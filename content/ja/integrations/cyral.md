@@ -26,6 +26,7 @@ author:
 categories:
 - data stores
 - security
+custom_kind: integration
 dependencies:
 - https://github.com/DataDog/integrations-extras/blob/master/cyral/README.md
 display_on_public_website: true
@@ -35,7 +36,6 @@ integration_id: cyral
 integration_title: Cyral
 integration_version: 0.0.1
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: cyral
 public_title: Cyral
@@ -48,6 +48,7 @@ tile:
   - Category::Data Stores
   - Category::Security
   - Supported OS::Linux
+  - Offering::Integration
   configuration: README.md#Setup
   description: Cyral インスタンスモニタリング MySQL からランタイムメトリクスを収集。
   media: []
@@ -59,29 +60,29 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/integrations-extras -->
 
 
-## 概要
+## Overview
 
-このチェックは、Datadog Agent を通じて [Cyral][1] MySQL サイドカーを監視します。
+This check monitors a [Cyral][1] MySQL sidecar through the Datadog Agent.
 
-## 計画と使用
+## Setup
 
-Cyral チェックは [Datadog Agent][2] パッケージに含まれていないため、お客様自身でインストールする必要があります。
+The Cyral check is not included in the [Datadog Agent][2] package, so you need to install it.
 
-### インフラストラクチャーリスト
+### Installation
 
-Agent v7.21 / v6.21 以降の場合は、下記の手順に従い Cyral チェックをホストにインストールします。Docker Agent または 上記バージョン以前の Agent でインストールする場合は、[コミュニティインテグレーションの使用][3]をご参照ください。
+For Agent v7.21+ / v6.21+, follow the instructions below to install the Cyral check on your host. See [Use Community Integrations][3] to install with the Docker Agent or earlier versions of the Agent.
 
-1. 以下のコマンドを実行して、Agent インテグレーションをインストールします。
+1. Run the following command to install the Agent integration:
 
    ```shell
    datadog-agent integration install -t datadog-cyral==<INTEGRATION_VERSION>
    ```
 
-2. コアの[インテグレーション][4]と同様にインテグレーションを構成します。
+2. Configure your integration similar to core [integrations][4].
 
-### ブラウザトラブルシューティング
+### Configuration
 
-1. cyral のパフォーマンスデータの収集を開始するには、Agent のコンフィギュレーションディレクトリのルートにある `conf.d/` フォルダーの `cyral.d/conf.yaml` ファイルを編集します。使用可能なすべてのコンフィギュレーションオプションについては、[サンプル cyral.d/conf.yaml][5] を参照してください。
+1. Edit the `cyral.d/conf.yaml` file, in the `conf.d/` folder at the root of your Agent's configuration directory to start collecting your cyral performance data. See the [sample cyral.d/conf.yaml][5] for all available configuration options.
 
     ```yaml
     init_config:
@@ -91,29 +92,29 @@ Agent v7.21 / v6.21 以降の場合は、下記の手順に従い Cyral チェ�
      - prometheus_url: http://localhost:9018/metrics
     ```
 
-2. [Agent を再起動します][6]。
+2. [Restart the Agent][6].
 
-### 検証
+### Validation
 
-[Agent の status サブコマンドを実行][7]し、Checks セクションで `cyral` を探します。
+[Run the Agent's status subcommand][7] and look for `cyral` under the Checks section.
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "cyral" >}}
 
 
-### ヘルプ
+### Service Checks
 
-Cyral には、サービスのチェック機能は含まれません。
+Cyral does not include any service checks.
 
-### ヘルプ
+### Events
 
-Cyral には、イベントは含まれません。
+Cyral does not include any events.
 
-## ヘルプ
+## Troubleshooting
 
-### Agent が接続できない
+### Agent cannot connect
 
 ```text
     cyral
@@ -122,9 +123,9 @@ Cyral には、イベントは含まれません。
       - Collected 0 metrics, 0 events & 0 service check
 ```
 
-`cyral.yaml` 内の `url` が正しいかどうかを確認してください。
+Check that the `url` in `cyral.yaml` is correct.
 
-ご不明な点は、[Datadog のサポートチーム][9]までお問い合わせください。
+Need help? Contact [Datadog support][9].
 
 [1]: https://cyral.com/
 [2]: https://app.datadoghq.com/account/settings/agent/latest

@@ -9,84 +9,84 @@ further_reading:
 title: クエリ
 ---
 
-## 概要
+## Overview
 
-Datadog では、メトリクス、ログ、トレース、モニター、ダッシュボード、ノートブックなどのすべてのグラフで同じ基本機能は使用しています。このページでは、グラフエディターのクエリについて説明します。上級レベルのユーザーは、JSON を使用したグラフの作成や編集が可能です。詳細については、[JSON を使用したグラフ作成][1]をご参照ください。
+Whether you are using metrics, logs, traces, monitors, dashboards, notebooks, etc., all graphs in Datadog have the same basic functionality. This page describes querying with the graphic editor. Advanced users can create and edit graphs with JSON. To learn more, see [Graphing with JSON][1].
 
-ダッシュボードやノートブックページにあるグラフエディターを使ってクエリを実行することもできますが、どのページでも利用可能な**クイックグラフ**を使うこともできます。クイックグラフは、任意のページで `G` をクリックすると開きます。詳しくは、[クイックグラフガイド][2]をご覧ください。
+You can query using the graph editor on the Dashboards or Notebooks pages, or you can use **Quick Graphs** available on any page. Open Quick Graphs by pressing `G` on any page. To learn more, see the [Quick Graphs Guide][2].
 
-## グラフエディター
+## Graphing editor
 
-ウィジェットで、右上の鉛筆アイコンをクリックしてグラフエディターを開きます。グラフエディターには以下のタブがあります。
+On widgets, open the graphing editor by clicking on the pencil icon in the upper right corner. The graphing editor has the following tabs:
 
-* **Share**: 任意の外部 Web ページにグラフを埋め込みます。
-* **JSON**: より柔軟性の高いエディター。グラフ定義言語の知識が必要です。
-* **Edit**: グラフ作成オプションのデフォルトの UI タブ。
+* **Share**: Embed the graph on any external web page.
+* **JSON**: A more flexible editor, which requires knowledge of the graph definition language.
+* **Edit**: The default UI tab for graphing options.
 
-初めてグラフエディターを開くと、**Edit** タブが表示されます。UI からほとんどの設定を選択できます。以下に例を示します。
+When you first open the graphing editor, you are on the **Edit** tab. Here, you can use the UI to choose most settings. Here is an example:
 
-{{< img src="dashboards/querying/references-graphing-edit-window-with-y-2.png" alt="グラフエディターの Edit タブ" style="width:100%;" >}}
+{{< img src="dashboards/querying/references-graphing-edit-window-with-y-2.png" alt="Graphing Edit Tab" style="width:100%;" >}}
 
-## グラフを構成する
+## Configuring a graph
 
-ダッシュボードでグラフを構成するには、次のプロセスに従ってください。
+To configure your graph on dashboards, follow this process:
 
-1. [視覚化の方法を選択](#select-your-visualization)
-2. [メトリクスの定義](#define-the-metric)
-3. [メトリクスのフィルタリング](#filter)
-4. [時間集計の構成](#configure-the-time-aggregation)
-5. [空間集計の構成](#configure-the-space-aggregation)
-6. [関数の適用](#advanced-graphing)
-7. [グラフのタイトルを作成](#create-a-title)
+1. [Select the visualization](#select-your-visualization)
+2. [Define the metric](#define-the-metric)
+3. [Filter your metric](#filter)
+4. [Configure the time aggregation](#configure-the-time-aggregation)
+5. [Configure the space aggregation](#configure-the-space-aggregation)
+6. [Apply function](#advanced-graphing)
+7. [Title the graph](#create-a-title)
 
-### 視覚化に使用するウィジェットを選択する
+### Select your visualization
 
-利用可能な[ウィジェット][3]の中から視覚化したいものを選択します。
+Select your visualization from the available [widgets][3].
 
-### メトリクスを定義する
+### Define the metric
 
-検索するか、**Metric** の隣にあるドロップダウンから選択して、グラフ化したいメトリクスを選択します。使用するメトリクスが分からない場合は、メトリクスのドロップダウンから `unit`、`type`、`interval`、`description`、`tags`、および `tag values` の数などの追加情報を得ることができます。
+Choose the metric to graph by searching or selecting it from the dropdown next to **Metric**. If you don't know which metric to use, the metric dropdown provides additional information, including the `unit`, `type`, `interval`, `description`, `tags`, and number of `tag values`. 
 
-{{< img src="dashboards/querying/metric_dropdown.png" alt="メトリクス選択ドロップダウン" responsive="true" style="width:100%;">}}
+{{< img src="dashboards/querying/metric_dropdown.png" alt="Metric Selector Dropdown" responsive="true" style="width:100%;">}}
 
-[メトリクスエクスプローラー][4]や[ノートブック][5]でメトリクスをさらに詳しく調べたり、[メトリクスの概要][6]ページでメトリクスのリストを閲覧することができます。
+Explore your metrics further with the [Metrics Explorer][4], a [Notebook][5], or see a list of metrics on the [Metrics Summary][6] page.
 
-### フィルター
+### Filter
 
-選択したメトリクスには、メトリクスの右側にある **from** ドロップダウンからホストまたはタグによるフィルターを設定することができます。デフォルトでは *(everywhere)* に設定されています。
+Your chosen metric can be filtered by host or tag using the **from** dropdown to the right of the metric. The default filter is *(everywhere)*.
 
-{{< img src="dashboards/querying/filter-3.png" alt="テンプレート変数とブール値ロジックを使用し、'from' フィールドでグラフをフィルター" style="width:100%;" >}}
+{{< img src="dashboards/querying/filter-3.png" alt="Filter the graph with the 'from' field, using template variables and boolean logic" style="width:100%;" >}}
 
-- `from` ドロップダウン内の[高度なフィルタリング][7]を使用して、ブール型またはワイルドカードでフィルタリングされたクエリを評価します。
-- テンプレート変数を使用して、クエリを動的にフィルターします。タグキーと一緒に `$` を追加すると、グラフはテンプレート変数のドロップダウンで選択したタグを自動的に適用します。詳細は[テンプレート変数のドキュメント][16]を参照してください。
+- Use [advanced filtering][7] within the `from` dropdown to evaluate boolean filtered or wildcard filtered queries.
+- Filter queries dynamically, using Template Variables. Add the `$` with the tag key and the graph automatically applies the tag you choose in the template variable dropdown. For more information, see the [Template Variable documentation][16].
 
-タグの詳細は、[タグ付けに関するドキュメント][8]を参照してください。
+To learn more about tags, see the [Tagging documentation][8].
 
-### 集計、ロールアップする
+### Aggregate and rollup
 
-#### 集計の方法
+#### Aggregation method
 
-集計方法は、フィルターのドロップダウンの隣に表示されます。デフォルトでは `avg by` に設定されていますが、`max by`、`min by`、`sum by` に変更できます。ほとんどの場合、メトリクスは多数のホストやインスタンスから集計されるため、時間間隔ごとに多数の値が含まれています。選択した集計方法によって、メトリクスを 1 本の線に集計する方法が決まります。
+Aggregation method is next to the filter dropdown. This defaults to `avg by` but you can change the method to `max by`, `min by`, or `sum by`. In most cases, the metric has many values for each time interval, coming from many hosts or instances. The aggregation method chosen determines how the metrics are aggregated into a single line.
 
-#### 時間集計の構成
+#### Configure the time aggregation
 
-前述の手順で選択したオプションに関係なく、グラフの表示ウィンドウに物理的なサイズ制約があることから、データは常にある程度集約されています。メトリクスが毎秒更新され、4 時間分のデータを表示する場合、全データを表示するには 14,400 ポイントが必要です。この期間内に各グラフで表示できるポイント数は 300 です。そのため、画面上の 1 ポイントは 48 データポイントに相当します。
+Regardless of the options chosen above, there is always some aggregation of data due to the physical size constraints of the window holding the graph. If a metric is updated every second, and you are looking at 4 hours of data, you need 14,400 points to display everything. Each graph displayed has about 300 points shown at any given time. Therefore, each point displayed on the screen represents 48 data points.
 
-実際には、メトリクスは Agent によって 15～20 秒ごとに収集されます。そのため、1 日分のデータは 4,320 データポイントとなります。1 つのグラフで 1 日分のデータを表示する場合、Datadog は自動的にデータをロールアップします。時間集計の詳細については、[メトリクスのはじめに][9]をご参照ください。ロールアップの間隔や Datadog が自動的にデータポイントをロールアップする方法については、[ロールアップ][10]ドキュメントを参照してください。
+In practice, metrics are collected by the Agent every 15-20 seconds. So one day's worth of data is 4,320 data points. If you display a day's worth of data on single graph, Datadog automatically rolls up the data. For more details on time aggregation, see the [Metrics Introduction][9]. See the [Rollup][10] documentation to learn more about the rollup intervals and how Datadog automatically rolls up data points.
 
-手動でデータをロールアップするには、[rollup 関数][11]を使用します。シグマのアイコンをクリックして関数を追加し、ドロップダウンメニューから `rollup` を選択します。次に、データを集計する方法と間隔 (秒) を選択します。
+To manually rollup the data, use the [rollup function][11]. Click the sigma icon to add a function and select `rollup` from the dropdown menu. Then choose how you want to aggregate the data and the interval in seconds. 
 
-このクエリは、全マシンにわたる利用可能なディスクスペースの平均値を 1 分間隔で集計し、それを表す単一のラインを作成します。
+This query creates a single line that represents the total available disk space, on average, across all machines rolled up in one minute buckets:
 
-{{< img src="dashboards/querying/references-graphing-rollup-example-minutes.png" alt="マシン全体の system.disk.free メトリクスのロールアップ例" style="width:100%;">}}
+{{< img src="dashboards/querying/references-graphing-rollup-example-minutes.png" alt="rollup example of the system.disk.free metric across all machines" style="width:100%;">}}
 
-JSON ビューに切り替えると、以下のようなクエリが表示されます。
+When switching to the JSON view, the query looks like this:
 
 ```text
 "query": "avg:system.disk.free{*}.rollup(avg, 60)"
 ```
 
-完全な JSON は次のようになります。
+The full JSON looks like this:
 
 ```text
 {
@@ -125,96 +125,113 @@ JSON ビューに切り替えると、以下のようなクエリが表示され
 }
 ```
 
-JSON ビューの使用方法については、[JSON を使用したグラフ作成][1]をご参照ください。
+For more about using the JSON view, see [Graphing with JSON][1].
 
-#### 空間集計の構成
+#### Configure the space aggregation
 
-集約方法のドロップダウンの隣から、グラフ上で線またはグループを構成する要素を選択します。たとえば、`host` を選択すると、各 `host`  につき 1 本の線が表示されます。各線は、特定の `host` に関する選択されたメトリクスで構成されており、選択した方法により集約されます。
+Next to the aggregation method dropdown, choose what constitutes a line or grouping on a graph. For example, if you choose `host`, there is a line for every `host`. Each line is made up of the selected metric on a particular `host` aggregated using the chosen method.
 
-さらに、[メトリクスの定義](#define-the-metric)で使用されるメトリクスのドロップダウンでタグをクリックすると、データをグループ化したり、集計したりすることができます。
+Additionally, you can click the tags in the metric dropdown used for [defining the metric](#define-the-metric) to group and aggregate your data. 
 
-### 高度なグラフの作成
+### Advanced graphing
 
-分析のニーズに応じて、割合、微分係数、平滑化など、他の数学関数をクエリに適用することもできます。詳細については、[使用可能な関数のリスト][12]をご参照ください。
+Depending on your analysis needs, you may choose to apply other mathematical functions to the query. Examples include rates and derivatives, smoothing, and others. See the [list of available functions][12].
 
-また、Datadog では、さまざまな算術演算によりメトリクス、ログ、トレース、その他のデータソースをグラフ化できます。グラフに表示される 値を変更するには、`+`、`-`、`/`、`*` を使用します。この構文では、整数値、および複数のメトリクスを使用した演算の両方を使用できます。
+Datadog also supports the ability to graph your metrics, logs, traces, and other data sources with various arithmetic operations. Use: `+`, `-`, `/`, `*`, `min`, and `max` to modify the values displayed on your graphs. This syntax allows for both integer values and arithmetic using multiple metrics.
 
-各メトリクスを別々にグラフに表示するには、コンマ (`,`) を使用します（例: `a, b, c`）。
+To graph metrics separately, use the comma (`,`). For example, `a, b, c`.
 
-**注**: コンマを使用したクエリは視覚化でのみサポートされ、モニターでは機能しません。モニターで複数のメトリクスを組み合わせるには、[ブール演算子][13]または算術演算子を使用します。
+**Note**: Queries using commas are only supported in visualizations, they do not work on monitors. Use [boolean operators][13] or arithmetic operations to combine multiple metrics in a monitor.
 
-#### 整数を使用したメトリクスの演算
+#### Metric arithmetic using an integer
 
-グラフでメトリクス値の表示方法を変更するには、算術演算を実行します。たとえば、特定のメトリクスの 2 倍の値を視覚化するには、グラフエディターで **Advanced...** リンクをクリックします。次に、`Formula` ボックスに計算式 (この例では `a * 2`) を入力します。
+Modify the displayed value of a metric on a graph by performing an arithmetic operation. For example, to visualize the double of a specific metric, click the **Advanced...** link in the graph editor. Then enter your arithmetic in the `Formula` box, in this case: `a * 2`:
 
-{{< img src="dashboards/querying/arithmetic_4.png" alt="数式の例 - 乗算" style="width:75%;" >}}
+{{< img src="dashboards/querying/arithmetic_4.png" alt="Formula example - multiply" style="width:75%;" >}}
 
-#### 2 つのメトリクス間の計算
+#### Arithmetic between two metrics
 
-メトリクスの割合を視覚化するには、1 つのメトリクスをもう 1 つのメトリクスで除算します。以下に例を示します。
+Visualize the percentage of a metric by dividing one metric over another, for example:
 
 ```text
 jvm.heap_memory / jvm.heap_memory_max
 ```
 
-グラフエディターの **Advanced...** オプションから **Add Query** を選択します。クエリにはアルファベット順に文字が割り当てられ、最初のメトリクスは `a` 、2 番目のメトリクスは `b` のように表示されます。
+Use the **Advanced...** option in the graph editor and select **Add Query**. Each query is assigned a letter in alphabetical order: the first metric is represented by `a`, the second metric is represented by `b`, etc.
 
-次に、`Formula` ボックスに算術演算 (この例では `a / b`) を入力します。グラフに数式のみを表示するには、メトリクス `a` および `b` の横にあるチェックマークをクリックします。
+Then in the `Formula` box, enter the arithmetic (`a / b` for this example). To display only the formula on your graph, click on the check marks next to the metrics `a` and `b`.
 
-{{< img src="dashboards/querying/arithmetic_5.png" alt="数式の例 - 比率" style="width:75%;" >}}
+{{< img src="dashboards/querying/arithmetic_5.png" alt="Formula example - ratio" style="width:75%;" >}}
 
-これは、`error` ログと `info` ログの比率をグラフ化する方法を示す別の例です。
+Here is another example showing how you can graph the ratio between `error` logs and `info` logs.
 
 ```text
 status:error / status:info
 ```
 
-{{< img src="dashboards/querying/arithmetic_6.png" alt="数式の例 - ログ比率" style="width:75%;" >}}
+{{< img src="dashboards/querying/arithmetic_6.png" alt="Formula example - logs ratio" style="width:75%;" >}}
 
-**注**: 数式に文字は割り当てられません。数式間では演算できません。
+**Note**: Formulas are not lettered. Arithmetic cannot be done between formulas.
 
-### エイリアスを作成する
+#### 2 つのクエリ間の最小値または最大値
+以下は `max` 演算子を使用して、2 つのアベイラビリティゾーン間の CPU 使用率の最大値を求める例です。
 
-データソースのカスタムエイリアスを作成して、ユーザーがグラフの結果を簡単に解釈できるようにすることができます。
+```text
+max(system.cpu.user{availability-zone:eastus-1}, system.cpu.user{availability-zone:eastus-2}) 
+```
 
-{{< img src="dashboards/querying/custom_alias.png" alt="カスタムエイリアス" style="width:75%;" >}}
+{{< img src="dashboards/querying/minmax_metrics_example.png" alt="2 つのメトリクスクエリ間の最大カウント値を示す 'max' の計算式例" style="width:75%;" >}}
 
-### タイトルの作成
+さらに、異なる商品の 2 つのクエリ間の最大値 (または最小値) を計算することもできます。以下は `min` 演算子を使用して、エラーステータスと警告ステータスのログ間の最小値を求める別の例です。
 
-タイトルを入力しなくても、選択内容に基づいてタイトルが自動的に生成されますが、グラフの内容を表すタイトルをご自身で作成することをお勧めします。
+```text
+min(status:error, status:warn)
+```
 
-### 保存
+{{< img src="dashboards/querying/minmax_logs_platform_example.png" alt="2 つのログクエリ間の最小カウント値を示す 'min' の計算式例" style="width:75%;" >}}
 
-作業内容を保存してエディターを終了するには **Done** をクリックします。いつでもエディターに戻ってグラフを変更できます。変更を加えた一方で、その内容を保存しない場合は、**Cancel** をクリックします。
+### Create an alias
 
-## その他のオプション
+You can create a custom alias for your data sources to make it easier for your users to interpret the graph results.
 
-### イベントオーバーレイ
+{{< img src="dashboards/querying/custom_alias.png" alt="Custom alias" style="width:75%;" >}}
 
-{{< img src="/dashboards/querying/event_overlay_example.png" alt="RUM のエラーレートをデプロイイベントと重ね合わせて表示する時系列ウィジェット" style="width:100%;" >}}
+### Create a title
 
-[時系列][15]可視化のグラフエディタで **Event Overlays** セクションを使用して、イベントの相関関係を表示します。検索フィールドに、任意のテキストまたは構造化検索クエリを入力します。イベント検索では、[ログ検索構文][14]を使用します。
+If you do not enter a title, one is automatically generated based on your selections. However, it is recommended that you create a title that describes the purpose of the graph.
 
-イベントオーバーレイは、すべてのデータソースをサポートしています。これにより、ビジネスイベントと Datadog のあらゆるサービスからのデータとの相関を容易にすることができます。
+### Save
 
-イベントオーバーレイを使えば、組織内のアクションがアプリケーションやインフラストラクチャーのパフォーマンスにどのような影響を与えるかを素早く確認することができます。以下に、使用例をいくつか紹介します。
-- デプロイメントイベントを重ね合わせた RUM のエラーレート
-- 余分なサーバーのプロビジョニングに関連するイベントと CPU 使用率を相関させる
-- egress トラフィックと疑わしいログインアクティビティを相関させる
-- Datadog が適切なアラートで構成されていることを確認するために、あらゆる時系列データとモニターアラートを相関させる
+Click **Done** to save your work and exit the editor. You can always come back to the editor to change the graph. If you make changes you don't want to save, click **Cancel**.
+
+## Additional options
+
+### Event overlays
+
+{{< img src="/dashboards/querying/event_overlay_example.png" alt="Timeseries widgets showing RUM error rates with deployment events overlaid" style="width:100%;" >}}
+
+View event correlations by using the **Event Overlays** section in the graphing editor for the [Timeseries][15] visualization. In the search field, enter any text or structured search query. Events search uses the [logs search syntax][14].
+
+The event overlay supports all data sources. This allows for easier correlation between business events and data from any Datadog service. 
+
+With the event overlay, you can quickly see how actions within the organization impact application and infrastructure performance. Here are some example use cases:
+- RUM error rates with deployment events overlaid
+- Correlating CPU usage with events related to provisioning extra servers
+- Correlating egress traffic with suspicious login activity
+- Correlating any timeseries data with monitor alerts to ensure that Datadog has been configured with the appropriate alerts
 
 
-### スプリットグラフ
+### Split graph
 
-スプリットグラフを使えば、メトリクスをタグごとに分けて可視化することができます。
+With split graphs, you can see your metric visualizations broken out by tags. 
 
-{{< img src="dashboards/querying/split_graph_beta.png" alt="フルスクリーンウィジェットでメトリクス container.cpu.usage のスプリットグラフを表示する" style="width:100%;" >}}
+{{< img src="dashboards/querying/split_graph_beta.png" alt="View split graphs of metric container.cpu.usage in the fullscreen widget" style="width:100%;" >}}
 
-1. グラフ表示時に **Split Graph** タブでこの機能にアクセスします。
-1. また、*sort by* メトリクスを変更することで、グラフ化しているデータと他のメトリクスとの関連性を確認することができます。
-1. 表示するグラフの数を *limit to* の値で制限します。
+1. Access this feature through the **Split Graph** tab when viewing graphs.
+1. You can change the *sort by* metric to see the relationship between the data you are graphing and other metrics. 
+1. Limit the number of graphs that are displayed by changing the *limit to* value.
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

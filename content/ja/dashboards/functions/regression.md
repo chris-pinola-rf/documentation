@@ -1,55 +1,56 @@
 ---
-title: 回帰
 aliases:
-  - /ja/graphing/functions/regression/
+- /ja/graphing/functions/regression/
+title: 回帰
 ---
-## ロバスト回帰
 
-| 関数         | 説明                                          | 例                              |
+## Robust trend
+
+| Function         | Description                                          | Example                              |
 | :----            | :-------                                             | :---------                           |
-| `robust_trend()` | Huber 損失を使用して、ロバスト回帰傾向線を求めます。 | `robust_trend(avg:<METRIC_NAME>{*})` |
+| `robust_trend()` | Fit a robust regression trend line using Huber loss. | `robust_trend(avg:<METRIC_NAME>{*})` |
 
-最も一般的な線形回帰である最小二乗法 (OLS) は、極値ポイントが少数あるだけでも大きな影響を受けがちです。ロバスト回帰も回帰直線を求める方法の 1 つですが、少数の極値からはそれほど強い影響を受けません。例として、次のプロットを見てみます。
+The most common type of linear regression—ordinary least squares (OLS)—can be heavily influenced by a small number of points with extreme values. Robust regression is an alternative method for fitting a regression line; it is not influenced as strongly by a small number of extreme values. As an example, see the following plot.
 
-{{< img src="dashboards/functions/regression/robust_trend.png" alt="堅牢性傾向" style="width:80%;">}}
+{{< img src="dashboards/functions/regression/robust_trend.png" alt="robust trend" style="width:80%;">}}
 
-元のメトリクスは青い実線で示されています。紫の破線は OLS 回帰線で、黄色の破線がロバスト回帰線です。メトリクスにある短時間のスパイクによって OLS 回帰線はやや上向きになりますが、ロバスト回帰線はこのスパイクを無視し、メトリクスの全体的傾向により的確に沿っています。
+The original metric is shown as a solid blue line. The purple dashed line is an OLS regression line, and the yellow dashed line is a robust regression line. The one short-lived spike in the metric leads to the OLS regression line trending upward, but the robust regression line ignores the spike and does a better job fitting the overall trend in the metric.
 
-## 傾向線
+## Trend line
 
-| 関数       | 説明                                                              | 例                            |
+| Function       | Description                                                              | Example                            |
 | :----          | :-------                                                                 | :---------                         |
-| `trend_line()` | メトリクス値に沿う最小二乗法の回帰線を求めます。 | `trend_line(avg:<METRIC_NAME>{*})` |
+| `trend_line()` | Fit an ordinary least squares regression line through the metric values. | `trend_line(avg:<METRIC_NAME>{*})` |
 
-例:
+Example:
 
-関数 `sin(x) * x/2 + x`、`trend_line(sin(x) * x/2 + x)` は、次のようになります。
+The function `sin(x) * x/2 + x` then `trend_line(sin(x) * x/2 + x)` has the following shape:
 
-{{< img src="dashboards/functions/regression/trend_line_function.png" alt="傾向線グラフと関数" style="width:80%;">}}
+{{< img src="dashboards/functions/regression/trend_line_function.png" alt="Trend line function" style="width:80%;">}}
 
-## 区分的定数
+## Piecewise constant
 
-| 関数               | 説明                                                                            | 例                                    |
+| Function               | Description                                                                            | Example                                    |
 | :----                  | :-------                                                                               | :---------                                 |
-| `piecewise_constant()` | 複数の定数値区間で構成される区分的関数でメトリクスを近似します。 | `piecewise_constant(avg:<METRIC_NAME>{*})` |
+| `piecewise_constant()` | Approximate the metric with a piecewise function composed of constant-valued segments. | `piecewise_constant(avg:<METRIC_NAME>{*})` |
 
-例:
+Example:
 
-関数 `x`、`piecewise_constant(x)` は、次のようになります。
+The function `x` then `piecewise_constant(x)` has the following shape:
 
-{{< img src="dashboards/functions/regression/piecewise_constant.png" alt="区分的定数" style="width:80%;">}}
+{{< img src="dashboards/functions/regression/piecewise_constant.png" alt="piecewise constant" style="width:80%;">}}
 
-## その他の関数
+## Other functions
 
-{{< whatsnext desc="他に利用できる関数を参照します。" >}}
-    {{< nextlink href="/dashboards/functions/algorithms" >}}アルゴリズム: メトリクスに異常値や外れ値の検出機能を実装します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/arithmetic" >}}算術: メトリクスに対して算術演算を実行します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/count" >}}カウント: メトリクスの 0 以外または null 以外の値をカウントします。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/exclusion" >}}除外: メトリクスの特定の値を除外します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/interpolation" >}}補間: メトリクスにデフォルト値を挿入または設定します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/rank" >}}ランク: メトリクスの一部のみを選択します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/rate" >}}レート: メトリクスに対してカスタム微分係数を計算します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/rollup" >}}ロールアップ: メトリクスに使用される元ポイントの数を制御します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/smoothing" >}}スムーシング: メトリクスの変動を滑らかにします。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/timeshift" >}}タイムシフト: メトリクスのデータポイントをタイムラインに沿って移動させます。{{< /nextlink >}}
+{{< whatsnext desc="Consult the other available functions:" >}}
+    {{< nextlink href="/dashboards/functions/algorithms" >}}Algorithmic: Implement Anomaly or Outlier detection on your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/arithmetic" >}}Arithmetic: Perform Arithmetic operation on your metric.  {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/count" >}}Count: Count non zero or non null value of your metric. {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/exclusion" >}}Exclusion: Exclude certain values of your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/interpolation" >}}Interpolation: Fill or set default values for your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/rank" >}}Rank: Select only a subset of metrics. {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/rate" >}}Rate: Calculate custom derivative over your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/rollup" >}}Rollup: Control the number of raw points used in your metric. {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/smoothing" >}}Smoothing: Smooth your metric variations.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/timeshift" >}}Timeshift: Shift your metric data point along the timeline. {{< /nextlink >}}
 {{< /whatsnext >}}

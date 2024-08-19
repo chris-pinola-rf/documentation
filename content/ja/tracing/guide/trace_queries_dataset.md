@@ -2,58 +2,52 @@
 further_reading:
 - link: /tracing/trace_explorer/trace_queries/
   tag: ドキュメント
-  text: .NET
+  text: Trace Queries
 title: Trace Queries ソースデータ
 ---
 
-## 概要
+## Overview
 
-Trace Queries を使用すると、トレース構造内の複数のスパンのプロパティとそれらスパン間の関係に基づいて、トレース全体を見つけることができます。詳細については、[Trace Queries のドキュメント][1]を参照してください。
+With Trace Queries, you can find entire traces based on the properties of multiple spans and the relationships between those spans within the structure of the trace. To learn more, read the [Trace Queries documentation][1].
 
 {{< img src="tracing/trace_queries/trace_queries.png" style="width:100%; background:none; border:none; box-shadow:none;" alt="Trace Queries UI" >}}
 
-## Trace Queries ソースデータの仕組み
+## How Trace Queries source data
 
-Datadog は、[インテリジェント保持フィルター][6]を使用して、Trace Queries 用のデータをインデックス化します。これは、以下を実行して行います。
+Datadog uses the [Intelligent Retention Filter][6] to index data for Trace Queries. It does so by performing: 
 
-- [フラットサンプリング](#1-flat-sampling): 取り込まれたスパンの均一な 1% サンプル。
-- [多様性サンプリング](#diversity-sampling): 各環境、サービス、オペレーション、リソースの可視性を維持するための、代表的で多様なトレースの選択。
+- [Flat sampling](#1-flat-sampling): A uniform 1% sample of ingested spans.
+- [Diversity sampling](#diversity-sampling): A representative, diverse selection of traces to keep visibility over each environment, service, operation, and resource.
 
-これら 2 つのサンプリングメカニズムは、**完全なトレース**をキャプチャし、Trace Queries が正常に機能するように、トレースのすべてのスパンが常にインデックス化されます。
+These 2 sampling mechanisms capture **complete traces**, meaning that all spans of a trace are always indexed to ensure the well-functioning of Trace Queries.
 
-{{< img src="tracing/trace_queries/trace_queries_new_dataset.png" style="width:100%; background:none; border:none; box-shadow:none;" alt="1% フラットサンプリングと多様性サンプリング" >}}
+{{< img src="tracing/trace_queries/trace_queries_new_dataset.png" style="width:100%; background:none; border:none; box-shadow:none;" alt="1% Flat Sampling & Diversity Sampling" >}}
 
-**注**: フラットサンプリングと多様性サンプリングによってインデックス化されたスパンは、インデックス化されたスパンの使用量にカウントされないため、**請求には影響しません**。
+**Note**: Spans indexed by flat sampling and diversity sampling do not count towards the usage of indexed spans, and therefore, **do not impact your bill**.
 
-### 1% フラットサンプリング
+### 1% flat sampling
 `retained_by:flat_sampled`
 
-フラット 1% サンプリングは `trace_id` に基づいて適用されます。これは、同じトレースに属するすべてのスパンが同じサンプリング決定を共有することを意味します。詳細については、[1% フラットサンプリングのドキュメント][2]を参照してください。
+Flat 1% sampling is applied based on the `trace_id`, meaning that all spans belonging to the same trace share the same sampling decision. To learn more, read the [one percent flat sampling documentation][2].
 
-### 多様性サンプリング
+### Diversity sampling
 `retained_by:diversity_sampling`
 
-15 分ごとに、多様性サンプリングは環境、サービス、操作、リソースの各組み合わせごとに少なくとも 1 つのスパンとそれに関連するトレースを保持します。これは、レイテンシーの `p75`、`p90`、`p95` パーセンタイルに対して行われ、トラフィックが少ないエンドポイントであっても、サービスやリソースのページで常にサンプルトレースを見つけることができるようにします。詳細については、[多様性サンプリングのドキュメント][3]を参照してください。
+Every 15 minutes, diversity sampling retains at least one span and the associated trace for each combination of environment, service, operation, and resource. This occurs for the `p75`, `p90`, and `p95` percentile of latencies to ensure that you can always find example traces in service and resource pages, even for low traffic endpoints. To learn more, read the [diversity sampling documentation][3].
 
-## Trace Queries を有効にした場合の影響
+## Impact of enabling Trace Queries
 
-Traces Queries がアカウントで有効になった瞬間から (イベントストリームで公開されたイベントで正確な日付を見つけてください)、インテリジェント保持フィルターは完全なトレースのキャプチャを開始し、より多くのデータをインデックス化し始めます。
+From the moment Traces Queries are enabled on your account (find the exact date in the event published in the Event Stream), the Intelligent Retention filter starts to index more data as it starts capturing complete traces .
 
-[トレースエクスプローラー][4]で、インテリジェント保持フィルターによってインデックス化されたスパンをクエリできます。その結果、トレースエクスプローラーのクエリでインデックス化スパンの数が急増することに気づくかもしれません。この変化は、**Intelligent Retention Filter change** イベントを示すイベントオーバーレイによって示されます。
+You can query spans indexed by the Intelligent Retention filter in the [Trace Explorer][4]. As a result, you might notice a spike in the number of indexed spans in Trace Explorer queries. This change is indicated by an event overlay showing an **Intelligent Retention Filter change** event.
 
-1% フラットサンプリング法または多様性サンプリング法でサンプリングされたスパンを見つけるには、トレースエクスプローラーで `retained_by:(flat_sampled OR diversity_sampling)` クエリパラメータを追加します。
+To find spans that are sampled by the 1% flat sampling or the diversity sampling methods, add a `retained_by:(flat_sampled OR diversity_sampling)` query parameter in the Trace Explorer.
 
-{{< img src="tracing/trace_queries/intelligent_retention_filter_change.png" style="width:90%; background:none; border:none; box-shadow:none;" alt="イベントオーバーレイインテリジェント保持フィルター" >}}
+{{< img src="tracing/trace_queries/intelligent_retention_filter_change.png" style="width:90%; background:none; border:none; box-shadow:none;" alt="Event Overlay Intelligent Retention Filter" >}}
 
-インテリジェント保持フィルターによってインデックス化されたスパンは、以下の APM クエリから除外されます。
+Spans indexed by the Intelligent retention filter are excluded from APM queries in [Trace Analytics monitor][5] evaluations. Therefore, monitors are **not impacted** by this change.
 
-- ライブラリ
-- チェック内容のサマリー
-- [トレース分析モニター][5]評価
-
-そのため、この変更による**影響はありません**。
-
-## その他の参考資料
+## Further reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

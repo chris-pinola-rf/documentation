@@ -14,26 +14,27 @@ aliases:
 cascade:
   algolia:
     rank: 70
-description: パフォーマンス向上のためにコードを操作する
+description: Instrument your code to improve performance
 further_reading:
 - link: https://app.datadoghq.com/release-notes?category=APM
-  tag: リリースノート
-  text: Datadog APM の最新リリースをご覧ください！ (アプリへのログインが必要です)
+  tag: Release Notes
+  text: Check out the latest Datadog APM releases! (App login required)
 - link: https://www.datadoghq.com/blog/span-based-metrics/
-  tag: ブログ
-  text: スパンベースのメトリクスを生成し、アプリケーションパフォーマンスの過去の傾向を追跡
+  tag: Blog
+  text: Generate span-based metrics to track historical trends in application performance
 - link: https://www.datadoghq.com/blog/apm-security-view/
-  tag: ブログ
-  text: APM セキュリティビューでリスク、脆弱性、攻撃を視覚化する
+  tag: Blog
+  text: Gain visibility into risks, vulnerabilities, and attacks with APM Security
+    View
 - link: https://www.datadoghq.com/blog/monitor-azure-app-service-linux/
-  tag: ブログ
-  text: Datadog で Azure App Service 上の Linux Web アプリを監視する
+  tag: Blog
+  text: Monitor your Linux web apps on Azure App Service with Datadog
 - link: https://www.datadoghq.com/blog/monitor-apis-datadog-api-catalog/
-  tag: ブログ
+  tag: Blog
   text: Datadog API カタログで API のパフォーマンス、セキュリティ、所有権を管理する
 - link: https://dtdg.co/fe
-  tag: 基盤の活用
-  text: APM の理解を深めるためのインタラクティブなセッションにご参加ください
+  tag: Foundation Enablement
+  text: APM の理解を深めるためのインタラクティブセッションに参加しましょう
 title: APM
 ---
 
@@ -41,60 +42,71 @@ title: APM
 
 </br>
 
-## 概要
 
-Datadog アプリケーションパフォーマンス監視機能 (APM) は、アプリケーションの深いところまで可視化し、パフォーマンスのボトルネックの特定、問題のトラブルシューティング、サービスの最適化を可能にします。分散型トレーシング、すぐに使えるパフォーマンスダッシュボード、その他のテレメトリーデータとのシームレスな相関付けにより、Datadog APM はアプリケーションで最高のパフォーマンスとユーザーエクスペリエンスを実現するのに役立ちます。
+{{< learning-center-callout header="イネーブルメントウェビナーセッションに参加" hide_image="true" btn_title="登録" btn_url="https://www.datadoghq.com/technical-enablement/sessions/?tags.topics-0=APM">}}
+  入門または中級者向けのイネーブルメントセッションに参加して、Datadog Application Performance Monitoring (APM) が、ブラウザやモバイルアプリケーションからバックエンドサービスやデータベースまで、AI を活用したコードレベルの分散トレーシングを提供する仕組みを学びましょう。
+{{< /learning-center-callout >}}
 
-Datadog APM で使用される用語の紹介は、[APM の用語と概念][1]を参照してください。
+## Overview
 
-## はじめに
+Datadog Application Performance Monitoring (APM) provides deep visibility into your applications, enabling you to identify performance bottlenecks, troubleshoot issues, and optimize your services. With distributed tracing, out-of-the-box dashboards, and seamless correlation with other telemetry data, Datadog APM helps ensure the best possible performance and user experience for your applications.
 
-Datadog APM の利用を開始する場合は、シングルステップのインスツルメンテーションを利用するのが最も簡単です。この方法であれば、Datadog Agent のインストールとアプリケーションのインスツルメンテーションをワンステップで行うことができ、追加の構成手順は必要ありません。詳しくは、[シングルステップのインスツルメンテーション][27]をご覧ください。
+For an introduction to terminology used in Datadog APM, see [APM Terms and Concepts][1].
 
-よりカスタマイズが必要なセットアップに対応するため、Datadog は Datadog トレーシングライブラリを使ったカスタムインスツルメンテーションをサポートしています。詳しくは、[アプリケーションのインスツルメンテーション][2]をご覧ください。
+## Getting started
 
-## ユースケース
+The simplest way to start with Datadog APM is with Single Step Instrumentation. This approach installs the Datadog Agent and instruments your application in one step, with no additional configuration steps required. To learn more, read [Single Step Instrumentation][27].
 
-Datadog APM がそれぞれのユースケースにどのように対応できるか、いくつかの例をご紹介します。
+For setups that require more customization, Datadog supports custom instrumentation with Datadog tracing libraries. To learn more, read [Application Instrumentation][2].
 
-| 実現したいこと| Datadog APM の活用方法 |
+<div class="alert alert-info">Datadog APM を初めて使用する場合は、<a href="https://docs.datadoghq.com/getting_started/tracing/">APM の概要</a>を読んで、Datadog に最初のトレースを送信する方法を学んでください。</div>
+
+## Use cases
+
+Discover some ways Datadog APM can help support your use cases:
+
+| You want to...| How Datadog APM can help |
 | ----------- | ----------- |
-| リクエストがシステム内をどのように流れるかを理解する。 | [トレースエクスプローラー][21]を使用して、分散サービス全体を対象にクエリを実行して、エンドツーエンドのトレースを視覚化します。 |
-| 個別サービスの健全性とパフォーマンスを監視する。 | [サービス詳細ページ][26]と[リソースページ][28]を使用し、パフォーマンスメトリクスの分析、デプロイメントの追跡、問題のあるリソースの特定を通じてサービスの健全性を評価します。 |
-| トレースをDBM、RUM、ログ、Synthetics、プロファイルと相関付ける。 | [APM データとその他のテレメトリーとの相関付け][20]を行い、データにコンテキストを付与して、より包括的な分析を可能にします。 |
-| Datadog へのデータの流れを制御する。 | [取り込み制御][6]を使用して、サービスやリソースごとの取り込みの構成とサンプリングレートを調整します。[保持フィルター][7]を使用して、どのスパンを 15 日間保持するかを選択します。 |
+| Understand how requests flow through your system. | Use the [Trace Explorer][21] to query and visualize end-to-end traces across distributed services. |
+| Monitor service health and performance of individual services. | Use the [service][26] and [resource pages][28] to assess service health by analyzing performance metrics, tracking deployments, and identifying problematic resources. |
+| Correlate traces with DBM, RUM, logs, synthetics, and profiles. | [Correlate APM Data with Other Telemetry][20] to give context to your data for more comprehensive analysis. |
+| Control how data flows into Datadog. | Use [Ingestion Controls][6] to adjust ingestion configuration and sampling rates by service and resource. Use [Retention filters][7] to choose which spans to retain for 15 days. |
 
-### トレースエクスプローラー
+### Trace Explorer
 
-[トレースエクスプローラー][21]を使用すると、トレースをリアルタイムで検索・分析することができます。パフォーマンスのボトルネックの特定、エラーのトラブルシューティング、関連ログやメトリクスへのピボットにより、問題を取り巻くコンテキストを完全に理解することができます。
+The [Trace Explorer][21] allows you search and analyze your traces in real-time. Identify performance bottlenecks, troubleshoot errors, and pivot to related logs and metrics to understand the full context around any issue.
 
-{{< img src="/tracing/trace_explorer/trace_explorer.png" alt="トレースエクスプローラーの画面。" style="width:100%;" >}}
+{{< img src="/tracing/trace_explorer/trace_explorer.png" alt="Trace explorer view." style="width:100%;" >}}
 
-### サービス詳細画面
+### Service page
 
-[サービス詳細ページ][26]は、サービスのパフォーマンスを監視し、[デプロイ中にバージョン間の比較][15]を行うのに役立ちます。
+The [service page][26] helps you monitor service performance and [compare between versions during deployments][15].
 
-{{< img src="tracing/deployment_tracking/VersionComparison.png" alt="サービス詳細画面のバージョン" style="width:100%;">}}
+{{< img src="tracing/deployment_tracking/VersionComparison.png" alt="Versions on the Service Page" style="width:100%;">}}
 
-### トレースを他のテレメトリーと相関付ける
+### Correlating traces with other telemetry
 
-Datadog APM は、ログ、リアルユーザーモニタリング (RUM)、Synthetic モニタリングなどとシームレスに連携します。
+Datadog APM integrates seamlessly with logs, real user monitoring (RUM), synthetic monitoring, and more:
 
-- [アプリケーションログをトレースと並べて表示する][9]ことで、特定のリクエスト、サービス、バージョンに関するログを見つけることができます。
-- [RUM セッションをバックエンドのトレースと関連付ける][10]ことで、バックエンドのパフォーマンスがユーザーエクスぺリンスに与える影響を理解できます。
-- [Synthetic テストをトレースと関連付ける][11]ことで、フロントエンドとバックエンドの両方のリクエストに関して、障害のトラブルシューティングを行うことができます。
+- [View your application logs side-by-side with traces][9] to find logs for specific requests, services, or versions.
+- [Associate RUM sessions with backend traces][10] to understand how backend performance affects user experience.
+- [Associate synthetic tests with traces][11] to troubleshoot failures across frontend and backend requests.
 
-{{< img src="tracing/index/ConnectLogsWithTraces.png" alt="ログとトレースをつなげる" style="width:100%;">}}
+{{< img src="tracing/index/ConnectLogsWithTraces.png" alt="Connect Logs And Traces" style="width:100%;">}}
 
-### 取り込み制御と保持フィルター
+### Ingestion controls and retention filters
 
-トレースはインスツルメンツされたアプリケーションで開始され、Datadog に取り込まれます。
+Traces start in your instrumented applications and flow into Datadog.
 
 Datadog APM は、トレースデータの量と保持を管理するためのツールを提供します。[取り込み制御][6]を使用して、サンプリングレートと[保持フィルター][7]を調整することで、どのスパンを保持するかを制御することができます。
 
-{{< img src="/tracing/apm_lifecycle/apm_lifecycle_0.png" alt="Datadog APM を通したデータの流れ。" style="width:100%;" >}}
+{{< img src="/tracing/apm_lifecycle/apm_lifecycle_0.png" alt="Flow of data through Datadog APM." style="width:100%;" >}}
 
-## その他の参考資料
+## Troubleshooting
+
+For troubleshooting assistance, read the [APM Troubleshooting][29] guide.
+
+## Further reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
@@ -126,3 +138,4 @@ Datadog APM は、トレースデータの量と保持を管理するための�
 [26]: /ja/tracing/services/service_page/
 [27]: /ja/tracing/trace_collection/single-step-apm/
 [28]: /ja/tracing/services/resource_page/
+[29]: /ja/tracing/troubleshooting/

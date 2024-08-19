@@ -26,6 +26,7 @@ author:
 categories:
 - data stores
 - log collection
+custom_kind: integration
 dependencies:
 - https://github.com/DataDog/integrations-extras/blob/master/hbase_master/README.md
 display_on_public_website: true
@@ -35,7 +36,6 @@ integration_id: hbase-master
 integration_title: Hbase Master
 integration_version: 1.1.1
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: hbase_master
 public_title: Hbase Master
@@ -52,8 +52,9 @@ tile:
   - Supported OS::Windows
   - Category::Data Stores
   - Category::ログの収集
+  - Offering::Integration
   configuration: README.md#Setup
-  description: HBase master インテグレーション。
+  description: HBase master integration.
   media: []
   overview: README.md#Overview
   support: README.md#Support
@@ -63,34 +64,34 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/integrations-extras -->
 
 
-## 概要
+## Overview
 
-Hbase_master サービスからメトリクスをリアルタイムに取得して
+Get metrics from Hbase_master service in real time to:
 
-- Hbase_master の状態を視覚化および監視できます。
-- Hbase_master のフェイルオーバーとイベントの通知を受けることができます。
+- Visualize and monitor Hbase_master states.
+- Be notified about Hbase_master failovers and events.
 
-## 計画と使用
+## Setup
 
-Hbase_master チェックは [Datadog Agent][1] パッケージに含まれていないため、お客様自身でインストールする必要があります。
+The Hbase_master check is not included in the [Datadog Agent][1] package, so you need to install it.
 
-### インフラストラクチャーリスト
+### Installation
 
-Agent v7.21 / v6.21 以降の場合は、下記の手順に従い Hbase_master チェックをホストにインストールします。Docker Agent または 上記バージョン以前の Agent でインストールする場合は、[コミュニティインテグレーションの使用][2]をご参照ください。
+For Agent v7.21+ / v6.21+, follow the instructions below to install the Hbase_master check on your host. See [Use Community Integrations][2] to install with the Docker Agent or earlier versions of the Agent.
 
-1. 以下のコマンドを実行して、Agent インテグレーションをインストールします。
+1. Run the following command to install the Agent integration:
 
    ```shell
    datadog-agent integration install -t datadog-hbase_master==<INTEGRATION_VERSION>
    ```
 
-2. コアの[インテグレーション][3]と同様にインテグレーションを構成します。
+2. Configure your integration similar to core [integrations][3].
 
-### ブラウザトラブルシューティング
+### Configuration
 
-1. Hbase_master の[メトリクス](#metrics)を収集するには、[Agent のコンフィギュレーションディレクトリ][4]のルートにある `conf.d/` フォルダーで `hbase_master.d/conf.yaml` ファイルを編集します。使用可能なすべてのコンフィギュレーションオプションについては、[サンプル hbase_master.d/conf.yaml][5] を参照してください。
+1. Edit the `hbase_master.d/conf.yaml` file in the `conf.d/` folder at the root of your [Agent's configuration directory][4] to start collecting your Hbase_master [metrics](#metrics). See the [sample hbase_master.d/conf.yaml][5] for all available configuration options.
 
-    **注**: Agent 6 を使用する場合は、[`hbase_master.d/metrics.yaml`][6] ファイルを修正して boolean キーを引用符で囲みます。
+    **NOTE**: If using Agent 6, be sure to modify the [`hbase_master.d/metrics.yaml`][6] file and wrap boolean keys in quotes.
 
     ```yaml
       - include:
@@ -105,17 +106,17 @@ Agent v7.21 / v6.21 以降の場合は、下記の手順に従い Hbase_master �
                values: {"true": 1, "false": 0, default: 0}
     ```
 
-2. [Agent を再起動します][7]。
+2. [Restart the Agent][7]
 
-### 収集データ
+### Log collection
 
-1. Datadog Agent で、ログの収集はデフォルトで無効になっています。以下のように、`datadog.yaml` でこれを有効にする必要があります。
+1. Collecting logs is disabled by default in the Datadog Agent, you need to enable it in `datadog.yaml`:
 
    ```yaml
    logs_enabled: true
    ```
 
-2. Hbase_master ログの収集を開始するには、次のコンフィギュレーションブロックを `hbase_master.d/conf.yaml` ファイルに追加します。
+2. Add this configuration block to your `hbase_master.d/conf.yaml` file to start collecting your Hbase_master Logs:
 
    ```yaml
    logs:
@@ -124,77 +125,77 @@ Agent v7.21 / v6.21 以降の場合は、下記の手順に従い Hbase_master �
        source: hbase
    ```
 
-   `path` のパラメーター値を変更し、環境に合わせて構成してください。
-   使用可能なすべての構成オプションの詳細については、[サンプル hbase_master.d/conf.yaml][8] を参照してください。
+   Change the `path` parameter value and configure it for your environment.
+   See the [sample hbase_master.d/conf.yaml][8] for all available configuration options.
 
-3. [Agent を再起動します][7]。
+3. [Restart the Agent][7].
 
-### 検証
+### Validation
 
-[Agent の status サブコマンドを実行][8]し、Checks セクションで `hbase_master` を探します。
+Run the [Agent's status subcommand][8] and look for `hbase_master` under the Checks section.
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "hbase_master" >}}
 
 
-### ヘルプ
+### Events
 
-Hbase_master チェックには、イベントは含まれません。
+The Hbase_master check does not include any events.
 
-### ヘルプ
+### Service Checks
 
-Hbase_master チェックには、サービスのチェック機能は含まれません。
+The Hbase_master check does not include any service checks.
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][9]までお問い合わせください。
+Need help? Contact [Datadog support][9].
 
 
 
 
 <!--  SOURCED FROM https://github.com/DataDog/integrations-extras -->
-## HBase RegionServer インテグレーション
+## HBase RegionServer Integration
 
-## 概要
+## Overview
 
-HBase RegionServer サービスからメトリクスをリアルタイムに取得して
+Get metrics from the HBase RegionServer service in real time to:
 
-- HBase RegionServer の状態を視覚化および監視できます。
-- HBase RegionServer のフェイルオーバーとイベントの通知を受けることができます。
+- Visualize and monitor HBase RegionServer states.
+- Be notified about HBase RegionServer failovers and events.
 
-## 計画と使用
+## Setup
 
-HBase RegionServer チェックは [Datadog Agent][1] パッケージに含まれていないため、お客様自身でインストールする必要があります。
+The HBase RegionServer check is not included in the [Datadog Agent][1] package, so you need to install it.
 
-### インフラストラクチャーリスト
+### Installation
 
-Agent v7.21 / v6.21 以降の場合は、下記の手順に従い HBase RegionServer チェックをホストにインストールします。Docker Agent または 上記バージョン以前の Agent でインストールする場合は、[コミュニティインテグレーションの使用][2]をご参照ください。
+For Agent v7.21+ / v6.21+, follow the instructions below to install the HBase RegionServer check on your host. See [Use Community Integrations][2] to install with the Docker Agent or earlier versions of the Agent.
 
-1. 以下のコマンドを実行して、Agent インテグレーションをインストールします。
+1. Run the following command to install the Agent integration:
 
    ```shell
    datadog-agent integration install -t datadog-hbase_regionserver==<INTEGRATION_VERSION>
    ```
 
-2. コアの[インテグレーション][3]と同様にインテグレーションを構成します。
+2. Configure your integration similar to core [integrations][3].
 
-### ブラウザトラブルシューティング
+### Configuration
 
-1. Hbase RegionServer の[メトリクス](#metrics)を収集するには、[Agent のコンフィギュレーションディレクトリ][4]のルートにある `conf.d/` フォルダーで `hbase_regionserver.d/conf.yaml` ファイルを編集します。使用可能なすべてのコンフィギュレーションオプションについては、[サンプル hbase_regionserver.d/conf.yaml][10] を参照してください。
+1. Edit the `hbase_regionserver.d/conf.yaml` file in the `conf.d/` folder at the root of your [Agent's configuration directory][4] to start collecting your HBase RegionServer [metrics](#metrics). See the [sample hbase_regionserver.d/conf.yaml][10] for all available configuration options.
 
-2. [Agent を再起動します][7]。
+2. [Restart the Agent][7]
 
-### 収集データ
+### Log collection
 
-1. Datadog Agent で、ログの収集はデフォルトで無効になっています。以下のように、`datadog.yaml` でこれを有効にする必要があります。
+1. Collecting logs is disabled by default in the Datadog Agent, you need to enable it in `datadog.yaml`:
 
    ```yaml
    logs_enabled: true
    ```
 
-2. Hbase_regionserver ログの収集を開始するには、次のコンフィギュレーションブロックを `hbase_regionserver.d/conf.yaml` ファイルに追加します。
+2. Add this configuration block to your `hbase_regionserver.d/conf.yaml` file to start collecting your Hbase_regionserver Logs:
 
    ```yaml
    logs:
@@ -203,32 +204,32 @@ Agent v7.21 / v6.21 以降の場合は、下記の手順に従い HBase RegionSe
        source: hbase
    ```
 
-   `path` のパラメーター値を変更し、環境に合わせて構成してください。
-   使用可能なすべてのコンフィギュレーションオプションについては、[サンプル hbase_regionserver.d/conf.yaml][10] を参照してください。
+   Change the `path` parameter value and configure it for your environment.
+   See the [sample hbase_regionserver.d/conf.yaml][10] for all available configuration options.
 
-3. [Agent を再起動します][7]。
+3. [Restart the Agent][7].
 
-## 検証
+## Validation
 
-[Agent の status サブコマンドを実行][8]し、Checks セクションで `hbase_regionserver` を探します。
+Run the [Agent's status subcommand][8] and look for `hbase_regionserver` under the Checks section.
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "hbase_regionserver" >}}
 
 
-### ヘルプ
+### Events
 
-HBase RegionServer チェックには、イベントは含まれません。
+The HBase RegionServer check does not include any events.
 
-### ヘルプ
+### Service Checks
 
-HBase RegionServer チェックには、サービスのチェック機能は含まれません。
+The HBase RegionServer check does not include any service checks.
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][9]までお問い合わせください。
+Need help? Contact [Datadog support][9].
 
 
 

@@ -10,26 +10,26 @@ title: フリーテキストウィジェット
 widget_type: free_text
 ---
 
-フリーテキストは、[スクリーンボード][1]に見出しを追加できるウィジェットです。
+Free text is a widget that allows you to add headings to your [screenboard][1].
 
-ダッシュボード全体の目的を示すためによく使用されます。
+This is commonly used to state the overall purpose of the dashboard.
 
-{{< img src="dashboards/widgets/free_text/free_text.png" alt="フリーテキスト" >}}
+{{< img src="dashboards/widgets/free_text/free_text.png" alt="Free Text" >}}
 
-## セットアップ
+## Setup
 
-### コンフィギュレーション
+### Configuration
 
-1. 表示するテキストを入力します。
-2. テキストの書式を選択します。
+1. Enter text to display.
+2. Choose your text formatting.
 
 ## API
 
-このウィジェットは **[Dashboards API][2]** で使用できます。[ウィジェット JSON スキーマ定義][3]については、以下の表を参照してください。
+This widget can be used with the **[Dashboards API][2]**. See the following table for the [widget JSON schema definition][3]:
 
 {{< dashboards-widgets-api >}}
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

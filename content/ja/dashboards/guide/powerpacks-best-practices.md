@@ -1,99 +1,109 @@
 ---
 further_reading:
+- link: /dashboards/widgets/powerpack
+  tag: ドキュメント
+  text: パワーパックウィジェット
 - link: https://docs.datadoghq.com/getting_started/dashboards/#add-widgets-and-refine-what-they-show
   tag: ドキュメント
   text: ウィジェットを追加し表示内容を調整
 - link: https://www.datadoghq.com/blog/standardize-dashboards-powerpacks-datadog/
   tag: ブログ
-  text: パワーパックでダッシュボードウィジェットを再利用可能なグループに保存する
+  text: パワーパックでダッシュボードウィジェットを再利用可能なグループに保存
 - link: https://docs.datadoghq.com/dashboards/guide/maintain-relevant-dashboards/
   tag: ガイド
   text: 適切なダッシュボードを維持するためのベストプラクティス
 title: パワーパックでグラフの専門知識を拡大する
 ---
 
-## 概要
+## Overview
 
-パワーパックは、再利用可能なダッシュボードの構成要素として、グラフの専門知識を拡張するウィジェットのテンプレート化されたグループです。パワーパックは、分野の知識や組織固有の標準をキャプチャして、組織全体で共有するための拡張性のある方法を提供します。パワーパックを使用することで、ダッシュボードの作成者は、追加のトレーニングを受けることなく、既存のダッシュボードに技術分野横断的な知識を取り入れることができるようになります。
+Powerpacks are templated groups of widgets that scale graphing expertise as reusable dashboard building blocks. They provide a scalable way to capture domain knowledge or organization-specific standards and share them throughout an organization. Using Powerpacks, you can empower dashboard creators to incorporate knowledge across technology areas into their existing dashboards without additional training.
 
-{{< img src="dashboards/guide/powerpacks_best_practices/configure_powerpack.png" alt="Datadog アプリケーションのパワーパックの構成ページ。タグや属性で値を構成するセクション、パワーパックの例からのいくつかのグラフ、他のパックを参照するための右側のメニューが表示されます" style="width:100%;" >}}
+{{< img src="dashboards/guide/powerpacks_best_practices/configure_powerpack.png" alt="The configure powerpack page in the Datadog application showing a section to configure values with tags or attributes, several graphs from an example powerpack, and a menu on the right to browse other packs" style="width:100%;" >}}
 
-パワーパックは、プリセット (Datadog によって作成) またはカスタム (ユーザーによって作成) のいずれかです。
+Powerpacks are either preset (created by Datadog) or custom (created by a user).
 
-- プリセットパワーパックは、パフォーマンスメトリクスや機能使用量のような一般的なモニタリングパターンに対して、すぐに利用できるビューを提供します。これらは多くの場合、特定の製品やインテグレーション (`RUM Page Views` など) にリンクされ、Datadog によって管理されています。
-- カスタムパワーパックは、ダッシュボードの書き込み権限があれば誰でも作成でき、ユーザーが社内のベストプラクティスを共有・標準化できるようにします。
+- Preset Powerpacks provide out-of-the-box views for common monitoring patterns like performance metrics or feature usage. They are often linked to a specific product or integration (like `RUM Page Views`) and are maintained by Datadog.
+- Anyone with dashboard write permissions can create custom Powerpacks to help users share and standardize internal best practices. Updates to custom Powerpacks are synced to all its Powerpack instances, so you don't have to make individual updates across multiple dashboards.
 
-このガイドでは、カスタムパワーパックの作成と共有のためのベストプラクティスを説明します。
+This guide addresses best practices for creating and sharing custom Powerpacks.
 
-## カスタムパワーパックはどんな時に役立つのでしょうか？
+## When do custom Powerpacks help?
 
-組織が成長するにつれ、専門知識や所有権が複数のチームに分散しやすくなります。パワーパックは、以下のような組織に最適です。
+As an organization grows, expertise and ownership easily become distributed across multiple teams. Powerpacks work best for organizations with:
 
-- 組織内で特定の技術 (Postgres、Kafka、Node.js など) やステーク (コンプライアンスやセキュリティなど) を担当するチーム。
-- これらの技術やステークをフルスタックやビジネス主導の視点に取り入れる担当の個別チーム。
+- Teams who own a specific technology (for example, Postgres, Kafka, Node.js) or stakes (such as Compliance or Security) across the organization.
+- Individual teams in charge of incorporating these technologies or stakes into full-stack and business-driven views.
 
-この所有権モデルは、チーム全体の標準化を促進し、ビジネスの重要なコンポーネントを監視するための組織のベストプラクティスを促進する拡張性のある方法を提供します。運用メトリクスと KPI の両方について、テクノロジーラインとチームラインに沿って所有権を分散させることで、オンコールエンジニア、SRE、経営陣などの主要な関係者が、ビジネス全体でダッシュボードの関連ビューにアクセスし解釈できるようにします。
+This ownership model fosters standardization across your teams and provides a scalable way to promote organizational best practices for monitoring key components of a business. For both operational metrics and KPIs, distributing ownership along technology lines and team lines ensures key stakeholders like on-call engineers, SREs, and executives can access and interpret relevant views on dashboards across the business.
 
-## パワーパックを作成するためのベストプラクティス
+## Best practices for creating a Powerpack
 
-うまく構築されたパワーパックは、既存のすべてのアプリケーションチームのダッシュボードにセキュリティ観測可能性を追加するなど、組織の新しい監視パターンの採用を加速させることができます。ダッシュボードの所有者が、問題や質問を最小限に抑えながら、コンテンツを最大限に活用できるように、明確で自己完結したパワーパックを構築してください。
+A well-constructed Powerpack can speed up an organization's adoption of new monitoring patterns, like adding security observability to all existing application teams' dashboards. Build a clear, self-contained Powerpack to ensure dashboard owners get the most from your content while minimizing issues or questions. 
 
-### 分かりやすいコンテンツの構築
+### Build self-explanatory content
 
-パワーパックのコンテンツは、わかりやすいものでなければなりません。パワーパックを作成するときは、ダッシュボード上の他のグループのコンテキストでも、ダッシュボードビューワがパックを解釈し理解するために必要なコンテキストを含めるようにします。これを実現するためのツールには、次のようなものがあります。
+The content in a Powerpack should be self-explanatory. When creating a Powerpack, include the context a dashboard viewer needs to interpret and understand the pack, even in the context of other groups on the dashboard. Some tools to achieve this include:
 
-- グラフが何を表示しているかを表す明確で短いタイトル。
-- コンテキストを追加したメモウィジェット。
-- 予想されるしきい値と予想外のしきい値を示す水平マーカー。
+- Clear and short titles to describe what a graph displays.
+- Note widgets with additional context.
+- Horizontal markers to show expected and unexpected thresholds.
 
-メモウィジェットは、グラフを解釈するのに役立つコンテキストを提供することができます。例えば、`RUM Page Views` パワーパックでは、今週のページビューを前週と比較する方法について説明しています。また、`System Resource Utilization` パックのように、メモから外部のリソースにリンクさせることもできます。
+A note widget can give helpful context on how to interpret a graph. For example, the `RUM Page Views` Powerpack describes how to compare the current week's page views to the previous week's. Notes can also link to external resources, like in the `System Resource Utilization` pack.
 
-{{< img src="dashboards/guide/powerpacks_best_practices/note_widget_example.png" alt="/checkout Page Views と題されたパワーパックの例で、リアルユーザーモニタリングデータのいくつかのグラフが表示されています。右上には、グラフの 1 つに関する情報を提供するメッセージを表示するメモウィジェットがあります" style="width:100%;" >}}
+{{< img src="dashboards/guide/powerpacks_best_practices/note_widget_example.png" alt="An example powerpack titled /checkout Page Views showing several graphs of real user monitoring data. In the top right is a notes widget with a message providing information about one of the graphs" style="width:100%;" >}}
 
-水平マーカーや予測関数のようなグラフ上のマーカーは、値が何を意味するのかのコンテキストを提供することができます。例えば、`Hosts Overview` パックでは、Agent の NTP オフセットがグラフ上に表示されます。水平マーカーは、グラフ上でしきい値を明確に定義することで、閲覧者がしなければならない視覚的なマッピングを減らすことができます。
+On-graph markers, like horizontal markers and forecast functions, can provide context on what a value means. For example, the `Hosts Overview` pack shows Agent NTP offsets where they appear on a graph. Horizontal markers reduce the visual mapping a viewer has to do by clearly defining acceptable thresholds on a graph.
 
-{{< img src="dashboards/guide/powerpacks_best_practices/horizontal_marker_example.png" alt="hosts overview と題されたパワーパックの例で、Current Agent NTP offset と題された折れ線グラフが表示されています。グラフは値 -1 と 1 の間で緑色で表示され、これらのしきい値はそれぞれオフセット -1s およびオフセット +1s とマークされています。1 と 3 の間、および -1 と -3 の間は黄色で表示され、これらのしきい値はそれぞれオフセット -3s およびオフセット +3s と表示されています。グラフは +3 と -3 を超えると赤色になります。" style="width:100%;" >}}
+{{< img src="dashboards/guide/powerpacks_best_practices/horizontal_marker_example.png" alt="An example powerpack titled hosts overview showing a line graph titled Current Agent NTP offset. The graph is colored green between the values -1 and 1, and these thresholds are marked as offset -1s and offset +1s respectively. The graph is colored yellow between 1 and 3 and also between -1 and -3, and these thresholds are marked as offset -3s and offset +3s respectively. The graph is colored red beyond +3 and -3." style="width:100%;" >}}
 
-### パワーパックを発見できるようにする
+### Make Powerpacks discoverable
 
-パワーパックは、ダッシュボードのウィジェットトレイに表示され、キーワード検索やタグ検索で見つけることができます。パワーパックのタイトル、説明、タグはすべて検索可能なフィールドで、誰かがあなたのパワーパックを見つけるための最も簡単な方法を提供します。
+Powerpacks appear in the dashboard widget tray and you can find them through keyword or tag searches. Powerpack title, description, and tags are all searchable fields and provide the easiest way for someone to find your Powerpack.
 
-{{< img src="dashboards/guide/powerpacks_best_practices/powerpack_keyword_search.png" alt="ダッシュボードのウィジェット追加メニューで、リソースというキーワードで検索している例です" style="width:60%;" >}}
+{{< img src="dashboards/guide/powerpacks_best_practices/powerpack_keyword_search.png" alt="An example search being done in the Add Widgets menu of a dashboard with the keyword resource" style="width:60%;" >}}
 
-適切なユーザーにパワーパックを見つけてもらうために、タイトルや説明文にユーザーが検索しそうなキーワード (「パフォーマンス」など) を含め、キーテクノロジーをタグ付けしてください。
+To ensure the right users find your Powerpack, include keywords your users might search (such as "performance") in the title or description, and tag key technologies.
 
-説明文は 80 文字までに制限されています。そのパックが何のためにあり、どのように使うことができるかを簡単に要約しているのが良い説明文です。例えば、`RUM Feature Usage` の "View usage patterns for a UI action on a specific app page" (特定のアプリのページで UI アクションの使用量を表示する) は、パワーパックが何を追跡し、入力として何を期待するか (特定のアプリページ) を説明しており、そして "usage"、"UI"、"app" といったキーワードを含んでいます。
+Descriptions are limited to 80 characters. A good description provides a brief summary of what a pack is for and how someone can use it. For example, "View usage patterns for a UI action on a specific app page" for `RUM Feature Usage` describes what the Powerpack tracks, what it expects as an input (a specific app page), and includes keywords like "usage," "UI," and "app".
 
-#### パワーパックのタグ付け
+#### Tagging Powerpacks
 
-タグを使って、特定のパックのキーテクノロジーや検索フレーズを指定します (例: `aws`、`k8s`、`app`)。タグのフィールドに直接 `key:value` のペアを記述するのは避けてください。タグは 80 文字までに制限されています。
+Use tags to specify key technologies or search phrases for a specific pack (for example, `aws`, `k8s`, `app`). Use plain strings to describe the content of the packs; avoid putting `key:value` pairs in the tag field directly. Tags are limited to 80 characters.
 
-ウィジェットトレイでパワーパックをタグで検索するには、`tag:search_string` 構文を使ってください。
+To search Powerpacks by tag in the widget tray, use `tag:search_string` syntax. 
 
-{{< img src="dashboards/guide/powerpacks_best_practices/powerpack_tag_search.png" alt="ダッシュボードのウィジェット追加メニューで、tag:security で検索している例です" style="width:60%;" >}}
+{{< img src="dashboards/guide/powerpacks_best_practices/powerpack_tag_search.png" alt="An example search being done in the Add Widgets menu of a dashboard with tag:security" style="width:60%;" >}}
 
-### パワーパックをカスタマイズできるようにする
+### Make Powerpacks customizable
 
-パワーパックは、各チームが関連するコンテキストに合わせてカスタマイズできる場合に、最も有用です。これを可能にするために構成変数を設定します。
+Powerpacks are most useful when they can be customized by each team into their relevant context. Set configuration variables to allow this.
 
-パワーパックの作成モーダルでは、クエリに現れる一般的なフィルターに基づいて、パックに追加する変数を提案します。提案された変数にカーソルを合わせると、それがどのグラフに影響するかを確認できます。提案されなかった変数を追加するには、ダッシュボードで直接グラフを修正し、希望の変数をフィルターとして、またはテンプレート変数として使用します。
+The Powerpack creation modal suggests variables to add to your pack based on common filters that appear in queries. Hover over any suggested variable to see which graphs it affects. To add a variable that is not suggested, modify your graphs directly in the dashboard to use the desired variable as a filter or as a template variable.
 
-他の人がどのように使用すべきかを明確にするために、変数名を変更します。以下の例では、`@appsec.type` を `AttackType` に変更し、期待される入力を明確にしています。
+Modify the names of variables to clarify how others should use them. In the example below, `@appsec.type` is renamed `AttackType` to clarify the expected input. 
 
-{{< img src="dashboards/guide/powerpacks_best_practices/create_powerpack.png" alt="パワーパックの作成画面。左側には、Powerpack Title と Group Title が表示され、どちらも Application Security Overview と入力されています。Add Tags セクションには、セキュリティとアプリが構成され、Add Variables セクションには、いくつかの変数が構成され、属性 @appsec.type には、名前として AttackType と入力されていることが示されています。その下には、Add Common Filters as Variables セクションがあり、いくつかのオプションが表示され、@appsec.category:attack_attempt フィルターが強調表示されています。右側にはいくつかのグラフがあり、そのうちの 3 つは左側の @appsec.category:attack_attempt フィルターと同じ色でハイライトされています" style="width:100%;" >}}
+{{< img src="dashboards/guide/powerpacks_best_practices/create_powerpack.png" alt="The Create Powerpack screen. Along the left, it shows Powerpack Title, and Group Title ,both entered as Application Security Overview, the Add Tags section configured with security and app, and several variables configured in the Add Variables section, including the attribute @appsec.type showing AttackType entered as its name. Below that is a section showing Add Common Filters as Variables, with several options shown and the @appsec.category:attack_attempt filter highlighted. There are several graphs along the right, and three of them are highlighted in the same color as the @appsec.category:attack_attempt filter on the left" style="width:100%;" >}}
 
-構成変数には 2 つの目的があります。以下のことが可能になります。
-1. ダッシュボードにパワーパックが追加される前に、チームはコンテキストにパワーパックのスコープを設定することができるようにする (セキュリティパワーパックが正しいサービスに関連していることを確認するために、`service` を選択するなど)。
-2. ダッシュボードにパワーパックが追加された後、ユーザーがパワーパックをフィルターできるようにする (例えば、パワーパックのセキュリティシグナルを `prod` と `staging` の両方の環境で表示する)。
+Configuration variables serve two purposes. They can:
+1. Help a team scope a Powerpack to their context once, before the pack gets added to their dashboard (such as selecting a `service` to ensure a security Powerpack is relevant to the correct service).
+2. Allow users to filter a Powerpack after the pack gets added to a dashboard (such as viewing security signals in a Powerpack in both `prod` and `staging` environments).
 
-各パワーパックユーザーは、ダイナミックフィルタリングを可能にするために、自分のダッシュボードに変数を保存するかどうかを決定します。以下の例では、ユーザーはテンプレート変数を通してダッシュボード上の `$Environment` の値を変更することができますが、`$Service` は常に `agent` に設定されています。
+Each Powerpack user decides whether to save a variable to their dashboard to allow dynamic filtering. In the example below, the user is able to change the value of `$Environment` on their dashboard through a template variable, but `$Service` is always set to `agent`.
 
-{{< img src="dashboards/guide/powerpacks_best_practices/configure_variables.png" alt="タグまたは属性変数の値を構成するオプションを示す画面。Tag or Attribute、Name、Value、Use as Template Variable の列があり、ダッシュボードに追加するオプションを提供するチェックボックスが表示されます。Add to dashboard チェックボックスは、$Environment ではチェックされ、$Service ではチェックされませ ん。" style="width:100%;" >}}
+{{< img src="dashboards/guide/powerpacks_best_practices/configure_variables.png" alt="A screen showing the option to configure values for tag or attribute variables, with a column for Tag or Attribute, Name, Value, and Use as Template Variable, which shows a checkbox providing the option to Add to dashboard. The Add to dashboard checkbox is checked for $Environment and unchecked for $Service." style="width:100%;" >}}
 
-### 情報を発信する
+### Updating a Powerpack
 
-パワーパックを作成したら、そのことを組織に知らせましょう。パワーパックについて伝えることは、パワーパックの存在を知らせると同時に、質問を受けるチャンネルにもなります。メールやメッセージングプラットフォームなどのコミュニケーションチャンネルを通じて、パワーパックの名前を組織で共有し、そのパワーパックが誰を対象としているかを明記し、それが表示される場所を記述してください。
+Changes made to an existing custom Powerpack are reflected across all instances of the same Powerpack. This can simplify the process of updating duplicate content across several dashboards. Click **Edit Powerpack Layout** to edit synced Powerpack instances.
 
-## その他の参考資料
+### Permissions
+By default, edit permissions for Powerpacks are restricted to the author. Editing permission can be modified at any time through the kebab menu in the widget tray or in the header of a Powerpack instance.
+
+### Spread the word
+
+Once your Powerpack is created, let your organization know about it. Communicating about your pack both announces the pack and provides a channel for any questions. Share the name of your Powerpack with your organization through communication channels like email or messaging platforms, specify who the pack is intended for, and describe where you expect it to appear. 
+
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}

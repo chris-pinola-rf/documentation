@@ -152,21 +152,21 @@ CI プロバイダーが対応していない場合は、[公開 API エンド�
 | {{< ci-details title="実行時間" >}}パイプラインがジョブをアクティブに稼働した時間。{{< /ci-details >}} | | {{< X >}} | | | | | | | | |
 | {{< ci-details title="ログの相関付け" >}}CI プロバイダーからのパイプラインまたはジョブのログの取得。ログは、パイプライン実行ビューの <strong>Logs</strong> タブに表示されます。{{< /ci-details >}} | {{< X >}} | {{< X >}} | {{< X >}} |  | {{< X >}} | {{< X >}} |  |  | {{< X >}} |  |
 | {{< ci-details title="インフラストラクチャーメトリクスの相関付け" >}}Datadog Agent、CI パイプライン、またはジョブランナーのホストレベルの情報を CI パイプラインの実行データと相関付け。{{< /ci-details >}} | {{< X >}} | {{< X >}} |  | {{< X >}} | {{< X >}} |  |  |  |  |  |
-| {{< ci-details title="datadog-ci を使用したトレースコマンドのカスタムスパン" >}}パイプラインのフレームグラフによる視覚化に組み込むために、コマンドレベルイベントの CI Visibility への送信をサポート。その後、<a href="https://docs.datadoghq.com/continuous_integration/pipelines/custom_commands/">これらのイベント</a>のクエリと分析が可能になります。{{< /ci-details >}} | {{< X >}} |  | {{< X >}} |  |  |  |  |  |  |  |
-| {{< ci-details title="カスタム事前定義タグ" >}}CI プロバイダーで、実行間で変化しない静的なパイプラインタグの設定をサポート。{{< /ci-details >}} | {{< X >}} | {{< X >}} | {{< X >}} |  | {{< X >}} | {{< X >}} |  |  |  |  |
-| {{< ci-details title="カスタムタグとランタイムの測定値" >}}CI Visibility で、<a href="https://docs.datadoghq.com/continuous_integration/pipelines/custom_tags_and_measures/">テキストと数字で構成されたユーザー定義タグ</a>のパイプラインおよびジョブへの追加をサポート。{{< /ci-details >}} | {{< X >}} | {{< X >}} | {{< X >}} | {{< X >}} | {{< X >}} | {{< X >}} |  |  |  |  {{< X >}} |
-| {{< ci-details title="パラメーター" >}}ユーザーが設定したカスタムパイプラインパラメーター (例: <code>DYNAMICS_IS_CHILD:true</code>) の追加をサポート。その後、<a href="https://docs.datadoghq.com/continuous_integration/explorer/?tab=pipelineexecutions">CI Visibility Explorer</a> でこれらのパラメーターを使って検索を行い、特定のパラメーターを持つすべてのイベントを見つけることができます。{{< /ci-details >}} | {{< X >}} | {{< X >}} |  |  |  |  | {{< X >}} |  |  |  {{< X >}} |
-| {{< ci-details title="パイプラインの失敗理由" >}}パイプラインやジョブの失敗の背後にある具体的な理由の特定。{{< /ci-details >}} | {{< X >}} | {{< X >}} |  |  |  |  | {{< X >}} | {{< X >}} | {{< X >}} |  {{< X >}} |
+| {{< ci-details title="datadog-ci を使用したトレースコマンドのカスタムスパン" >}}パイプラインのフレームグラフによる視覚化に組み込むために、コマンドレベルイベントの CI Visibility への送信をサポート。その後、<a href="https://docs.datadoghq.com/continuous_integration/pipelines/custom_commands/">これらのイベント</a>のクエリと分析が可能になります。{{< /ci-details >}} | {{< X >}} | {{< X >}} | {{< X >}} | {{< X >}} | {{< X >}} | {{< X >}} |  |  | {{< X >}} |  |
+| {{< ci-details title="Custom predefined tags" >}}Support for setting static pipeline tags in the CI provider that do not change between executions.{{< /ci-details >}} | {{< X >}} | {{< X >}} | {{< X >}} |  | {{< X >}} | {{< X >}} |  |  |  |  |
+| {{< ci-details title="Custom tags and measures at runtime" >}}Support for adding <a href="https://docs.datadoghq.com/continuous_integration/pipelines/custom_tags_and_measures/">user-defined text and numerical tags</a> to pipelines and jobs in CI Visibility.{{< /ci-details >}} | {{< X >}} | {{< X >}} | {{< X >}} | {{< X >}} | {{< X >}} | {{< X >}} |  |  |  |  {{< X >}} |
+| {{< ci-details title="Parameters" >}}Support for adding custom pipeline parameters that users set (for example, <code>DYNAMICS_IS_CHILD:true</code>). You can then search using these parameters in the <a href="https://docs.datadoghq.com/continuous_integration/explorer/?tab=pipelineexecutions">CI Visibility Explorer</a> to find all events with a specific parameter.{{< /ci-details >}} | {{< X >}} | {{< X >}} |  |  |  |  | {{< X >}} |  |  |  {{< X >}} |
+| {{< ci-details title="Pipeline failure reason" >}}Identification of a specific reason behind a pipeline or job failure.{{< /ci-details >}} | {{< X >}} | {{< X >}} |  |  |  |  | {{< X >}} | {{< X >}} | {{< X >}} |  {{< X >}} |
 
-## CI パイプラインデータの使用
+## Use CI pipelines data
 
-[ダッシュボード][8]または[ノートブック][9]を作成する際、検索クエリで CI パイプラインデータを使用すると、視覚化ウィジェットのオプションが更新されます。詳細については、[ダッシュボード][10]と[ノートブックのドキュメント][11]を参照してください。
+When creating a [dashboard][8] or a [notebook][9], you can use CI pipeline data in your search query, which updates the visualization widget options. For more information, see the [Dashboards][10] and [Notebooks documentation][11].
 
-## パイプラインデータのアラート
+## Alert on pipeline data
 
-**Export** ボタンをクリックすると、[**Executions** ページ][6]または [**Test Runs** ページ][13]の [CI Pipeline モニター][12]に検索クエリをエクスポートできます。
+You can export your search query to a [CI Pipeline monitor][12] on the [**Executions** page][6] or the [**Test Runs** page][13] by clicking the **Export** button.
 
-## 参考資料
+## Further reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

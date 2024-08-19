@@ -26,6 +26,7 @@ author:
 categories:
 - クラウド
 - OS & システム
+custom_kind: integration
 dependencies:
 - https://github.com/DataDog/integrations-core/blob/master/hyperv/README.md
 display_on_public_website: true
@@ -33,9 +34,8 @@ draft: false
 git_integration_title: hyperv
 integration_id: hyper-v
 integration_title: HyperV
-integration_version: 1.11.0
+integration_version: 1.11.1
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: hyperv
 public_title: HyperV
@@ -48,10 +48,14 @@ tile:
   - Category::Cloud
   - Category::OS & System
   - Supported OS::Windows
+  - Offering::Integration
   configuration: README.md#Setup
   description: Microsoft の Hyper-V 仮想化テクノロジーを監視
   media: []
   overview: README.md#Overview
+  resources:
+  - resource_type: blog
+    url: https://www.datadoghq.com/blog/monitor-microsoft-hyperv-with-datadog
   support: README.md#Support
   title: HyperV
 ---
@@ -59,51 +63,51 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/integrations-core -->
 
 
-## 概要
+## Overview
 
-このチェックは、Datadog Agent を通じて [Hyper-V][1] を監視します。
+This check monitors [Hyper-V][1] through the Datadog Agent.
 
-## 計画と使用
+## Setup
 
-### インフラストラクチャーリスト
+### Installation
 
-Hyper-V チェックは [Datadog Agent][2] パッケージに含まれています。サーバーに追加でインストールする必要はありません。
+The Hyper-V check is included in the [Datadog Agent][2] package. No additional installation is needed on your server.
 
-### ブラウザトラブルシューティング
+### Configuration
 
-1. Hyper-V のパフォーマンスデータの収集を開始するには、Agent のコンフィギュレーションディレクトリのルートにある `conf.d/` フォルダーの `hyperv.d/conf.yaml` ファイルを編集します。使用可能なすべてのコンフィギュレーションオプションについては、[サンプル hyperv.d/conf.yaml][3] を参照してください。
+1. Edit the `hyperv.d/conf.yaml` file, in the `conf.d/` folder at the root of your Agent's configuration directory to collect your Hyper-V performance data. See the [sample hyperv.d/conf.yaml][3] for all available configuration options.
 
-2. [Agent を再起動します][4]。
+2. [Restart the Agent][4].
 
-**注**: このチェックのバージョン 1.5.0 以降では、メトリクスの収集に新しい実装を使用し、これには Python 3 が必要です。Python 3 の使用が不可能なホストの場合や、このチェックのレガシーバージョンを使用する場合は、以下の[コンフィグ][5]を参照してください。
+**Note**: Versions 1.5.0 or later of this check use a new implementation for metric collection, which requires Python 3. For hosts that are unable to use Python 3, or if you would like to use a legacy version of this check, refer to the following [config][5].
 
-### 検証
+### Validation
 
-[Agent の status サブコマンドを実行][6]し、Checks セクションで `hyperv` を探します。
+[Run the Agent's status subcommand][6] and look for `hyperv` under the Checks section.
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "hyperv" >}}
 
 
-### ヘルプ
+### Service Checks
 
-Hyper-V には、サービスのチェック機能は含まれません。
+Hyper-V does not include any service checks.
 
-### ヘルプ
+### Events
 
-Hyper-V には、イベントは含まれません。
+Hyper-V does not include any events.
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][8]までお問合せください。
+Need help? Contact [Datadog support][8].
 
-## その他の参考資料
+## Further Reading
 
-お役に立つドキュメント、リンクや記事:
+Additional helpful documentation, links, and articles:
 
-- [Datadog を使用した Microsoft Hyper-V の監視][9]
+- [Monitor Microsoft Hyper-V with Datadog][9]
 
 [1]: https://docs.microsoft.com/en-us/windows-server/virtualization/hyper-v/hyper-v-on-windows-server
 [2]: https://app.datadoghq.com/account/settings/agent/latest

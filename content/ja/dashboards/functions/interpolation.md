@@ -11,50 +11,50 @@ further_reading:
 title: 補間
 ---
 
-## フィル
+## Fill
 
-| 関数 | 説明                                       | 例                                    |
+| Function | Description                                       | Example                                    |
 | :----    | :-------                                          | :---------                                 |
-| `fill()` | メトリクスに欠落しているメトリクス値を補間します。 | `<METRIC_NAME>{*}.fill(<METHOD>, <LIMIT>)` |
+| `fill()` | Interpolate missing metric values for the metric. | `<METRIC_NAME>{*}.fill(<METHOD>, <LIMIT>)` |
 
-`fill()` 関数は 2 つのパラメーターを持ちます。
+The `fill()` function has two parameters:
 
-* **`METHOD`**: 補間方法として使用する関数。以下から選択します。
-    * **linear**: ギャップの最初から最後までを線形補間します。
-    * **last**: ギャップの最後の値でギャップを埋めます。
-    * **zero**: ゼロ値でギャップを埋めます。
-    * **null**: 補間を無効にします。
+* **`METHOD`**: The function to use as an interpolation method; choose from:
+    * **linear**: Gives you a linear interpolation between the beginning and the end of the gap.
+    * **last**: Fills the gap with the last value of the gap.
+    * **zero**: Fills the gap with a zero value.
+    * **null**: Deactivates the interpolation.
 
-* `LIMIT` [*任意*、*デフォルト*=**300**、*最大*=**600**]: 補間するギャップの最大サイズを表す補間制限 (秒単位)。
+* `LIMIT` [*optional*, *default*=**300**, *maximum*=**600**]: The interpolation limit (in seconds) that represents the maximum size of a gap you want to interpolate.
 
-`.fill()` 関数とその補間への影響についての詳しい説明は、[補間と塗りつぶし修飾子][1]を参照してください。
+Read [Interpolation and the Fill Modifier][1] for a detailed explanation of the `.fill()` function and its impact on interpolation.
 
-## デフォルトゼロ
+## Default zero
 
-| 関数         | 説明                             | 例                          |
+| Function         | Description                             | Example                          |
 | ---------------- | --------------------------------------- | -------------------------------- |
-| `default_zero()` | 疎なメトリクスにデフォルト値を追加します。 | `default_zero(system.load.1{*})` |
+| `default_zero()` | Adds a default value to sparse metrics. | `default_zero(system.load.1{*})` |
 
-`default_zero()` 関数は、値 0 を使用して空の間隔を埋めます。補間が有効の場合は、補間を使用します。**注**: `GAUGE` タイプのメトリクスには、デフォルトで補間が有効になっています。大部分の関数と同様、`default_zero()` は[時間集計と空間集計][2]の**後**に評価されます。
+The `default_zero()` function fills empty time intervals using the value 0 or, if interpolation is enabled, with interpolation. **Note**: Interpolation is enabled by default for `GAUGE` type metrics. Like most functions, `default_zero()` is applied **after** [time and space aggregation][2].
 
-### ユースケース
+### Use cases
 
-`default_zero()` 関数は、次のような使用例に対応します (使用例は他にもあります)。
+The `default_zero()` function is intended to address the following use cases (though it may also work for other use cases):
 
-- 疎なメトリクスに対して算術演算を行う際にゲージを 0 に揃える (注: `as_count()` または `as_rate()` としてクエリされる `COUNT` または `RATE` タイプのメトリクスは、_常に_ 0 に揃えられます。したがって、`default_zero()` を使用しても揃え方に変更はありません。これは `GAUGE` タイプのメトリクスにのみ影響します)。
-- モニターがデータなし状態に入る前に、モニターのアラートを解消する。これは、単純なアラートとマルチアラートの両方に有効ですが、0 の値でモニターがトリガーされることはありません。たとえば、`avg(last_10m):avg:system.cpu.idle{*} < 10` というクエリを使用したモニターでは正しく機能しません。値が 0 と評価されると、このモニターが (解消ではなく) トリガーされるためです。`as_count()` クエリを使用したエラー率モニターにはこの関数を使用しないでください。詳細については[モニター評価での as_count()][3] を参照してください。
-- (空ではないが) 疎な系列内の空の間隔を埋める。これには、視覚的な理由またはモニター評価で時系列の最小/最大/平均を調整する目的があります。評価ウィンドウにデータのポイントがない場合、`default_zero()` は何の効果もありません。
-- 時系列ウィジェットで、データがない場合に値 0 を表示する。
+- Aligning gauges as 0 when performing arithmetic on sparse metrics (note: `COUNT` or `RATE` type metrics queried `as_count()` or `as_rate()` are _always_ aligned as 0, so using `default_zero()` does not change how they are aligned; it only affects `GAUGE` type metrics).
+- Resolving monitors before they enter a no-data condition. This works for both simple and multi alerts, but the value 0 must not cause the monitor to trigger. For example, this would not work for a monitor with the query `avg(last_10m):avg:system.cpu.idle{*} < 10` because this monitor triggers (instead of resolving) when it evaluates to 0. Avoid using this function for error rate monitors with `as_count()` queries. See the [as_count() in Monitor Evaluations guide][3] for more details.
+- Filling in empty intervals in sparse (but nonempty) series for visual reasons or to affect the min/max/average of a timeseries in a monitor evaluation. If the evaluation window doesn't contain any points of data, `default_zero()` has no effect.
+- Showing the value 0 on the timeseries widget when there is no data.
 
-### 例
+### Example
 
-`default_zero()` 関数の具体的な動作を示すために、以下のような [DogStatsD を使用した][4]カスタムメトリクスに対して単一のポイントが作成されるとします。
+To demonstrate how the `default_zero()` function works, consider this single point created for a custom metric [using DogStatsD][4]:
 
 ```text
 $ echo -n "custom_metric:1|g" | nc -4u -w0 127.0.0.1 8125
 ```
 
-このメトリクスを過去 30 分間クエリすると、タイムスタンプは 1 つです。クエリのロールアップ間隔のうち、1 つにしかポイントがないためです。
+When this metric is queried over the past 30 minutes, there is a single timestamp, because only one of the query's rollup intervals has a point:
 
 ```text
 avg:custom_metric{*}
@@ -67,7 +67,7 @@ avg:custom_metric{*}
 +---------------------+---------------+
 ```
 
-`default_zero()` 関数は、このポイントを前方に 5 分間 (ゲージの補間制限のデフォルト値) 補間してから、残りの空の間隔を 0 で埋めます。
+The `default_zero()` function interpolates this point five minutes forward in time (the default interpolation limit for gauges), then fills the remaining empty intervals with zeros:
 
 ```text
 default_zero(avg:custom_metric{*})
@@ -92,7 +92,7 @@ default_zero(avg:custom_metric{*})
 +---------------------+-----------------------------+
 ```
 
-## その他の参考資料
+## Further reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

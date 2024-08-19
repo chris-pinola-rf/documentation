@@ -13,26 +13,24 @@ title: Topology Map ウィジェット
 widget_type: topology_map
 ---
 
-Topology Map ウィジェットには、データソースとその関係が視覚化されており、データがアーキテクチャ内をどのように流れているかを理解するのに役立ちます。
+The Topology Map widget displays a visualization of data sources and their relationships to help understand how data flows through your architecture. 
 
-## セットアップ
+## Setup
 
-### コンフィギュレーション
+### Configuration
 
-1. グラフ化するデータを選択します。
-    * サービスマップ: ウィジェットの中央にあるノードは、マップされたサービスを表します。マッピングされたサービスを呼び出すサービスは、呼び出し元からサービスへの矢印で表示されます。サービスマップの詳細については、[APM のサービスマップ機能][1]を参照してください。
+1. Choose the data to graph:
+    * Service Map: The node in the center of the widget represents the mapped service. Services that call the mapped service are shown with arrows from the caller to the service. To learn more about the Service Map, reference the [Service Map feature of APM][1].
 
-2. グラフのタイトルを入力します。
+2. Enter a title for your graph.
 
 ## API
 
-このウィジェットは、**ダッシュボード API** とともに使用できます。詳しくは、[ダッシュボード API][2] ドキュメントをご参照ください。
-
-サービスマップウィジェットの[ウィジェット JSON スキーマ定義][3]は次のとおりです。
+This widget can be used with the **[Dashboards API][2]**. See the following table for the [widget JSON schema definition][3]:
 
 {{< dashboards-widgets-api >}}
 
-
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

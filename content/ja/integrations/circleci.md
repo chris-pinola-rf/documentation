@@ -14,17 +14,18 @@ assets:
     service_checks:
       metadata_path: assets/service_checks.json
     source_type_id: 213
-    source_type_name: Aurora
+    source_type_name: CircleCI
 author:
   homepage: https://www.datadoghq.com
-  name: Ruby
+  name: Datadog
   sales_email: info@datadoghq.com (日本語対応)
   support_email: help@datadoghq.com
 categories:
-- モニター
+- metrics
 - configuration & deployment
 - 自動化
 - 開発ツール
+custom_kind: integration
 dependencies: []
 display_on_public_website: true
 draft: false
@@ -33,10 +34,9 @@ integration_id: circleci
 integration_title: CircleCI
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: circleci
-public_title: Aurora
+public_title: CircleCI
 short_description: CircleCI のプラットフォームは、高品質のソフトウェアを迅速に構築し、リリースすることを容易にします。
 supported_os: []
 tile:
@@ -46,6 +46,7 @@ tile:
   - Category::Configuration & Deployment
   - Category::Automation
   - Category::Developer Tools
+  - Offering::Integration
   configuration: README.md#Setup
   description: CircleCI のプラットフォームは、高品質のソフトウェアを迅速に構築し、リリースすることを容易にします。
   media:
@@ -53,57 +54,60 @@ tile:
     image_url: images/circleci_synthetics.jpg
     media_type: image
   overview: README.md#Overview
+  resources:
+  - resource_type: blog
+    url: https://www.datadoghq.com/blog/circleci-monitoring-datadog/
   support: README.md#Support
-  title: Aurora
+  title: CircleCI
 ---
 
 <!--  SOURCED FROM https://github.com/DataDog/integrations-internal-core -->
-## 概要
+## Overview
 
-CircleCI に接続して、
+Connect to CircleCI to:
 
-- ビルドの完了数、平均ビルド時間など、CircleCI のキーメトリクスを視覚化できます。
-- Datadog のタグシステムを使用してデータを分析できます (ジョブ名やリポジトリでビルドを細分するなど)。
-- Synthetics で Orb ワークフローのデータを表示する
-- CircleCI のジョブログを収集し、Datadog に取り込む
+- Visualize key CircleCI metrics such as the number of finished builds or the average build time.
+- Analyze data (such as splitting builds by job name or repository) using Datadog's tag system.
+- View orb workflow data in Synthetics
+- Collect and ingest CircleCI job logs into DataDog
 
-## 計画と使用
+## Setup
 
-### インフラストラクチャーリスト
+### Installation
 
-CircleCI インテグレーションは、[インテグレーションタイル][1]からインストールできます。
+You can install the CircleCI integration with its [integration tile][1].
 
-### ブラウザトラブルシューティング
+### Configuration
 
-1. CircleCI 設定で、Personal API Tokens に移動し、生成したキーをフォームに入力します。名前は CircleCI ラベルと同じである必要はありませんが、一意でなければなりません。
-2. 「Organization/repo*name」、「Organization/repo*\*」、「Organization/\*」などの式を使用してリポジトリを絞り込みます。**フィルタリングは、追跡対象のプロジェクトに対して行われ、このリストは CircleCI 側でセットアップする必要があります。**
-3. 適切なバージョン管理システムを指定し、適切な API キーを参照します。
-4. リポジトリでログ収集を有効にした場合、そのパイプラインが Datadog CI Visibility に送信されていることを確認する必要があります。
-   [CircleCI ワークフローでトレーシングをセットアップする][2]の手順に従ってください。
+1. In your CircleCI settings, go to Personal API Tokens and enter the generated key in the form. The name does not need to be the same as the CircleCI label, but it has to be unique.
+2. Filter the repositories using an expression such as "Organization/repo*name", "Organization/repo*\*" or "Organization/\*". **The filtering is made on the list of tracked projects, which must be set up on the CircleCI side.**
+3. Specify the appropriate version control system and reference the appropriate API key.
+4. If you enable log collection for a repo, you must make sure that its pipelines are being sent to DataDog CI Visibility.
+   Follow the instructions in [Set up Tracing on a CircleCI Workflow][2].
 
-API トークンは複数設定でき、トークン 1 個につき複数のプロジェクトを追跡できます。Datadog にリポジトリの情報を表示するには、ユーザーがそのリポジトリのコントリビューターとして設定されている必要があります。
+Multiple API tokens can be set, and multiple projects can be tracked for one given token. Users must be set as contributors for a particular repo in order to see that repo's information in Datadog.
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "circleci" >}}
 
 
-### ヘルプ
+### Events
 
-CircleCI インテグレーションには、イベントは含まれません。
+The CircleCI integration does not include any events.
 
-### ヘルプ
+### Service Checks
 
-CircleCI インテグレーションには、サービスのチェック機能は含まれません。
+The CircleCI integration does not include any service checks.
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][4]までお問合せください。
+Need help? Contact [Datadog support][4].
 
-## その他の参考資料
+## Further reading
 
-- [Datadog で CircleCI 環境を監視する][5]
+- [Monitor your CircleCI environment with Datadog][5]
 
 [1]: https://app.datadoghq.com/integrations/circleci
 [2]: https://docs.datadoghq.com/ja/continuous_integration/pipelines/circleci/

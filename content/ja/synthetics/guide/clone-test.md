@@ -8,28 +8,28 @@ further_reading:
 title: Synthetic テストの複製
 ---
 
-## 概要
+## Overview
 
-Synthetics テストを複製するには、UI または API のエンドポイントを使用します。
+To clone a Synthetics test, use the UI or API endpoints.
 
-## UI を使用する
+## Use the UI
 
-1. Synthetics テストで、右側の **Gear** アイコンをクリックします。
-2. ドロップダウンメニューの **Clone** をクリックします。
+1. In a Synthetics test, click the **Gear** icon on the right.  
+2. Click **Clone** in the dropdown menu.
 
-{{< img src="synthetics/faq/clone-test.mp4" alt="Synthetic テストの複製" video="true" width="90%" >}}
+{{< img src="synthetics/faq/clone-test.mp4" alt="Cloning your Synthetic tests" video="true" width="90%" >}}
 
-## API を使用する
+## Use the API
 
-1. 関連するエンドポイントを使用して、テストの構成を取得します。[API テストの取得][1]または[ブラウザテストの取得][2]を参照してください。
-2. 必要に応じて修正 (URL やタグの変更など) を行ってください。
-3. 更新したテスト構成と該当するエンドポイントを送信します。[API テストの作成][3]または[ブラウザテストの作成][4]を参照してください。
+1. Retrieve your test configuration with the relevant endpoint. See [Get an API test][1] or [Get a browser test][2].
+2. Perform modifications as needed (such as changing the URL or tags).
+3. Send your updated test configuration with the relevant endpoint. See [Create an API test][3] or [Create a browser test][4].
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
-[1]: /ja/api/latest/synthetics/#get-a-browser-test
-[2]: /ja/api/latest/synthetics/#get-an-api-test
+[1]: /ja/api/latest/synthetics/#get-an-api-test
+[2]: /ja/api/latest/synthetics/#get-a-browser-test
 [3]: /ja/api/latest/synthetics/#create-an-api-test
 [4]: /ja/api/latest/synthetics/#create-a-browser-test

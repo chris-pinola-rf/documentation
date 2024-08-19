@@ -4,6 +4,7 @@ categories:
 - google cloud
 - data stores
 - ログの収集
+custom_kind: integration
 dependencies: []
 description: Google Bigtable のキーメトリクスを追跡
 doc_link: https://docs.datadoghq.com/integrations/google_cloud_bigtable/
@@ -14,7 +15,6 @@ integration_id: google-cloud-bigtable
 integration_title: Google Bigtable
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: '1.0'
 name: google_cloud_bigtable
 public_title: Datadog-Google Bigtable インテグレーション
@@ -29,9 +29,9 @@ Bigtable は Google が提供する NoSQL ビッグデータデータベース�
 
 Datadog Google Cloud Platform インテグレーションを使用して、Google Bigtable からメトリクスを収集できます。
 
-## 計画と使用
+## Setup
 
-### インフラストラクチャーリスト
+### Installation
 
 [Google Cloud Platform インテグレーション][1]をまだセットアップしていない場合は、最初にセットアップします。それ以上のインストール手順はありません。
 
@@ -46,21 +46,21 @@ Google Bigtable のログは Google Cloud Logging で収集され、Cloud Pub/Su
 3. 宛先として "Cloud Pub/Sub" を選択し、その目的で作成された Pub/Sub トピックを選択します。**注**: Pub/Sub トピックは別のプロジェクトに配置できます。
 4. **作成**をクリックし、確認メッセージが表示されるまで待ちます。
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "google_cloud_bigtable" >}}
 
 
-### ヘルプ
+### Events
 
 Google Bigtable インテグレーションには、イベントは含まれません。
 
-### ヘルプ
+### Service Checks
 
 Google Bigtable インテグレーションには、サービスのチェック機能は含まれません。
 
-## ヘルプ
+## Troubleshooting
 
 ご不明な点は、[Datadog のサポートチーム][5]までお問い合わせください。
 

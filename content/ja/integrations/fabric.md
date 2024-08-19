@@ -1,8 +1,9 @@
 ---
 categories:
 - orchestration
+custom_kind: integration
 dependencies: []
-description: Datadog イベントストリームで Fabric タスクを参照および検索。
+description: See and search on Fabric tasks in your Datadog event stream.
 doc_link: https://docs.datadoghq.com/integrations/fabric/
 draft: false
 git_integration_title: fabric
@@ -11,7 +12,6 @@ integration_id: fabric
 integration_title: Fabric
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: '1.0'
 name: fabric
 public_title: Datadog-Fabric インテグレーション
@@ -29,9 +29,9 @@ Fabric を Datadog に接続すると、以下のことができます。
 - イベントストリームでデプロイイベントをキャプチャおよび検索できます。
 - デプロイイベントをダッシュボード上のメトリクスの変化と関連付けることができます。
 
-## 計画と使用
+## Setup
 
-### ブラウザトラブルシューティング
+### Configuration
 
 1. dogapi パッケージをインストールします。
 
@@ -61,21 +61,21 @@ Fabric を Datadog に接続すると、以下のことができます。
         # do things
     ```
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 
 Fabric インテグレーションには、メトリクスは含まれません。
 
-### ヘルプ
+### Events
 
 Fabric インテグレーションには、イベントは含まれません。
 
-### ヘルプ
+### Service Checks
 
 Fabric インテグレーションには、サービスのチェック機能は含まれません。
 
-## ヘルプ
+## Troubleshooting
 
 ご不明な点は、[Datadog のサポートチーム][1]までお問合せください。
 

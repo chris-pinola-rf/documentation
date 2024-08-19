@@ -14,6 +14,7 @@ categories:
 - 構成 & デプロイ
 - マーケットプレイス
 - テスト
+custom_kind: integration
 dependencies: []
 display_on_public_website: true
 draft: false
@@ -22,7 +23,6 @@ integration_id: flagsmith-platform
 integration_title: Flagsmith
 integration_version: ''
 is_public: true
-custom_kind: integration
 legal_terms:
   eula: assets/eula.pdf
 manifest_version: 2.0.0
@@ -65,6 +65,9 @@ tile:
     image_url: images/dashboard_widget.png
     media_type: image
   overview: README.md#Overview
+  resources:
+  - resource_type: blog
+    url: https://www.datadoghq.com/blog/flagsmith-datadog-marketplace/
   support: README.md#Support
   title: Flagsmith
   uninstallation: README.md#Uninstallation
@@ -73,43 +76,43 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/marketplace -->
 
 
-## 概要
+## Overview
 
-[Flagsmith][1] は、安心して機能をリリースできるよう支援し、Web、モバイル、サーバーサイドのアプリケーションで機能フラグを管理します。Flagsmith がホストする API を使用したり、プライベートクラウドにデプロイしたり、オンプレミスで実行したりすることができます。
+[Flagsmith][1] helps you release features with confidence and manages feature flags across web, mobile, and server-side applications. Use the Flagsmith-hosted API, deploy to your own private cloud, or run on-premise.
 
-Flagsmith は、機能フラグの開発、実装、管理のためのオールインワンプラットフォームを提供します。社内のソリューションから移行する場合でも、初めてトグルを使用する場合でも、Flagsmith はパワーと効率の両方を提供します。
+Flagsmith provides an all-in-one platform for developing, implementing, and managing your feature flags. Whether you are moving off an in-house solution or using toggles for the first time, Flagsmith will provide both power and efficiency.
 
-### 複数のプラットフォームでフラグを管理
+### Manage Flags across multiple platforms
 
-Flagsmith は、Web、モバイル、サーバーサイドのアプリケーションで、機能トグルの作成と管理を容易にします。コードのセクションをフラグでラップし、Flagsmith を使ってその機能を管理します。
+Flagsmith makes it easy to create and manage feature toggles across web, mobile, and server-side applications. Wrap a section of code with a flag, and then use Flagsmith to manage that feature.
 
-### 強力なセグメンテーションルール
+### Powerful Segmenting rules
 
-機能フラグを開発環境ごと、ユーザーグループごと (個人ユーザー、ユーザーセグメント、パーセンテージなど) に管理することができます。これにより、カナリアデプロイのようなプラクティスを実装することができます。
+Manage feature flags by development environment and by user group—including individual users, a segment of users, or a percentage. This allows you to implement practices like canary deployments.
 
-### A/B テストや多変量テストの推進
+### Drive A/B and Multivariate Tests
 
-多変量フラグにより、2 つ以上のバリエーションでパーセンテージ分割を行い、正確なA/B/n テストや実験が可能です。
+Multivariate flags allow you to use a percentage split across two or more variations for precise A/B/n testing and experimentation.
 
-### ライブラリ
+### Dashboards
 
-Flagsmith のフラグを既存の Datadog ダッシュボードから直接表示し、制御することができます。
+View and control Flagsmith flags directly from your existing Datadog dashboards.
 
-### ヘルプ
+### Events
 
-[Datadog Flagsmith インテグレーション][2]により、Flagsmith から Datadog のイベントストリームにフラグ変更イベントを送信します。
+Send flag change events from Flagsmith into your Datadog event stream with the [Datadog Flagsmith integration][2].
 
-## Agent
+## Support
 
-サポートまたは機能リクエストをご希望の場合は、以下のチャンネルから Flagsmith にお問い合わせください。
+For support or feature requests, contact Flagsmith through the following channel:
 
-- [Flagsmith サポート][4]
+- [Flagsmith Support][4]
 
-### その他の参考資料
+### Further Reading
 
-お役に立つドキュメント、リンクや記事:
+Additional helpful documentation, links, and articles:
 
-- [Flagsmith のインテグレーションと Datadog Marketplace の製品を使って、機能をより早くリリースし、その影響を追跡する][5]
+- [Release features faster and track their impact with Flagsmith's integration and Datadog Marketplace offering][5]
 
 [1]: https://flagsmith.com/
 [2]: https://app.datadoghq.com/integrations/flagsmith
@@ -117,4 +120,4 @@ Flagsmith のフラグを既存の Datadog ダッシュボードから直接表�
 [4]: https://flagsmith.com/contact-us/
 [5]: https://www.datadoghq.com/blog/flagsmith-datadog-marketplace/
 ---
-このアプリケーションは Marketplace から入手でき、Datadog テクノロジーパートナーによってサポートされています。このアプリケーションを購入するには、<a href="https://app.datadoghq.com/marketplace/app/flagsmith-platform" target="_blank">こちらをクリック</a>してください。
+This application is made available through the Marketplace and is supported by a Datadog Technology Partner. <a href="https://app.datadoghq.com/marketplace/app/flagsmith-platform" target="_blank">Click Here</a> to purchase this application.

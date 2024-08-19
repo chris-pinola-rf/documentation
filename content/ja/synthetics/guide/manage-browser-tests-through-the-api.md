@@ -1,7 +1,7 @@
 ---
 further_reading:
 - link: /api/latest/synthetics
-  tag: ヘルプ
+  tag: API
   text: Synthetics API
 - link: https://www.datadoghq.com/blog/private-synthetic-monitoring/
   tag: ブログ
@@ -12,42 +12,42 @@ further_reading:
 title: プログラムによるブラウザテストの管理
 ---
 
-## 概要
+## Overview
 
-アプリケーションをエンドツーエンドで監視することは、ユーザーの体験を理解する上で非常に重要です。[Datadog テストレコーダー][1]を使用すると、これらの複雑なテストワークフローのための構成を簡素化することができます。しかし、プログラムで Synthetics リソースを管理し、API や [Terraform][14] を通じてブラウザテストを定義したいと思うかもしれません。
+アプリケーションをエンドツーエンドで監視することは、ユーザーの体験を理解する上で非常に重要です。[Datadog テストレコーダー][1]を使用すると、これらの複雑なテストワークフローのための構成を簡素化することができます。しかし、Synthetics のリソースをプログラムで管理し、API または [Terraform][14] でブラウザテストを定義したいと思うかもしれません。
 
-## API でブラウザテストを管理する
+## Manage your browser tests with the API
 
-Datadog では、まず Datadog UI でブラウザテストを作成し、API でテストコンフィギュレーションを取得することを推奨しています。
+Datadog recommends creating your browser tests in the Datadog UI first and retrieving your tests configurations with the API.
 
-1. [ブラウザテストの作成][2]と[レコーディングの保存][3]を行います。
-2. Synthetics の全テストのリストを取得するには、[全テストエンドポイント一覧の取得][4]を使用します。
-3. `type: browser` でフィルタリングし、API で管理したいブラウザテストの `public_ids` を取得します。
-4. [ブラウザテストエンドポイントの取得][5]を使用して、すべてのブラウザテストのコンフィギュレーションファイルを取得します。
+1. [Create a browser test][2] and [save a recording][3].
+2. Use the [Get the list of all tests endpoint][4] to retrieve the list of all Synthetics tests.
+3. Filter on `type: browser` and retrieve the `public_ids` of the browser tests you want to manage with the API. 
+4. Use the [Get a browser test endpoint][5] to retrieve the configuration files of every browser test.
 
-ブラウザテストのコンフィギュレーションファイルは、後で使用するために保存したり、プログラムによってブラウザテストを複製、更新、削除するために使用することができます。
+You can store the browser test configuration files for later usage or use them to duplicate, update, and delete your browser tests programmatically.
 
-## Terraform でブラウザテストを管理する
+## Manage your browser tests with Terraform
 
-[Datadog Terraform プロバイダー][6]を用いて、Terraform 構成を介してブラウザテストおよび関連する Synthetics リソースをプログラム的に作成・管理できます。また、既存のリソースを Terraform 構成に[インポート][7]したり、既存のリソースを外部の[データソース][9]として参照することもできます。
+[Datadog Terraform プロバイダー][6]を使用すると、Terraform 構成を通じて、ブラウザテストや関連付けられた Synthetics リソースをプログラムで作成・管理することができます。また、既存のリソースを Terraform 構成に[インポート][7]したり、既存のリソースを外部の[データソース][9]として参照することもできます。
 
-### ブラウザテスト
+### Browser tests
 
-[Synthetic テストリソース][8]を使用して、`type` を `browser` に設定することで、Terraform でブラウザテストを作成・管理することができます。
+`type` を `browser` に設定した [Synthetic テストリソース][8]を使って、 Terraform でブラウザテストを作成・管理することができます。
 
-### プライベートロケーション
+### Private locations
 
-カスタムロケーションや保護されたロケーションから Synthetic テストを実行する必要がある場合は、[プライベートロケーションリソース][10]を使用して、テストを実行するプライベートロケーションを作成および管理できます。[プライベートロケーション][11]のページで詳細をご覧ください。
+カスタムロケーションやセキュリティ保護されたロケーションから Synthetic テストを実行する必要がある場合は、 [プライベートロケーションリソース][10]を使ってテストを実行するプライベートロケーションを作成・管理できます。詳しくは[プライベートロケーション][11]のページをご覧ください。
 
-### グローバル変数とローカル変数
+### Global and local variables
 
-[Synthetics グローバル変数リソース][12]を使用して、Synthetics グローバル変数を作成・管理します。これはテスト間で安全に共有できる変数です。また、[config_variable][16] でネストされたスキーマを使用して、テスト固有の[組み込みのローカル変数][15]を作成することもできます。
+Use the [synthetics global variable resource][12] to create and manage synthetics global variables, which are variables that can be securely shared across tests. You can also create test-specific [local variables with builtins][15] by defining the [config_variable][16] nested schema with `type = "text"` in your synthetic test resources.
 
-### 同時実行上限
+### Concurrency cap
 
-[Synthetics の同時実行上限リソース][13]を使用すると、並列で実行される Synthetic テストの数を制限することができます。
+[Synthetics 同時実行数の上限リソース][13]を使用すると、並列で実行される Synthetic テストの数を制限することができます。
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

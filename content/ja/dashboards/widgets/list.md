@@ -2,6 +2,7 @@
 algolia:
   tags:
   - イベントストリーム
+  - log stream
 further_reading:
 - link: /ja/dashboards/graphing_json/
   tag: ドキュメント
@@ -10,83 +11,99 @@ further_reading:
   tag: ドキュメント
   text: ノートブック
 title: リストウィジェット
+widget_type: list_stream
 ---
 
-リストウィジェットでは、さまざまなソースから送られてくるイベントや問題のリストを表示することができます。
+The list widget displays a list of events and issues, which can come from a variety of sources such as Logs, RUM, or Events. Search and query across sources to narrow down the events you want the widget to highlight and display.
 
-_エラー追跡問題を表示するリストウィジェット_
+_List widget displaying error tracking issues_
 
-{{< img src="dashboards/widgets/list/list_overview.png" alt="エラーの一覧、エラー数、エラー量を表示するリストウィジェットです。" style="width:50%;">}}
+{{< img src="dashboards/widgets/list/list_overview.png" alt="List widget displaying a list of errors, their error count and volume." style="width:50%;">}}
 
-## セットアップ
+## Setup
 
-{{< img src="dashboards/widgets/list/list_setup.png" alt="リストウィジェットの構成モーダル" style="width:100%;">}}
+{{< img src="dashboards/widgets/list/list_setup.png" alt="List widget configuration modal" style="width:100%;">}}
 
-### 構成
+### Configuration
 
-1. グラフ化するデータの種類を選択します。組織で利用可能な製品に応じて、問題、ログ、監査証跡、イベントからリストウィジェットを作成することができます。
+1. Choose the type of data to graph. You can create a list widget from Issues, Logs, Audit Trail, Watchdog Alerts, or Events depending on which products are available for your organization.
 
-2. ディスプレイの環境設定を行います。スクリーンボードとノートブックの場合にのみ、ウィジェットがカスタムタイムフレームを持つか、グローバルタイムフレームを使用するかを選択します。
+2. Set display preferences. On screenboards and notebooks, choose whether your widget has a custom timeframe or uses the global timeframe.
 
-3. オプション: グラフにタイトルを付けます (または、提案されたタイトルを使用するには空白のままにします)。
+3. Optional: Give your graph a title (or leave blank for suggested title).
 
-### オプション
+### Options
 
-リストウィジェットの種類によって、それぞれ構成が異なります。
+Each type of list widget has its own configuration.
 
-### 問題
+### Issues
 
-#### ソート方法
+#### Sorting by
 
-問題については、以下でソートすることができます。
+For issues, you can sort by:
 
-* エラー数 (デフォルト)
-* 最初に遭遇
-* 影響を受けたセッション
+* Number of errors (default)
+* First seen
+* Impacted sessions
 
-**注:** "Sorting by” の選択を変更しても、表示される列は変わりません。影響を受けたセッションでソートするようにリストを変更し、これをウィジェットに表示したい場合、グラフエディタに "Impacted Sessions” も選択または追加する必要があります。
+**Note:** Changing the "Sorting by" selection does not change the columns displayed. If you change your list to sort by impacted sessions, and want to see this on your widget, you must also select or add "Impacted Sessions" to the graph editor.
 
-### ログ
+### Logs
 
-#### グループ化
+#### Grouping by
 
-ログについては、以下でグループ化することができます。
+For logs, you can group by:
 
-* パターン
-* トランザクション
+* Patterns
+* Transactions
 
-### RUM イベントリストオプション
+### RUM event list options
 
-#### ソート方法
+#### Sorting by
 
-RUM については、以下でソートすることができます。
+For RUM, you can sort by:
 
-* セッションタイプ
-* 使用時間
-* 表示回数
-* エラー数
-* アクション数
-* セッションフラストレーション数
-* 初期ビュー名
-* 最終ビュー名
+* Session type
+* Time spent
+* View count
+* Error count
+* Action count
+* Session frustration count
+* Initial view name
+* Last view name
 
-昇順または降順
+Ascending or descending
 
-### イベント
+### Events
 
-#### レポートフォーマットのサイズ:
+#### Report format size:
 
-イベントについては、ウィジェットでの表示方法を選択することができます。
+For Events, you can choose how they're displayed in the widget:
 
-* 小 (タイトルのみ)
-* 大 (イベント全体)
+* Small (title only)
+* Large (full event)
+
+### Incidents
+
+#### Sorting by
+
+For incidents, you can sort by:
+
+* Created time
+* Severity
+* Status
+
+Ascending or descending
 
 ## API
 
-このウィジェットは、**ダッシュボード API** とともに使用できます。詳しくは、[ダッシュボード API][1] ドキュメントをご参照ください。
+This widget can be used with the **[Dashboards API][1]**. See the following table for the [widget JSON schema definition][2]:
 
-## その他の参考資料
+{{< dashboards-widgets-api >}}
+
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
-[1]: /ja/api/v1/dashboards/
+[1]: /ja/api/latest/dashboards/
+[2]: /ja/dashboards/graphing_json/widget_json/

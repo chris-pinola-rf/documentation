@@ -18,6 +18,7 @@ author:
 categories:
 - event management
 - issue tracking
+custom_kind: integration
 dependencies: []
 display_on_public_website: true
 draft: false
@@ -26,7 +27,6 @@ integration_id: honeybadger
 integration_title: Honeybadger
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: honeybadger
 public_title: Honeybadger
@@ -37,8 +37,10 @@ tile:
   classifier_tags:
   - Category::Event Management
   - Category::問題の追跡
+  - Offering::Integration
   configuration: README.md#Setup
-  description: イベントストリームで Honeybadger の例外を表示、検索、議論。
+  description: View, search on, and discuss exceptions from Honeybadger in your event
+    stream.
   media: []
   overview: README.md#Overview
   support: README.md#Support
@@ -46,41 +48,41 @@ tile:
 ---
 
 <!--  SOURCED FROM https://github.com/DataDog/integrations-internal-core -->
-## 概要
+## Overview
 
-Honeybadger は例外とアップタイムを監視し、Web アプリをエラーフリーに保ちます。Honeybadger を Datadog に接続することで、Datadog のイベントストリームで Honeybadger のアラートを受け取ることができます。
+Honeybadger provides exception and uptime monitoring to keep your web apps error-free. Connect Honeybadger to Datadog to get Honeybadger alerts in your Datadog event stream.
 
-## 計画と使用
+## Setup
 
-### インフラストラクチャーリスト
+### Installation
 
-Honeybadger からエラーをキャプチャするには、以下のようにします。
+To capture errors from Honeybadger:
 
-1. Honeybadger の[プロジェクトリスト][1]を開きます。
-2. 監視するプロジェクトの "Settings" をクリックします。
-3. "Alerts & Integrations" をクリックします。
-4. 新しいインテグレーションとして "Datadog" を選択します。
-5. [API キー][2]を追加します。
-6. インテグレーションを保存します。
-7. [Honeybadger インテグレーションタイル][3]の **Install Integration** ボタンをクリックします。
+1. Open your Honeybadger [project list][1].
+2. Click on "Settings" for the project you want to monitor.
+3. Click on "Alerts & Integrations".
+4. Select "Datadog" as a new integration.
+5. Add your [API key][2].
+6. Save the integration.
+7. Click the **Install Integration** button on the [Honeybadger Integration Tile][3].
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 
-Honeybadger インテグレーションには、メトリクスは含まれません。
+The Honeybadger integration does not include any metrics.
 
-### ヘルプ
+### Events
 
-Honeybadger インテグレーションには、イベントは含まれません。
+The Honeybadger integration does not include any events.
 
-### ヘルプ
+### Service Checks
 
-Honeybadger インテグレーションには、サービスのチェック機能は含まれません。
+The Honeybadger integration does not include any service checks.
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][4]までお問合せください。
+Need help? Contact [Datadog support][4].
 
 [1]: https://app.honeybadger.io/users/sign_in
 [2]: https://app.datadoghq.com/organization-settings/api-keys

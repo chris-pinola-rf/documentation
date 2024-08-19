@@ -24,6 +24,8 @@ assets:
       metadata_path: assets/service_checks.json
     source_type_id: 10297
     source_type_name: RapDev MSTeams
+  logs:
+    source: rapdev_msteams
   monitors:
     '[Microsoft Teams] Poor Call Session Audio Performance Qualifier A': assets/monitors/performance_audio_packet_utilization.json
     '[Microsoft Teams] Poor Call Session Audio Performance Qualifier B': assets/monitors/performance_audio_rtt.json
@@ -41,6 +43,7 @@ author:
 categories:
 - コラボレーション
 - マーケットプレイス
+custom_kind: integration
 dependencies: []
 display_on_public_website: true
 draft: false
@@ -49,7 +52,6 @@ integration_id: rapdev-msteams
 integration_title: Microsoft Teams
 integration_version: ''
 is_public: true
-custom_kind: integration
 legal_terms:
   eula: assets/EULA.pdf
 manifest_version: 2.0.0
@@ -83,22 +85,19 @@ tile:
   description: ユーザーとデバイスの Microsoft Teams 通話品質を監視する
   media:
   - caption: 通話品質概要
-    image_url: images/1.png
+    image_url: images/1.jpg
     media_type: image
   - caption: 通話品質ユーザーエクスペリエンス概要
-    image_url: images/2.png
+    image_url: images/2.jpg
     media_type: image
-  - caption: 通話品質ユーザーエクスペリエンスネットワークとオーディオ
-    image_url: images/3.png
+  - caption: Call quality user experience audio and video
+    image_url: images/3.jpg
     media_type: image
-  - caption: 通話品質ユーザーエクスペリエンスオーディオとビデオ
-    image_url: images/4.png
+  - caption: Call quality user devices
+    image_url: images/4.jpg
     media_type: image
-  - caption: 通話品質ユーザーデバイス
-    image_url: images/5.png
-    media_type: image
-  - caption: パフォーマンス修飾子ルックアップテーブル
-    image_url: images/6.png
+  - caption: Performance qualifier lookup table
+    image_url: images/5.jpg
     media_type: image
   overview: README.md#Overview
   support: README.md#Support
@@ -107,30 +106,30 @@ tile:
 ---
 
 <!--  SOURCED FROM https://github.com/DataDog/marketplace -->
-## 概要
+## Overview
 
-RapDev Microsoft Teams インテグレーションは、通話品質レポートを監視し、通話アクティビティとエクスペリエンスに関する洞察を提供するメトリクス、モニター、ダッシュボードを提供します。
+The RapDev Microsoft Teams integration monitors call quality reports and provides metrics, monitors and dashboards that provide insights into call activity and experience. 
 
-このインテグレーションには、以下のものが含まれます。
-1. 複数のダッシュボード
-2. 通話品質メトリクスに関する推奨モニター
-3. 通話メタデータとパフォーマンス修飾子用のメトリクスルックアップテーブル
+This integration includes 
+1. Multiple dashboards
+2. Recommended monitors on call quality metrics
+3. Metric lookup tables for call metadata and performance qualifiers
 
-Microsoft Teams インテグレーションは、Active Directory テナントに最小限の権限しか必要とせず、インストールも簡単なため、組織は迅速に Microsoft Teams の通話品質レポートを展開し、レポーティングを開始することができます。
+The Microsoft Teams integration requires minimum permissions on your Active Directory tenant and is simple to install, enabling your organization to quickly deploy and begin reporting on Microsoft Teams call quality reports.
 
-## Agent
-サポートまたは機能リクエストについては、以下のチャンネルで RapDev.io までお問い合わせください。
+## Support
+For support or feature requests please contact RapDev.io through the following channels: 
 
- - メール: support@rapdev.io 
- - チャット: [rapdev.io](https://www.rapdev.io/#Get-in-touch)
- - 電話: 855-857-0222 
-
----
-
-ボストンより ❤️ を込めて
-
-*お探しのインテグレーションが見つかりませんか？組織に役立つ重要なツールの導入をお考えですか？[こちら](mailto:support@rapdev.io)からメッセージをお送りいただければ、導入をサポートいたします！*
-
+ - Email: support@rapdev.io 
+ - Chat: [rapdev.io](https://www.rapdev.io/#Get-in-touch)
+ - Phone: 855-857-0222 
 
 ---
-このアプリケーションは Marketplace から入手でき、Datadog テクノロジーパートナーによってサポートされています。このアプリケーションを購入するには、<a href="https://app.datadoghq.com/marketplace/app/rapdev-msteams" target="_blank">こちらをクリック</a>してください。
+
+Made with ❤️ in Boston
+
+*This isn't the integration you're looking for? Missing a critical feature for your organization? Drop us a [note](mailto:support@rapdev.io) and we'll build it!!*
+
+
+---
+This application is made available through the Marketplace and is supported by a Datadog Technology Partner. <a href="https://app.datadoghq.com/marketplace/app/rapdev-msteams" target="_blank">Click Here</a> to purchase this application.

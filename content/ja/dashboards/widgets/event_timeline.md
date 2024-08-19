@@ -6,4 +6,4 @@ private: true
 title: イベントタイムラインウィジェット
 ---
 
-<div class="alert alert-warning">Event Timeline ウィジェットは、<a href="https://docs.datadoghq.com/dashboards/widgets/timeseries/">Timeseries ウィジェット</a>を通じてサポートされます。</div>
+<div class="alert alert-warning">The Event Timeline widget is supported through the <a href="https://docs.datadoghq.com/dashboards/widgets/timeseries/">Timeseries widget</a>.</div>

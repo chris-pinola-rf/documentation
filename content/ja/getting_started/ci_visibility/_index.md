@@ -2,7 +2,7 @@
 algolia:
   tags:
   - pipeline visibility
-  - usm
+  - pipelines
   - CI パイプライン
 further_reading:
 - link: https://www.datadoghq.com/blog/monitor-ci-pipelines/
@@ -20,128 +20,128 @@ further_reading:
 title: CI Visibility の概要
 ---
 
-## 概要
+## Overview
 
-CI Visibility または CI Pipeline Visibility では、CI パイプラインの健全性を監視し、パイプライン実行のパフォーマンスをトレースとして視覚化できます。トレース内のスパンはパイプラインの異なるレベルを表します。
+CI Visibility, or CI Pipeline Visibility, allows you to monitor the health of your CI pipelines and visualize the performance of your pipeline executions as traces, where spans represent the different levels of the pipeline. 
 
-{{< img src="/getting_started/ci_visibility/pipelines_list.png" alt="Datadog CI Visibility の CI パイプラインのリスト表示" style="width:100%" >}}
+{{< img src="/getting_started/ci_visibility/pipelines_list.png" alt="A list view of your CI pipelines in Datadog CI Visibility" style="width:100%" >}}
 
-CI Visibility では、CI ジョブのログを転送し、それらをパイプラインと自動的に関連付けることができます。使用しているプロバイダーによって、CI Visibility の [**Settings** ページ][1]でジョブログの収集を有効にするか、またはプロバイダーの設定で Datadog とのインテグレーションを行うことができます。
+You can forward CI job logs and automatically correlate them with your pipelines in CI Visibility. Depending on the providers you are using, you can either enable job log collection on the [**Settings** page][1] in CI Visibility or in your provider’s settings to integrate with Datadog.
 
-`datadog-ci` CLI を使用して、パイプライン内で[トレースコマンド][2]や[カスタムタグとメジャーコマンド][3]を実行し、パイプラインのトレースにユーザー定義のテキストタグや数値タグを追加することもできます。
+You can also use the `datadog-ci` CLI to [trace commands][2] in your pipelines, as well as the [custom tags and measures commands][3] to add user-defined text and numerical tags in your pipeline traces.
 
-CI Visibility は DevOps およびプラットフォームエンジニアリング組織に包括的なモニタリング、分析、ボトルネックの特定と解決、リソース割り当ての最適化、CI コストの削減を提供します。
+CI Visibility provides DevOps and platform engineering organizations with comprehensive monitoring, analytics, and the ability to pinpoint and resolve bottlenecks, optimize resource allocation, and decrease CI costs. 
 
-パフォーマンスメトリクス、ログ、アラートを統合することで、組織は開発速度を向上させ、パイプラインの信頼性を高め、クラウド環境およびセルフホスト環境におけるデータに基づいた意思決定を行うことができます。
+By integrating performance metrics, logs, and alerts, organizations can improve development speed, increase the reliability of their pipelines, and make data-informed decisions across cloud and self-hosted environments.
 
-## CI プロバイダーの設定
+## Set up your CI provider
 
-CI Visibility は、CI パイプラインのパフォーマンスと結果を追跡し、パイプラインが終了した後に結果を表示します。
+CI Visibility tracks the performance and results of your CI pipelines, and displays results after the pipeline finishes. 
 
-パイプラインメトリクスの送信を開始するには、以下の Datadog がサポートする CI プロバイダーのいずれかのドキュメントを参照してください。
+To start sending pipeline metrics, see the documentation for one of the following CI providers that Datadog supports below.
 
 {{< partial name="continuous_integration/ci-pipelines-getting-started.html" >}}
 
 </br>
 
-CI プロバイダーがサポートされていない場合、プログラムを使用してパイプラインイベントを Datadog に送信できます。詳細は[パイプライン イベントを Datadog に送信するセクション](#send-pipeline-events-to-datadog)を参照してください。
+If your CI provider is not supported, you can programmatically send your pipeline events to Datadog. See the [Send pipeline events to Datadog section](#send-pipeline-events-to-datadog).
 
-選択した CI プロバイダーによっては、CI Visibility がパイプラインのすべてのレベル (ステージ、ジョブ、ステップ、コマンド) をサポートしていない場合があります。CI Visibility がどのように CI パイプラインを定義するかについては、[用語セクション][4]を参照してください。
+Depending on the CI provider(s) of choice, CI Visibility may not support all of the levels in your pipeline (stage, job, step, or command). For more information about how CI Visibility defines a CI pipeline, see the [Terminology section][4].
 
-## CI パイプラインデータの利用
+## Use CI pipeline data
 
-パイプラインのメトリクス (キュー時間、継続時間、パーセンタイル、ステータスなど) にアクセスし、CI プロバイダー全体で収集されたデータを使用して重要な傾向とパターンを特定し始めます。
+Access your pipelines’ metrics (such as queue times, durations, percentiles, and statuses) to start identifying important trends and patterns using the data collected across your CI providers. 
 
-{{< img src="/getting_started/ci_visibility/pipelines_dashboard.png" alt="すぐに使えるダッシュボードで、CI Visibility のパイプライン、ジョブ、ステージから収集したデータを表示するウィジェット" style="width:100%" >}}
+{{< img src="/getting_started/ci_visibility/pipelines_dashboard.png" alt="An out-of-the-box dashboard with widgets displaying data collected from your pipelines, jobs, and stages in CI Visibility" style="width:100%" >}}
 
-[ダッシュボード][5]を作成してパイプラインで障害が発生しているポイントを視覚化することや、[すぐに使えるダッシュボード][6]で CI Visibility で収集したデータを入力したウィジェットを使用して、CI パイプライン、ステージ、ジョブの健全性とパフォーマンスを視覚化することができます。
+You can create [dashboards][5] to visualize at which points failures are happening in your pipelines, or use an [out-of-the-box dashboard][6] containing widgets populated with data collected in CI Visibility to visualize the health and performance of your CI pipelines, stages, and jobs.
 
-## CI パイプラインの検索と管理
+## Search and manage your CI pipelines
 
-[**CI Pipeline List** ページ][7]は、デフォルトブランチの CI パイプラインのパフォーマンスと信頼性に関する包括的なビューを提供します。集計された統計、トレンド、およびパイプラインに関する情報にアクセスし、障害や回帰などの問題を特定して解決します。
+The [**CI Pipeline List** page][7] provides a comprehensive view of the performance and reliability of your CI pipelines, for the default branch. Access aggregated statistics, trends, and information about your pipelines to identify and resolve issues like failures and regressions.
 
-トラブルシューティングを強化し、パイプライン管理プロセスを合理化するために、パイプラインをクリックしてインサイトにアクセスし、実行履歴をレビューし、ログや関連するテレメトリーデータにピボットします。詳細については、[CI パイプラインの検索と管理][8]を参照してください。
+To enhance troubleshooting and streamline your pipeline management processes, click on a pipeline to access insights, review execution histories, and pivot to logs and related telemetry data. For more information, see [Search and Manage CI Pipelines][8].
 
-## CI Visibility Explorer で結果を確認
+## Examine results in the CI Visibility Explorer
 
-[CI Visibility Explorer][9] では、CI プロバイダーから収集したデータを使用してパイプラインスパンの視覚化やフィルタリングを行うことができます。各パイプライン実行は、ステージとジョブ情報を含むトレースとして報告されます。
+The [CI Visibility Explorer][9] allows you to create visualizations and filter pipeline spans using the data collected from your CI providers. Each pipeline execution is reported as a trace, which includes stage and job information. 
 
 {{< tabs >}}
-{{% tab "パイプライン" %}}
+{{% tab "Pipeline" %}}
 
-[**Software Delivery** > **CI Visibility** > **Executions**][101] に移動し、`Pipeline` を選択してパイプラインスパンの結果のフィルタリングを開始します。
+Navigate to [**Software Delivery** > **CI Visibility** > **Executions**][101] and select `Pipeline` to start filtering your pipeline span results. 
 
-{{< img src="/getting_started/ci_visibility/pipeline_view.png" alt="Shopist リポジトリでフィルタリングされた CI Visibility Explorer のパイプライン実行結果" style="width:100%" >}}
+{{< img src="/getting_started/ci_visibility/pipeline_view.png" alt="Pipeline execution results in the CI Visibility Explorer filtered on the Shopist repository" style="width:100%" >}}
 
 [101]: https://app.datadoghq.com/ci/pipeline-executions?query=ci_level%3Apipeline
 
 {{% /tab %}}
-{{% tab "ステージ" %}}
+{{% tab "Stage" %}}
 
-[**Software Delivery** > **CI Visibility** > **Executions**][101] に移動し、`Stage` を選択してステージスパンの結果のフィルタリングを開始します。
+Navigate to [**Software Delivery** > **CI Visibility** > **Executions**][101] and select `Stage` to start filtering your stage span results. 
 
-{{< img src="/getting_started/ci_visibility/stage_view.png" alt="Shopist リポジトリでフィルタリングされた CI Visibility Explorer のステージ結果" style="width:100%" >}}
+{{< img src="/getting_started/ci_visibility/stage_view.png" alt="Stage results in the CI Visibility Explorer filtered on the Shopist repository" style="width:100%" >}}
 
 [101]: https://app.datadoghq.com/ci/pipeline-executions?query=ci_level%3Astage
 
 {{% /tab %}}
-{{% tab "ジョブ" %}}
+{{% tab "Job" %}}
 
-[**Software Delivery** > **CI Visibility** > **Executions**][101] に移動し、`Job` を選択してジョブスパンの結果のフィルタリングを開始します。
+Navigate to [**Software Delivery** > **CI Visibility** > **Executions**][101] and select `Job` to start filtering your job span results. 
 
-{{< img src="/getting_started/ci_visibility/job_view.png" alt="Shopist リポジトリでフィルタリングされた CI Visibility Explorer のジョブ結果" style="width:100%" >}}
+{{< img src="/getting_started/ci_visibility/job_view.png" alt="Job results in the CI Visibility Explorer filtered on the Shopist repository" style="width:100%" >}}
 
 [101]: https://app.datadoghq.com/ci/pipeline-executions?query=ci_level%3Ajob
 
 {{% /tab %}}
-{{% tab "ステップ" %}}
+{{% tab "Step" %}}
 
-[**Software Delivery** > **CI Visibility** > **Executions**][101] に移動し、`Step` を選択してステップスパンの結果のフィルタリングを開始します。
+Navigate to [**Software Delivery** > **CI Visibility** > **Executions**][101] and select `Step` to start filtering your step span results. 
 
-{{< img src="/getting_started/ci_visibility/step_view.png" alt="Shopist リポジトリでフィルタリングされた CI Visibility Explorer のステップ結果" style="width:100%" >}}
+{{< img src="/getting_started/ci_visibility/step_view.png" alt="Step results in the CI Visibility Explorer filtered on the Shopist repository" style="width:100%" >}}
 
 [101]: https://app.datadoghq.com/ci/pipeline-executions?query=ci_level%3Astep
 
 {{% /tab %}}
 {{< /tabs >}}
 
-[ファセット][9]を使用して検索クエリをカスタマイズし、パイプラインの各レベルで費やされた時間の変化を特定します。
+Use [facets][9] to customize the search query and identify changes in time spent on each level of your pipeline.
 
-パイプラインをクリックすると、**Pipeline Executions** セクションにリストされている個々のパイプライン実行にアクセスできます。パイプラインの実行をクリックすると、**Trace** タブでフレームグラフやスパンのリストを見ることができます。
+Once you click into a pipeline, you can access individual pipeline executions listed in the **Pipeline Executions** section. When you click on a pipeline execution, you can see a flame graph or a list of spans in the **Trace** tab. 
 
-{{< img src="/getting_started/ci_visibility/executions.png" alt="ステージングビルドおよびテストパイプラインのフレームグラフとして視覚化されたパイプライン実行結果" style="width:100%" >}}
+{{< img src="/getting_started/ci_visibility/executions.png" alt="Pipeline execution results visualized as a flame graph for the Staging Build and Test pipeline" style="width:100%" >}}
 
-パイプラインのボトルネックを特定し、実行時間の割合が大きいものから小さいものへとランク付けされた個々のノードを調査できます。
+You can identify bottlenecks in your pipeline and examine individual nodes ranked from the largest to smallest percentage of execution time. 
 
-Test Visibility を設定した後、パイプライン実行のサイドパネルの Test Runs タブで、テストのステータス (Failed、New Flaky、Passed、Skipped) を含む CI パイプラインで実行されたテストに関する情報にアクセスできます。詳細については、[Flaky Test Management ドキュメント][10]を参照してください。
+After you have set up Test Visibility, you can access information about tests that were run in your CI pipelines, including the test status (Failed, New Flaky, Passed, or Skipped), on the Test Runs tab in a pipeline execution’s side panel. For more information, see the [Flaky Test Management documentation][10].
 
-パイプライン実行のサイドパネルの Logs タブで、クラウドおよびセルフホスト型ランナー全体のパイプラインまたはジョブのログにアクセスし、ランナーに関する情報を確認できます。
+You can access pipeline or job logs across cloud and self-hosted runners and see information about your runners on the Logs tab in a pipeline execution’s side panel.
 
-[サポートされているプロバイダー][11]を使用している場合、インフラストラクチャーのメトリクスと GitLab ジョブを関連付け、GitLab ジョブのホスト、システム、ホストタグ、ホストメトリクスの情報にアクセスできます。詳細については、[Datadog で GitLab ジョブとインフラストラクチャーメトリクスを相関させる][12]を参照してください。
+If you are using [supported providers][11], you can correlate infrastructure metrics with your GitLab jobs and access the GitLab job’s host, system, host tags, and host metrics information. For more information, see [Correlate Infrastructure Metrics with GitLab Jobs in Datadog][12].
 
-## パイプラインイベントを Datadog に送信
+## Send pipeline events to Datadog
 
-他のパイプラインプロバイダーやカスタムパイプラインの場合、[CI Visibility Pipelines API][16] を使用してパイプラインイベントを Datadog にプログラムで送信できます。詳細については、[パイプラインデータモデルと実行タイプ][13]を参照してください。
+For other pipeline providers and custom pipelines, you can programmatically send pipeline events to Datadog using the [CI Visibility Pipelines API][16]. For more information, see [Pipeline Data Model and Execution Types][13].
 
-リクエストには、パイプライン実行のトリガーとなったコミットの以下の Git 情報 (リポジトリ URL、コミット SHA、および作者のメール) を含めてください。
+Provide the following Git information (the repository URL, commit SHA, and the author email) of the commit that triggered the pipeline execution in the request.
 
-## CI パイプラインモニターを作成
+## Create a CI pipeline monitor
 
-[CI モニター][14]を使用して、CI パイプラインで障害が発生したり、期間のしきい値を超えたりしたときに、パイプラインの健全性やパフォーマンスの低下を組織の関連チームに警告します。
+Alert relevant teams in your organization about pipeline health and performance regressions when failures occur or duration thresholds are exceeded in your CI pipelines with [CI monitors][14].
 
-{{< img src="/getting_started/ci_visibility/avg_duration_monitor.png" alt="テストとデプロイカートパイプラインの平均継続時間が過去 1 日で 5 分を超えたときにトリガーするように構成された CI パイプラインモニター" style="width:100%" >}}
+{{< img src="/getting_started/ci_visibility/avg_duration_monitor.png" alt="A CI pipeline monitor configured to trigger an alert when the average duration for the Test and Deploy Cart pipeline exceeds five minutes in the past day" style="width:100%" >}}
 
-過去 1 日の平均継続時間が 5 分のしきい値を超えたときに CI パイプラインに警告を出すモニターを設定するには、以下の手順に従います。
+To set up a monitor that alerts on your CI pipeline when the average duration in the past day exceeds a five minute threshold:
 
-1. [**Monitors** > **New Monitor**][15] に移動し、**CI** を選択します。
-1. CI パイプラインの一般的なモニタータイプを選択して開始します。たとえば、パイプラインの実行時間が長すぎる場合に警告をトリガーする `Long Running Pipeline` や、ジョブの失敗に対して警告をトリガーする `Failed Job` を選択するか、独自の検索クエリをカスタマイズします。この例では、`@ci.pipeline.name:test_and_deploy_cart` を入力し、`Duration (@duration)` の平均を選択します。
-1. `Evaluate the query over the` セクションで、**last 1 day** を選択します。
-1. 評価された値がしきい値を**超えたとき**に警告をトリガーするように警告条件を設定し、`Alert threshold > 300000000000` のように警告や注意のしきい値を指定します。
-1. `Notify your team` セクションで、モニターの通知設定を構成します。
-1. モニターの権限を設定します。
-1. **Create** をクリックします。
+1. Navigate to [**Monitors** > **New Monitor**][15] and select **CI**. 
+1. Select a common monitor type for CI pipelines to get started, for example: `Long Running Pipeline` to trigger alerts when a pipeline has been running for too long or `Failed Job` to trigger alerts for job failures, or customize your own search query. In this example, enter `@ci.pipeline.name:test_and_deploy_cart` and select the Avg of `Duration (@duration)`.
+1. In the `Evaluate the query over the` section, select **last 1 day**. 
+1. Set the alert conditions to trigger when the evaluated value is **above** the threshold, and specify values for the alert or warning thresholds, such as `Alert threshold > 300000000000`.
+1. In the `Configure notifications and automations` section, configure your monitor's notification settings.
+1. Set permissions for the monitor.
+1. Click **Create**.
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
@@ -153,7 +153,7 @@ Test Visibility を設定した後、パイプライン実行のサイドパネ�
 [6]: https://app.datadoghq.com/dash/integration/30516/ci-visibility---pipelines-dashboard
 [7]: https://app.datadoghq.com/ci/pipelines
 [8]: /ja/continuous_integration/search/
-[9]: /ja/continuous_integration/explorer?tab=pipelineexecutions
+[9]: /ja/continuous_integration/explorer
 [10]: /ja/tests/guides/flaky_test_management/
 [11]: /ja/continuous_integration/pipelines/?tab=githubactions#supported-features
 [12]: /ja/continuous_integration/guides/infrastructure_metrics_with_gitlab/

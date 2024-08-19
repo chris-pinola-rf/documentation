@@ -23,6 +23,7 @@ author:
 categories:
 - コンテナ
 - kubernetes
+custom_kind: integration
 dependencies:
 - https://github.com/DataDog/integrations-core/blob/master/containerd/README.md
 display_on_public_website: true
@@ -32,7 +33,6 @@ integration_id: containerd
 integration_title: Containerd
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: containerd
 public_title: Containerd
@@ -47,6 +47,7 @@ tile:
   - Category::Kubernetes
   - Supported OS::Linux
   - Supported OS::Windows
+  - Offering::Integration
   configuration: README.md#Setup
   description: Containerd のすべてのメトリクスを Datadog で追跡
   media: []
@@ -58,28 +59,28 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/integrations-core -->
 
 
-## 概要
+## Overview
 
-このチェックは、Containerd コンテナランタイムを監視します。
+This check monitors the Containerd container runtime.
 
-## 計画と使用
+## Setup
 
-### インフラストラクチャーリスト
+### Installation
 
-Containerd は [Datadog Agent][1] の中核となるチェックです。Containerd は、`datadog.yaml` と `containerd.d/conf.yaml` の両方で構成する必要があります。
+Containerd is a core [Datadog Agent][1] check. You must configure Containerd in both `datadog.yaml` and `containerd.d/conf.yaml`.
 
-`datadog.yaml` では、Agent が Containerd に問い合わせるために使用する `cri_socket_path` を構成します。`containerd.d/conf.yaml` では、イベントのチェックインスタンス設定 (`filters` など) を構成します。
+In `datadog.yaml`, configure your `cri_socket_path` for the Agent to query Containerd. In `containerd.d/conf.yaml`, configure the check instance settings (such as `filters`) for the events.
 
-#### コンテナへのインストール
+#### Installation on containers
 
-コンテナで Agent を使用している場合は、`DD_CRI_SOCKET_PATH` 環境変数を Containerd ソケットに設定すると、デフォルト構成の Containerd インテグレーションが自動的に有効になります。
+If you are using the Agent in a container, setting the `DD_CRI_SOCKET_PATH` environment variable to the Containerd socket automatically enables the Containerd integration with the default configuration.
 
-たとえば、Kubernetes でインテグレーションをインストールするには、DaemonSet を編集して、Containerd ソケットをホストノードから Agent コンテナにマウントし、`DD_CRI_SOCKET_PATH` 環境変数を DaemonSet のマウントパスに設定します。
+For example, to install the integration on Kubernetes, edit your DaemonSet to mount the Containerd socket from the host node to the Agent container and set the `DD_CRI_SOCKET_PATH` environment variable to the DaemonSet mount path:
 
 {{< tabs >}}
-{{% tab "Linux コンテナ" %}}
+{{% tab "Linux container" %}}
 
-##### Linux コンテナ
+##### Linux container
 
 ```yaml
 apiVersion: extensions/v1beta1
@@ -93,7 +94,7 @@ spec:
         - name: datadog-agent
           # ...
           env:
-            - name: DD_CRI_ソケットパス
+            - name: DD_CRI_SOCKET_PATH
               value: /var/run/containerd/containerd.sock
           volumeMounts:
             - name: containerdsocket
@@ -110,12 +111,12 @@ spec:
               name: var-run
 ```
 
-**注:** 問題なくインテグレーションを実行するには、ホストから `/var/run` ディレクトリをマウントする必要があります。
+**Note:** The `/var/run` directory must be mounted from the host to run the integration without issues.
 
 {{% /tab %}}
-{{% tab "Windows コンテナ" %}}
+{{% tab "Windows Container" %}}
 
-##### Windows コンテナ
+##### Windows container
 
 ```yaml
 apiVersion: extensions/v1beta1
@@ -143,35 +144,35 @@ spec:
 {{% /tab %}}
 {{< /tabs >}}
 
-### ブラウザトラブルシューティング
+### Configuration
 
-1. Containerd のパフォーマンスデータの収集を開始するには、Agent のコンフィギュレーションディレクトリのルートにある `conf.d/` フォルダーの `containerd.d/conf.yaml` ファイルを編集します。使用可能なすべてのコンフィギュレーションオプションの詳細については、[サンプル containerd.d/conf.yaml][2] を参照してください。
+1. Edit the `containerd.d/conf.yaml` file, in the `conf.d/` folder at the root of your Agent's configuration directory to start collecting your Containerd performance data. See the [sample containerd.d/conf.yaml][2] for all available configuration options.
 
-2. [Agent を再起動します][3]。
+2. [Restart the Agent][3]
 
-### 検証
+### Validation
 
-[Agent の `status` サブコマンドを実行][4]し、Checks セクションで `containerd` を探します。
+[Run the Agent's `status` subcommand][4] and look for `containerd` under the Checks section.
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "containerd" >}}
 
 
-このインテグレーションは Linux と Windows で動作しますが、一部のメトリクスは OS に依存します。OS に依存するメトリクスの一覧は `metadata.csv` をご覧ください。
+This integration works on Linux and Windows, but some metrics are OS dependent. Look at `metadata.csv` for the list of OS dependent metrics. 
 
-### ヘルプ
+### Events
 
-Containerd チェックは、イベントを収集できます。`filters` を使用して関連イベントを選択します。詳細については、[サンプル containerd.d/conf.yaml][2] を参照してください。
+The Containerd check can collect events. Use `filters` to select the relevant events. See the [sample containerd.d/conf.yaml][2] to have more details.
 
-### ヘルプ
+### Service Checks
 {{< get-service-checks-from-git "containerd" >}}
 
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][3]までお問合せください。
+Need help? Contact [Datadog support][3].
 
 
 

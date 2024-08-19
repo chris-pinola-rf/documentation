@@ -7,52 +7,48 @@ further_reading:
   tag: ドキュメント
   text: JSON を使用したダッシュボードの構築
 title: ホストマップウィジェット
+widget_type: ホストマップ
 ---
 
-ホストマップウィジェットは、メインの[ホストマップ][1]ページから利用できる同じ視覚化機能を使用して、ホスト全体のあらゆるメトリクスをグラフ化します。
+The host map widget graphs any metric across your hosts using the same visualization available from the main [Host Map][1] page:
 
-{{< img src="dashboards/widgets/hostmap/hostmap.png" alt="ホストマップ" >}}
+{{< img src="dashboards/widgets/hostmap/hostmap.png" alt="Host Map" >}}
 
-## セットアップ
+## Setup
 
-{{< img src="dashboards/widgets/hostmap/hostmap_setup.png" alt="ホストマップの設定" >}}
+{{< img src="dashboards/widgets/hostmap/hostmap_setup.png" alt="Host Map Setup" >}}
 
-### コンフィギュレーション
+### Configuration
 
-ホストマップウィジェットの構成は、メインの[ホストマップ][1]ページに似ています。
+Configuration of the host map widget is similar to the main [host map][1] page:
 
-1. **Type**: `hosts` と `containers` のどちらを表示するかを選択します。
-2. **Filter by**: 表示するホストまたはコンテナを選択します。
-3. **Group by**: ホストまたはコンテナを 1 つまたは複数のタグで集計します。
-4. **Fill by**: ホストまたはコンテナマップの要素を塗りつぶすメトリクスを選択します。
-5. **Size by** (オプション): ホストまたはコンテナマップの要素のサイズを決定するメトリクスを選択します。
-6. **Palette** (オプション): カラーパレットを選択します。
-7. **Values** (オプション): カラーパレットの塗りつぶしの最小および最大値を定義します。
+1. **Type**: Choose to display `hosts` or `containers`.
+2. **Filter by**: Choose the hosts or containers to display.
+3. **Group by**: Aggregate your hosts or containers by one or several tags.
+4. **Fill by**: Choose a metric to fill your host or container map elements.
+5. **Size by** (optional): Choose a metric to size your host or container map elements.
+6. **Palette** (optional): Choose a color palette.
+7. **Values** (optional): Define the min and max color palette fill values.
 
-**注**: ホストマップウィジェットではフリーテキスト検索は使用できません。
+**Note**: Free text search is not available for the host map widget.
 
-### オプション
+### Options
 
-#### タイトル
+#### Context links
 
-`Show a Title` チェックボックスをオンにして、ウィジェットのカスタムタイトルを表示します。
-
-{{< img src="dashboards/widgets/options/title.png" alt="ウィジェットのタイトル" style="width:80%;">}}
-
-オプションで、サイズと配置を定義できます。
+[Context links][2] are enabled by default; you can toggle them on or off. Context links connect dashboard widgets with other pages (in Datadog or third-party).
 
 ## API
 
-このウィジェットは、**ダッシュボード API** とともに使用できます。詳しくは、[ダッシュボード API][2] ドキュメントをご参照ください。
-
-ホストマップウィジェットの[ウィジェット JSON スキーマ定義][3]は次のとおりです。
+This widget can be used with the **[Dashboards API][3]**. See the following table for the [widget JSON schema definition][4]:
 
 {{< dashboards-widgets-api >}}
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
 [1]: /ja/infrastructure/hostmap/
-[2]: /ja/api/v1/dashboards/
-[3]: /ja/dashboards/graphing_json/widget_json/
+[2]: /ja/dashboards/guide/context-links/
+[3]: /ja/api/latest/dashboards/
+[4]: /ja/dashboards/graphing_json/widget_json/

@@ -8,65 +8,71 @@ further_reading:
   tag: ドキュメント
   text: ツリーマップウィジェット
 title: 円グラフウィジェット
+widget_type: sunburst
 ---
 
-円グラフウィジェットは、単一のデータセットとそれに対応する比率、または複数のデータセットを入れ子にして比率を表示することができます。
+The pie chart widget can display a single dataset with corresponding proportions, or multiple datasets with nested proportions.
 
-{{< img src="dashboards/widgets/pie_chart/pie_chart_overview.png" alt="円グラフのウィジェットです。一番内側のリングにはユーザーの国が表示され、一番外側のリングは各国で使用されているブラウザのシェアを示すように比例配分されています。" style="width:60%;">}}
+{{< img src="dashboards/widgets/pie_chart/pie_chart_overview.png" alt="A pie chart widget. The innermost ring shows the user's country, and the outermost ring is segmented proportionally to show the share of browsers used in each country." style="width:60%;">}}
 
 
-## コンフィギュレーション
+## Configuration
 
-1. 利用可能なデータソースから選択します。
-2. クエリを構成します。詳しくは、次の資料をご覧ください。
-    * メトリクス: メトリクスのクエリを構成するには、[クエリ作成][1]のドキュメントを参照してください。
-    * イベント: ログイベントクエリの構成については、[ログ検索][2]に関するドキュメントを参照してください。
-3. (オプション) [式][3]でクエリを修正します。
-4. グラフをカスタマイズします。
+1. Select from the available data sources.
+2. Configure the query, see the following resources for more information:
+    * Metrics: See the [querying ][1] documentation to configure a metric query.
+    * Events: See the [log search][2] documentation to configure a log event query.
+3. (Optional) Modify query with a [formula][3].
+4. Customize your graph.
 
-## グラフのカスタマイズ
+## Graph customization
 
-### 総量表示
+### Total amount display
 
-グラフの中央にトータルカウントを表示するかどうかをトグルします。デフォルトでは、**Automatic** オプションは、グラフが一定のサイズに達すると、トータルカウントを表示します。
+Toggle whether to show a total count in the center of the chart. By default, the **Automatic** option shows the total count once the graph reaches a certain size.
 
-### 凡例のコンフィギュレーション
+### Legend configuration
 
-凡例はオフにしたり、**Aside** オプションでチャートセグメントの上に直接表示したり、各値とその色、比率を一覧表示する **Table** として表示することができます。
+The legend can be turned off, displayed directly over chart segments with the **Aside** option, or as a **Table** listing each value, its color, and proportion.
 
-デフォルトでは、**Automatic** オプションは、ダッシュボード内にラベル付きの Aside 凡例を表示し、フルスクリーンで開いたときに **Aside** と **Table** の両方の凡例を表示します。
+By default, the **Automatic** option shows a labeled Aside legend within a dashboard, and displays both the **Aside** and **Table** legends when opened in full-screen.
 
-{{< img src="dashboards/widgets/pie_chart/legend_automatic.png" alt="円グラフの凡例とラベルのオプション: Automatic、Table、Aside、None" style="width:80%;">}}
+{{< img src="dashboards/widgets/pie_chart/legend_automatic.png" alt="Pie chart Legend and Labeling options: Automatic, Table, Aside, and None" style="width:80%;">}}
 
-### コンテキストリンク
+### Context links
 
-[コンテキストリンク][4]は、デフォルトで有効になっており、オンまたはオフに切り替えることができます。コンテキストリンクは、ダッシュボードウィジェットと他のページ (Datadog 内、またはサードパーティ製) の橋渡しをします。
+[Context links][4] are enabled by default, and can be toggled on or off. Context links bridge dashboard widgets with other pages (in Datadog, or third-party).
 
-## 表示とインタラクション
+## Display and interaction
 
-### フィルターとフォーカス
+### Filter and focus
 
-複数のデータ群を一度にプロットする場合、1 つのカテゴリーを選択し、その中での比率を表示することが可能です。
+In the case where multiple groups of data are plotted at once, you can choose a single category and view proportions within it.
 
-1 つのカテゴリーを表示するには、カテゴリーリングの外側にカーソルを合わせ、クリックします。前の表示に戻るには、カーソルをグラフの中央に移動し、クリックします。
+To view a single category, hover over the outer portion of the category ring, and click. To go back to the previous view, move your cursor to the center of the chart and click.
 
-{{< img src="dashboards/widgets/pie_chart/interaction_animation.mp4" alt="円グラフのインタラクションをアニメーション化し、フィルターをかけて 1 つのカテゴリーにフォーカスする" video="true" style="width:80%;">}}
+{{< img src="dashboards/widgets/pie_chart/interaction_animation.mp4" alt="Animation of pie chart interaction to filter and focus on a single category" video="true" style="width:80%;">}}
 
-### 全画面
+### Full-screen
 
-円グラフウィジェットを全画面表示すると、標準の[全画面表示オプション][5]のセットが表示されます。
+Viewing the pie chart widget in full-screen reveals the standard set of [full-screen options][5].
 
 ## API
 
-このウィジェットは、[Dashboards API][6] で使用することができます。
+This widget can be used with the **[Dashboards API][6]**. See the following table for the [widget JSON schema definition][7]:
 
-## ツリーマップウィジェット
+<div class="alert alert-info">The widget type for Pie Chart is <strong>sunburst</strong>.</div>
 
-円グラフウィジェットのように、[ツリーマップ][7]もネストされた比率を表示するために使用することができます。両者の主な違いは、円グラフは放射状のスライスで比率を表示し、ツリーマップはネストされた長方形を表示する点です。
+{{< dashboards-widgets-api >}}
 
-## その他の参考資料
+## Treemap widget
+
+Like the pie chart widget, the [treemap][8] can also be used to display nested proportions. The primary difference between the two is that the pie chart displays proportions in radial slices, and the treemap displays nested rectangles.
+
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
+
 
 [1]: /ja/dashboards/querying
 [2]: /ja/logs/explorer/search_syntax/
@@ -74,4 +80,5 @@ title: 円グラフウィジェット
 [4]: /ja/dashboards/guide/context-links/
 [5]: /ja/dashboards/widgets/#full-screen
 [6]: /ja/api/latest/dashboards/
-[7]: /ja/dashboards/widgets/treemap/
+[7]: /ja/dashboards/graphing_json/widget_json/
+[8]: /ja/dashboards/widgets/treemap/

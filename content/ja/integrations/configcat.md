@@ -24,6 +24,7 @@ categories:
 - 構成 & デプロイ
 - notifications
 - プロビジョニング
+custom_kind: integration
 dependencies:
 - https://github.com/DataDog/integrations-extras/blob/master/configcat/README.md
 display_on_public_website: true
@@ -33,7 +34,6 @@ integration_id: configcat
 integration_title: ConfigCat
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: configcat
 public_title: ConfigCat
@@ -51,6 +51,7 @@ tile:
   - Supported OS::Linux
   - Supported OS::Windows
   - Supported OS::macOS
+  - Offering::Integration
   configuration: README.md#Setup
   description: Datadog により追跡する設定変更イベント
   media: []
@@ -62,51 +63,51 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/integrations-extras -->
 
 
-## 概要
+## Overview
 
-[ConfigCat 機能フラグ][1]を使用すれば、コードを再デプロイすることなく、機能の管理やソフトウェアのコンフィギュレーション変更が可能になります。技術チーム以外のメンバーでも、[ダッシュボードから 10 分で習得][2]し機能を直接管理できるため、いつでもデプロイし、自信を持ってリリースできます。新しい機能の場合は、初めに特定のユーザーグループをターゲットにするとよいでしょう。A/B/n テストやソフトウェアの発売をサポートしているほか、ウェブ、モバイル、バックエンドアプリケーションと容易に統合が可能な[オープンソース SDK][3]  が提供されています。
+Manage features and change your software configuration using [ConfigCat feature flags][1], without the need to re-deploy code. A [10 minute trainable Dashboard][2] allows even non-technical team members to manage features directly. Deploy anytime, release when confident. Target a specific group of users first with new ideas. Supports A/B/n testing and soft launching. Provides [open-source SDKs][3] for easy integration with any web, mobile or backend application.
 
-このインテグレーションにより、ConfigCat のあらゆる設定変更が Datadog にイベントとして確実に送信されます。
+This integration ensures that every setting change in ConfigCat is sent to Datadog as an Event.
 
-*例:*
-![Datadog イベント][4]
+*Example:*
+![DatadogEvent][4]
 
-## 計画と使用
+## Setup
 
-1. [Datadog サブスクリプション][5]を入手します。
-2. [Datadog API キー][6]を取得します。
-    ![Datadog イベント][7] 
-4. ConfigCat ダッシュボードで [integrations タブ][8]を開きます。
-5. Datadog の _CONNECT_ ボタンをクリックし、Datadog API キーを設定します。
-6. これで完了です。機能フラグに何かしらの変更を加え、次に Datadog でイベントをチェックします。
+1. Have a [Datadog subscription][5].
+2. Get a [Datadog API Key][6].
+    ![DatadogEvent][7] 
+4. Open the [integrations tab][8] on ConfigCat Dashboard.
+5. Click on Datadog's _CONNECT_ button and set your Datadog API key.
+6. You're all set. Go ahead and make some changes on your feature flags then check your Events in Datadog.
 
 
-### アンインストール
+### Un-installation
 
-1. ConfigCat ダッシュボードで [integrations タブ][8]を開きます。
-2. Datadog の DISCONNECT ボタンをクリックし、Datadog API キーを設定します。
+1. Open the [integrations tab][8] on ConfigCat Dashboard.
+2. Click on Datadog's DISCONNECT button and set your Datadog API key.
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 
-ConfigCat インテグレーションには、メトリクスは含まれません。
+ConfigCat integration does not include any metrics.
 
-### ヘルプ
+### Events
 
-収集されたすべての ConfigCat 関連のイベントは、`source:configcat` プロパティと一緒に Datadog イベントストリームに表示され、製品、コンフィギュレーション、環境の各名前でタグ付けされます。
+All ConfigCat related events collected appear within the Datadog Event Stream with the `source:configcat` property are tagged with your product, config and environment names.
 
-これは、本番環境 `source:configcat production` で発生したイベントを検索する方法を示した例です。
+For example here is how to search for events that happened in the production environment: `source:configcat production`:
 
-![フィルタリング][9]
+![Filtering][9]
 
-### ヘルプ
+### Service Checks
 
-ConfigCat インテグレーションには、サービスのチェック機能は含まれません。
+ConfigCat integration does not include any service checks.
 
-## ヘルプ
+## Troubleshooting
 
-ヘルプが必要な場合は [ConfigCat ドキュメント][10]を確認するか、[ConfigCat サポート][11]にお問い合わせください。
+Need help? See the [ConfigCat documentation][10] or contact [ConfigCat support][11].
 
 [1]: https://configcat.com
 [2]: https://app.configcat.com

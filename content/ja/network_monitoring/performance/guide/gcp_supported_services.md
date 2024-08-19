@@ -10,10 +10,10 @@ npm_provider: gcp
 title: NPM Google Cloud でサポートされるデバイス
 ---
 
-Datadog ネットワークパフォーマンスモニタリング (NPM) は、AppEngine、Google DNS、Gmail、および以下にリストされているその他の GCP サービスへの API 呼び出しを自動的に検出します。
+Datadog Network Performance Monitoring (NPM) automatically detects API calls to AppEngine, Google DNS, Gmail, and other GCP services listed below:
 
 {{< get-npm-integrations "gcp" >}}
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}

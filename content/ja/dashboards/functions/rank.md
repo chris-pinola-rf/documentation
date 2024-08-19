@@ -1,54 +1,55 @@
 ---
-title: ランク
 aliases:
-  - /ja/graphing/functions/rank/
+- /ja/graphing/functions/rank/
+title: ランク
 ---
-## トップ
 
-| 関数 | 説明               | 例                                              |
+## Top
+
+| Function | Description               | Example                                              |
 | :----    | :-------                  | :---------                                           |
-| `top()`  | トップ n 個の要素をグラフ化します。 | `top(<METRIC_NAME>{*}, <LIMIT_TO>, '<BY>', '<DIR>')` |
+| `top()`  | Graph the top N elements. | `top(<METRIC_NAME>{*}, <LIMIT_TO>, '<BY>', '<DIR>')` |
 
-`top()` 関数は 3 つのパラメーターを持ちます。
+The `top()` function has three parameters:
 
-* `LIMIT_TO`: 表示される系列の数。以下から選択します。
+* `LIMIT_TO`: The number of series to be displayed; choose from:
     - `5`
     - `10`
     - `25`
     - `50`
     - `100`
-* `BY`: 集計方法。以下から選択します。
-    - `max`: すべてのメトリクス値の最大値。
-    - `mean`: すべてのメトリクス値の平均値。
-    - `min`: すべてのメトリクス値の最小値。
-    - `sum`: すべてのメトリクス値の合計。
-    - `last`: 最後のメトリクス値。
-    - `l2norm`: 時系列の[ノルム][1]を使用して (常に正の値)、系列をランク付けします。
-    - `area`: グラフの曲線の下の符号付き面積。負の場合もあります。
+* `BY`: Aggregation method; choose from:
+    - `max`: Maximum of all metrics values.
+    - `mean`: Mean of all metrics values.
+    - `min`: Min of all metrics values.
+    - `sum`: Sum of all metrics values.
+    - `last`: Last metrics value.
+    - `l2norm`: Uses the [norm][1] of the timeseries, which is always positive, to rank the series.
+    - `area`: Signed area under the curve being graphed, which can be negative
 
-* `DIR`: ランク付けの方向。以下のいずれかを選択します。
-    - `asc`: 結果を昇順でランク付けします。
-    - `desc`: 結果を降順でランク付けします。
+* `DIR`: The direction of ranking; choose between:
+    - `asc`: Rank the results in ascending order.
+    - `desc`: Rank the results in descending order.
 
-`top()` メソッドには、便宜的に次の形式の関数も用意されています。これらは、入力として 1 つの系列リストを受け取ります。
+The `top()` method also has convenience functions of the following form, all of which take a single series list as input:
 
 `[top, bottom][5, 10, 15, 20]_[mean, min, max, last, area, l2norm][2]`
 
-たとえば、`bottom10_min()` は、`min` メトリクスを使用して、下位の値 10 の系列を取得します。
+For example, `bottom10_min()` retrieves the 10 lowest-valued series using the `min` metric.
 
-## その他の関数
+## Other functions
 
-{{< whatsnext desc="他に利用できる関数を参照します。" >}}
-    {{< nextlink href="/dashboards/functions/algorithms" >}}アルゴリズム: メトリクスに異常値や外れ値の検出機能を実装します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/arithmetic" >}}算術: メトリクスに対して算術演算を実行します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/count" >}}カウント: メトリクスの 0 以外または null 以外の値をカウントします。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/exclusion" >}}除外: メトリクスの特定の値を除外します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/interpolation" >}}補間: メトリクスにデフォルト値を挿入または設定します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/rate" >}}レート: メトリクスに対してカスタム微分係数を計算します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/regression" >}}回帰: メトリクスに何らかの機械学習関数を適用します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/rollup" >}}ロールアップ: メトリクスに使用される元ポイントの数を制御します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/smoothing" >}}スムーシング: メトリクスの変動を滑らかにします。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/timeshift" >}}タイムシフト: メトリクスのデータポイントをタイムラインに沿って移動させます。{{< /nextlink >}}
+{{< whatsnext desc="Consult the other available functions:" >}}
+    {{< nextlink href="/dashboards/functions/algorithms" >}}Algorithmic: Implement Anomaly or Outlier detection on your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/arithmetic" >}}Arithmetic: Perform Arithmetic operation on your metric.  {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/count" >}}Count: Count non zero or non null value of your metric. {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/exclusion" >}}Exclusion: Exclude certain values of your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/interpolation" >}}Interpolation: Fill or set default values for your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/rate" >}}Rate: Calculate custom derivative over your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/regression" >}}Regression: Apply some machine learning function to your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/rollup" >}}Rollup: Control the number of raw points used in your metric. {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/smoothing" >}}Smoothing: Smooth your metric variations.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/timeshift" >}}Timeshift: Shift your metric data point along the timeline. {{< /nextlink >}}
 {{< /whatsnext >}}
 
 

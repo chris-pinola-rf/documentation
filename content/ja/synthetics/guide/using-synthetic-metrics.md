@@ -13,51 +13,51 @@ further_reading:
 title: 推定使用量メトリクスを使用する
 ---
 
-## 概要
+## Overview
 
-Synthetic テストから生成された[メトリクス][1]を使って、[テストで作成した Synthetic モニター][3]に加えて、[メトリクスモニター][2]を作成することが可能です。
+You can use [metrics][1] generated from your Synthetic tests to create [metric monitors][2] in addition to the [Synthetic monitor created with your test][3].
 
-{{< img src="synthetics/guide/using-synthetic-metrics/metric-monitor.png" alt="CI で失敗するテストが多すぎる場合にアラートを出すメトリクスモニターの例" style="width:95%;" >}}
+{{< img src="synthetics/guide/using-synthetic-metrics/metric-monitor.png" alt="Example metric monitor that alerts when too many tests are failing in CI" style="width:95%;" >}}
 
-メトリクスモニターを使用すると、以下のことが実現できます。
+With metric monitors, you can accomplish the following:
 
-- トータルレスポンスタイムの監視
-- DNS、DNS 解決、TCP 接続など、特定の HTTP タイミングでのスコープ
-- Synthetic テストから得られるメトリクスに追加されたタグへのアクセス
+- Monitor the total response time
+- Scope on specific HTTP timings such as DNS, the DNS resolution, and TCP connection
+- Access tags added to metrics coming from Synthetic tests 
 
-このガイドでは、`synthetics.test_runs` のような一般的なメトリクスを使って、メトリクスモニターをセットアップする方法を説明します。
+This guide demonstrates how to set up a metric monitor using a general metric such as `synthetics.test_runs`. 
 
-## メトリクスモニターの作成
+## Create a metric monitor
 
 
-{{< img src="synthetics/guide/using-synthetic-metrics/metric-monitor-setup.png" alt="CI で失敗するテストが多すぎる場合にアラートを出すメトリクスモニターの例" style="width:95%;" >}}
+{{< img src="synthetics/guide/using-synthetic-metrics/metric-monitor-setup.png" alt="Example metric monitor that alerts when too many tests are failing in CI" style="width:95%;" >}}
 
-1. メトリクスモニターを作成するには、[Monitors > New Monitor][4] に移動し、**Metric** をクリックします。
+1. To create a metric monitor, navigate to [Monitors > New Monitor][4] and click **Metric**. 
 
-2. モニターのアラート条件をカスタマイズするために、検出方法を選択します。この例では、しきい値アラートのメトリクスモニターを作成します。
+2. Select a detection method to customize your monitor's alerting conditions. For this example, you can create a threshold alert metric monitor.
 
-   しきい値アラート
-   : メトリクスがしきい値を超えるとアラートがトリガーされます。
+   Threshold Alert
+   : An alert is triggered whenever a metric crosses a threshold.
 
-   変更アラート
-   : 値間のデルタがしきい値より大きい場合、アラートがトリガーされます。
+   Change Alert
+   : An alert is triggered when the delta between values is higher than the threshold.
 
-   異常検知
-   : メトリクスが予想されるパターンから逸脱するとアラートがトリガーされます。
+   Anomaly Detection
+   : An alert is triggered whenever a metric deviates from an expected pattern.
 
-   外れ値アラート
-   : グループ内のあるメンバーが他のメンバーと異なる振る舞いをしたときにアラートがトリガーされます。
+   Outliers Alert
+   : An alert is triggered whenever one member in a group behaves differently from its peers.
 
-   予測アラート
-   : あるメトリクスが将来しきい値を超えると予測される場合にアラートがトリガーされます。
+   Forecast Alert
+   : An alert is triggered whenever a metric is forecast to cross a threshold in the future.
 
-3. **Define the metric** セクションでは、Synthetic Monitoring のメトリクスとして `synthetics.test_runs` など、ステータス、レスポンスコード、再試行動作にフィルターをかけることができるものを入力します。
+3. In the **Define the metric** section, enter a Synthetic Monitoring metric such as `synthetics.test_runs`, where you can filter on status, response codes, and retry behavior.
 
-4. アラート条件を設定し、通知メッセージを追加します。
+4. Set the alerting conditions and add a notification message.
 
-5. 編集権限を設定し、**Create** をクリックします。
+5. Set editing permissions and click **Create**.
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

@@ -12,42 +12,51 @@ further_reading:
 - link: /logs/explorer/
   tag: ドキュメント
   text: ログの調査方法
+- link: /logs/troubleshooting/
+  tag: ドキュメント
+  text: ログのトラブルシューティング
 - link: https://learn.datadoghq.com/courses/going-deeper-with-logs-processing
-  tag: ラーニングセンター
+  tag: Learning Center
   text: ログ処理を極める
+- link: https://www.datadoghq.com/blog/monitor-cloudflare-zero-trust/
+  tag: ブログ
+  text: Datadog Cloud SIEM で Cloudflare Zero Trust を監視
+- link: https://www.datadoghq.com/blog/monitor-1password-datadog-cloud-siem/
+  tag: ブログ
+  text: Datadog Cloud SIEM で 1Password を監視
 title: パイプライン
 ---
 
-## 概要
+## Overview
 
-Datadog は自動的に JSON 形式のログを[パースします][1]。そして、処理パイプラインを通して送ることで、値をすべてのログ (生ログとJSON) に追加することができます。パイプラインは、ログを広範囲の形式から取得し Datadog で一般的に使用される形式に変換します。ログパイプラインの実装と処理戦略は、組織に[属性の命名習慣][2]を導入するため、有意義です。
+Datadog automatically [parses][1] JSON-formatted logs. You can then add value to all your logs (raw and JSON) by sending them through a processing pipeline. Pipelines take logs from a wide variety of formats and translate them into a common format in Datadog. Implementing a log pipelines and processing strategy is beneficial as it introduces an [attribute naming convention][2] for your organization.
 
-パイプラインを使用すると、いくつかの[プロセッサー][3]を通して順次ログをつなぐことにより、ログがパースされ補完されます。これにより、半構造化されたテキストから意味のある情報や属性を抽出し、[ファセット][4]として再利用することができます。パイプラインを経由するログは、すべてのパイプラインフィルターに対してテストされます。いずれかのフィルターに一致したログは、すべてのプロセッサーが順次適用されてから、次のパイプラインに移動します。
+With pipelines, logs are parsed and enriched by chaining them sequentially through [processors][3]. This extracts meaningful information or attributes from semi-structured text to reuse as [facets][4]. Each log that comes through the pipelines is tested against every pipeline filter. If it matches a filter, then all the processors are applied sequentially before moving to the next pipeline.
 
-パイプラインおよびプロセッサーは、あらゆるタイプのログに適用できます。ロギングコンフィギュレーションを変更したり、サーバー側の処理ルールに変更をデプロイする必要もありません。すべての処理は、[パイプラインコンフィギュレーションページ][5]で構成できます。
+Pipelines and processors can be applied to any type of log. You don't need to change logging configuration or deploy changes to any server-side processing rules. Everything can be configured within the [pipeline configuration page][5].
 
-**注**: ログ管理ソリューションを最適にご利用いただくため、Datadog では [Grok プロセッサ][6]内でパイプラインごとに最大 20 件のプロセッサーおよび 10 個のパース規則を使用することをおすすめします。Datadog はサービスのパフォーマンスに悪影響を与える可能性のあるパース規則、プロセッサー、パイプラインを無効化する権利を有しています。
+**Note**: For optimal use of the Log Management solution, Datadog recommends using at most 20 processors per pipeline and 10 parsing rules within a [Grok processor][6]. Datadog reserves the right to disable underperforming parsing rules, processors, or pipelines that might impact Datadog's service performance.
 
-## 前処理
+## Preprocessing
 
-JSON ログの前処理は、ログがパイプライン処理に入る前に発生します。前処理では、予約済み属性に基づく一連の操作（`timestamp`、`status`、`host`、`service`、`message` など）を実行します。JSON ログに異なる属性名がある場合は、前処理を使用してログ属性名を予約済み属性リストの属性名にマップします。
+Preprocessing of JSON logs occurs before logs enter pipeline processing. Preprocessing runs a series of operations based on reserved attributes, such as `timestamp`, `status`, `host`, `service`, and `message`. If you have different attribute names in your JSON logs, use preprocessing to map your log attribute names to those in the reserved attribute list.
 
-JSON ログ前処理は、デフォルトで標準ログフォワーダーに機能するよう構成されています。このコンフィギュレーションは、カスタムまたは特定のログ転送方法に合わせて編集することが可能です。
+JSON log preprocessing comes with a default configuration that works for standard log forwarders. To edit this configuration to adapt custom or specific log forwarding approaches:
 
-1. Datadog アプリで [Pipelines][7] に移動し、[Preprocessing for JSON logs][8] を選択します。
+1. Navigate to [Pipelines][7] in the Datadog app and select [Preprocessing for JSON logs][8].
 
-    **注:** JSON ログの前処理は、ログ属性の 1 つをログの `host` として定義する唯一の方法です。
+    **Note:** Preprocessing JSON logs is the only way to define one of your log attributes as `host` for your logs.
 
-2. 予約済み属性に基づき、デフォルトのマッピングを変更します。
+2. Change the default mapping based on reserved attribute:
 
 {{< tabs >}}
 {{% tab "Source" %}}
 
-#### ソース属性
+#### Source attribute
 
-JSON 形式のログファイルに `ddsource` 属性が含まれる場合、Datadog はその値をログのソースと解釈します。Datadog が使用しているソース名を使用する場合は、[インテグレーションパイプラインライブラリ][1]を参照してください。
+If a JSON formatted log file includes the `ddsource` attribute, Datadog interprets its value as the log's source. To use the same source names Datadog uses, see the [Integration Pipeline Library][1].
 
-**注**: コンテナ化環境から取得したログの場合、[環境変数][2]を使用してデフォルトのソース値とサービス値をオーバーライドする必要があります。
+**Note**: Logs coming from a containerized environment require the use of an [environment variable][2] to override the default source and service values.
 
 
 [1]: https://app.datadoghq.com/logs/pipelines/pipeline/library
@@ -55,9 +64,9 @@ JSON 形式のログファイルに `ddsource` 属性が含まれる場合、Dat
 {{% /tab %}}
 {{% tab "Host" %}}
 
-#### ホスト属性
+#### Host attribute
 
-Datadog Agent または RFC5424 形式を使用すると、自動的にログにホスト値が設定されます。ただし、JSON 形式のログファイルに以下の属性が含まれる場合、Datadog はその値をログのホストと解釈します。
+Using the Datadog Agent or the RFC5424 format automatically sets the host value on your logs. However, if a JSON formatted log file includes the following attribute, Datadog interprets its value as the log's host:
 
 * `host`
 * `hostname`
@@ -66,9 +75,9 @@ Datadog Agent または RFC5424 形式を使用すると、自動的にログに
 {{% /tab %}}
 {{% tab "Date" %}}
 
-#### 日付属性
+#### Date attribute
 
-デフォルトでは、Datadog は、ログを受信したときにタイムスタンプを生成し、それを date 属性に付加します。ただし、JSON 形式のログファイルに以下の属性のいずれかが含まれる場合、その値をログの正式な日付と解釈します。
+By default Datadog generates a timestamp and appends it in a date attribute when logs are received. However, if a JSON formatted log file includes one of the following attributes, Datadog interprets its value as the log's official date:
 
 * `@timestamp`
 * `timestamp`
@@ -79,12 +88,12 @@ Datadog Agent または RFC5424 形式を使用すると、自動的にログに
 * `published_date`
 * `syslog.timestamp`
 
-[ログ日付リマッパープロセッサー][1]を設定し、別の属性を指定してログの日付のソースとして使用します。
+Specify alternate attributes to use as the source of a log's date by setting a [log date remapper processor][1].
 
-**注**: ログエントリの正式な日付が 18 時間以上前だった場合、Datadog はそのエントリを拒否します。
+**Note**: Datadog rejects a log entry if its official date is older than 18 hours in the past.
 
 <div class="alert alert-warning">
-認識される日付の形式は、<a href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO8601</a>、<a href="https://en.wikipedia.org/wiki/Unix_time">UNIX (ミリ秒エポック形式)</a>、および <a href="https://www.ietf.org/rfc/rfc3164.txt">RFC3164</a> です。
+The recognized date formats are: <a href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO8601</a>, <a href="https://en.wikipedia.org/wiki/Unix_time">UNIX (the milliseconds EPOCH format)</a>, and <a href="https://www.ietf.org/rfc/rfc3164.txt">RFC3164</a>.
 </div>
 
 
@@ -92,11 +101,11 @@ Datadog Agent または RFC5424 形式を使用すると、自動的にログに
 {{% /tab %}}
 {{% tab "Message" %}}
 
-#### メッセージ属性
+#### Message attribute
 
-デフォルトで、Datadog ではメッセージの値をログエントリの本文として収集します。この値がハイライトされて [Log Explore][1] に表示され、[全文検索][2]用にインデックス化されます。
+By default, Datadog ingests the message value as the body of the log entry. That value is then highlighted and displayed in the [Log Explorer][1], where it is indexed for [full text search][2].
 
-[ログメッセージリマッパープロセッサー][3]を設定し、別の属性を指定してログのメッセージのソースとして使用します。
+Specify alternate attributes to use as the source of a log's message by setting a [log message remapper processor][3].
 
 
 [1]: /ja/logs/explorer/
@@ -105,43 +114,43 @@ Datadog Agent または RFC5424 形式を使用すると、自動的にログに
 {{% /tab %}}
 {{% tab "Status" %}}
 
-#### ステータス属性
+#### Status attribute
 
-各ログエントリにはステータスレベルを指定でき、Datadog 内のファセット検索で使用できます。ただし、JSON 形式のログファイルに以下の属性のいずれかが含まれる場合、Datadog はその値をログの正式なステータスと解釈します。
+Each log entry may specify a status level which is made available for faceted search within Datadog. However, if a JSON formatted log file includes one of the following attributes, Datadog interprets its value as the log's official status:
 
 * `status`
 * `severity`
 * `level`
 * `syslog.severity`
 
-[ログステータスリマッパープロセッサー][1]を設定し、別の属性を指定してログのステータスのソースとして使用します。
+Specify alternate attributes to use as the source of a log's status by setting a [log status remapper processor][1].
 
 [1]: /ja/logs/log_configuration/processors/#log-status-remapper
 {{% /tab %}}
 {{% tab "Service" %}}
 
-#### サービス属性
+#### Service attribute
 
-Datadog Agent または RFC5424 形式を使用すると、自動的にログにサービス値が設定されます。ただし、JSON 形式のログファイルに以下の属性が含まれる場合、Datadog はその値をログのサービスと解釈します。
+Using the Datadog Agent or the RFC5424 format automatically sets the service value on your logs. However, if a JSON formatted log file includes the following attribute, Datadog interprets its value as the log's service:
 
 * `service`
 * `syslog.appname`
 
-[ログサービスリマッパープロセッサー][1]を設定し、別の属性を指定してログのサービスのソースとして使用します。
+Specify alternate attributes to use as the source of a log's service by setting a [log service remapper processor][1].
 
 
 [1]: /ja/logs/log_configuration/processors/#service-remapper
 {{% /tab %}}
 {{% tab "Trace ID" %}}
 
-#### トレース ID 属性
+#### Trace ID attribute
 
-デフォルトで、[Datadog トレーサーは、自動的にログにトレースとスパンの ID を挿入します][1]。ただし、JSON 形式のログに以下の属性が含まれる場合、Datadog はその値をログの `trace_id` と解釈します。
+By default, [Datadog tracers can automatically inject trace and span IDs into your logs][1]. However, if a JSON formatted log includes the following attributes, Datadog interprets its value as the log's `trace_id`:
 
 * `dd.trace_id`
 * `contextMap.dd.trace_id`
 
-[トレース ID リマッパープロセッサー][2]を設定し、別の属性を指定してログのトレース ID のソースとして使用します。
+Specify alternate attributes to use as the source of a log's trace ID by setting a [trace ID remapper processor][2].
 
 
 [1]: /ja/tracing/other_telemetry/connect_logs_and_traces/
@@ -149,95 +158,99 @@ Datadog Agent または RFC5424 形式を使用すると、自動的にログに
 {{% /tab %}}
 {{< /tabs >}}
 
-## パイプラインを作成する
+## Create a pipeline
 
-1. Datadog アプリで [Pipelines][7] に移動します。
-2. **New Pipeline** を選択します。
-3. Live tail プレビューからフィルターを適用するログを選択、または独自のフィルターを適用します。ドロップダウンメニューから選択、または **</>** アイコンを選択して独自のフィルタークエリを作成します。フィルターを使用すると、パイプラインを適用するログの種類を制限できます。
+1. Navigate to [Pipelines][7] in the Datadog app.
+2. Select **New Pipeline**.
+3. Select a log from the live tail preview to apply a filter, or apply your own filter. Choose a filter from the dropdown menu or create your own filter query by selecting the **</>** icon. Filters let you limit what kinds of logs a pipeline applies to.
 
-    **注**: パイプラインフィルターはパイプラインのプロセッサーの前に適用されます。このため、パイプライン自体で抽出される属性で絞り込みを行うことはできません。
+    **Note**: The pipeline filtering is applied before any of the pipeline's processors. For this reason, you cannot filter on an attribute that is extracted in the pipeline itself.
 
-4. パイプラインに名前を付けます。
-5. (オプション) パイプライン内のプロセッサに編集アクセスを許可します。
-6. (オプション) パイプラインにタグと説明を追加します。説明とタグを使用して、パイプラインの目的や、どのチームが所有しているかを記載することができます。
-7. **Create** を押します。
+4. Name your pipeline.
+5. (Optional) Grant editing access to processors in the pipeline.
+6. (Optional) Add tags and a description to the pipeline. The description and tags can be used to state the pipeline's purpose and which team owns it.
+7. Press **Create**.
 
-パイプラインにより返還されたログの例:
+An example of a log transformed by a pipeline:
 
-{{< img src="logs/processing/pipelines/log_post_processing.png" alt="パイプラインにより返還されたログの例" style="width:50%;">}}
+{{< img src="logs/processing/pipelines/log_post_processing.png" alt="An example of a log transformed by a pipeline" style="width:50%;">}}
 
-### インテグレーションパイプライン
+### Integration pipelines
 
 <div class="alert alert-info">
-サポートされているインテグレーションのリストは、<a href="/integrations/#cat-log-collection">こちら</a>でご確認ください。
+See the <a href="/integrations/#cat-log-collection">list of supported integrations</a>.
 </div>
 
-ログを収集するようセットアップされている一部のソースには、インテグレーション処理パイプラインを使用できます。これらのパイプラインは**読み取り専用**であり、各ソースに適した方法でログをパースします。インテグレーションログにインテグレーションパイプラインが自動的にインストールされ、ログをパースして対応するファセットをログエクスプローラーに追加します。
+Integration processing pipelines are available for certain sources when they are set up to collect logs. These pipelines are **read-only** and parse out your logs in ways appropriate for the particular source. For integration logs, an integration pipeline is automatically installed that takes care of parsing your logs and adds the corresponding facet in your Logs Explorer.
 
-インテグレーションパイプラインを表示するには、[パイプライン][5]ページに移動します。インテグレーションパイプラインを編集するには、それを複製した上で編集します。
+To view an integration pipeline, navigate to the [Pipelines][5] page. To edit an integration pipeline, clone it and then edit the clone:
 
-{{< img src="logs/processing/pipelines/cloning_pipeline.png" alt="パイプラインの複製" style="width:80%;">}}
+{{< img src="logs/processing/pipelines/cloning_pipeline.png" alt="Cloning pipeline" style="width:80%;">}}
 
-以下の ELB ログの例を参照してください。
+See the ELB logs example below:
 
-{{< img src="logs/processing/elb_log_post_processing.png" alt="ELB ログの後処理" style="width:70%;">}}
+{{< img src="logs/processing/elb_log_post_processing.png" alt="ELB log post processing" style="width:70%;">}}
 
-### インテグレーションパイプラインライブラリ
+### Integration pipeline library
 
-Datadog で利用可能なインテグレーションパイプラインの一覧については、[インテグレーションパイプラインライブラリ][7]をご覧ください。パイプラインライブラリにて、Datadog がデフォルトで各ログフォーマットを処理する方法をご確認いただけます。
+To see the full list of integration pipelines that Datadog offers, browse the [integration pipeline library][7]. The pipeline library shows how Datadog processes different log formats by default.
 
-{{< img src="logs/processing/pipelines/integration-pipeline-library.mp4" alt="インテグレーションパイプラインライブラリ" video=true style="width:80%;">}}
+{{< img src="logs/processing/pipelines/integration-pipeline-library.mp4" alt="Integration pipeline library" video=true style="width:80%;">}}
 
-インテグレーションパイプラインを使用する場合、Datadog は対応するログの `source` を構成し、インテグレーションをインストールすることを推奨しています。Datadog がこのソースから初回のログを受信すると、インストールが自動でトリガーされ、インテグレーションパイプラインが処理対象のパイプラインリストに追加されます。ログソースの構成については、対応する[インテグレーションのドキュメント][9]を参照してください。
+To use an integration pipeline, Datadog recommends installing the integration by configuring the corresponding log `source`. Once Datadog receives the first log with this source, the installation is automatically triggered and the integration pipeline is added to the processing pipelines list. To configure the log source, refer to the corresponding [integration documentation][9].
 
-Clone ボタンをクリックしてインテグレーションパイプラインをコピーすることもできます。
+It's also possible to copy an integration pipeline using the clone button.
 
-{{< img src="logs/processing/pipelines/clone-pipeline-from-library.mp4" alt="ライブラリからパイプラインを複製" video=true style="width:80%;">}}
+{{< img src="logs/processing/pipelines/clone-pipeline-from-library.mp4" alt="Cloning pipeline from Library" video=true style="width:80%;">}}
 
-## プロセッサーまたはネストされたパイプラインを追加
+## Add a processor or nested pipeline
 
-1. Datadog アプリで [Pipelines][7] に移動します。
-2. パイプラインにカーソルを合わせ、表示される矢印をクリックしてプロセッサーおよびネストされたパイプラインを展開します。
-3. **Add Processor** または **Add Nested Pipeline** を選択します。
+1. Navigate to [Pipelines][7] in the Datadog app.
+2. Hover over a pipeline and click the arrow next to it to expand processors and nested pipelines.
+3. Select **Add Processor** or **Add Nested Pipeline**.
 
-### プロセッサー
+### Processors
 
-プロセッサーは、パイプラインの内部で実行し、データ構造化アクションを完了します。アプリ内または API を使用して、プロセッサー別にプロセッサーを追加し構成する方法については、[プロセッサーに関するドキュメント][3]を参照してください。
+プロセッサーはパイプライン内で実行され、データ構造化アクションを完了します。アプリ内または API を使用して、プロセッサーの種類ごとにプロセッサーを追加および構成する方法については、[プロセッサーに関するドキュメント][3]を参照してください。 
 
-### ネストされたパイプライン
+カスタム日時形式のパースや、タイムスタンプが UTC でない場合に必要な `timezone` パラメーターについては、[日付のパース][10]を参照してください。
 
-ネストされたパイプラインとは、パイプラインの内部のパイプラインのことです。ネストされたパイプラインを使用すると、処理を 2 段階に分けることができます。たとえば、チームなどの高レベルのフィルターを使用してから、インテグレーション、サービス、タグ、属性などに基づく第 2 レベルのフィルタリングを使用します。
+### Nested pipelines
 
-パイプラインは、ネストされたパイプラインとプロセッサーを持つことができます。一方、ネストされたパイプラインは、プロセッサーしか持つことができません。
+Nested pipelines are pipelines within a pipeline. Use nested pipelines to split the processing into two steps. For example, first use a high-level filter such as team and then a second level of filtering based on the integration, service, or any other tag or attribute.
 
-{{< img src="logs/processing/pipelines/nested_pipeline.png" alt="ネストされたパイプライン" style="width:80%;">}}
+A pipeline can contain nested pipelines and processors whereas a nested pipeline can only contain processors.
 
-あるパイプラインを別のパイプラインに移動して、ネストされたパイプラインに変換することができます。
+{{< img src="logs/processing/pipelines/nested_pipeline.png" alt="Nested pipelines" style="width:80%;">}}
 
-{{< img src="logs/processing/pipelines/move_to_pipeline.mp4" alt="ネストされたパイプラインをドラッグアンドドロップ" video="true" width="80%" >}}
+パイプラインを別のパイプラインに移動して、ネストされたパイプラインにします。
 
-## パイプラインの管理
+1. 移動したいパイプラインにカーソルを合わせ、**Move to** アイコンをクリックします。
+1. 元のパイプラインの移動先となるパイプラインを選択します。**注**: ネストされたパイプラインを含むパイプラインは、別の最上位の位置にのみ移動できます。別のパイプラインに移動することはできません。
+1. **Move** をクリックします。
 
-パイプラインの変更情報を使って、パイプラインやプロセッサの最後の変更がいつ行われたのか、どのユーザーが変更したのかを特定します。パイプラインが有効か読み取り専用かなど、他のファセット化されたプロパティと同様に、この変更情報を使用してパイプラインをフィルタリングします。
+## Manage your pipelines
 
-{{< img src="logs/processing/pipelines/log_pipeline_management.png" alt="ファセット検索、パイプラインの修正情報、並べ替えモーダルによるパイプラインの管理方法" style="width:50%;">}}
+Identify when the last change to a pipeline or processor was made and which user made the change using the modification information on the pipeline. Filter your pipelines using this modification information, as well as other faceted properties such as whether the pipeline is enabled or read-only.
 
-スライドオプションパネルの `Move to` オプションでパイプラインを正確に並べ替えることができます。スクロールして、選択したパイプラインを移動させる正確な位置を `Move to` モーダルを使ってクリックします。パイプラインは、他の読み取り専用パイプラインの中に移動することはできません。ネストされたパイプラインを含むパイプラインは、他のトップレベルの位置にのみ移動することができます。他のパイプラインの中に移動することはできません。
+{{< img src="logs/processing/pipelines/log_pipeline_management.png" alt="How to manage your pipelines with faceted search, pipeline modificiation information, and the reordering modal" style="width:50%;">}}
 
-{{< img src="logs/processing/pipelines/log_pipeline_move_to.png" alt="モーダルへの移動を利用してパイプラインを正確に並べ替える方法" style="width:50%;">}}
+Reorder pipelines precisely with the `Move to` option in the sliding option panel. Scroll and click on the exact position to move the selected pipeline to using the `Move to` modal. Pipelines cannot be moved into other read-only pipelines. Pipelines containing nested pipelines can only be moved to other top level positions. They cannot be moved into other pipelines.
 
-## 推定使用量メトリクス
+{{< img src="logs/processing/pipelines/log_pipeline_move_to.png" alt="How to reorder your pipelines precisely using the move to modal" style="width:50%;">}}
 
-パイプラインごとに推定された使用量メトリクス、具体的には、各パイプラインで取り込まれ、変更されたログの量と件数が表示されます。また、各パイプラインからすぐに使える [Logs Estimated Usage Dashboard][10] へのリンクがあり、そのパイプラインの使用量メトリクスをより詳細なグラフで表示することが可能です。
+## Estimated usage metrics
 
-{{< img src="logs/processing/pipelines/log_pipeline_statistics.png" alt="パイプラインの使用量メトリクスを素早く確認する方法" style="width:50%;">}}
+パイプラインごとに推定された使用量メトリクス、具体的には、各パイプラインで取り込まれ、変更されたログの量と件数が表示されます。また、各パイプラインからすぐに使える [Logs Estimated Usage Dashboard][11] へのリンクがあり、そのパイプラインの使用量メトリクスをより詳細なグラフで表示することが可能です。
 
-## その他の参考資料
+{{< img src="logs/processing/pipelines/log_pipeline_statistics.png" alt="How to get a quick view of your pipelines' usage metrics" style="width:50%;">}}
+
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
 <br>
-*Logging without Limits は Datadog, Inc. の商標です。
+*Logging without Limits is a trademark of Datadog, Inc.
 
 [1]: /ja/logs/log_configuration/parsing/
 [2]: /ja/logs/log_collection/?tab=host#attributes-and-tags
@@ -248,4 +261,5 @@ Clone ボタンをクリックしてインテグレーションパイプライ�
 [7]: https://app.datadoghq.com/logs/pipelines/pipeline/library
 [8]: https://app.datadoghq.com/logs/pipelines/remapping
 [9]: /ja/integrations/#cat-log-collection
-[10]: https://app.datadoghq.com/dash/integration/logs_estimated_usage
+[10]: /ja/logs/log_configuration/parsing/?tab=matchers#parsing-dates
+[11]: https://app.datadoghq.com/dash/integration/logs_estimated_usage

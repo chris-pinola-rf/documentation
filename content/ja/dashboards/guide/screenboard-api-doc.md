@@ -6,31 +6,31 @@ title: スクリーンボード API
 ---
 
 <div class="alert alert-danger">
-このエンドポイントは旧バージョンです。代わりに、 <a href="https://docs.datadoghq.com/api/v1/dashboards/">新しいダッシュボードエンドポイント</a>を使用してください。
+This endpoint is outdated. Use the <a href="https://docs.datadoghq.com/api/v1/dashboards/">new Dashboard endpoint</a> instead.
 </div>
 
-`Screenboard` エンドポイントを使用すると、スクリーンボードをプログラムで作成、更新、削除、およびクエリできます。
+The `Screenboard` endpoint allows you to programmatically create, update, delete, and query screenboards.
 
-## スクリーンボードの作成
+## Create a screenboard
 
-### シグニチャ
+### Signature
 
 `POST https://api.datadoghq.com/api/v1/screen`
 
-### 引数
+### Arguments
 
-* **`board_title`** [必須]:
-    ダッシュボードの名前。
-* **`description`** [オプション、デフォルト = **None**]:
-    ダッシュボードの内容の説明。
-* **`widgets`** [必須]:
-    ウィジェット定義のリスト。ウィジェット定義を取得するには、ウィジェット構成 UI で JSON タブを使用します。
-* **`template_variables`** [オプション、デフォルト = **None**]:
-    ダッシュボードのテンプレートを使用するためのテンプレート変数のリスト。
-* **`read_only`** [オプション、デフォルト = **False**]:
-    スクリーンボードの読み取り専用ステータス。
+* **`board_title`** [*required*]:
+    The name of the dashboard.
+* **`description`** [*optional*, *default*=**None**]:
+    A description of the dashboard's content.
+* **`widgets`** [*required*]:
+    A list of widget definitions. To get a widget definition, use the *JSON tab* in the widget configuration UI.
+* **`template_variables`** [*optional*, *default*=**None**]:
+    A list of template variables for using Dashboard templating.
+* **`read_only`** [*optional*, *default*=**False**]:
+    The read-only status of the screenboard.
 
-### 例
+### Examples
 
 {{< tabs >}}
 {{% tab "Python" %}}
@@ -130,30 +130,30 @@ curl -X POST -H "Content-type: application/json" \
 {{% /tab %}}
 {{< /tabs >}}
 
-## スクリーンボードの更新
+## Update a screenboard
 
-### シグニチャ
+### Signature
 
 `PUT https://api.datadoghq.com/api/v1/screen/<SCREEENBOARD_ID>`
 
-### 引数
+### Arguments
 
-* **`board_title`** [必須]:
-    ダッシュボードの名前。
-* **`description`** [オプション、デフォルト = **None**]:
-    ダッシュボードの内容の説明。
-* **`widgets`** [必須]:
-    ウィジェット定義のリスト。ウィジェット定義を取得するには、ウィジェット構成 UI で JSON タブを使用します。
-* **`template_variables`** [オプション、デフォルト = **None**]:
-    ダッシュボードのテンプレートを使用するためのテンプレート変数のリスト。
-* **`width`** [オプション、デフォルト = **None**]:
-    スクリーンボードの幅 (ピクセル単位)。
-* **`height`** [オプション、デフォルト = **None**]:
-    スクリーンボードの高さ (ピクセル単位)。
-* **`read_only`** [オプション、デフォルト = **False**]:
-    スクリーンボードの読み取り専用ステータス。
+* **`board_title`** [*required*]:
+    The name of the dashboard.
+* **`description`** [*optional*, *default*=**None**]:
+    A description of the dashboard's content.
+* **`widgets`** [*required*]:
+    A list of widget definitions. To get a widget definition, use the *JSON tab* in the widget configuration UI.
+* **`template_variables`** [*optional*, *default*=**None**]:
+    A list of template variables for using Dashboard templating.
+* **`width`** [*optional*, *default*=**None**]:
+    Screenboard width in pixels
+* **`height`** [*optional*, *default*=**None**]:
+    Screenboard height in pixels.
+* **`read_only`** [*optional*, *default*=**False**]:
+    The read-only status of the screenboard.
 
-### 例
+### Examples
 
 {{< tabs >}}
 {{% tab "Python" %}}
@@ -254,20 +254,20 @@ curl -X PUT -H "Content-type: application/json" \
 {{% /tab %}}
 {{< /tabs >}}
 
-## スクリーンボードの削除
+## Delete a screenboard
 
-既存のスクリーンボードを削除します。
-*このエンドポイントは、JSON 引数を受け取りません。*
+Delete an existing screenboard.
+*This endpoint takes no JSON arguments.*
 
-### シグニチャ
+### Signature
 
 `DELETE https://api.datadoghq.com/api/v1/screen/<SCREEENBOARD_ID>`
 
-### 引数
+### Arguments
 
-このエンドポイントは、JSON 引数を受け取りません。
+*This endpoint takes no JSON arguments.*
 
-### 例
+### Examples
 
 {{< tabs >}}
 {{% tab "Python" %}}
@@ -310,7 +310,7 @@ api_key=<DATADOG_API_KEY>
 app_key=<DATADOG_APPLICATION_KEY>
 board_id=2471
 
-# 削除するスクリーンボードを作成
+# Create a screenboard to delete
 board_id=$(curl -X POST -H "Content-type: application/json" \
 -d '{
         "width": 1024,
@@ -336,19 +336,19 @@ curl -X DELETE \
 {{% /tab %}}
 {{< /tabs >}}
 
-## スクリーンボードの取得
+## Get a screenboard
 
-既存のスクリーンボードの定義を取得します。
+Fetch an existing screenboard definition.
 
-### シグニチャ
+### Signature
 
 `GET https://api.datadoghq.com/api/v1/screen/<SCREEENBOARD_ID>`
 
-### 引数
+### Arguments
 
-このエンドポイントは、JSON 引数を受け取りません。
+*This endpoint takes no JSON arguments.*
 
-### 例
+### Examples
 
 {{< tabs >}}
 {{% tab "Python" %}}
@@ -390,7 +390,7 @@ api_key=<DATADOG_API_KEY>
 app_key=<DATADOG_APPLICATION_KEY>
 board_id=6334
 
-# 取得するスクリーンボードを作成
+# Create a screenboard to get
 board_id=$(curl -X POST -H "Content-type: application/json" \
 -d '{
         "width": 1024,
@@ -416,19 +416,19 @@ curl -X GET \
 {{% /tab %}}
 {{< /tabs >}}
 
-## すべてのスクリーンボードの取得
+## Get all screenboards
 
-スクリーンボードの定義をすべて取得します。
+Fetch all of your screenboards' definitions.
 
-### シグニチャ
+### Signature
 
 `GET https://api.datadoghq.com/api/v1/screen`
 
-### 引数
+### Arguments
 
-このエンドポイントは、JSON 引数を受け取りません。
+*This endpoint takes no JSON arguments.*
 
-### 例
+### Examples
 
 {{< tabs >}}
 {{% tab "Python" %}}

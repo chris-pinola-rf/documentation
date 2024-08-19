@@ -20,6 +20,7 @@ author:
 categories:
 - ログの収集
 - セキュリティ
+custom_kind: integration
 dependencies: []
 description: OneLogin
 display_on_public_website: true
@@ -31,7 +32,6 @@ integration_id: onelogin
 integration_title: OneLogin
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: onelogin
 public_title: OneLogin
@@ -49,6 +49,7 @@ tile:
   - Supported OS::macOS
   - Category::Log Collection
   - Category::Security
+  - Offering::Integration
   configuration: README.md#Setup
   description: OneLogin のイベントログとインテグレーションします。
   media: []
@@ -59,43 +60,44 @@ version: '1.0'
 ---
 
 <!--  SOURCED FROM https://github.com/DataDog/integrations-internal-core -->
-## 概要
+## Overview
 
-Datadog と OneLogin を接続すると、OneLogin が公開するログを見ることができます。
+Connect Datadog with OneLogin to see logs published by OneLogin. The OneLogin integration collects logs to track any [event][1] in OneLogin, including logins, file access, and updates to admin privileges. You can use this integration for compliance and security in conjunction with the [OOTB SIEM rules][2] for OneLogin.
 
-## 計画と使用
+## Setup
 
-### 収集データ
-#### クライアント ID とクライアントシークレットを生成する
+### Log collection
+#### Generate Client ID and Client Secret
 
-1. OneLogin アカウントにログインします。
-2. **Administration** > **Developers** > **Api Credentials** に移動します。
-3. **New Credential** をクリックし、資格情報に意味のある名前を付けます。
-4. 新しい資格情報に **Read All** アクセスを許可します。
-5. 新しい資格情報をクリックすると、クライアント ID とクライアントシークレットが表示されます。
+1. Log in to your OneLogin account.
+2. Navigate to **Administration** > **Developers** > **Api Credentials**.
+3. Click **New Credential** and give your credential a meaningful name.
+4. Give your new credential **Read All** access.
+5. Click on your new credential to view the Client ID and Client Secret.
 
-#### インストールと構成
+#### Installation and configuration
 
-1. Datadog [OneLogin インテグレーションタイル][1]を開きます。
-2. クライアント ID、クライアントシークレットを対応するフィールドに入力します。
-3. オプションで、ログに関連付けるタグをカンマ区切りで追加することができます。
+1. Open the Datadog [OneLogin integration tile][3].
+2. Enter the Client ID and Client Secret into the corresponding fields.
+3. Optionally add comma-separated tags to associate with your logs.
 
-### データセキュリティ
+### Metrics
 
-OneLogin インテグレーションには、メトリクスは含まれません。
+The OneLogin integration does not include any metrics.
 
-### ヘルプ
+### Events
 
-OneLogin インテグレーションには、イベントは含まれません。
+The OneLogin integration does not include any events.
 
-### サービスチェック
+### Service checks
 
-OneLogin インテグレーションには、サービスのチェック機能は含まれません。
+The OneLogin integration does not include any service checks.
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][2]までお問合せください。
+Need help? Contact [Datadog support][4].
 
-
-[1]: https://app.datadoghq.com/account/settings#integrations/onelogin
-[2]: https://docs.datadoghq.com/ja/help/
+[1]: https://developers.onelogin.com/api-docs/1/events/event-resource
+[2]: https://docs.datadoghq.com/ja/security/default_rules/?search=onelogin
+[3]: https://app.datadoghq.com/account/settings#integrations/onelogin
+[4]: https://docs.datadoghq.com/ja/help/

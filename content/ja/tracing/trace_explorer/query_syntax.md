@@ -1,5 +1,6 @@
 ---
 aliases:
+- /ja/tracing/search_syntax/
 - /ja/tracing/trace_search_analytics/
 - /ja/tracing/trace_search/
 - /ja/tracing/search
@@ -23,9 +24,9 @@ further_reading:
 - link: /tracing/trace_explorer/trace_view/
   tag: ドキュメント
   text: Datadog トレースの読み方を理解する
-- link: /tracing/services/services_list/
+- link: /tracing/service_catalog/
   tag: ドキュメント
-  text: Datadog に報告するサービスの一覧
+  text: Datadog に報告するサービスの発見とカタログ化
 - link: /tracing/services/service_page/
   tag: ドキュメント
   text: Datadog のサービスについて
@@ -275,7 +276,7 @@ Analytics は、15 分間 (ローリングウィンドウ) で収集されたデ
 
 {{< img src="tracing/app_analytics/analytics/view_traces.png" alt="トレースを確認" style="width:40%;">}}
 
-## エクスポート
+## Export
 
 {{< img src="tracing/app_analytics/analytics/export_button.png" alt="分析をエクスポートボタン" style="width:40%;">}}
 
@@ -288,7 +289,7 @@ Analyticsをエクスポート
 
 ## ダッシュボード内のトレース
 
-トレース検索から [Analytics][4] をエクスポートするか、[ダッシュボード][15]でメトリクスおよびログと共に直接構築します。 
+トレース検索から [Analytics][4] をエクスポートするか、[ダッシュボード][15]でメトリクスおよびログと共に直接構築します。
 
 [時系列ウィジェットに関する詳細][16]
 
@@ -307,7 +308,7 @@ Analyticsをエクスポート
 [9]: /ja/tracing/trace_search_and_analytics/query_syntax/#measures
 [10]: /ja/tracing/glossary/#trace
 [11]: /ja/monitors/types/apm/
-[12]: /ja/dashboards/#timeboards
+[12]: /ja/dashboards/#get-started
 [13]: /ja/help/
 [14]: /ja/tracing/glossary/#indexed-span
 [15]: /ja/dashboards/

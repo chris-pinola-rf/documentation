@@ -32,59 +32,59 @@ further_reading:
 title: Continuous Testing
 ---
 
-<div class="alert alert-info">このページでは、CI/CD パイプラインで Continuous Testing のテストを実行する方法について説明します。CI/CD のメトリクスやダッシュボードを表示したい場合は、<a href="/continuous_integration/" target="_blank">CI Visibility のドキュメント</a>を参照してください。</div>
+<div class="alert alert-info">This page is about running Continuous Testing tests in your CI/CD pipelines. If you want to view CI/CD metrics and dashboards, see the <a href="/continuous_integration/" target="_blank">CI Visibility documentation.</a></div>
 
-Datadog Continuous Testing は、製品のライフサイクル全体におけるソフトウェアテストを自動化するためのツール群を提供します。ノーコードで信頼性の高いエンドツーエンドテストを提供し、[一般的な CI プロバイダー][1]やコラボレーションツールとのシームレスなインテグレーションにより、Continuous Testing はアプリケーション開発を加速し、高品質の機能を迅速にリリースできるよう支援します。
+Datadog Continuous Testing offers a set of tools that enable you to automate software testing for a product's entire lifecycle. By offering code-free, reliable end-to-end testing and seamless integrations with [popular CI providers][1] and collaboration tools, Continuous Testing helps you accelerate application development and ship high-quality features faster.
 
-## 簡単かつスピーディーにテストを実行
+## Test with ease and speed
 
-コードレスの [Web レコーダー][2]、[モバイルアプリレコーダー][15]、[並列テスト実行][3]、組み込みのマルチロケーションテストなどのスケーラブルな機能を使用して、QA チームの時間と労力を節約できます。また、[**Settings** ページ][3]で、テストを順次実行したり、同時に実行するテストの数をカスタマイズしたりできます。
+Use scalable features such as a codeless [web recorder][2], [mobile app recorder][15], [parallel test runs][3], and built-in multi-location testing to save time and effort for your QA team. You can run your tests sequentially and customize the number of tests you want to run at the same time on the [**Settings** page][3].
 
-{{< img src="continuous_testing/settings/parallelization.png" alt="Continuous Testing の設定ページで、テストを順次実行するか、同時に実行するテストの数をカスタマイズするかを選択します" style="width:100%;">}}
+{{< img src="continuous_testing/settings/parallelization.png" alt="Choose between running your tests sequentially and customizing the number of tests you want to run at the same time in the Continuous Testing Settings page" style="width:100%;">}}
 
-gRPC や WebSocket を含む複数のプロトコル、フレームワーク、API をサポートしており、アプリケーションスタックのあらゆるレベルにわたって、[あらゆる本番前環境を対象に][17]テストを行うことができます。
+With support for multiple protocols, frameworks, and APIs—including gRPC and WebSockets—you can test across every level of your application stack, and [across any pre-production environment][17].
 
-## テストの信頼性を向上
+## Improve test reliability
 
-テストコードを実装する代わりに、[Synthetic モニタリングの回復力、拡張性、コードレステスト][4]を使用してソフトウェアを構築することができます。自己修復ブラウザテスト、モバイルアプリテスト、自動テスト再試行により、偽陽性を最小化し、テスト結果に自信を持つことができます。
+Instead of having to implement test code, you can build software using [Synthetic Monitoring's resilient, scalable, and codeless tests][4]. Gain confidence in your test results by minimizing false positives through self-healing browser tests, mobile app tests, and automatic test retries. 
 
-ユーザーに最高の体験をさせるために、[クロスブラウザテスト][2]と[モバイルアプリケーションテスト][16]を自動化することができます。これらの Continuous Testing 機能は、さまざまなシナリオや環境をカバーするために複数のテストを実行する CI バッチで役立ちます。
+To ensure your users have the best experience, you can automate [cross-browser testing][2] and [mobile application testing][16]. These Continuous Testing features are useful in CI batches where multiple tests are executed to cover a variety of scenarios and environments.
 
-## シームレスなインテグレーションで効率アップ
+## Increase efficiency through seamless integrations
 
-テストとトラブルシューティングを 1 つのプラットフォームで行うことにより、アプリケーション開発を迅速に進めることができます。以下の CI プロバイダーと [Slack][18] や [Jira][19] などのコラボレーションツールから選択し、ワークフローを統合し、コンテキストの切り替えを回避します。
+Fast-track your application development by testing and troubleshooting in one platform. Select from the following types of CI providers and collaboration tools such as [Slack][18] or [Jira][19] to merge workflows and avoid context switching.
 
 {{< partial name="continuous_testing/ct-getting-started.html" >}}
 
 </br>
 
-[Datadog Terraform プロバイダー][10]を使って、テストの作成と状態管理をコントロールすることができます。Synthetic テストをステージング、プリプロダクト、カナリアデプロイメントの[インテグレーションおよびエンドツーエンドテスト][11]として活用したり、[CI パイプライン][11]で直接実行することができます。
+You can use the [Datadog Terraform provider][10] to control test creation and state management. Leverage your Synthetic tests as [integration and end-to-end tests][11] for your staging, pre-prod, and canary deployments, or run them directly in your [CI pipelines][11].
 
-## トラブルシューティングの高速化
+## Accelerate troubleshooting
 
-統一されたモニタリングプラットフォームでテストを実施することで、テスト実行が失敗した根本原因を突き止め、平均解決時間 (MTTR) を短縮することができます。
+Performing tests in a unified monitoring platform helps you find the root cause of failed test runs and reduce Mean Time to Resolution (MTTR). 
 
-{{< img src="continuous_testing/ci_execution_side_panel.png" alt="Synthetic Monitoring & Testing Results Explorer の CI バッチのサイドパネル" style="width:100%;">}}
+{{< img src="continuous_testing/ci_execution_side_panel.png" alt="CI batches side panel in the Synthetic Monitoring & Testing Results Explorer" style="width:100%;">}}
 
-[Synthetic Monitoring & Testing Results Explorer][11] で実行されたジョブを確認することで、Datadog の [APM インテグレーション][12]で可視化された相関メトリクス、トレース、ログを通じて、ツールを切り替えることなく、トラブルシューティングのための完全なコンテキストを得ることができます。
+You can obtain the full context for troubleshooting—without switching between tools—through correlated metrics, traces, and logs surfaced by the Datadog [APM integration][12] by looking at executed jobs in the [Synthetic Monitoring & Testing Results Explorer][11].
 
-## Synthetic Monitoring & Testing Results Explorer で CI バッチを調査する
+## Examine CI batches in the Synthetic Monitoring & Testing Results Explorer
 
-Synthetic テストの実行や、CI/CD パイプラインで実行されているテストのバッチに対して、[検索クエリおよび視覚化][11]を作成します。
+Create [search queries and visualizations][11] for your Synthetic test runs or batches of tests running in CI/CD pipelines.
 
-{{< img src="continuous_testing/explorer/results_explorer.png" alt="Synthetic Monitoring & Testing Results Explorer の CI バッチ結果のリスト" style="width:100%;">}}
+{{< img src="continuous_testing/explorer/results_explorer.png" alt="A list of CI batch results in the Synthetic Monitoring & Testing Results Explorer" style="width:100%;">}}
 
-個々のテスト実行やテストの包括的なバッチを監視し、テストの種類ごとに関連する洞察にアクセスできます。
+You can monitor individual test executions and comprehensive batches of tests, and access relevant insights for each testing type. 
 
-## 準備はいいですか？
+## Ready to start?
 
-[Synthetic テスト][4]をいくつか構成したら、お好みの [CI/CD プロバイダー][1]のドキュメントを参照するか、CI/CD パイプラインで [`datadog-ci` NPM パッケージ][14]を使用します。ローカル環境や、プライベートネットワーク内のステージング環境でテストを実行する場合など、非公開の環境や本番以外の環境で Continuous Testing を使用するには、[ローカル環境およびステージング環境のテスト][17]を参照してください。その後、[Synthetic Monitoring & Testing Results Explorer][11] でバッチ実行の詳細について調べ始めます。
+After you have configured some [Synthetic tests][4], see the documentation for your preferred [CI/CD provider][1], or use the [`datadog-ci` NPM package][14] in your CI/CD pipelines. See [Testing Local and Staging Environments][17] to use Continuous Testing in environments that are not publicly available or production, for example, running tests against your local development environment or a staging environment within a private network. Then, start exploring details about your batch runs in the [Synthetic Monitoring & Testing Results Explorer][11].
 
-{{< learning-center-callout header="ラーニングセンターで CI/CD パイプラインでの Synthetic テストをお試しください" btn_title="今すぐ登録" btn_url="https://learn.datadoghq.com/courses/synthetic-tests-ci-cd-pipeline">}}
-  Datadog ラーニングセンターには、このトピックについて学ぶのに役立つ実践的なコースが満載です。無料で登録して、CI/CD パイプラインで Datadog Synthetic テストを実行する方法を学びましょう。
+{{< learning-center-callout header="Try Synthetic Tests in a CI/CD Pipeline in the Learning Center" btn_title="Enroll Now" btn_url="https://learn.datadoghq.com/courses/synthetic-tests-ci-cd-pipeline">}}
+  The Datadog Learning Center is full of hands-on courses to help you learn about this topic. Enroll at no cost to learn how to run a Datadog Synthetic test in a CI/CD pipeline.
 {{< /learning-center-callout >}}
 
-## その他の参考資料
+## Further reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

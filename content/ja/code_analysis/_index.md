@@ -1,4 +1,12 @@
 ---
+algolia:
+  tags:
+  - code analysis
+  - datadog code analysis
+  - static analysis
+  - software composition analysis
+  - SAST
+  - SCA
 description: Datadog Code Analysis を使用して、開発中の保守性の問題、バグ、セキュリティ脆弱性に対処し、顧客への影響を防ぐ方法を学びます。
 further_reading:
 - link: https://app.datadoghq.com/release-notes?category=Software%20Delivery
@@ -22,7 +30,7 @@ title: コード分析
 
 {{% site-region region="gov" %}}
 <div class="alert alert-danger">
-    Code Analysis は、{{< region-param key="dd_site_name" >}} サイトでは使用できません。
+    Code Analysis は {{< region-param key="dd_site_name" >}} サイトでは利用できません。
 </div>
 {{% /site-region %}}
 
@@ -32,78 +40,118 @@ Code Analysis は公開ベータ版です。
 
 ## 概要
 
-Code Analysis は、[Static Analysis][1] と [Software Composition Analysis (SCA)][2] の製品で構成されています。
+Code Analysis は、リポジトリ内の [Static Analysis][1] および [Software Composition Analysis (SCA)][2] のスキャンで検出された違反結果を表示します。
 
 Static Analysis
-: 保守性の問題、バグ、パフォーマンスの問題、セキュリティの脆弱性について、開発ライフサイクルの早い段階で特注コードをスキャンし、問題が本番環境に到達するのを未然に防ぐとともに、可能な場合は、ユーザーに影響が及ぶ前にエンジニアリングチームがこれらの問題に対処できるよう、修正案を提供します。
+: 開発ライフサイクルの早期段階で、保守性の問題、バグ、パフォーマンスの問題、セキュリティ脆弱性がないか、オーダーメイドのコードをスキャンし、問題が本番環境に到達するのを防ぎます。また、可能であれば修正案を提供し、エンジニアリングチームがユーザーへの影響を防ぐよう支援します。
 
 Software Composition Analysis 
-: リポジトリにインポートされたオープンソースライブラリの既知の脆弱性をスキャンします。
+: リポジトリにインポートされたオープンソースライブラリに既知の脆弱性がないかをスキャンします。
 
-Code Analysis を構成したら、[Code Analysis ページ][9]に移動して、構成した各リポジトリの Static Analysis と SCA のスキャン結果の要約を見ることができます。要約された結果は常に各リポジトリのデフォルトブランチの最新のコミットに対するもので、トリアージして修正したい各リポジトリの既存の問題がすべて表示されていることを確認できます。
+<div class="alert alert-info">Datadog Software Composition Analysis は、ソフトウェア開発ライフサイクル (SDLC) 全体にわたって脆弱なライブラリを特定できます。Code Analysis では、リポジトリを直接スキャンして得られた結果を要約します。リポジトリおよびランタイムで検出されたすべての脆弱性を統合して表示するには、<a href="/security/application_security/software_composition_analysis" target="_blank">アプリケーションセキュリティ</a>をご覧ください。</div>
 
-リストからリポジトリを選択すると、その特定のリポジトリの違反を検索・管理できます。デフォルトでは、結果はリポジトリのデフォルトブランチの最新コミットにフィルタリングされますが、ページ上部でブランチやコミットを変更できます。選択したブランチやコミットにかかわらず、すべての結果は以下のビューに整理されます。
+## Set up Code Analysis on your repository
+
+Click **+ Add a Repository** on the [**Code Analysis Repositories** page][9] and choose to run the scans directly in Datadog or in your CI pipelines.
 
 {{< tabs >}}
-{{% tab "Code Vulnerabilities" %}}
+{{% tab "Datadog" %}}
 
-{{< img src="code_analysis/shopist_code_vulnerabilities.png" alt="Datadog Shopist サービスとリポジトリの Code Analysis ページにあるコードの脆弱性" style="width:100%;">}}
+<div class="alert alert-warning">Datadog-hosted scans are supported by Software Composition Analysis (SCA) and GitHub repositories only. To enable Static Analysis or use a different CI provider, run scans in your CI pipelines instead.</div>
 
-**Code Vulnerabilities** ビューで、Static Analysis によって検出されたコードセキュリティリスクを特定し、対処します。
+To enable [Software Composition Analysis][101] on GitHub repositories, click **Select Repositories** on your desired GitHub account and click the toggle for `Enable Software Composition Analysis (SCA)` to enable for all repositories. If you don't see any GitHub accounts listed, [create a new GitHub App][102] to get started.
 
-{{% /tab %}}
-{{% tab "Code Quality" %}}
+{{< img src="code_analysis/setup/enable_account.png" alt="Enable Software Composition Analysis on all repositories for your GitHub account" style="width:100%;">}}
 
-{{< img src="code_analysis/shopist_code_quality.png" alt="Datadog Shopist サービスとリポジトリの Code Analysis ページにあるコード品質の脆弱性" style="width:100%;">}}
+Optionally, you can select specific GitHub repositories to enable SCA by clicking the toggle for each repository.
 
-**Code Quality** ビューで、Static Analysis によって検出された不適切なコーディングプラクティスを特定し、対処します。
+{{< img src="code_analysis/setup/enable_repository.png" alt="Enable Software Composition Analysis on a GitHub repository" style="width:100%;">}}
 
-{{% /tab %}}
-{{% tab "Library Vulnerabilities" %}}
-
-{{< img src="code_analysis/shopist_lib_vulnerabilities.png" alt="Datadog Shopist サービスとリポジトリの Code Analysis ページにあるライブラリの脆弱性" style="width:100%;">}}
-
-**Library Vulnerabilities** ビューで、SCA によって検出された脆弱なオープンソースライブラリを特定し、対処します。
+[101]: /ja/code_analysis/software_composition_analysis
+[102]: /ja/integrations/github/
 
 {{% /tab %}}
-{{% tab "Library List" %}}
+{{% tab "CI Pipelines" %}}
 
-{{< img src="code_analysis/shopist_lib_list.png" alt="Datadog Shopist サービスとリポジトリの Code Analysis ページにあるライブラリのリスト" style="width:100%;">}}
+If you do not want to run your scans directly through Datadog, you can select which scans you'd like to run ([Static Analysis][106] and [Software Composition Analysis][107]) and configure your CI pipeline provider accordingly.
 
-**Library List** ビューで、コードベースにインポートされた SCA によって検出されたライブラリの完全なリストを管理します。
+## Configure your CI/CD provider
+
+See the following documentation to configure your CI/CD provider to run Static Analysis and SCA scans:
+
+- [Static Analysis and GitHub Actions][101]
+- [Static Analysis and CircleCI Orbs][102]
+- [Static Analysis and Generic CI Providers][103]
+- [Software Composition Analysis and GitHub Actions][104]
+- [Software Composition Analysis and Generic CI Providers][105]
+
+[101]: /ja/code_analysis/static_analysis/github_actions 
+[102]: /ja/code_analysis/static_analysis/circleci_orbs 
+[103]: /ja/code_analysis/static_analysis/generic_ci_providers 
+[104]: /ja/code_analysis/software_composition_analysis/github_actions 
+[105]: /ja/code_analysis/software_composition_analysis/generic_ci_providers 
+[106]: /ja/code_analysis/static_analysis
+[107]: /ja/code_analysis/software_composition_analysis
 
 {{% /tab %}}
 {{< /tabs >}}
 
-Static Analysis を使用すると、[VS Code][3] や [IntelliJ & PyCharm][4] などの IDE、または [GitHub 上のプルリクエスト][5]で直接書いたコードに対して、不適切なコーディングプラクティスやセキュリティの脆弱性に関する自動化されたフィードバックを受け取ることができます。
+## Set up the GitHub integration 
 
-## リポジトリに Code Analysis をセットアップする
+You can configure a GitHub App by using the [GitHub integration tile][7] and setting up the [source code integration][8] to see the offending code snippets as part of the Static Analysis results in Datadog.
 
-[Code Analysis ページ][9] で **+ Setup a Repository** をクリックし、関連するプログラミング言語を選択して Code Analysis をプロジェクトに追加します。Datadog は、以下の言語に対してすぐに使えるルールセットを提供しています。
+{{< img src="code_analysis/source_code_integration.png" alt="Link to GitHub from the Code Analysis view" style="width:100%;">}}
 
-{{< partial name="code_analysis/languages-getting-started.html" >}}
+For more information, see the [Source Code Integration documentation][10].
 
-</br>
+## Static Analysis インテグレーション
 
-Static Analysis ルールセットの詳細については、[Static Analysis ルール][6]を参照してください。
+With Static Analysis, you can receive automated feedback on poor coding practices and security vulnerabilities on the code you write [directly in an IDE][11] such as [VS Code][3] or [IntelliJ & PyCharm][4], and in your [pull requests on GitHub][5]. 
 
-## CI/CD プロバイダーの構成
+{{< img src="developers/ide_plugins/vscode/static-analysis-issue.png" alt="A Static Analysis result in Visual Studio Code" style="width:100%;">}}
 
-{{< whatsnext desc="以下で Code Analysis を構成する CI/CD プロバイダーを選択します:">}}
-    {{< nextlink href="code_analysis/static_analysis/github_actions" >}}Static Analysis と GitHub Actions{{< /nextlink >}}
-    {{< nextlink href="code_analysis/static_analysis/circleci_orbs" >}}Static Analysis と CircleCI Orbs{{< /nextlink >}}
-    {{< nextlink href="code_analysis/static_analysis/generic_ci_providers" >}}Static Analysis と一般的な CI プロバイダー{{< /nextlink >}}
-    {{< nextlink href="code_analysis/software_composition_analysis/github_actions" >}}Software Composition Analysis と GitHub Actions{{< /nextlink >}}
-    {{< nextlink href="code_analysis/software_composition_analysis/generic_ci_providers" >}}Software Composition Analysis と一般的な CI プロバイダー{{< /nextlink >}}
-{{< /whatsnext >}}
+## Search and manage repositories
 
-</br>
+After you have configured Code Analysis, you can see a summary of the results from the Static Analysis and SCA scans for each of your configured repositories on the [**Code Analysis** page][9]. The summarized results are always for the latest scanned commit on the default branch of each repository, which ensures that you are seeing all the existing problems on each repository that you may want to triage and fix.
 
-## GitHub インテグレーションのセットアップ
+{{< img src="code_analysis/repositories.png" alt="A list of repositories with code and library scan results on the Code Analysis page" style="width:100%;">}}
 
-Datadog UI の Static Analysis 結果の一部として問題のあるコードスニペットを表示するには、[GitHub インテグレーションタイル][7]を使用して GitHub アプリを構成し、[ソースコードインテグレーション][8]をセットアップする必要があります。
+Select a repository from the list to search through and manage violations for that specific repository. By default, the results are filtered to the latest scanned commit on the default branch of the repository, but you may change the branch or commit at the top of the page. 
 
-## その他の参考資料
+Regardless of the selected branch or commit, all results are organized into the following views:
+
+{{< tabs >}}
+{{% tab "Code Vulnerabilities" %}}
+
+{{< img src="code_analysis/shopist_code_vulnerabilities.png" alt="Code vulnerabilities on the Code Analysis page for the Datadog Shopist service and repository" style="width:100%;">}}
+
+Identify and address code security risks detected by Static Analysis in the **Code Vulnerabilities** view.
+
+{{% /tab %}}
+{{% tab "Code Quality" %}}
+
+{{< img src="code_analysis/shopist_code_quality.png" alt="Code quality vulnerabilities on the Code Analysis page for the Datadog Shopist service and repository" style="width:100%;">}}
+
+Identify and address poor coding practices detected by Static Analysis in the **Code Quality** view.
+
+{{% /tab %}}
+{{% tab "Library Vulnerabilities" %}}
+
+{{< img src="code_analysis/shopist_lib_vulnerabilities.png" alt="Library vulnerabilities on the Code Analysis page for the Datadog Shopist service and repository" style="width:100%;">}}
+
+Identify and address vulnerable open source libraries detected by SCA in the **Library Vulnerabilities** view.
+
+{{% /tab %}}
+{{% tab "Library List" %}}
+
+{{< img src="code_analysis/shopist_lib_list.png" alt="A list of libraries on the Code Analysis page for the Datadog Shopist service and repository" style="width:100%;">}}
+
+Manage the full list of libraries detected by SCA that have imported into your codebase in the **Library List** view.
+
+{{% /tab %}}
+{{< /tabs >}}
+
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
@@ -116,4 +164,5 @@ Datadog UI の Static Analysis 結果の一部として問題のあるコード�
 [7]: /ja/integrations/github/#link-a-repository-in-your-organization-or-personal-account
 [8]: /ja/integrations/guide/source-code-integration
 [9]: https://app.datadoghq.com/ci/code-analysis
-[9]: /ja/security/application_security/software_composition_analysis
+[10]: /ja/integrations/guide/source-code-integration/?tab=codeanalysis
+[11]: /ja/code_analysis/ide_plugins/

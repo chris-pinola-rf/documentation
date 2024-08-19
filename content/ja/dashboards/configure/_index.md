@@ -7,109 +7,109 @@ further_reading:
 title: 構成
 ---
 
-## 概要
+## Overview
 
-ダッシュボードは、Datadog 製品全体のデータを視覚化します。詳細や構成を追加することで、トラブルシューティングを加速し、視覚化する情報に焦点を当てることができます。
+Dashboards provide visibility into your data across Datadog products. Add details and configurations to expedite troubleshooting and add focus to the information you are visualizing.
 
-個々のダッシュボードを構成することで、以下が可能になります。
-- [ダッシュボードが視覚化する内容の詳細と説明情報を追加する](#dashboard-details)
-- [ダッシュボードの表示をカスタマイズし、ダッシュボード関連のアクティビティを表示するための構成アクションを表示する](#configuration-actions)
-- [権限で個々のダッシュボードへのアクセスを制限する](#permissions)
-- [テンプレート変数を使ってビューをカスタマイズする](#template-variables)
+Configure individual dashboards to:
+- [Add details and descriptive information on what the dashboard visualizes](#dashboard-details)
+- [View configuration actions to customize your dashboard display and view dashboard related activities](#configuration-actions)
+- [Restrict access to individual dashboards with Permissions](#permissions)
+- [Customize views with template variables](#template-variables)
 
-## ダッシュボードの詳細
+## Dashboard details
 
-個々のダッシュボードからダッシュボードのタイトルにカーソルを合わせると、ダッシュボードの詳細を表示および編集できます。タイトルと作成者を表示するパネルが開きます。
+From an individual dashboard, hover over the dashboard title to view and edit dashboard details. A panel opens which displays the title and the creator.
 
-{{< img src="dashboards/suggested_dashboards.png" alt="編集可能なタイトル、提案されたダッシュボード、チームの機能をハイライトするダッシュボードの詳細" style="width:70%;" >}}
+{{< img src="dashboards/suggested_dashboards.png" alt="Dashboard details highlighting editable title, suggested dashboards, and Teams features" style="width:70%;" >}}
 
-Markdown に対応するダッシュボードの説明を更新したり、[チーム][1]をダッシュボードと関連付けたりします。
+Update Markdown-supported dashboard descriptions or associate [teams][1] with a dashboard:
 
-1. ダッシュボードのタイトルにカーソルを合わせます。ドロップダウンパネルが開きます。
-1. ダッシュボードのタイトルまたは説明をクリックして編集します。
-1. タイトルを変更するには、チェックボタンをクリックします。
-1. **Teams** ドロップダウンから最大 5 チームを選択します。
-1. (オプション) ダッシュボードの説明内に `[[suggested_dashboards]]` を追加して、提案されたダッシュボードのリストを表示します。これらのダッシュボードは、組織内のユーザーアクティビティと、ユーザーがこのダッシュボードから他のダッシュボードに移動する頻度に基づいて推奨されます。
+1. Hover the dashboard title. A dropdown panel opens.
+1. Click on the dashboard title or description to edit them. 
+1. Click the check button, to change the title.
+1. Select up to 5 teams from the **Teams** dropdown.
+1. (Optional) Add `[[suggested_dashboards]]` inside the dashboard description for a list of suggested dashboards. These dashboards are recommended based on the user activity in your organization and how often users go from this dashboard to other dashboards.
 
-## テンプレート変数
+## Template variables
 
- テンプレート変数を使用すると、タグまたはファセットに基づいて、ホスト、コンテナ、またはサービスの特定のサブセットにダッシュボードを特化させることができます。以下を行う方法については、[テンプレート変数][2]のドキュメントを参照してください。
- - ダッシュボードのテンプレート変数を追加および構成する
- - テンプレート変数をダッシュボードウィジェットに適用する
- - テンプレート変数を使って保存ビューを作成する
+ Template variables allow you to focus your dashboards on a particular subset of hosts, containers, or services based on tags or facets. See the [Template variables][2] documentation to learn how to:
+ - Add and configure dashboard template variables
+ - Apply template variables to dashboard widgets
+ - Use template variables to create Saved views
 
-## 構成アクション
+## Configuration actions
 
-**Configure** をクリックすると、ダッシュボードで使用可能な構成オプションのメニューが開きます。これには以下などがあります。
+Click **Configure** to open a menu of configuration options available for your dashboard, including:
 
-| ブラウザトラブルシューティング    | 説明 |
+| Configuration    | Description |
 | ----------- | ----------- |
-| バージョン履歴 | ダッシュボードのバージョン履歴をプレビュー、復元、複製します。詳細については、[バージョン履歴ガイド][3]を参照してください。 |
-| 監査イベントの表示 | 組織内で誰がこのダッシュボードを使用しているかを確認できます。個人として、自分のアクションのストリームを見ることができます。詳細は、[Datadog 監査証跡][4]を参照してください。 |
-| ダッシュボードを複製 | ダッシュボード全体を新しいダッシュボードにコピーできます。このとき、複製に名前を付けるよう求められます。 |
-| キーボードショートカット | 使用可能なキーボードショートカットのリストを表示します。 |
-| UTC 時間を表示 | UTC 時間とデフォルトのタイムゾーンを切り替えます。 |
-| 密度を高める | 高密度モードでは、ウィジェットの密度を高めるために、ダッシュボードにグループウィジェットが並べて表示されます。このモードは、グループウィジェットを使用するダッシュボードの大画面でデフォルトでオンになります。 |
-| TV モード | 切り替えることで、主要なパフォーマンスメトリクスを大画面やテレビに表示できます。 |
+| Version history | Preview, restore, or clone your dashboard's version history. For more information, see the [Version History guide][3]. |
+| View audit events | See who is using this dashboard within your organization. As an individual, you can see a stream of your own actions. For more information, see [Datadog Audit Trail][4]. |
+| Clone dashboard | Copy the entire dashboard to a new dashboard. You are prompted to name the clone. |
+| Keyboard&nbsp;shortcuts | View a list of available keyboard shortcuts. |
+| Display UTC time | Toggle between UTC time and your default time zone. |
+| Increase density | High-density mode displays group widgets in a dashboard side-by-side for increased widget density. This mode turns on by default on large screens for dashboards that use group widgets. |
+| TV Mode | Toggle to display key performance metrics on large screens or TVs. |
 
-### 通知
+### Notifications
 
-ダッシュボードの変更通知を受信するには、通知追跡を有効にします。管理者権限に関係なく、これは組織内のどのユーザーでも有効にできます。
+Enable notifications tracking to receive change notifications for a dashboard. Any user in the organization can enable this for themselves, regardless of administrative privileges.
 
-ダッシュボードで通知が有効になると、[イベントエクスプローラー][5]でイベントが作成されます。このイベントでは、テキストの変更、ウィジェットの変更、ダッシュボードの複製、ダッシュボードの削除に関する情報が、アクションを実行したユーザーの名前とともに表示されます。以下の検索により、イベントエクスプローラーで特定のダッシュボードの変更イベントを表示します。
+When notifications are activated for a dashboard, an event is created in the [Events Explorer][5]. This event provides information on text changes, widget changes, dashboard cloning, and dashboard deletion, along with the name of the user performing the action. View change events for a specific dashboard in the event explorer by searching:
 
 ```text
 tags:(audit AND dash) <DASHBOARD_NAME>
 ```
 
-### ダッシュボード JSON をコピー、インポート、エクスポート
+### Copy, import, or export dashboard JSON
 
-右上にあるエクスポートアイコンを使用してダッシュボードの JSON をコピー、インポート、またはエクスポートします。
+Copy, import, or export a dashboard's JSON using the export icon (upper right) with the following options:
 
-| オプション                          | 説明                                                                                                                                                                |
+| Option                          | Description                                                                                                                                                                |
 |---------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Copy&nbsp;dashboard&nbsp;JSON   | ダッシュボードの JSON をクリップボードにコピーします。                                                                                                                               |
-| Import&nbsp;dashboard&nbsp;JSON | JSON をダッシュボードに貼り付ける、またはインポートします。このオプションを選択すると、ダッシュボードのすべてのコンテンツが上書きされます。JSON がすでにクリップボードにある場合は、`Ctrl V` (Mac の場合は `Cmd V`) を使用します。 |
-| Export&nbsp;dashboard&nbsp;JSON | ダッシュボードの JSON を含む JSON ファイルをダウンロードします。                                                                                                                |
+| Copy&nbsp;dashboard&nbsp;JSON   | Copy the dashboard's JSON to your clipboard.                                                                                                                               |
+| Import&nbsp;dashboard&nbsp;JSON | Paste or import your JSON to the dashboard. This option overwrites all content on the dashboard. If the JSON is already on your clipboard, use `Ctrl V` (`Cmd V` for Mac). |
+| Export&nbsp;dashboard&nbsp;JSON | Download a JSON file containing the JSON of your dashboard.                                                                                                                |
 
-### ダッシュボードを削除
+### Delete dashboard
 
-<div class="alert alert-warning">削除する前に、ダッシュボードのスターを解除する必要があります。</div>
+<div class="alert alert-warning">Dashboards must be unstarred before deletion.</div>
 
-ダッシュボードを完全に削除するには、このオプションを使用します。削除したダッシュボードを復元するには、プリセットの **Recently Deleted** リストを使用します。**Recently Deleted** にあるダッシュボードは、30 日後に完全に削除されます。詳細については、[ダッシュボードリスト][6]のドキュメントを参照してください。
+Use this option to permanently delete your dashboard. Use the preset **Recently Deleted** list to restore deleted dashboards. Dashboards in **Recently Deleted** are permanently deleted after 30 days. For more information, see the [Dashboard list][6] documentation.
 
-## ヘルプ
+## Permissions
 
-<div class="alert alert-info">個々のダッシュボードの<em>表示</em>制限は、<strong>Enterprise</strong> ティアプランを利用している人であれば誰でも利用できます。この機能を有効にするには、アカウントチームまたは <a href="/help/">Datadog サポート</a>にご連絡ください。</div>
+<div class="alert alert-info"><em>View</em> restrictions on individual dashboards are available to anyone on an <strong>Enterprise</strong> tier plan. Reach out to your account team or <a href="/help/">Datadog support</a> to enable this feature. </div>
 
-{{< img src="dashboards/access_popup.png" alt="ダッシュボードにアクセスするためのロールを選択するためのドロップダウンメニューを備えたダイアログボックス。" style="width:70%;">}}
+{{< img src="dashboards/access_popup.png" alt="Dialog box with dropdown menu allowing users to choose a role to access the dashboard." style="width:70%;">}}
 
-きめ細かいアクセス制御を使用して、特定のダッシュボードを編集できる[ロール][7]を制限することができます。
-1. ダッシュボードを表示中に、右上の歯車 **Configure** をクリックします。
-1. **Permissions** を選択します。
-1. **Restrict Access** をクリックします。
-1. ダイアログボックスが更新され、組織のメンバーはデフォルトで **Viewer** アクセス権を持っていることが表示されます。
-1. ドロップダウンを使用して、ダッシュボードを編集できるロール、チーム、またはユーザーを 1 つ以上選択します。
-1. **Add** をクリックします。
-1. ダイアログボックスが更新され、選択したロールに **Editor** 権限があることが表示されます。
-1. **Save** をクリックします。
+Use granular access controls to limit the [roles][7] that may edit a particular dashboard:
+1. While viewing a dashboard, click on the cog **Configure** in the upper right.
+1. Select **Permissions**.
+1. Click **Restrict Access**.
+1. The dialog box updates to show that members of your organization have **Viewer** access by default.
+1. Use the dropdown to select one or more roles, teams, or users that may edit the dashboard.
+1. Click **Add**.
+1. The dialog box updates to show that the role you selected has the **Editor** permission.
+1. Click **Save**.
 
-**注:** ダッシュボードの編集アクセス権を維持するために、保存する前に、少なくとも 1 つのロールのメンバーであることを含めることがシステムから要求されます。ロールの詳細については、[RBAC ドキュメント][7]を参照してください。
+**Note:** To maintain your edit access to the dashboard, the system requires you to include at least one role that you are a member of before saving. For more information about roles, see the [RBAC documentation][7].
 
-アクセスが制限されたダッシュボードのアクセス制限を解除するには、以下の手順に従ってください。
-1. ダッシュボードを表示中に、右上の歯車 **Configure** をクリックします。
-1. **Permissions** を選択します。
-1. **Restore Full Access** をクリックします。
-1. **Save** をクリックします。
+To restore general access to a dashboard with restricted access, follow the steps below:
+1. While viewing a dashboard, click on the cog **Configure** in the upper right.
+1. Select **Permissions**.
+1. Click **Restore Full Access**.
+1. Click **Save**.
 
-ダッシュボードが非推奨の「読み取り専用」設定で作成された場合、アクセス制御リストにはアクセス管理 (`user_access_manage`) 権限を持つロールのリストが事前に入力されます。
+If the dashboard was created with the deprecated "read only" setting, the access control list pre-populates with a list of roles that have the Access Management (`user_access_manage`) permission.
 
-Terraform でダッシュボードを管理する場合、最新バージョンの Datadog Terraform プロバイダーを使用して、ダッシュボードを編集できるロールを制御することができます。詳細については、[Terraform ダッシュボードロール制限ガイド][8]を参照してください。
+If you manage your dashboards with Terraform, you can use the latest version of the Datadog Terraform provider to control which roles can edit your dashboards. For more information, see the [Terraform Dashboard role restriction guide][8].
 
-編集制限がある各ダッシュボードの右上にアクセスインジケーターが表示されます。権限によっては、**Gain Edit Access** または **Request Edit Access** と表示されます。アクセスインジケーターをクリックすると、アクセス権限を理解し、ダッシュボードを編集するための手順を確認することができます。
+The access indicator appears at the top right of each edit-restricted dashboard. Depending on your permissions, it may say **Gain Edit Access** or **Request Edit Access**. Click the access indicator to understand your access permissions and what steps to take to edit the dashboard.
 
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

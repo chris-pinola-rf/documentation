@@ -9,64 +9,67 @@ further_reading:
 - link: /synthetics/browser_tests/
   tag: ドキュメント
   text: ブラウザテストの設定
+- link: /mobile_app_testing/mobile_app_tests/
+  tag: ドキュメント
+  text: モバイルアプリテストの構成
 - link: /synthetics/guide/explore-rum-through-synthetics/
   tag: ドキュメント
   text: Synthetics で RUM とセッションリプレイを確認する
 - link: https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/synthetics_test
-  tag: Terraform
+  tag: External Site
   text: Terraform でテストを作成・管理する
 title: Continuous Testing 設定
 ---
 {{< jqmath-vanilla >}}
 
-## 概要
+## Overview
 
-Continuous Testing の設定は、[Synthetic Monitoring & Continuous Testing Settings ページ][1]で行うことができます。
+You can access Continuous Testing settings on the [Synthetic Monitoring & Testing Settings page][1].
 
-{{< img src="continuous_testing/continuous_testing_settings_default.png" alt="Continuous Testing のデフォルト設定" style="width:100%;">}}
+{{< img src="continuous_testing/settings/parallelization.png" alt="Set parallelization for your Continuous Testing tests on the Settings page" style="width:100%;">}}
 
-デフォルトでは、CI/CD パイプラインで実行されるすべてのテストは、順次実行されます (1 つずつ実行されます)。この動作を変更するには、[並列化値](#set-parallelization)を設定し、選択を保存してください。
+By default, all your tests running in CI/CD pipelines run sequentially (one after the other). To change this behavior, set a [parallelization value](#set-parallelization) and save your selection.
 
-## 並列化
+## Parallelization
 
-並列テストとは、[継続的インテグレーションと継続的デリバリー (CI/CD) パイプライン][4]の中で同時に実行されるテストのことです。
+Parallel tests are tests that run simultaneously in your [continuous integration and continuous delivery (CI/CD) pipelines][4]. 
 
-{{< img src="continuous_testing/parallelization_explained.png" alt="並列化のメリットと逐次テスト実行のメリットを説明する図" style="width:100%;">}}
+{{< img src="continuous_testing/parallelization_explained.png" alt="A diagram that explains the benefits of parallelization vs. sequential test runs" style="width:100%;">}}
 
-これによって、次のことが確実にできるようになります。
+This ensures you can:
 
-* パイプラインの期間を短縮し、新機能を迅速に提供する
-* 開発への自信とスピード感を高める
-* 完全なテストカバレッジを実現し、生産性を脅かすバグがコードベースに到達するのを防ぐ
+* Reduce pipeline duration and ship new features faster
+* Increase development confidence and speed of delivery
+* Have complete test coverage and reduce the volume of production-breaking bugs from reaching your codebase
 
-### 並列化の見積もり
+### Estimate parallelization
 
-**Estimate Parallelization** をクリックすると、[Continuous Testing メトリクス][3]に基づいて Datadog が推奨する並列実行するテストの数が表示されます。
+Click **Estimate Parallelization** to see how many tests Datadog recommends running in parallel based on your [Continuous Testing metrics][3]. 
 
-{{< img src="continuous_testing/estimated_parallelization.png" alt="Continuous Testing Settings の Estimate Parallelization ウィザードの完了" style="width:60%;">}}
+{{< img src="continuous_testing/estimated_parallelization.png" alt="Completing the Estimate Parallelization wizard in Continuous Testing Settings" style="width:60%;">}}
 
-CI パイプラインにおけるテストの予想期間と、オプションで CI バッチあたりの平均テスト数を指定した後、**Estimated Parallelization** セクションでは、設定したい並列化の量を計算します。
+After specifying the expected duration for testing in your CI pipeline and, optionally, the average number of tests per CI batch, the **Estimated Parallelization** section calculates the amount of parallelization you want to set:
 
-$$\text"estimated parallelization" = {\text"CI バッチあたりの平均テスト数" * \text"平均テスト時間"} / \text"CI パイプラインにおけるテストの予想期間"$$
+$$\text"estimated parallelization" = {\text"average numbers of tests per CI batch" * \text"average test duration"} / \text"expected duration in your CI pipeline"$$
 
-### 並列化の設定
+### Set parallelization
 
-1. **Set your preferences** で、**Parallelization** を選択します。
-2. 並列に実行したいテストの数に応じて、必要な並列化をカスタマイズします。
-3. **Save Selection** をクリックします。
-4. 選択内容を確認します。
+1. Under **Set your preferences**, select the **Parallelization** option. 
+2. Customize the parallelization you need based on how many tests you want to run in parallel.
+3. Click **Save Selection**.
+4. Confirm your selection.
 
-{{< img src="continuous_testing/continuous_testing_settings_parallelization.png" alt="Continuous Testing のための並列化の設定" style="width:100%;">}}
+{{< img src="continuous_testing/settings/parallelization.png" alt="Parallelization settings for 25 parallel Continuous Testing test runs" style="width:100%;">}}
 
-## アクセス許可
+## Permissions
 
-Continuous Testing の並列化をカスタマイズするには、`billing_edit` 権限が必要です。
+In order to customize the parallelization for Continuous Testing, you must have the `billing_edit` permission. 
 
-そうでない場合は、次のエラーが表示されます: `You're missing edit permission for Continuous Testing settings. You can run your tests with a parallelization of X (up to X tests running at the same time at a given point during your CI). To increase this value, reach out to your administrator admin.email@datadoghq.com`
+Otherwise, the following error displays: `You're missing edit permission for Continuous Testing settings. You can run your tests with a parallelization of X (up to X tests running at the same time at a given point during your CI). To increase this value, reach out to your administrator admin.email@datadoghq.com`.
 
-詳しくは、[Datadog ロール権限][2]を参照してください。
+For more information, see [Datadog Role Permissions][2].
 
-## その他の参考資料
+## Further reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

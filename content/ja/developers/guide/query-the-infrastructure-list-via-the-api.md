@@ -1,13 +1,14 @@
 ---
-title: API を使ったインフラストラクチャーリストのクエリ
 aliases:
-  - /ja/developers/faq/query-the-infrastructure-list-via-the-api
+- /ja/developers/faq/query-the-infrastructure-list-via-the-api
+title: API を使ったインフラストラクチャーリストのクエリ
 ---
-上級の Datadog ユーザーは、[API][1] を使用して、ユーザーのインフラストラクチャーに関する一般データを問い合わせることができます。問い合わせることができるのは、[インフラストラクチャーリスト][2]や[ホストマップ][3]に表示されるデータです。それには、[api/v1/hosts][4] エンドポイントで API GET リクエストを行います。
 
-## 例
+If you're a more advanced Datadog user, you may want to use [the API][1] to query general data about infrastructure—the kind of data that you can find in your [infrastructure list][2] or the [host map][3]. You can do this with an API GET request on the [api/v1/hosts][4] endpoint.
 
-たとえば、`env:prod` および `role:elasticsearch` タグを含むすべてのホストに一般データを問い合わせる場合は、Python の `requests` ライブラリを使用して、以下のような API 呼び出しを作成します。
+## Examples
+
+If, for example, you want to query general data from all your hosts that include the `env:prod` and `role:elasticsearch` tag, you can make the following API call with Python's `requests` library:
 
 ```python
 import requests
@@ -23,7 +24,7 @@ infra_content = s.request(
 ).json()
 ```
 
-インフラストラクチャー内のすべてのホストを反復処理するには、次を使用します。
+To iterate over all the hosts in your infrastructure, use the following:
 
 ```python
 import requests

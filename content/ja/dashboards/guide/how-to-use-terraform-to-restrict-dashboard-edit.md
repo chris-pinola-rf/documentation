@@ -6,11 +6,11 @@ title: Terraform でダッシュボードの編集を制限する方法
 ---
 
 
-## restricted_roles 属性を使用したダッシュボードの制限
+## Restricting a dashboard using the restricted_roles attribute
 
-`restricted_roles` 属性を使用すると、特定のロールにダッシュボードの編集を制限できます。このフィールドはロールの ID リストを取得し、関連するユーザーに編集権限を付与します。
+The `restricted_roles` attribute can be used to restrict editing of the dashboard to specific roles. The field takes a list of IDs of roles, and authorizes any associated users.
 
-使用例:
+Example usage:
 
 ```hcl
 resource "datadog_dashboard" "example" {
@@ -19,15 +19,15 @@ resource "datadog_dashboard" "example" {
 }
 ```
 
-**注**: `is_read_only` 属性は非推奨です。ダッシュボードへのアクセスを管理するには、`restricted_roles` 属性または制限ポリシーを使用することをお勧めします。
+**Note**: The `is_read_only` attribute is deprecated. It is recommended to use the `restricted_roles` attribute or restriction policies to manage access to your dashboards.
 
-## 制限ポリシーを使用したダッシュボードの制限
+## Restricting a dashboard using a restriction policy
 
-<div class="alert alert-warning">制限ポリシーは非公開ベータ版です。アクセスについては、<a href="/help/">Datadog サポート</a>またはカスタマーサクセスマネージャーにお問い合わせください。</div>
+<div class="alert alert-warning">Restriction policies are in private beta. Contact <a href="/help/">Datadog Support</a> or your Customer Success Manager for access.</div>
 
-[制限ポリシー][1]を使用すると、ダッシュボードやその他のリソースの編集を、ロール、チーム、ユーザー、サービスアカウントなどの特定のプリンシパルに制限できます。
+[Restriction Policies][1] allow you to restrict the editing of dashboards and other resources to specific principals, including roles, teams, users, and service accounts.
 
-使用例:
+Example usage:
 
 ```hcl
 resource "datadog_dashboard" "example" {
@@ -48,9 +48,9 @@ resource "datadog_restriction_policy" "example" {
 }
 ```
 
-ロール ID は [Roles API][2] や [Roles UI][5] から取得するか、[datadog_role][3] リソースの Terraform で定義したロール ID を利用します。
+Role IDs can be retrieved from the [Roles API][2], [Roles UI][5], or by using the role ID defined in Terraform for [datadog_role][3] resources.
 
-組織 ID は [GET /api/v2/current_user API][4] リクエストから取得できます。`data.relationships.org.data.id` フィールドで見つけてください。
+Org ID can be obtained from the [GET /api/v2/current_user API][4] request. Find it in the `data.relationships.org.data.id` field. 
 
 
 

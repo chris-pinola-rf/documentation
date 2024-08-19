@@ -22,6 +22,7 @@ author:
   support_email: help@datadoghq.com
 categories:
 - 自動化
+custom_kind: integration
 dependencies:
 - https://github.com/DataDog/integrations-extras/blob/master/concourse_ci/README.md
 display_on_public_website: true
@@ -31,7 +32,6 @@ integration_id: concourse-ci
 integration_title: Concourse-CI
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: concourse_ci
 public_title: Concourse-CI
@@ -47,6 +47,7 @@ tile:
   - Supported OS::Linux
   - Supported OS::Windows
   - Supported OS::macOS
+  - Offering::Integration
   configuration: README.md#Setup
   description: Concourse CI から送信されるメトリクスを収集
   media: []
@@ -58,26 +59,26 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/integrations-extras -->
 
 
-## 概要
+## Overview
 
-Concourse CI で Datadog メトリクスエミッターを構成すると、以下のことができます。
+Configure the Datadog Metric Emitter in Concourse CI to:
 
-- パイプラインの処理時間、コンテナの数、およびマウントされたワーカーボリュームを可視化できます。
-- 低速なリクエストを識別してルートを構築できます。
+- Visualize the duration of pipelines, number of containers and mounted volumes of workers.
+- Identify slow requests to build routes.
 
-## 計画と使用
+## Setup
 
-### インフラストラクチャーリスト
+### Installation
 
-Concourse CI には Datadog メトリクスエミッターが付属しています。起動時にメトリクスを送信するように [ATC][1] を構成するには、[Datadog Agent][2] がインストールされていることが前提条件です。
+Concourse CI comes bundled with a Datadog metrics emitter. A prerequisite to configuring [ATC][1] to emit metrics on start is to have a [Datadog Agent][2] installed.
 
-### ブラウザトラブルシューティング
+### Configuration
 
-以下のオプションを設定して、Datadog エミッターを使用するように ATC を構成します。[カスタムメトリクス][3]を送信しないように、`concourse.ci` というプレフィックスを使用することが重要です。
+Configure ATC to use the Datadog emitter by setting the following options. It is important to use a prefix of `concourse.ci` to avoid emitting [custom metrics][3].
 
-### メトリクスエミッターオプション
+### Metric emitter options
 
-詳しくは、Concourse CI のドキュメントの [Configuring Metrics][4] を参照してください。
+See [Configuring Metrics][4] in the Concourse CI documentation for more information.
 
 ```text
 Metric Emitter (Datadog):
@@ -86,23 +87,23 @@ Metric Emitter (Datadog):
     --datadog-prefix=           Prefix for all metrics to easily find them in Datadog [$CONCOURSE_DATADOG_PREFIX]
 ```
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "concourse_ci" >}}
 
 
-### ヘルプ
+### Events
 
-このインテグレーションは、イベントをサポートしていません。
+This integration does not support events.
 
-### サービス
+### Service
 
-このインテグレーションは、サービスチェックを収集しません。
+This integration does not collect service checks.
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][6]までお問合せください。
+Need help? Contact [Datadog support][6].
 
 [1]: https://concourse-ci.org/concepts.html
 [2]: https://app.datadoghq.com/account/settings/agent/latest

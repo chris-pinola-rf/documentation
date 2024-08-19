@@ -27,6 +27,7 @@ categories:
 - metrics
 - cloud
 - data stores
+custom_kind: integration
 dependencies: []
 display_on_public_website: true
 draft: false
@@ -35,7 +36,6 @@ integration_id: amazon-s3
 integration_title: Amazon S3
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: amazon_s3
 public_title: Amazon S3
@@ -48,8 +48,9 @@ tile:
   - Category::Metrics
   - Category::クラウド
   - Category::Data Stores
+  - Offering::Integration
   configuration: README.md#Setup
-  description: Amazon S3 は、可用性と拡張性に優れたクラウドストレージサービスです。
+  description: Amazon S3 is a highly available and scalable cloud storage service.
   media: []
   overview: README.md#Overview
   support: README.md#Support
@@ -57,48 +58,48 @@ tile:
 ---
 
 <!--  SOURCED FROM https://github.com/DataDog/integrations-internal-core -->
-## 概要
+## Overview
 
-Amazon S3 は、可用性と拡張性に優れたクラウドストレージサービスです。
+Amazon S3 is a highly available and scalable cloud storage service.
 
-このインテグレーションを有効にすると、Datadog にすべての S3 メトリクスを表示できます。
+Enable this integration to see in Datadog all your S3 metrics.
 
-注: このインテグレーションでは、's3:GetBucketTagging' の権限が完全に有効になっている必要があります。
+Note: This integration requires the permission 's3:GetBucketTagging' to be fully enabled.
 
-注: S3 リクエストメトリクスはバケット自体で有効にする必要があります。[AWS ドキュメント][1]を参照してください。
+Note: S3 requests metrics have to be enabled on the buckets themselves, see the [AWS documentation][1]
 
-## 計画と使用
+## Setup
 
-### インフラストラクチャーリスト
+### Installation
 
-[Amazon Web Services インテグレーション][2]をまだセットアップしていない場合は、最初にセットアップします。
+If you haven't already, set up the [Amazon Web Services integration][2] first.
 
-### メトリクスの収集
+### Metric collection
 
-1. [AWS インテグレーションページ][3]で、`Metric Collection` タブの下にある `S3` が有効になっていることを確認します。
-2. [Datadog - Amazon S3 インテグレーション][4]をインストールします。
+1. In the [AWS integration page][3], ensure that `S3` is enabled under the `Metric Collection` tab.
+2. Install the [Datadog - Amazon S3 integration][4].
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "amazon_s3" >}}
 
 
-### ヘルプ
+### Events
 
-Amazon S3 インテグレーションには、イベントは含まれません。
+The Amazon S3 integration does not include any events.
 
-### ヘルプ
+### Service Checks
 
-Amazon S3 インテグレーションには、サービスのチェック機能は含まれません。
+The Amazon S3 integration does not include any service checks.
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][6]までお問合せください。
+Need help? Contact [Datadog support][6].
 
 [1]: https://docs.aws.amazon.com/AmazonS3/latest/dev/cloudwatch-monitoring.html
 [2]: https://docs.datadoghq.com/ja/integrations/amazon_web_services/
 [3]: https://app.datadoghq.com/integrations/amazon-web-services
-[4]: https://app.datadoghq.com/integrations/amazon-billing
+[4]: https://app.datadoghq.com/integrations/amazon-s3
 [5]: https://github.com/DataDog/integrations-internal-core/blob/main/amazon_s3/metadata.csv
 [6]: https://docs.datadoghq.com/ja/help/

@@ -4,42 +4,47 @@ aliases:
 further_reading:
 - link: /continuous_integration/pipelines/custom_commands/
   tag: ドキュメント
-  text: トラブルシューティング CI
+  text: CI Visibility のトラブルシューティング
 title: パイプライントレースへのカスタムコマンドの追加
 ---
 
 {{< site-region region="gov" >}}
-<div class="alert alert-warning">選択したサイト ({{< region-param key="dd_site_name" >}}) では CI Visibility は利用できません。</div>
+<div class="alert alert-warning">CI Visibility is not available for the selected site ({{< region-param key="dd_site_name" >}}).</div>
 {{< /site-region >}}
 
-カスタムコマンドは、CI パイプラインの個々のコマンドをトレースする方法を提供し、ジョブが持つかもしれないセットアップやティアダウンアクション (例えば、Docker イメージのダウンロードや Kubernetes ベースのインフラで利用できるノードの待機) を考慮せずにコマンドにかかる時間を測定することを可能にします。これらのスパンは、パイプラインのトレースの一部として表示されます。
+Custom commands provide a way to trace individual commands in your CI pipelines, allowing you to measure the time your command takes without taking into account any setup or teardown actions that the job might have (for example, downloading Docker images or waiting for an available node in a Kubernetes-based infrastructure). These spans appear as part of the pipeline's trace:
 
-{{< img src="ci/ci-custom-spans.png" alt="カスタムコマンドを使用した単一パイプラインの詳細" style="width:100%;">}}
+{{< img src="ci/ci-custom-spans.png" alt="Details for a single pipeline with custom commands" style="width:100%;">}}
 
-## 互換性
+## Compatibility
 
-カスタムコマンドは、以下の CI プロバイダーで動作します。
+Custom commands work with the following CI providers:
 
-- Jenkins と Datadog プラグイン >= v3.2.0
+- GitHub.com (SaaS) with datadog-ci CLI >= 2.40. For sending custom commands in GitHub Actions, see [Trace a command](#trace-a-command-in-github-actions).
+- GitLab (SaaS or self-hosted >= 14.1) with datadog-ci CLI >= 2.40.
+- Jenkins with the Datadog plugin >= v3.2.0
 - CircleCI
+- Azure DevOps Pipelines with datadog-ci CLI >= 2.40.
+- AWS Codepipeline with datadog-ci CLI >= 2.40. Follow [Adding custom commands][6] to set up custom commands in AWS Codepipeline.
+- Buildkite with datadog-ci CLI >= 2.40.
 
-## Datadog CI CLI のインストール
+## Install the Datadog CI CLI
 
-`npm` を使用して [`datadog-ci`][1] (>=v0.17.0) CLI をグローバルにインストールします。
+Install the [`datadog-ci`][1] (>=v0.17.0) CLI globally using `npm`:
 
 {{< code-block lang="shell" >}}
 npm install -g @datadog/datadog-ci
 {{< /code-block >}}
 
-## コマンドのトレース
+## Trace a command
 
-コマンドをトレースするには、以下を実行します。
+To trace a command, run:
 
 {{< code-block lang="shell" >}}
 datadog-ci trace [--name <name>] -- <command>
 {{< /code-block >}}
 
-環境変数 `DATADOG_API_KEY` に有効な [Datadog API キー][2]を指定します。例:
+Specify a valid [Datadog API key][2] in the `DATADOG_API_KEY` environment variable. For example:
 
 {{< site-region region="us,us3,eu,ap1" >}}
 <pre>
@@ -51,51 +56,94 @@ echo "Hello World"
 </code>
 </pre>
 {{< /site-region >}}
-{{< site-region region="us5,gov" >}}
-<div class="alert alert-warning">選択したサイト ({{< region-param key="dd_site_name" >}}) では CI Visibility は利用できません。</div>
+{{< site-region region="gov" >}}
+<div class="alert alert-warning">CI Visibility is not available in the selected site ({{< region-param key="dd_site_name" >}}).</div>
 {{< /site-region >}}
 
-## コンフィギュレーション設定
+## Configuration settings
 
-これらのオプションは `datadog-ci trace` コマンドで利用可能です。
+These options are available for the `datadog-ci trace` command:
 
 `--name`
-: カスタムコマンドの表示名。<br/>
-**デフォルト**: `<command>` と同じ値<br/>
-**例**: `Wait for DB to be reachable`
+: Display name of the custom command.<br/>
+**Default**: same value as `<command>`<br/>
+**Example**: `Wait for DB to be reachable`
 
 `--tags`
-: カスタムコマンドにアタッチされる `key:value` 形式のキーと値のペア (`--tags` パラメーターは複数回指定できます)。`DD_TAGS` を使用してタグを指定する場合は、カンマを使用してタグを区切ります (例: `team:backend,priority:high`)。<br/>
-**環境変数**: `DD_TAGS`<br/>
-**デフォルト**: (none)<br/>
-**例**: `team:backend`<br/>
-**注**: `--tags` と `DD_TAGS` 環境変数を使用して指定されたタグがマージされます。`--tags` と `DD_TAGS` の両方に同じキーが表示される場合、環境変数 `DD_TAGS` の値が優先されます。
+: Key-value pairs in the form `key:value` to be attached to the custom command (the `--tags` parameter can be specified multiple times). When specifying tags using `DD_TAGS`, separate them using commas (for example, `team:backend,priority:high`).<br/>
+**Environment variable**: `DD_TAGS`<br/>
+**Default**: (none)<br/>
+**Example**: `team:backend`<br/>
+**Note**: Tags specified using `--tags` and with the `DD_TAGS` environment variable are merged. If the same key appears in both `--tags` and `DD_TAGS`, the value in the environment variable `DD_TAGS` takes precedence.
+
+`--measures`
+: Key-value pairs in the form `key:value` to be attached to the custom command as numerical values (the `--measures` parameter can be specified multiple times).<br/>
+_(Requires datadog-ci >=v2.35.0)_ <br/>
+**Default**: (none)<br/>
+**Example**: `size:1024`<br/>
 
 `--no-fail`
-: サポートされていない CI プロバイダーで実行しても、datadog-ci が失敗しないようにします。この場合、コマンドは実行されますが、Datadog には何も報告されません。<br/>
-**デフォルト**: `false`
+: Prevents datadog-ci from failing even if run in an unsupported CI provider. In this case, the command is run and nothing is reported to Datadog.<br/>
+**Default**: `false`
 
-位置引数
-: 起動され、トレースされるコマンド。
+`--dry-run`
+: Prevents datadog-ci from sending the custom span to Datadog. All other checks are performed.<br/>
+**Default**: `false`
 
-次の環境変数がサポートされています。
+Positional arguments
+: The command that is launched and traced.
 
-`DATADOG_API_KEY` (必須)
-: リクエストの認証に使用される [Datadog API キー][2]。<br/>
-**デフォルト**: (なし)
+The following environment variables are supported:
+
+`DATADOG_API_KEY` (Required)
+: [Datadog API key][2] used to authenticate the requests.<br/>
+**Default**: (none)
 
 {{< site-region region="us3,us5,eu,ap1" >}}
-さらに、選択したサイトを使用するように Datadog サイトを構成します ({{< region-param key="dd_site_name" >}}):
+Additionally, configure the Datadog site to use the selected one ({{< region-param key="dd_site_name" >}}):
 
 `DATADOG_SITE`
-: 結果をアップロードする Datadog サイト。<br/>
-**デフォルト**: `datadoghq.com`<br/>
-**選択したサイト**: {{< region-param key="dd_site" code="true" >}}
+: The Datadog site to upload results to.<br/>
+**Default**: `datadoghq.com`<br/>
+**Selected site**: {{< region-param key="dd_site" code="true" >}}
 {{< /site-region >}}
 
-## その他の参考資料
+## Trace a command in GitHub Actions
+
+If the job name does not match the entry defined in the workflow configuration file (the GitHub [job ID][3]),
+the `DD_GITHUB_JOB_NAME` environment variable needs to be exposed, pointing to the job name. For example:
+1. If the job name is changed using the [name property][4]:
+    ```yaml
+    jobs:
+      build:
+        name: My build job name
+        env:
+          DD_GITHUB_JOB_NAME: My build job name
+        steps:
+        - run: datadog-ci trace ...
+    ```
+2. If the [matrix strategy][5] is used, several job names are generated by GitHub by adding the matrix values at the end of the job name, within parenthesis. The `DD_GITHUB_JOB_NAME` environment variable should then be conditional on the matrix values:
+
+    ```yaml
+    jobs:
+      build:
+        strategy:
+          matrix:
+            version: [1, 2]
+            os: [linux, macos]
+        env:
+          DD_GITHUB_JOB_NAME: build (${{ matrix.version }}, ${{ matrix.os }})
+        steps:
+        - run: datadog-ci trace ...
+    ```
+
+## Further reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
 [1]: https://www.npmjs.com/package/@datadog/datadog-ci
 [2]: https://app.datadoghq.com/organization-settings/api-keys
+[3]: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_id
+[4]: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#name
+[5]: https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs#using-a-matrix-strategy
+[6]: /ja/continuous_integration/pipelines/awscodepipeline/#add-the-pipeline-execution-id-as-an-environment-variable

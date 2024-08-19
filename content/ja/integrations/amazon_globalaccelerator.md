@@ -17,13 +17,14 @@ assets:
     source_type_name: Amazon GlobalAccelerator
 author:
   homepage: https://www.datadoghq.com
-  name: Ruby
+  name: Datadog
   sales_email: info@datadoghq.com (日本語対応)
   support_email: help@datadoghq.com
 categories:
 - AWS
-- モニター
+- metrics
 - クラウド
+custom_kind: integration
 dependencies: []
 display_on_public_website: true
 draft: false
@@ -32,7 +33,6 @@ integration_id: amazon-globalaccelerator
 integration_title: Amazon Global Accelerator
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: amazon_globalaccelerator
 public_title: Amazon Global Accelerator
@@ -45,6 +45,7 @@ tile:
   - Category::Metrics
   - Category::Cloud
   - Submitted Data Type::Metrics
+  - Offering::Integration
   configuration: README.md#Setup
   description: Global Accelerator は、アクセラレータを使用してアプリケーションのパフォーマンスを向上させます。
   media: []
@@ -54,41 +55,41 @@ tile:
 ---
 
 <!--  SOURCED FROM https://github.com/DataDog/integrations-internal-core -->
-## 概要
+## Overview
 
-AWS Global Accelerator は、ローカルおよびグローバルユーザー向けにアプリケーションのパフォーマンスを向上させるアクセラレータを作成するサービスです。
+AWS Global Accelerator is a service in which you create accelerators to improve the performance of your applications for local and global users.
 
-このインテグレーションを有効にすると、すべての Global Accelerator メトリクスを Datadog に表示できます。
+Enable this integration to see all your Global Accelerator metrics in Datadog.
 
-## セットアップ
+## Setup
 
-### インストール
+### Installation
 
-[Amazon Web Services インテグレーション][1]をまだセットアップしていない場合は、最初にセットアップします。
+If you haven't already, set up the [Amazon Web Services integration][1] first.
 
-### メトリクスの収集
+### Metric collection
 
-1. [AWS インテグレーションページ][2]で、**Metric Collection** タブの下にある Global Accelerator が有効になっていることを確認します。
-2. [Datadog - Amazon Global Accelerator インテグレーション][3]をインストールします。
+1. In the [AWS integration page][2], ensure that Global Accelerator is enabled under the **Metric Collection** tab.
+2. Install the [Datadog - AWS Global Accelerator integration][3].
 
 
-## データ収集
+## Data Collected
 
-### メトリクス
+### Metrics
 {{< get-metrics-from-git "amazon_globalaccelerator" >}}
 
 
-### サービスチェック
+### Service Checks
 
-Amazon Global Accelerator には、サービスのチェック機能は含まれません。
+AWS Global Accelerator does not include any service checks.
 
-### イベント
+### Events
 
-Amazon Global Accelerator には、イベントは含まれません。
+AWS Global Accelerator does not include any events.
 
-## トラブルシューティング
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][5]までお問い合わせください。
+Need help? Contact [Datadog support][5].
 
 [1]: https://docs.datadoghq.com/ja/integrations/amazon_web_services/
 [2]: https://app.datadoghq.com/integrations/amazon-web-services

@@ -2,8 +2,9 @@
 categories:
 - collaboration
 - notifications
+custom_kind: integration
 dependencies: []
-description: Datadog のアラートとグラフをチームのフローに送信。
+description: Send Datadog alerts and graphs to your team's flows.
 doc_link: https://docs.datadoghq.com/integrations/flowdock/
 draft: false
 git_integration_title: flowdock
@@ -12,7 +13,6 @@ integration_id: ''
 integration_title: Flowdock
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: '1.0'
 name: flowdock
 public_title: Datadog-Flowdock インテグレーション

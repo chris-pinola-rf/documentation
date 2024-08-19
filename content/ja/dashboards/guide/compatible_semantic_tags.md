@@ -8,34 +8,34 @@ further_reading:
 title: 互換性のあるセマンティックタグ
 ---
 
-## 概要
+## Overview
 
-互換性のある一連のデータについて、Datadog は色と意味を対応させることができます。互換性のあるタグが検出されると、Datadog はセマンティックカラーパレットを提案します。これにより、データを意味主導の色に自動的にマッピングします。
+For compatible series of data, Datadog can map colors to meaning. When a compatible tag is detected, Datadog suggests the Semantic color palette. This automatically maps data to meaning-driven colors.
 
-**注**: セマンティックカラーパレットを使用するには、クエリが 1 つのタグでグループ化されている必要があります。
+**Note**: To use the Semantic color palette, a query must be grouped with a single set of tags.
 
-### 互換性のあるタグを、その意味に基づいて色にマッピングする
+### Map compatible tags to colors based on their meaning
 
-例えば、エラーステータスコードは赤、成功は緑にマッピングされます。
+For example, an error status code is mapped to red, and success to green.
 
-{{< img src="/dashboards/guide/compatible_semantic_tags/semantic_option.png" alt="グラフエディターにおけるセマンティックカラーオプション" style="width:100%;" >}}
+{{< img src="/dashboards/guide/compatible_semantic_tags/semantic_option.png" alt="Semantic color option in the graph editor" style="width:100%;" >}}
 
-### チャート間で一貫した色付けにする
+### Ensure consistent coloring across charts
 
-セマンティックパレットを使用したグラフでは、各タグに同じ安定した色を使用します。これにより、異なるグラフ間で指定されたタグを簡単に追跡することができます。
+Charts with a semantic palette use the same, stable color for each tag. This allows you to easily trace a given tag across different graphs.
 
-### グループ化の挙動
+### Grouping behavior
 
-単一のタグセットでグループ化されたクエリがサポートされます。セマンティックパレットで複数のグルーパーを使用した場合、色付けは一貫して行われますが、意味づけはされません。
+Queries grouped with a single set of tags are supported. If multiple groupers are used with the semantic palette, coloring is consistent, but not meaning-driven.
 
-{{< img src="/dashboards/guide/compatible_semantic_tags/multiple_tags.png" alt="セマンティックパレットを用いた複数タググラフの例" style="width:100%;" >}}
+{{< img src="/dashboards/guide/compatible_semantic_tags/multiple_tags.png" alt="Example of multiple tag graph using semantic palette" style="width:100%;" >}}
 
-例えば、`Status` タグと `Service` タグの両方を使用したクエリを考えてみましょう。セマンティックパレットが選択されていても、チャートの色はもはや特定の意味に対応していません (赤が必ずしも「悪い」ことを示すわけではない、というように)。ただし、ステータスとサービスの組み合わせは、すべてのチャートで一貫した色付けが維持されます。
+For example, consider a query that uses both the `Status` and `Service` tags. Even if the semantic palette is selected, the colors in the chart no longer correspond to a specific meaning (as in, red no longer necessarily indicates "bad"). However, each status/service combination retains consistent coloring for all charts.
 
-## 対応するタグキー
+## Supported tag keys
 
 {{% semantic-color %}}
 
-## その他の参考資料
+## Further reading
 
 {{< partial name="whats-next/whats-next.html" >}}

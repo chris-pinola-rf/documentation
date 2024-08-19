@@ -4,6 +4,7 @@ categories:
 - orchestration
 - google cloud
 - ログの収集
+custom_kind: integration
 dependencies: []
 description: Cloud Run for Anthos クラスターからメトリクスおよびログを収集し、Datadog で分析
 doc_link: https://docs.datadoghq.com/integrations/google_cloud_run_for_anthos/
@@ -18,7 +19,6 @@ integration_id: google-cloud-run-for-anthos
 integration_title: Google Cloud Run for Anthos
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: '1.0'
 name: google_cloud_run_for_anthos
 public_title: Datadog-Google Cloud Run for Anthos インテグレーション
@@ -33,11 +33,11 @@ Google Cloud Run for Anthos は、ハイブリッドおよびマルチクラウ�
 
 Datadog Google Cloud Platform インテグレーションを使用して、Google Cloud Run for Anthos からメトリクスを収集できます。
 
-## 計画と使用
+## Setup
 
 ### メトリクスの収集
 
-#### インフラストラクチャーリスト
+#### Installation
 
 [Google Cloud Platform インテグレーション][3]をまだセットアップしていない場合は、最初にセットアップします。
 
@@ -71,21 +71,21 @@ Google Cloud Run のログは Google Cloud Logging で収集し、Cloud Pub/Sub 
 
 ポッドで環境変数を受信しないようにするには、`admission.datadoghq.com/enabled: "false"` ラベルを追加します。これは `mutateUnlabelled: true` を設定している場合でも機能します。詳細については、[Datadog Admission Controller][8] のドキュメントを参照してください。
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "google_cloud_run_for_anthos" >}}
 
 
-### ヘルプ
+### Events
 
 Google Cloud Run for Anthos インテグレーションには、イベントは含まれません。
 
-### ヘルプ
+### Service Checks
 
 Google Cloud Run for Anthos インテグレーションには、サービスのチェック機能は含まれません。
 
-## ヘルプ
+## Troubleshooting
 
 ご不明な点は、[Datadog のサポートチーム][10]までお問合せください。
 

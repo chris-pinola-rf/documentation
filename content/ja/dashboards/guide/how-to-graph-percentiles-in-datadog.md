@@ -1,49 +1,50 @@
 ---
-title: Datadog でパーセンタイルグラフを作成する方法
 aliases:
-  - /ja/graphing/faq/how-to-graph-percentiles-in-datadog
-  - /ja/graphing/guide/how-to-graph-percentiles-in-datadog
+- /ja/graphing/faq/how-to-graph-percentiles-in-datadog
+- /ja/graphing/guide/how-to-graph-percentiles-in-datadog
+title: Datadog でパーセンタイルグラフを作成する方法
 ---
-## DogStatsD の実装
 
-Datadog では、DogStatsD からヒストグラムメトリクスとしてデータを送信することで、パーセンタイルを取得できます。Agent に組み込まれている [DogStatsD][1] サーバーは、[DogStatsD][1] パケットを受け取り、[データ集計を実行][2]して、最終的にパーセンタイルメトリクスを Datadog に送信します。
+## DogStatsD implementation
 
-この集計は収集側で処理されるため、GUI でグラフ作成機能として使用することはできません。
+It's possible to get percentiles in Datadog by submitting data as a histogram metric through DogStatsD. The Agent embeds a [DogStatsD][1] server that receives [DogStatsD][1] packets, [perform data aggregation][2], and send final percentile metrics to Datadog.
 
-ヒストグラムデータからは、95 パーセンタイル、50 パーセンタイル、平均値、最大値、カウントを取得できます。
+Since this aggregation is taken care of on the collection side, this isn't available as a graphing function in the GUI.
 
-* [DogStatsD の簡単な紹介][1]
+Out of the histogram data, you get: 95th percentile, 50th percentile, avg, max, count.
 
-* [さまざまなプログラミング言語で使用できる DogStatsD クライアント][3]
+* A quick [introduction to DogStatsD][1]
 
-### 追加のパーセンタイル
+* [DogStatsD clients available for each programming language][3].
 
-Agent の構成ファイルの「histogram_percentiles」行を使用して、以下のような追加のパーセンタイルを取得できます。
+### Additional percentiles
+
+Through the "histogram_percentiles" line of the configuration file of the Agent, get extra percentiles, such as:
 
 * histogram_percentiles: 0.95, 0.75
 
-[ヒストグラムの詳細][4]
+[More about histogram][4]
 
-## ローカル集計
+## Local aggregations
 
-ヒストグラムは、Datadog Agent によってホストあたり 10 秒ごとに計算されます。この収集モデルには、メリットとデメリットがあります。
+Histograms are computed every 10 seconds on a host per host basis by the Datadog Agent. This collection model comes with its advantages and its limitations.
 
-### メリット
+### Advantages
 
-* ヒストグラムメトリクスの計算に使用される生データポイントが、Datadog サイトに公開されたり、リレーされることはありません。
-* StatsD がすべての集計を処理し、計算されたデータパッケージを Datadog のサーバーに直接送信します。
+* Raw datapoints used to compute histogram metrics are not exposed nor relayed to the Datadog site.
+* StatsD handles the relevant aggregations and submits the calculated data package to the Datadog server directly.
 
-### デメリット
+### Disadvantages
 
-* 集計データの報告ストリームが 2 つある場合、現時点では、その 2 つのストリームから取得される生データポイントを一緒に集計することはできません。一緒に集計できるのは集計値だけです。
-    * 例: すべてのリージョンの `<METRIC_NAME>.avg` から平均を求める場合は、各リージョンの平均ストリーム値を受け取り、平均値の平均が生成されます。
+* If you have two reporting streams of aggregated data, it is not possible today to aggregate across the raw datapoints from both streams, only aggregate across the aggregates.
+    * EX: Averaging across `<METRIC_NAME>.avg` for all regions, takes the average stream values for each region and produces an average of averages.
 
-* タグの複雑さが増すような変更を行うと (より具体化するためのタグを追加すると)、ロールアップされたメトリクス可視化機能の動作が変化します。
-    * 例: 変更前の `<METRIC_NAME>.avg` (タグなし) は、すべての生ポイントに対して集計を行っていました (StatsD が、すべての生データポイントを受け取って集計してから、1 つのメトリクスストリーム上に送信する)。しかし、US、EU などのリージョンタグを追加すると、StatsD は生データポイントを 2 つのリージョンビンに入れ、それらを集計し、2 つのストリーム上に送信します。つまり、`<METRIC_NAME>.avg` をグラフ化する場合、AVG by * は、1 つのストリームではなく、2 つのストリームに対する集計になります。
+* Making a change to increase tag complexity (adding additional tags to be more specific) leads to changes in the behavior of a rolled up metric visualization
+    * EX: Whereas before the change `<METRIC_NAME>.avg` (without any tags) would be aggregating across all raw points (StatsD takes all the raw datapoints, aggregates it and then ships over a single metric stream), adding a tag like region (US, EU) tag causes StatsD to bin raw datapoints into two region bins, aggregate them, and ship over two streams. This means when graphing `<METRIC_NAME>.avg` AVG by * means an aggregate across the two streams rather than a single one.
 
-[Datadog のヒストグラムの特性については、こちらを参照してください][5]。
+[Read more about the Datadog histograms characteristics][5]
 
-[1]: /ja/metrics/dogstatsd_metrics_submission/
+[1]: /ja/metrics/custom_metrics/dogstatsd_metrics_submission/
 [2]: https://github.com/DataDog/dd-agent/blob/master/aggregator.py
 [3]: /ja/developers/community/libraries/
 [4]: /ja/metrics/types/?tab=histogram#metric-types

@@ -10,10 +10,10 @@ npm_provider: azure
 title: NPM Azure でサポートされるデバイス
 ---
 
-Datadog ネットワークパフォーマンスモニタリング (NPM) は、Azure Blob Storage、Cosmos、Postgres、および以下にリストされているその他の Azure サービスへの API 呼び出しを自動的に検出します。
+Datadog Network Performance Monitoring (NPM) automatically detects API calls to Azure Blob Storage, Cosmos, Postgres and other Azure services listed below:
 
 {{< get-npm-integrations "azure" >}}
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}

@@ -3,62 +3,62 @@ is_beta: false
 title: CoScreen の最適化およびトラブルシューティング
 ---
 
-### CoScreen、Zoom、その他のツールで Bluetooth ヘッドセットのマイクを入力として使用すると、音質が低下するのはなぜですか？
+### Why does the audio quality degrade when using the microphone of my Bluetooth headset as input in CoScreen, Zoom, and other tools?
 
-Bluetooth ヘッドセットを使用している場合、ヘッドセットのマイクがオーディオ入力デバイスとして選択されていると、再生品質が低下することがあります。CoScreen セッション中にオーディオを再生 (例えば、YouTube ビデオを再生) すると、このことに気づくかもしれません。これは、Bluetooth ヘッドセットが別の Bluetooth プロファイルの使用に切り替えたために起こる可能性があります。
+If you're using a Bluetooth headset, the playback quality may degrade when your headset's microphone is selected as an audio input device. You may notice this if you play audio (for example, play a YouTube video) while you are in a CoScreen session. This can occur because your Bluetooth headset has switched to using a different Bluetooth profile.
 
-オーディオ再生のみの場合、Bluetooth ヘッドセットは通常 [A2DP プロファイル][2]を使用し、これは高音質に最適化されていますが、マイクの使用はサポートしていません。ヘッドセットマイクをオーディオ入力として選択すると (例えば、CoScreen セッションまたは Zoom 会議中)、ヘッドセットは別のプロファイル、通常は [HFP][3] または [HSP][4] に切り替わります。これはマイクの使用をサポートしていますが、音質は低下します。ほとんどの Bluetooth ヘッドセットは一度に 1 つのプロファイルしか使用できません。
+When only playing audio, Bluetooth headsets typically use the [A2DP profile][2], which is optimized for high audio quality but does not support using the microphone. If you choose your headset microphone as audio input (for example, during a CoScreen session or Zoom meeting) the headset switches to a different profile, usually [HFP][3] or [HSP][4], which supports microphone usage but has lower sound quality. Most Bluetooth headsets can use only one profile at a time.
 
-この問題を避けるには、ノートパソコンの内蔵マイクなど、別のオーディオ入力を使うことができます。高音質を取り戻すには、アプリケーションを再起動する必要があるかもしれません。
+To avoid this issue, you can use a different audio input—such as a laptop's built-in microphone. You may need to restart your application to regain high  quality audio.
 
-### 画面共有の品質やリモートコントロールのレイテンシーを最適化するにはどうすればよいですか？
+### How can I optimize my screen sharing quality and remote control latency?
 
-あなたとあなたの周りの人々が共有するウィンドウの品質の背後にあるいくつかの重要な要因に影響を与えることができます。
+You can influence a few key factors behind the quality of the windows you and your peers share.
 
-#### ネットワーク帯域と安定性
+#### Network bandwidth and stability
 
-* 参加者全員が、アップロードとダウンロードが 5Mbps 以上の高速で安定したインターネット接続が可能であることを確認してください。
-* システムのパケットロスが 2% 以上ないことを確認してください。プロバイダーに関係なく、ビデオ会議はこの値を超えると不安定になります。[パケットロステスト][1]を実行してください。問題が発生した場合は、ルーターやモデムを再起動したり、ルーターの近くに移動したり、別のインターネット接続でテストしてみてください。
-* CoScreen は、2 人の参加者だけがピアツーピアで接続できる場合 (つまり、間に企業のプロキシやファイアウォールを介さずに直接接続できる場合)、最も速く機能します。参加者が 3 人以上になった場合、または直接接続が確立できない場合、トラフィックはグローバルに分散されたビデオインフラクチャーを経由し、あらゆる状況下での接続性を確保します。
+* Make sure every participant has a fast and stable internet connection with at least 5Mbps upload and download.
+* Make sure your system does not have a packet loss of more than 2 percent. Video conferencing becomes unstable above that threshold, regardless of provider. Run a [packet loss test][1]. If you see issues, try restarting your router or modem, move closer to your router, or test with an alternative internet connection.
+* CoScreen works fastest if only two participants can connect peer-to-peer (that is, directly, without having a corporate proxy or firewall between them). As soon as there are three or more participants, or a direct connection cannot be established, the traffic is routed through a globally distributed video infrastructure, ensuring connectivity in all circumstances.
 
-#### 画面解像度
-CoScreen は高解像度の画面共有をサポートしており、自分や相手が 4k 以上の超高解像度のディスプレイを使用していても対応できます。ネットワーク帯域と CPU が対応する負荷に対応できることを確認してください。問題がある場合は、両端を低解像度で試してみてください。
+#### Screen resolution
+CoScreen supports high-resolution screen sharing, even if you and your peers have ultra-high display resolutions of 4k or above. Ensure that your network bandwidth and CPU can handle the corresponding load. If there are issues, try lower resolutions on both ends.
 
 #### CPU
-CoScreen は、他の多くのツールよりもはるかに高い品質でウィンドウをキャプチャするため、古いシステムでは 1 つの CPU コアの最大 60% を共有ウィンドウに費やすことができます。CPU の割り当てを確認してください。
+Sharing windows can take up to 60 percent of one CPU core on older systems because CoScreen captures them at a much higher quality than many other tools. Check your CPU allocation.
 
-### ファイアウォールと SSL
-企業内ファイアウォールや SSL 検査を使用している場合、CoScreen クライアントが CoScreen サーバーに接続できず、あなたとチームメンバー間の接続が確立できない可能性があります。許可リストへの URL のリストについては、サポートにお問い合わせください。
+### Firewalls and SSL
+If your organization uses a corporate firewall or SSL inspection, the CoScreen client might not be able to connect to the CoScreen server and would therefore be unable to establish a connection between you and your team members. Contact support for a list of URLs to allowlist.
 
-### macOS でのトラブルシューティング
+### Troubleshooting on macOS
 
-#### サイドパネルの UI がグレーアウトし、接続が確立されない
+#### The side panel UI is grayed out, and a connection is never established
 
-UI がグレーアウトした参加フェーズで止まっているのに、"Unable to connect to CoScreen" (CoScreen に接続できません) ダイアログが表示されないという問題に遭遇することがあります。CoScreen は、固定されていない 1 つのデスクトップ上に存在することを想定しているためです。この問題は、複数のデスクトップに特化して常駐するようにアプリケーションを構成している場合に発生する可能性があります。
+You may encounter a problem where the UI is stuck in the grayed out joining phase, but you never receive the "Unable to connect to CoScreen" dialog. Because CoScreen expects to live on a single non-fixed desktop. This problem may occur if you have configured the application to reside specifically on more than one desktop.
 
-この問題を解決するには
+To resolve this issue:
 
-1. CoScreen アプリケーションのアイコンを右クリックし、_Options_ に進みます。
-2. _Assign To_ が _None_ に設定されていることを確認します。
-3. _Options_ を終了し、CoScreen に再接続します。
+1. Right-click on the CoScreen application icon and go to _Options_.
+2. Ensure that _Assign To_ is set to _None_.
+3. Exist _Options_ and rejoin the CoScreen.
 
-{{< img src="coscreen/assign-to-none.png" alt="macOS のドックのスクリーンショット。CoScreen を右クリックするとメニューが表示され、'Options' にカーソルを合わせると、2 つ目のメニューが表示されます。'Assign To' で、ユーザーは 'None' を選択しています。" style="width:60%;" >}}
+{{< img src="coscreen/assign-to-none.png" alt="Screenshot of macOS dock. Right-clicking on the CoScreen brings up a menu, and hovering over 'Options' opens up a second menu. Under 'Assign To', the user has selected 'None.'" style="width:60%;" >}}
 
-### Windows でのトラブルシューティング
+### Troubleshooting on Windows
 
-#### CoScreen は Windows の管理者モードでどのように動作しますか？
+#### How does CoScreen work with Windows administrator mode?
 
-CoScreen を管理者モードで実行し、同じく管理者モードで起動されたアプリを共有する場合、すべてのリモートユーザーは共有されたウィンドウを操作することができます。しかし、非管理者モードで CoScreen を実行し、管理者モードで起動されたアプリを共有する場合、リモートユーザーはそのウィンドウを操作できません。
+If you run CoScreen in administrator mode and share an app that was also launched in administrator mode, all remote users are able to control the shared window. However, if you are running CoScreen in non-administrator mode and share an app that was launched in admin mode, then remote users cannot control that window.
 
-#### CoScreen の UI が小さく表示される
+#### The CoScreen UI appears small
 
-Windows コンピューターで CoScreen UI が他のアプリより小さく表示される場合、ディスプレイ設定で構成されたスケーリング係数と CoScreen との相互作用が関係しています。画面のスケーリングと解像度を下げることで、エクスペリエンスを改善することができます。
+If the CoScreen UI appears to be smaller than other apps on your Windows computer, it is related to the scaling factor configured under display settings and how it interacts with CoScreen. You can decrease the scaling and resolution of your screen to improve the experience.
 
-#### 私の声が聞き取りにくい、またはロボットみたいだ
+#### My voice is hard to understand, or sounds robotic
 
-一部のデバイスでは、Realtek の音声認識機能を使用しているため、CoScreen 使用時に声がロボットっぽく聞こえることがあります。声の聞き取りに問題がある場合は、Realtek Audio Console を開き、オプションの **Voice Recognition** のチェックを外して状況が改善されるかどうか確認してください。
+Some devices use a Realtek voice recognition feature that may cause your voice to sound robotic when using CoScreen. If you are experiencing issues with the audibility of your voice, open the Realtek Audio Console and untick the option **Voice Recognition** to see if the situation improves.
 
-{{< img src="coscreen/windows_screenshot.png" alt="Realtek Audio Console の Windows ダイアログのスクリーンショット。'Voice Recognition' のトグルはオフに設定されています。" style="width:70%;" >}}
+{{< img src="coscreen/windows_screenshot.png" alt="Screenshot of Windows dialog for Realtek Audio Console. The 'Voice Recognition' toggle is set to off." style="width:70%;" >}}
 
 [1]: https://packetlosstest.com/
 [2]: https://www.bluetooth.com/specifications/specs/advanced-audio-distribution-profile-1-4/

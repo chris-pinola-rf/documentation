@@ -5,68 +5,68 @@ aliases:
 title: 適切なダッシュボードを維持するためのベストプラクティス
 ---
 
-ダッシュボードの一覧ページが乱雑になると、適切なコンテンツを見つけるのが難しくなり、検索クエリが未使用または無関係の結果で汚染される可能性があります。一括削除と[**Recently Deleted** (最近削除した) ダッシュボード][1]を組み合わせることで、不要なダッシュボードを大規模に削除し、誤って削除したものを復元することができます。このガイドには以下が含まれます。
+A cluttered dashboard list page can make finding the right content difficult and pollute a search query with unused or irrelevant results. By combining bulk delete with [**Recently Deleted** dashboards][1], you can remove unwanted dashboards at scale and restore any accidental deletions. This guide includes:
 
-- 定期的に削除する未使用のダッシュボードを特定するための一般的なルール
-- 管理しやすい一覧ページを維持するためのベストプラクティス
+- General rules for identifying unused dashboards for periodic removal
+- Best practices for maintaining a manageable list page
 
-## 使われていないダッシュボードを探す
+## Finding unused dashboards
 
-使われていないダッシュボードをひとつひとつ探すのは大変ですが、このガイドラインを参考にすれば、使われていないコンテンツの大部分を特定でき、ダッシュボードの乱雑さを大幅に軽減することができます。ダッシュボードの削除を始める前に、一覧ページに関するいくつかの注意事項を説明します。
+While finding every single unused dashboard is tricky, these guidelines can help identify a large majority of unused content and reduce dashboard clutter significantly. Before you start deleting dashboards, a few notes about the list page:
 
-- プリセットリストの **All Custom** から開始します。削除できるのはカスタムダッシュボードのみです
-- チェックボックス列をクリックすると、現在のページ上のすべてのダッシュボードが選択されます
-- 共有ダッシュボードを削除しないようにします。公開または認証された共有リンクがあるダッシュボードには、名前の横に **SHARED** が表示されます。これらのダッシュボードの削除は、公開ビューに影響を与える可能性があるため、避けた方が安全な場合があります。
+- Start with the **All Custom** preset list. Only custom dashboards can be deleted
+- Clicking the checkbox column selects all dashboards on the current page
+- Avoid deleting shared dashboards. Dashboards with a public or authenticated sharing link appear with **SHARED** next to their name. It may be safer to avoid deleting these dashboards, since it may affect a public view
 
-誤って削除したものを復元するには、**Recently Deleted** の一覧に移動します。この一覧には、過去 30 日間に削除されたダッシュボードが表示され、自動的に最も最近削除されたダッシュボードが最初に表示されます。また、[API を使用して][2]ダッシュボードを一括復元することもできます。
+To restore accidental deletions, go to the **Recently Deleted** list. This list shows dashboards deleted in the last 30 days and automatically displays the least-recently deleted dashboards first. You can also bulk restore dashboards [through the API][2].
 
-{{< img src="dashboards/guide/restore_deleted.png" alt="削除したダッシュボードの復元" style="width:80%;">}}
+{{< img src="dashboards/guide/restore_deleted.png" alt="Restore deleted dashboards" style="width:80%;">}}
 
-### 削除ガイドライン
+### Deletion guidelines
 
-#### 1. 人気順の逆ソート
+#### 1. Reverse sort by popularity
 
-**Popularity** の列をクリックすると、人気順の逆順に並べ替えられます。このリストでは、最も最近更新されたダッシュボードが自動的に一番上に置かれます。これらのダッシュボードの人気が低く、過去 3 か月に変更されていない場合は、削除しても安全な場合があります。
+Click the **Popularity** column to reverse sort by popularity. The list automatically puts least-recently modified dashboards at the top. If these dashboards are low popularity and have not been modified in the last three months, it may be safe to delete them.
 
-**注:** 非公式な公開リポジトリである Datadog Miscellany には、過去 3 ヶ月間変更されていない[ダッシュボードやモニターを削除するスクリプト][3]があります。
+**Note:** Datadog Miscellany, an unofficial public repo, has a [script to remove dashboards and monitors][3] that have not been modified in the last three months.
 
-#### 2. デフォルトのタイトルを検索する
+#### 2. Search for default titles
 
-次のような用語を検索します。
+Search for terms like:
 - "'s timeboard"
 - "'s screenboard"
 - "'s dashboard"
 
-これらの文字列を含む多くのダッシュボードには、デフォルトのタイトルがあります (たとえば、"Stephanie's Dashboard Thu, Jun 3, 1:41:44 pm")。デフォルトのタイトルは、テスト用ダッシュボードをすばやく作成し、名前を変更しなかったことを示す場合があります。これらのダッシュボードは、特に古いものや人気のないものは削除しても問題ない場合があります。たとえば、以下の画像は、**All Custom** にフィルタリングした検索で、"'s screenboard" を検索し、人気順で逆ソートしたものです。
+Many dashboards containing these strings have default titles (for example, "Stephanie's Dashboard Thu, Jun 3, 1:41:44 pm"). Default titles can indicate a test dashboard that was created quickly and never renamed. It may be safe to delete these dashboards, especially if they are old or low-popularity. For example, the image below shows a search filtered to **All Custom** with a search for "'s screenboard", reverse sorted by popularity.
 
-**注:** 非公式な公開リポジトリである Datadog Miscellany には、[タイトルに基づきダッシュボードを削除するスクリプト][4]があります。
+**Note:** Datadog Miscellany, an unofficial public repo, has a [script to delete dashboards based on title][4].
 
-{{< img src="dashboards/guide/screenboard_search.jpeg" alt="''s screenboard' を検索" style="width:80%;">}}
+{{< img src="dashboards/guide/screenboard_search.jpeg" alt="Search for ''s screenboard'" style="width:80%;">}}
 
-#### 3. "test" などのキーワードで検索
+#### 3. Search for keywords like "test"
 
-ダッシュボードが一時的にしか使用されていないことを示す、`test` や `cloned` といった用語を検索してください。これらの単語は、活発に使用されているダッシュボードのラベルとして使用されることがあるので、注意して削除するか、タイトルと一緒にダッシュボードの年齢と人気を確認します。
+Search for terms that indicate a dashboard was only used temporarily, like `test` or `cloned`. These words can be used to label actively-used dashboards, so delete with caution, or look at dashboard age and popularity alongside title.
 
-## ダッシュボードの衛生管理に関するベストプラクティス
+## Best practices for dashboard hygiene
 
-定期的な清掃は、ダッシュボードの乱雑さを軽減します。ダッシュボードを維持するための良い習慣は、さらに効果的です。これらのプラクティスは、ダッシュボードを長期的に管理できるようにするために役立ちます。
+Periodic cleans reduce dashboard clutter; good practices for maintaining dashboards can be even more effective. These practices help your team ensure dashboards are manageable in the long-term.
 
-- カスタムリストを使って、必要なものを探しましょう。サービス名などのキーワードで検索し、複数のダッシュボードを選択してリストに追加します。
-- 単発の調査はノートブックやクイックグラフに保存します。個々のメトリクスやグラフを調査する場合、削除が必要な新しいダッシュボードを作成するよりも、デフォルトで保存されない[ノートブック][5]や[クイックグラフ][6]を試してみてください。
-- [ダッシュボードの詳細][7]を使用して、ダッシュボードが何のためにあり、どのように使用するかを説明します。これにより、チームメイトがダッシュボードの目的を理解しやすくなり、より多くの人にダッシュボードが役立つようになります。
+- Use custom lists to find what you need. Search for a keyword like a service name, and select multiple dashboards to add them to a list
+- Save one-off explorations for Notebooks or Quick Graphs. When exploring an individual metric or graph, try [Notebooks][5], which are unsaved by default, or [Quick Graphs][6] rather than creating a new dashboard that needs to be deleted
+- Use [dashboard details][7] to describe what a dashboard is for and how to use it. This helps teammates understand a dashboard's intended purpose and makes a dashboard useful to more people
 
-また、ダッシュボードの[一括削除][8]や[一括復元][2]を行うエンドポイントを含む Dashboards API を使用して、プログラムによるダッシュボードの管理も可能です。
+You can also manage dashboards programmatically with the Dashboards API, which includes endpoints to [bulk delete][8] and [bulk restore][2] dashboards.
 
-## 付録
-**注**: Datadog Miscellany は非公式な公開リポジトリであり、Datadog によって積極的にメンテナンスされているわけではありません。
+## Appendix
+**Note**: Datadog Miscellany is an unofficial public repo and is not actively maintained by Datadog.
 
-- [ドキュメント: 削除されたダッシュボードを UI で復元する][1]
-- [API: ダッシュボードのエンドポイントを削除する][8]
-- [API: 削除されたダッシュボードのエンドポイントを復元する][2]
-- [Datadog Miscellany: 古いダッシュボードやモニターを削除する][3]
-- [Datadog Miscellany: タイトルのテキストに基づいたダッシュボードの削除][4]
+- [Documentation: Restore deleted dashboards in UI][1]
+- [API: Delete dashboards endpoint][8]
+- [API: Restore deleted dashboards endpoint][2]
+- [Datadog Miscellany: Remove old dashboards and monitors][3]
+- [Datadog Miscellany: Delete dashboards based on text in title][4]
 
-[1]: https://docs.datadoghq.com/ja/dashboards/#restore-deleted-dashboards
+[1]: https://docs.datadoghq.com/ja/dashboards/list/#restore-deleted-dashboards
 [2]: https://docs.datadoghq.com/ja/api/latest/dashboards/#restore-deleted-dashboards
 [3]: https://github.com/DataDog/Miscellany/tree/master/remove_old_dash_monitors
 [4]: https://github.com/DataDog/Miscellany/tree/master/delete_dashboards_by_text_search

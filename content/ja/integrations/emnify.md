@@ -30,6 +30,7 @@ author:
 categories:
 - iot
 - メトリクス
+custom_kind: integration
 dependencies:
 - https://github.com/DataDog/integrations-extras/blob/master/emnify/README.md
 display_on_public_website: true
@@ -39,7 +40,6 @@ integration_id: emnify
 integration_title: EMnify
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: emnify
 public_title: EMnify
@@ -50,6 +50,7 @@ tile:
   classifier_tags:
   - Category::IoT
   - Category::Metrics
+  - Offering::Integration
   configuration: README.md#Setup
   description: EMnify データ使用量メトリクスのモニターとダッシュボード
   media:
@@ -74,26 +75,28 @@ tile:
 ---
 
 <!--  SOURCED FROM https://github.com/DataDog/integrations-extras -->
-## 概要
-[EMnify][1] は、デバイスを接続したまま安全に保つ、セルラー IoT 接続プラットフォームです。
+## Overview
+[EMnify][1] is a cellular IoT connectivity platform that keeps devices
+connected and secure.
 
-Datadog-EMnify インテグレーションを使用して、IoT EMnify デバイスからメトリクスとデータ使用量を収集します。
+Use the Datadog-EMnify integration to collect metrics and data usage from IoT EMnify devices.
 
-## 計画と使用
-[EMnify インテグレーションガイド][2]に従って、**インテグレーションの手順**と**インテグレーションの検証**のセクションを使用して、使用量データのストリーミングを構成してください。
+## Setup
+Follow the [EMnify integration guide][2] to configure streaming of usage data, using the **Integration steps** and **Verifying the integration** sections.
 
-### ログ管理
+### Monitors
 
-使用パターンは人によって異なるため、モニターに特定のケースを反映させるには、作業量に応じた境界線と感度を定義する必要があります。
-詳細については、[予測値モニター][3]と[異常モニター][4]のドキュメントをお読みください。
+Everybody has different usage patterns, so in order for monitors to reflect your specific case you must
+define workload-based boundaries and sensitivity.
+For more information read the [Forecast monitor][3] and [Anomaly monitor][4] documentation.
 
-### ダッシュボード  
+### Dashboard
 
-[ダッシュボード][5]で時間帯を選択し、表示されるデータにフィルターをかけることができます。
+Choose a time frame in the [dashboard][5] to filter the data displayed.
 
-## Agent
+## Support
 
-ご不明な点は、[EMnify サポート][6]までお問い合わせください。
+Need help? Contact [EMnify support][6].
 
 [1]: https://www.emnify.com/
 [2]: https://www.emnify.com/integration-guides/emnify-datastreamer-integration-for-datadog

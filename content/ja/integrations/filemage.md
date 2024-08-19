@@ -27,6 +27,7 @@ author:
   support_email: tmoore@dopensource.com
 categories:
 - クラウド
+custom_kind: integration
 dependencies:
 - https://github.com/DataDog/integrations-extras/blob/master/filemage/README.md
 display_on_public_website: true
@@ -36,7 +37,6 @@ integration_id: filemage
 integration_title: FileMage
 integration_version: 1.0.0
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: filemage
 public_title: FileMage
@@ -52,6 +52,7 @@ tile:
   - Supported OS::Linux
   - Supported OS::Windows
   - Supported OS::macOS
+  - Offering::Integration
   configuration: README.md#Setup
   description: FileMage サービス用モニタリング Agent
   media:
@@ -66,36 +67,36 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/integrations-extras -->
 
 
-## 概要
+## Overview
 
-このチェックは [FileMage][1] を監視します。
+This check monitors [FileMage][1].
 
-## 計画と使用
+## Setup
 
-### パッケージのインストール
+### Installing the package
 
-Datadog Agent v7.21 または v6.21 以降の場合、以下の手順に従ってホストに Filemage インテグレーションをインストールします。
-Datadog Agent 以前のバージョンでインストールする場合は、[コミュニティインテグレーションを利用する][2]を参照してください。
+For the Datadog Agent v7.21 or v6.21 and later, follow these instructions to install the Filemage integration on your host.  
+See [Use Community Integrations][2] to install it with the Docker Agent or earlier versions of the Datadog Agent.  
 
-1. 以下のコマンドを実行して、Agent インテグレーションをインストールします。
+1. Run the following command to install the Agent integration:
 
 ```shell
 datadog-agent integration install -t datadog-filemage==1.0.0
 ```
 
-2. Agent ベースの[インテグレーション][3]と同様にインテグレーションを構成します。
+2. Configure your integration similar to an Agent-based [integration][3].
 
-### ブラウザトラブルシューティング
+### Configuration
 
-1. FileMage の[メトリクス](#metrics)の収集を開始するには、[Agent の構成ディレクトリ][4]のルートにある `conf.d/` フォルダーの `filemage.d/conf.yaml.example` ファイルを編集します。
-   完了したら、変更したファイルを `filemage.d/conf.yaml` という名前で保存します。
-   使用可能なすべてのコンフィギュレーションオプションの詳細については、[サンプル filemage conf.yaml][5] を参照してください。
+1. Edit the `filemage.d/conf.yaml.example` file in the `conf.d/` folder at the root of your [Agent Configuration Directory][4] to start collecting your FileMage [metrics](#metrics).  
+   Once complete, save the modified file as `filemage.d/conf.yaml`.  
+   See the [sample filemage conf.yaml][5] for all available configuration options.
 
-2. [Agent を再起動します][6]。
+2. [Restart the Agent][6].
 
-### 検証
+### Validation
 
-[Agent の `status` サブコマンドを実行][7]し、Running Checks セクションで `filemage` を探します。
+Run the [Agent's `status` subcommand][7] and look for `filemage` under the Running Checks section.
 
 
 ```text
@@ -120,21 +121,21 @@ datadog-agent integration install -t datadog-filemage==1.0.0
 ```
 
 
-## リアルユーザーモニタリング
+## Data Collected
 
-このインテグレーションは、各 FTP コマンドの実行回数を追跡します。
+This integration tracks the number of times each FTP command is run.
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "filemage" >}}
 
 
-### ヘルプ
+### Events
 
-FileMage インテグレーションには、イベントは含まれません。
+The FileMage integration does not include any events.
 
-## ヘルプ
+## Troubleshooting
 
-ヘルプが必要な場合は、[dOpenSource][10] までお問い合わせください。
+Need help? Contact [dOpenSource][10].
 
 
 [1]: https://www.filemage.io/

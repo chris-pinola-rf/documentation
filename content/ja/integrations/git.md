@@ -4,8 +4,9 @@ categories:
 - developer tools
 - issue tracking
 - source control
+custom_kind: integration
 dependencies: []
-description: 自己ホスト型 Git サーバーから Datadog へコミットとプルリクエストを送信。
+description: Send commits and pull requests from your self-hosted Git server to Datadog.
 doc_link: https://docs.datadoghq.com/integrations/git/
 draft: false
 git_integration_title: git
@@ -14,7 +15,6 @@ integration_id: git
 integration_title: Git
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: '1.0'
 name: git
 public_title: Datadog-Git インテグレーション

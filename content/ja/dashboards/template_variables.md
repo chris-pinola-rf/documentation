@@ -25,144 +25,144 @@ further_reading:
 title: テンプレート変数
 ---
 
-## 概要
+## Overview
 
-テンプレート変数により、ダッシュボード内の 1 つ以上のウィジェットを動的にフィルタリングできます。テンプレート変数の選択から保存ビューを構築し、ドロップダウン選択によって視覚化を整理して操作することができます。
+Template variables allow you to dynamically filter one or more widgets in a dashboard. You can build saved views from your template variable selections to organize and navigate your visualizations through the dropdown selections. 
 
-テンプレート変数は、以下のように定義されます。
+A template variable is defined by:
 
 * **Tag or Attribute**:
-    * Tag: 推奨される[タグ付けフォーマット][1] (`<KEY>:<VALUE>`) に従う場合、*Tag* は `<KEY>` となります。
-    * Attribute: [テンプレート変数のファセットまたはメジャー](#logs-apm-and-rum-queries)を使用します。
-* **Name**: ダッシュボード上のクエリに表示されるテンプレート変数の一意の名前です。テンプレート変数は、選択されたタグまたは属性の後に自動的に名前が付けられます。
-* **Default Value**: ダッシュボードが読み込まれたときに自動的に表示されるタグまたは属性の値です。デフォルトは `*` です。
-* **Available Values**: ドロップダウンメニューで選択可能なタグまたは属性の値です。デフォルトは `(all)` です。利用可能な値のリストには、常に `*` が含まれており、タグや属性の全ての値をクエリすることができます。
+    * Tag: If you follow the recommended [tagging format][1] (`<KEY>:<VALUE>`), the *Tag* is the `<KEY>`.
+    * Attribute: Use a [facet or measure as the template variable](#logs-apm-and-rum-queries).
+* **Name**: A unique name for the template variable that appears in queries on the dashboard. Template variables are automatically named after the selected tag or attribute.
+* **Default Value**: The tag or attribute value that appears automatically when the dashboard is loaded. Defaults to `*`.
+* **Available Values**: The tag or attribute values available for selection in the dropdown menu. Defaults to `(all)`. The list of available values always includes `*`, which queries all values of the tag or attribute.
 
-## テンプレート変数の追加
+## Add a template variable
 
-ダッシュボードにテンプレート変数を追加するには
-1. **Add Variables** をクリックします。
-1. テンプレート変数がすでに定義されている場合は、ダッシュボードのヘッダーにカーソルを合わせ、**Edit** ボタンをクリックして編集モードに入ります。
-1. 編集モードで、**+ (プラス)** アイコンをクリックして、新しいテンプレート変数を作成します。
-1. (オプション) タグを選択した後、**+ Configure Dropdown Values** ボタンをクリックして、変数名を変更し、デフォルト値または使用可能な値を設定します。
-  {{< img src="dashboards/template_variables/add_template_variable_configure_dropdown_values.png" alt="Configure Dropdown Values ボタンを表示する Add Variable ポップオーバー" style="width:80%;" >}}
+To add a template variable in a dashboard:
+1. Click **Add Variables**. 
+1. If template variables are already defined, hover over the dashboard header and click the **Edit** button to enter edit mode.
+1. In edit mode, click the **+ (plus)** icon to create a new template variable.
+1. (Optional) After selecting a tag, click the **+ Configure Dropdown Values** button to rename the variable and set default or available values.
+  {{< img src="dashboards/template_variables/add_template_variable_configure_dropdown_values.png" alt="Add Variable popover showing the Configure Dropdown Values button" style="width:80%;" >}}
 
-## テンプレート変数の編集
+## Edit a template variable
 
-ダッシュボードでテンプレート変数を編集するには
-1. ダッシュボードのヘッダーにある **Edit** ボタンをクリックします。
-1. 編集モードで、テンプレート変数をクリックし、ポップオーバーで変更します。
-1. ヘッダー内の変数を並べ替えるには、変数にカーソルを合わせ、ドラッグアイコンハンドルをクリックしてドラッグします。
-  {{< img src="dashboards/template_variables/edit_template_variable_drag.png" alt="テンプレート変数編集モードのポップオーバーにドラッグアイコンが表示され、順序を並べ替えることができます" style="width:100%;" >}}
+To edit a template variable in a dashboard:
+1. Click the **Edit** button in the dashboard header.
+1. In edit mode, click on a template variable and make changes in the popover.
+1. To rearrange variables in the header, hover over a variable, then click and drag the drag icon handle.
+  {{< img src="dashboards/template_variables/edit_template_variable_drag.png" alt="Template variable edit mode popover showing the drag icon allowing you to rearrange the order" style="width:100%;" >}}
 
-## テンプレート変数をウィジェットに適用する
+## Apply a template variable to widgets
 
-ウィジェットクエリにテンプレート変数を追加するには
-1. ダッシュボードのヘッダーにある **Edit** ボタンをクリックします。
-1. 編集モードで、テンプレート変数をクリックして、そのポップオーバーを開きます。
-1. **Select Widgets** をクリックして、ウィジェット選択モードに入ります。
-1. バナーには、変数を使用しているソースの数が表示されます。以下の例では、テンプレート変数 `env` がダッシュボードの 20 個のグラフで使用されています。
-  {{< img src="dashboards/template_variables/apply_template_variable_to_widgets.png" alt="テンプレート変数 'env’ を 20 個のウィジェットに適用する確認を表示するダッシュボードの例" style="width:100%;" >}}
-1. 個々のウィジェットをクリックすると、テンプレート変数が補間されたグラフがプレビューされます。
-1. グループ内のすべてのウィジェットを追加または削除するには、グループの右隅にあるチェックボックスを切り替えます。
-1. ダッシュボード上のすべてのウィジェットを追加または削除するには、選択バナーの **Select All** または **Deselect All** をクリックします。
-1. ウィジェット選択モードを終了するには、バナーの **Save** または **X** をクリックします。
+To add a template variable to widget queries:
+1. Click the **Edit** button in the dashboard header.
+1. In edit mode, click on a template variable to open its popover.
+1. Click **Select Widgets** to enter widget selection mode.
+1. The banner displays the number of sources using the variable. In the example below, the template variable `env` is used in 20 graphs on the dashboard:
+  {{< img src="dashboards/template_variables/apply_template_variable_to_widgets.png" alt="Example dashboard displaying confirmation to apply 'env' template variable to 20 widgets" style="width:100%;" >}}
+1. Click on individual widgets to preview the graph with the template variable interpolated.
+1. To add or remove from all widgets in a group, toggle the checkbox on the right corner of the group.
+1. To add or remove from all widgets on the dashboard, click **Select All** or **Deselect All** in the selection banner.
+1. Click **Save** or **X** in the banner to exit widget selection mode.
 
-## 保存ビュー
+## Saved views
 
-### 作成
+### Create
 
-ダッシュボードのテンプレート変数の左側にある **Saved Views** ドロップダウンメニューをクリックします。テンプレート変数の値を更新しても、その値が自動的にビューに保存されるわけではありません。
+Click on the **Saved Views** dropdown menu to the left of the template variables in your dashboard. When you update a template variable value, the value does not automatically save to a view.
 
-{{< img src="dashboards/template_variables/saved_views_dropdown_options.png" alt="選択したテンプレート変数をデフォルトビューまたは保存ビューとして設定する保存ビュードロップダウンオプション" style="width:90%;" >}}
+{{< img src="dashboards/template_variables/saved_views_dropdown_options.png" alt="Saved views dropdown options to set selected template variables as the default view or a saved view" style="width:90%;" >}}
 
-現在のテンプレート変数の値をビューに保存するには、**Saved Views** ドロップダウンメニューから **Save selections as view** を選択します。ビューの一意な名前を入力し、**Save** をクリックします。
+To save your current template variables' values in a view, select **Save selections as view** from the **Saved Views** dropdown menu. Enter a unique name for the view and click **Save**. 
 
-保存ビューがドロップダウンメニューに表示されます。ビューをクリックすると、以前に保存したテンプレート変数の値が表示されます。
+Your saved view appears in the dropdown menu. Click on the view to retrieve your previously saved template variable values.
 
-### 削除
+### Delete
 
-ビューを削除するには、保存ビューのドロップダウンメニューをクリックし、**Manage views...** を選択します。それぞれのビューの横に、保存されているビューのポップアップがごみ箱アイコンとともに表示されます。ビューを削除するには、該当するごみ箱アイコンをクリックして下さい。
+To delete a view, click on the saved views dropdown menu and choose **Manage views...**. From there, a popup with your saved views is displayed with a trash bin icon next to each view. Click the appropriate trash bin icon to delete a view.
 
-### 変更
+### Modify
 
-**Default view** を変更するには、鉛筆アイコンをクリックしてテンプレート変数の値を更新します。次に、**Done** をクリックして保存します。他のビューで値を更新した場合は、その値を新規のビューとして保存し、元のビューを削除します。
+To modify the **Default view**, click on the pencil icon and update the template variable values. Then click **Done** to save. If any values in the other views are changed, save the values as a new view, and then delete the original view.
 
-## API
+## Usage
 
-テンプレート変数は、ウィジェットとイベントオーバーレイに使用されます。
+Template variables are used in widgets and event overlays. 
 
-### ログ、APM、RUM クエリ
+### Logs, APM, and RUM queries
 
-テンプレート変数は、ログ、APM、および RUM ウィジェットで動作します。ファセットに基づいて、ログ、APM、RUM のテンプレート変数を定義することができます。これらの変数は `@` で始まり、例えば `@http.status_code` のようになります。
+Template variables work with log, APM, and RUM widgets because they share the same tags. You can define log, APM, and RUM template variables based on facets. These variables start with `@`, for example: `@http.status_code`.
 
-ログ、APM、および RUM ウィジェットでは、値の途中でワイルドカードを使用したり (たとえば、`eng*@example.com`)、値の中で複数のワイルドカードを使用したり (たとえば、`*prod*`) することが可能です。
+On log, APM, and RUM widgets, you can use wildcards in the middle of a value (for example, `eng*@example.com`) or use multiple wildcards in a value (for example, `*prod*`).
 
-**注**: このタイプのテンプレート変数に **Add to all** を適用すると、すべてのログ、APM、RUM ウィジェットに変数が追加されます。
+**Note**: Using **Add to all** for this type of template variable adds the variable to all log, APM, and RUM widgets.
 
-### 分散型トレーシング
+### Widgets
 
-ウィジェットを作成または編集する場合、既存のテンプレート変数が `from` フィールドにオプションとして表示されます。例えば、テンプレート変数 `environment` を構成した場合、`$environment` オプションはウィジェット内の動的変数として利用できます。
+When creating or editing a widget, existing template variables display as options in the `from` field. For example, if you configure the `environment` template variable, the `$environment` option is available as a dynamic variable in the widget. 
 
 {{< img src="dashboards/template_variables/dynamic_template_variable.png" alt="Template variable can be set dynamically in widgets" style="width:100%;">}}
 
-環境変数 `environment` に **production** を選択すると、`$environment` 変数を持つウィジェットが本番環境に動的にスコープされます。
+Selecting **production** for the `environment` value dynamically scopes widgets with the `$environment` variable to the production environment.
 
-テンプレート変数の値を変更する場合、ダッシュボード URL はそのテンプレート変数の値を反映するよう、`&tpl_var_<TEMPLATE_VARIABLE_NAME>=<TEMPLATE_VARIABLE_VALUE>` というフォーマットで更新されます。たとえば、テンプレート変数が `$env` のダッシュボードで値が `prod` に変更された場合、URL のパラメーターは `&tpl_var_env=prod` となります。
+When you change the value of a template variable, the dashboard URL updates to reflect the template variable value with the format `&tpl_var_<TEMPLATE_VARIABLE_NAME>=<TEMPLATE_VARIABLE_VALUE>`. For example, a dashboard with the template variable `$env` changed to `prod` would have the URL parameter `&tpl_var_env=prod`.
 
-値をクエリに含めるには、`{TX-PL-LABEL}lt;TEMPLATE_VARIABLE_NAME>.value` という構文で値を追加します。例えば、`service` という名前のテンプレート変数では、 `env:staging-$service.value` を使用します。
+To include the value in the query, append it with the syntax `$<TEMPLATE_VARIABLE_NAME>.value`. For example, with a template variable named `service`, use `env:staging-$service.value`.
 
-テンプレート変数のフィールドにカーソルを合わせると、その変数を使用するウィジェットがダッシュボード上でハイライト表示され、一目でわかります。
+Hover over the template variable fields to see at a quick glance, the widgets that use that variable highlighted on the dashboard.
 
-#### 関連するテンプレート変数
+#### Associated template variables
 
-テンプレート変数の値を選択すると、セレクターの上部に関連値が表示されます。関連値は、ページ上で選択されている他のテンプレート変数の値から計算され、構成することなくシームレスに関連値を識別することができます。
+When selecting a template variable value, associated values are displayed at the top of the selector. Associated values are calculated from other template variable values selected on the page, and seamlessly identify the related values without any configuration.
 
-#### テキスト
+#### Text
 
-テキストベースのウィジェットでは、テンプレート変数のタグ/属性と値を `{TX-PL-LABEL}lt;TEMPLATE_VARIABLE_NAME>` で、キーを `{TX-PL-LABEL}lt;TEMPLATE_VARIABLE_NAME>.key` で、または値を `{TX-PL-LABEL}lt;TEMPLATE_VARIABLE_NAME>.value` で表示させることができます。これは、英数字でない任意の文字の後に来ることができ、空白や以下の文字のいずれかが続くことができます: `#`、`{TX-PL-LABEL}#x60;、`%`、`=`、`;`、`"`、`(`、`)`、`[`、`]`、`{`、`}`、`^`、`*`、`+`、`|`、`?`
+For text-based widgets, you can display a template variable's tag/attribute and value with `$<TEMPLATE_VARIABLE_NAME>`, its key with `$<TEMPLATE_VARIABLE_NAME>.key`, or its value with `$<TEMPLATE_VARIABLE_NAME>.value`. This can come after any non-alphanumeric character, and can be followed by whitespace or any of the following characters: `#`, `$`, `%`, `=`, `;`, `"`, `(`, `)`, `[`, `]`, `{`, `}`, `^`, `*`, `+`, `|`, and `?`.
 
-**注**: ワイルドカード構文は、テンプレート変数の後にはサポートされていません。
+**Note**: The wildcard syntax is not supported following a template variable.
 
-例えば、テンプレート変数が `env` で、タグ/属性が `environment` で、選択値が `dev` である場合:
-* `$env` には `environment:dev` と表示されます
-* `$env.key` には `environment` と表示されます
-* `$env.value` には `dev` が表示されます
-* `dev{dynamic-wildcard-value}` ではなく、`$env*` は `dev*` という正確な値を探します。
+For example, with a template variable named `env`, with tag/attribute `environment`, and with a selected value of `dev`:
+* `$env` displays `environment:dev`
+* `$env.key` displays `environment`
+* `$env.value` displays `dev`
+* `$env*` looks for the exact value `dev*` NOT `dev{dynamic-wildcard-value}`
 
-### イベントオーバーレイ
+### Events overlay
 
-ダッシュボードで特定のタグとメトリクスに紐付くイベントを検索するには、テンプレート変数のイベントオーバーレイ検索が便利です。イベントオーバーレイ検索は個別のグラフに適用されます。
+Use the events overlay search with template variables to find events that share certain tags with the metrics in your dashboard. The event overlay search is applied through an individual graph.
 
-イベント検索フィールドで `$<TEMPLATE_VARIABLE_KEY>.value` 構文を使用すると、ダッシュボードテンプレート変数の値を直接キャプチャできます。
+Values from dashboard template variables can be directly captured by using the `$<TEMPLATE_VARIABLE_KEY>.value` syntax in the event search field.
 
-**注**: ダッシュボードのテンプレート変数は、イベントタグではなく、メトリクスタグである必要があります。
+**Note**: Dashboard template variables must be metric tags, not event tags.
 
-#### ダッシュボード  
+#### Dashboard
 
-ダッシュボードから、以下のフォーマットを使用してテンプレート変数を持つイベントを検索します。
+From your dashboard, search events with template variables using the format:
 
 ```text
 <TAG_KEY>:$<TEMPLATE_VARIABLE_NAME>.value
 ```
 
-例えば、`region:$region.value` を、`region` テンプレート変数についての `us-east1` の値で検索すると、`region:us-east1` でタグ付けされたイベントが表示されます。さらに、イベントのタイミングがグラフ上にピンクのバーで示されます。
+For example, searching for `region:$region.value` with a value of `us-east1` for the `region` template variable displays events tagged with `region:us-east1`. Additionally, the timing of the events are marked by pink bars in the graphs.
 
-複数のテンプレート変数で検索するには、コンマを入れます（例: `role:$role.value,env:$env.value`）
+Use commas to search using multiple template variables, for example: `role:$role.value,env:$env.value`
 
-**注**: 検索を実行する際に *enter* を押すと、`$region.value` がテンプレート変数ドロップダウンメニューの値に更新されます。
+**Note**: Once you press *enter* to search, `$region.value` updates to the value in the template variable dropdown menu.
 
-#### 分散型トレーシング
+#### Widgets
 
-以下のフォーマットで、ウィジェットからテンプレート変数を使用したイベントのタイミングをオーバーレイします。
+From your widgets, overlay the timing of the events using template variables with the format:
 
 ```text
 $<TEMPLATE_VARIABLE_NAME>
 ```
 
-例えば、イベントオーバーレイ検索ボックスに `$region` と入力して、`region` テンプレート変数ドロップダウンメニューにある値のイベントを検索します。
+For example, enter `$region` in the event overlays search box. This searches for events with the value in the `region` template variable dropdown menu.
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

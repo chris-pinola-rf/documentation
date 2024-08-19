@@ -10,29 +10,29 @@ title: アラート値ウィジェット
 widget_type: alert_value
 ---
 
-アラート値ウィジェットは、シンプルアラート型メトリクスモニターのクエリの現在値を表示します。シンプルアラート型モニターのメトリクスクエリはグループ化されておらず、1 つの値を返します。モニターの挙動とアラートステータスの概要を取得するには、ダッシュボード内のアラート値ウィジェットを使用します。
+The Alert value widget displays the current query value from a simple-alert metric monitor. Simple-alert monitors have a metric query that is not grouped and returns one value. Use Alert value widgets in your dashboard to get an overview of your monitor behaviors and alert statuses.
 
-{{< img src="dashboards/widgets/alert_value/alert_value_2023.png" alt="ディスク容量、CPU 高使用率、チェックアウトエラー率の 3 種類のモニターステータスを示す 3 つのアラート値ウィジェット" >}}
+{{< img src="dashboards/widgets/alert_value/alert_value_2023.png" alt="Three alert value widgets with three different monitor statuses for disk space, high cpu and checkout error rate" >}}
 
-## セットアップ
-{{< img src="dashboards/widgets/alert_value/alert_value_setup_2023.png" alt="CPU 高使用率に関するアラート値のセットアップページ" style="width:100%;">}}
+## Setup
+{{< img src="dashboards/widgets/alert_value/alert_value_setup_2023.png" alt="Alert Value setup page for high cpu monitor" style="width:100%;">}}
 
-### 構成
+### Configuration
 
-1. グラフ化する既存のメトリクスモニターを選択します。
-2. 表示に使用する書式を選択します。
-    * 小数点以下の桁数
-    * 単位
-    * 配置
-3. グラフにタイトルをつけます。
+1. Choose an existing metric monitor to graph.
+2. Select the formatting to display:
+    * Decimal
+    * Units
+    * Alignment
+3. Give your graph a title.
 
 ## API
 
-このウィジェットは **[Dashboards API][1]** で使用できます。[ウィジェット JSON スキーマ定義][2]については、以下の表を参照してください。
+This widget can be used with the **[Dashboards API][1]**. See the following table for the [widget JSON schema definition][2]:
 
 {{< dashboards-widgets-api >}}
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

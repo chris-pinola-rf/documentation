@@ -28,6 +28,7 @@ categories:
 - developer tools
 - orchestration
 - プロビジョニング
+custom_kind: integration
 dependencies:
 - https://github.com/DataDog/integrations-extras/blob/master/pulumi/README.md
 display_on_public_website: true
@@ -37,7 +38,6 @@ integration_id: pulumi
 integration_title: Pulumi
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: pulumi
 public_title: Pulumi
@@ -59,6 +59,7 @@ tile:
   - Supported OS::Linux
   - Supported OS::Windows
   - Supported OS::macOS
+  - Offering::Integration
   configuration: README.md#Setup
   description: 好きなプログラミング言語を使って、あらゆるクラウドに対応する Infrastructure as Code を実現
   media: []
@@ -70,66 +71,69 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/integrations-extras -->
 
 
-## 概要
+## Overview
 
-[Pulumi][1] は、クラウドエンジニアリングチームが好きなプログラミング言語を使って、あらゆるクラウド上のクラウドリソースを定義、デプロイ、管理できるようにする、最新の Infrastructure as Code プラットフォームです。
+[Pulumi][1] is a modern infrastructure as code platform that enables cloud engineering teams to define, deploy, and manage cloud resources on any cloud using their favorite programming languages.
 
-Pulumi インテグレーションは、Datadog で利用可能な任意のクラウドリソースをプロビジョニングするために使用されます。このインテグレーションは、Datadog でリソースをデプロイおよび更新するための認証情報を使って構成される必要があります。
+The Pulumi integration is used to provision any of the cloud resources available in Datadog. This integration must be configured with credentials to deploy and update resources in Datadog.
 
-## 計画と使用
+**注**: インテグレーションを変更するには、AWS IAM 権限を設定する必要があります。AWS IAM 権限の設定方法は、[AWS インテグレーションドキュメント][2]を参照してください。
 
-### インフラストラクチャーリスト
+## Setup
 
-[Pulumi と Datadog のインテグレーション][2]では、Datadog SDK を使用してリソースの管理およびプロビジョニングを行います。
+### Installation
 
-### ブラウザトラブルシューティング
+[Pulumi と Datadog のインテグレーション][3]では、Datadog SDK を使用してリソースの管理およびプロビジョニングを行います。
 
-1. [無料または商用 Pulumi アカウントに登録します][3]
+### Configuration
 
-2. [Pulumi をインストールします][4]
+1. [無料または商用 Pulumi アカウントに登録します][4]
 
-3. 取得後、Datadog の認証トークンを Pulumi に設定するには、2 つの方法があります。
+2. [Pulumi をインストールします][5]
+
+3. Once obtained, there are two ways to set your Datadog authorization tokens for Pulumi:
 
 
-環境変数 `DATADOG_API_KEY` と `DATADOG_APP_KEY` を設定します。
+Set the environment variables `DATADOG_API_KEY` and `DATADOG_APP_KEY`:
 
 ```
 export DATADOG_API_KEY=XXXXXXXXXXXXXX && export DATADOG_APP_KEY=YYYYYYYYYYYYYY
 ```
 
-または、複数のユーザーが簡単にアクセスできるように、Pulumi スタックと一緒に保存したい場合は、コンフィギュレーションを使用して設定します。
+Or, set them using configuration if you prefer that they be stored alongside your Pulumi stack for easier multi-user access:
 
 ```
 pulumi config set datadog:apiKey XXXXXXXXXXXXXX --secret && pulumi config set datadog:appKey YYYYYYYYYYYYYY --secret
 ```
 
-**注**: `datadog:apiKey` と `datadog:appKey` を設定する際に `--secret` を渡して、適切に暗号化されるようにします。
+**Note**: Pass `--secret` when setting `datadog:apiKey` and `datadog:appKey` so that they are properly encrypted.
 
-4. `pulumi new` を実行してインフラストラクチャースタックのプロジェクトディレクトリを初期化し、[API ドキュメント][5]に従って新しいメトリクス、モニター、ダッシュボード、その他のリソースを定義します。
+4. `pulumi new` を実行してインフラストラクチャースタックのプロジェクトディレクトリを初期化し、[API ドキュメント][6]に従って新しいメトリクス、モニター、ダッシュボード、その他のリソースを定義します。
 
-5. クラウドのリソースをコードで定義したら、`pulumi up` を実行して、Pulumi プログラムで定義した新しいリソースを作成します。
+5. Once you have defined your cloud resources in code, run `pulumi up` to create the new resources defined in your Pulumi program. 
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 
-Pulumi には、メトリクスは含まれません。
+Pulumi does not include any metrics.
 
-### ヘルプ
+### Service Checks
 
-Pulumi には、サービスのチェック機能は含まれません。
+Pulumi does not include any service checks.
 
-### ヘルプ
+### Events
 
-Pulumi には、イベントは含まれません。
+Pulumi does not include any events.
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][6]までお問合せください。
+Need help? Contact [Datadog support][7].
 
 [1]: https://pulumi.com
-[2]: https://www.pulumi.com/docs/intro/cloud-providers/datadog/
-[3]: https://www.pulumi.com/pricing/
-[4]: https://www.pulumi.com/docs/get-started/
-[5]: https://www.pulumi.com/docs/reference/pkg/datadog/
-[6]: https://docs.datadoghq.com/ja/help/
+[2]: https://docs.datadoghq.com/ja/integrations/amazon_web_services/?tab=roledelegation#aws-iam-permissions
+[3]: https://www.pulumi.com/docs/intro/cloud-providers/datadog/
+[4]: https://www.pulumi.com/pricing/
+[5]: https://www.pulumi.com/docs/get-started/
+[6]: https://www.pulumi.com/docs/reference/pkg/datadog/
+[7]: https://docs.datadoghq.com/ja/help/

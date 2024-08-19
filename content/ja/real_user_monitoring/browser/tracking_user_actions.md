@@ -32,7 +32,7 @@ title: ユーザーアクションの追跡
 
 初期化パラメーター `trackUserInteractions` は、アプリケーション内のユーザークリックの収集を有効にします。つまり、ページに含まれている機密データと非公開データは、ユーザーによってやり取りされた要素を特定するために含まれる場合があります。
 
-Datadog に送信する情報を制御するには、[アクション名を手動で設定する](#declare-a-name-for-click-actions)か、[Datadog Browser SDK for RUM でグローバルスクラビングルールを実装する][1]必要があります。
+Datadog に送信する情報を制御するには、[プライバシーオプションでアクション名をマスクする][6]、[アクション名を手動で設定する](#declare-a-name-for-click-actions)、または [Datadog Browser SDK for RUM でグローバルスクラビングルールを実装する][1]ことができます。
 
 ## ユーザーインタラクションの追跡
 
@@ -101,13 +101,21 @@ Datadog Browser SDK for RUM は、クリックアクションの命名にさま�
 
 両方の属性が要素に存在する場合、`data-dd-action-name` が優先されます。
 
-## カスタムアクションの送信
+### アクション名の決定方法
 
-ユーザーインタラクションのコレクションを拡張するには、`addAction` API を使用してカスタムアクションを送信します。これらのカスタムアクションは、ユーザージャーニー中に発生したイベントに関連する情報を送信します。
+Datadog Browser SDK は、クリックアクション名を決定するために異なる戦略を採用します。
 
-詳しくは、[カスタムアクションの送信][5]をご覧ください。
+1. `data-dd-action-name` 属性やカスタム属性 (上記で説明した通り) がクリックされた要素 (またはその親) にユーザーによって明示的に設定されている場合、その値がアクション名として使用されます。
 
-## その他の参考資料
+2. `data-dd-action-name` 属性やそれに相当するものが設定されていない場合、要素のタイプに応じて、sdk は要素またはその親の `label`、`placeholder`、`aria-label` などの他の属性を使用してアクション名を構築します。これらの属性が見つからない場合、sdk は内部テキストをアクション名として使用します。
+
+## Send custom actions
+
+To extend the collection of user interactions, send your custom actions using the `addAction` API. These custom actions send information relative to an event that occurs during a user journey.
+
+For more information, see [Send Custom Actions][5].
+
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
@@ -116,3 +124,4 @@ Datadog Browser SDK for RUM は、クリックアクションの命名にさま�
 [3]: /ja/real_user_monitoring/browser/data_collected/#default-attributes
 [4]: https://github.com/DataDog/browser-sdk/blob/main/CHANGELOG.md#v2160
 [5]: /ja/real_user_monitoring/guide/send-rum-custom-actions
+[6]: /ja/real_user_monitoring/session_replay/privacy_options#mask-action-names

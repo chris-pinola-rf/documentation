@@ -9,18 +9,18 @@ further_reading:
 title: AWS と Terraform のインテグレーション
 ---
 
-[Terraform][1] を使うと、Datadog IAM ロール、ポリシードキュメント、Datadog-AWS インテグレーションを 1 つの `terraform apply` コマンドで作成することが可能です。
+Using [Terraform][1], you can create the Datadog IAM role, policy document, and the Datadog-AWS integration with a single `terraform apply` command.
 
 
-1. [Datadog Terraform プロバイダー][2]を構成し、Terraform の構成で Datadog API と対話するように設定します。
+1. Configure the [Datadog Terraform provider][2] to interact with the Datadog API through a Terraform configuration.
 
 {{< site-region region="us,us3,us5,eu" >}}
 
-2. 以下の例を基本テンプレートとして、Terraform の構成ファイルを設定します。変更を適用する前に、以下のパラメーターを確実に更新してください。
-   * `AWS_PERMISSIONS_LIST`: Datadog AWS インテグレーションが必要とする IAM ポリシー。現在のリストは、[Datadog AWS インテグレーション][1]のドキュメントで確認できます。
-   * `AWS_ACCOUNT_ID`: AWS アカウント ID。
+2. Set up your Terraform configuration file using the example below as a base template. Ensure to update the following parameters before you apply the changes:
+   * `AWS_PERMISSIONS_LIST`: The IAM policies needed by Datadog AWS integrations. The current list is available in the [Datadog AWS integration][1] documentation.
+   * `AWS_ACCOUNT_ID`: Your AWS account ID.
 
-   さらなる使用例やオプションパラメーターの全リスト、Datadog の追加リソースについては、Terraform レジストリの [Datadog AWS インテグレーションリソース][2]ページを参照してください。
+   See the [Datadog AWS integration resource][2] page in the Terraform registry for further example usage and the full list of optional parameters, as well as additional Datadog resources.
 
    ```hcl
    data "aws_iam_policy_document" "datadog_aws_integration_assume_role" {
@@ -78,11 +78,11 @@ title: AWS と Terraform のインテグレーション
 
 {{< site-region region="ap1" >}}
 
-2. 以下の例を基本テンプレートとして、Terraform の構成ファイルを設定します。変更を適用する前に、以下のパラメーターを確実に更新してください。
-   * `AWS_PERMISSIONS_LIST`: Datadog AWS インテグレーションが必要とする IAM ポリシー。現在のリストは、[Datadog AWS インテグレーション][1]のドキュメントで確認できます。
-   * `AWS_ACCOUNT_ID`: AWS アカウント ID。
+2. Set up your Terraform configuration file using the example below as a base template. Ensure to update the following parameters before you apply the changes:
+   * `AWS_PERMISSIONS_LIST`: The IAM policies needed by Datadog AWS integrations. The current list is available in the [Datadog AWS integration][1] documentation.
+   * `AWS_ACCOUNT_ID`: Your AWS account ID.
 
-   さらなる使用例やオプションパラメーターの全リスト、Datadog の追加リソースについては、[Terraform Registry][2] を参照してください。
+   See the [Terraform Registry][2] for further example usage and the full list of optional parameters, as well as additional Datadog resources.
 
    ```hcl
    data "aws_iam_policy_document" "datadog_aws_integration_assume_role" {
@@ -140,7 +140,7 @@ title: AWS と Terraform のインテグレーション
 
 {{< site-region region="gov" >}}
 
-2. アクセスキーを使用して Datadog AWS インテグレーションをインストールする場合、[AWS マニュアルセットアップガイド][3]で説明されているように、[必要な権限][1]とアクセスキーを持つ IAM ユーザーを作成したことを確認してください。以下の例のプレースホルダーにアクセスキー ID とシークレットアクセスキーを追加します。Terraform を使用して AWS ユーザーと関連するアクセスキーを設定する方法については、Terraform Registry の [AWS Provider][2] リソースを参照してください。
+2. If you are using access keys to install the Datadog AWS integration, ensure that you have created an IAM user with the [necessary permissions][1] and access key as described in the [AWS manual setup guide][3]. Add your access key ID and secret access key to the placeholders in the example below. For information about using Terraform to set up the AWS user and associated access key, see the [AWS Provider][2] resources in the Terraform Registry.
 
    ```
    resource "datadog_integration_aws" "sandbox" {
@@ -154,7 +154,7 @@ title: AWS と Terraform のインテグレーション
 [3]: /ja/integrations/guide/aws-manual-setup/?tab=accesskeysgovcloudorchinaonly#aws
 {{< /site-region>}}
 
-3. `terraform apply` を実行します。データ収集が開始されるまで最大 10 分待ち、すぐに使える [AWS 概要ダッシュボード][5]を表示し、AWS サービスやインフラストラクチャーから送信されるメトリクスを確認します。
+3. Run `terraform apply`. Wait up to 10 minutes for data to start being collected, and then view the out-of-the-box [AWS overview dashboard][5] to see metrics sent by your AWS services and infrastructure.
 
 {{< partial name="whats-next/whats-next.html" >}}
 

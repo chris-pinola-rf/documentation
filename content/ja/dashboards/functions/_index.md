@@ -24,36 +24,36 @@ further_reading:
 title: 関数
 ---
 
-## 概要
+## Overview
 
-関数は、メトリッククエリの結果が視覚化するためにどのように返されるかを変更することができます。ほとんどの関数は、メトリクスクエリの結果が返された後に適用されますが、関数はクエリが行われる前にパラメーターを変更することもできます。
+Functions can modify how the results of a metric query are returned for visualizations. Most functions are applied after the results of the metric query are returned, but functions can also change the parameters before the query is made. 
 
-例えば、ロールアップ関数は、結果が返される前にクエリの時間集計を変更します。また、算術関数は、メトリクスクエリの返される結果に変更を加えます。メトリクスのクエリについて詳しくは、[メトリクス][3] ページを参照してください。さまざまな関数の詳細については、[関数の種類](#function-types)を参照してください。
+For example, the Rollup function changes the time aggregation of a query before the results are returned. Alternatively, arithmetic functions apply changes to the returned results of the metric query. See the [Metrics][3] page to learn more about querying metrics. To learn more about the different functions, see the [function types](#function-types).
 
-## 関数を追加する
+## Add a function
 
-グラフエディターの Add Function `Σ` アイコンをクリックして関数をクエリに適用することができます。ほとんどの関数は[時間][1]および[空間集計][2]後に適用されます。
+Functions can be applied to your queries by clicking the Add Function `Σ` icon in the graphing editor. Most of the functions are applied after [time][1] and [space aggregation][2].
 
-{{< img src="dashboards/functions/sigmaaddingfunctions.png" alt="Add Function の Capital Sigma シンボル" style="width:100%;" >}}
+{{< img src="dashboards/functions/sigmaaddingfunctions.png" alt="Capital Sigma symbol for Add Function" style="width:100%;" >}}
 
-## 関数の種類
+## Function types
 
-{{< whatsnext desc="関数の種類を選択します。" >}}
-    {{< nextlink href="/dashboards/functions/algorithms" >}}アルゴリズム: 異常値や外れ値の検出機能を実装します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/arithmetic" >}}算術: 算術演算を実行します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/count" >}}カウント: 0 以外または null 以外の値をカウントします。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/exclusion" >}}除外: メトリクスの特定の値を除外します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/interpolation" >}}補間: デフォルト値を挿入または設定します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/rank" >}}ランク: メトリクスの一部のみを選択します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/rate" >}}レート: メトリクスに対してカスタム微分係数を計算します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/regression" >}}回帰: 何らかの機械学習関数を適用します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/rollup" >}}ロールアップ: 使用される元ポイントの数を制御します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/smoothing" >}}スムーシング: メトリクスの変動を抑制します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/timeshift" >}}タイムシフト: メトリクスのデータポイントをタイムラインに沿って移動させます。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/beta" >}}ベータ版: メトリクスのローリングアベレージを計算します。{{< /nextlink >}}
+{{< whatsnext desc="Choose a type of function:" >}}
+    {{< nextlink href="/dashboards/functions/algorithms" >}}Algorithmic: Implement anomaly or outlier detection.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/arithmetic" >}}Arithmetic: Perform arithmetic operations.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/count" >}}Count: Count non-zero or non-null values.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/exclusion" >}}Exclusion: Exclude certain values of your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/interpolation" >}}Interpolation: Fill or set default values.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/rank" >}}Rank: Select only a subset of metrics. {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/rate" >}}Rate: Calculate a custom derivative over your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/regression" >}}Regression: Apply a machine learning function.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/rollup" >}}Rollup: Control the number of raw data points used. {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/smoothing" >}}Smoothing: Smooth your metric variations.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/timeshift" >}}Timeshift: Shift your metric data point along the timeline. {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/beta" >}}Beta: Compute the rolling average of a metric.{{< /nextlink >}}
 {{< /whatsnext >}}
 
-
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

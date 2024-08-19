@@ -10,29 +10,29 @@ title: アラートグラフウィジェット
 widget_type: alert_graph
 ---
 
-アラートグラフは、システムで定義されているほとんどのモニターの現在のステータスを表示する時系列グラフです。
+Alert graphs are timeseries graphs showing the current status of most monitors defined on your system:
 
-{{< img src="dashboards/widgets/alert_graph/alert_graph.png" alt="アラートグラフ" >}}
+{{< img src="dashboards/widgets/alert_graph/alert_graph.png" alt="Alert Graph" >}}
 
-このウィジェットは、メトリクス、異常値、外れ値、予測、APM、インテグレーションなどのデフォルトのスケジュール済みクエリアラートモニターでサポートされています。
+This widget is supported in default scheduled query alert monitors such as metric, anomaly, outlier, forecast, APM, and integration.
 
-## セットアップ
+## Setup
 
-### 構成
+### Configuration
 
-1. これまでに作成したモニターから、グラフ化するモニターを選択します。
-2. タイムフレームを選択します。
-3. 次のいずれかの可視化方法を選択します。
+1. Choose a previously created monitor to graph.
+2. Select a timeframe.
+3. Select your visualization:
     * Timeseries
-    * Toplist
+    * Top list
 
 ## API
 
-このウィジェットは **[Dashboards API][1]** で使用できます。[ウィジェット JSON スキーマ定義][2]については、以下の表を参照してください。
+This widget can be used with the **[Dashboards API][1]**. See the following table for the [widget JSON schema definition][2]:
 
 {{< dashboards-widgets-api >}}
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

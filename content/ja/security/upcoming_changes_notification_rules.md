@@ -10,67 +10,67 @@ is_beta: true
 title: セキュリティ通知ルールの今後の変更点
 ---
 
-この記事では、[通知ルール][1]の構成方法に関する今後の変更点について概説します。最も重要な変更は [Cloud Security Management (CSM)][4] に適用されますが、[Application Security Management][5] と [Cloud SIEM][6] にも影響します。
+This article outlines upcoming changes to how [notification rules][1] are configured. Although the most significant changes apply to [Cloud Security Management (CSM)][4], they also impact [Application Security Management][5] and [Cloud SIEM][6].
 
-## CSM Misconfigurations におけるシグナルの廃止
+## Signals deprecation for CSM Misconfigurations
 
-現在、[CSM Misconfigurations][2] の通知は、以下の図に示すように、シグナルが有効な検出ルールに対してのみ設定できます。
+Currently, notifications for [CSM Misconfigurations][2] can only be configured for detection rules that have signals enabled, as shown in the following diagram:
 
-**現在のワークフロー**:
+**Current workflow**:
 
-{{< img src="security/csm/notification_rules_old_workflow.png" alt="CSM Misconfigurations で通知を有効にする現在のワークフローを示す図" width="80%">}}
+{{< img src="security/csm/notification_rules_old_workflow.png" alt="Diagram that shows the current workflow for enabling notifications for CSM Misconfigurations" width="80%">}}
 
-通知ルールに対する今後の変更の一環として、通知を生成するためにシグナルを有効にする必要がなくなりました。新しいワークフローを下図に示します。
+As part of the upcoming changes to notification rules, you are no longer required to enable signals in order to generate notifications. The new workflow is shown in the following diagram:
 
-**新しいワークフロー**:
+**New workflow**:
 
-{{< img src="security/csm/notification_rules_new_workflow.png" alt="CSM Misconfigurations で通知を有効にする新しいワークフローを示す図" width="100%">}}
+{{< img src="security/csm/notification_rules_new_workflow.png" alt="Diagram that shows the new workflow for enabling notifications for CSM Misconfigurations" width="100%">}}
 
-この変更は、CSM Misconfigurations で通知が生成される仕組みに以下のような影響を与えます。
+This change has the following impact on how notifications are generated for CSM Misconfigurations:
 
-1. 通知ルールを作成する際に、ソースタイプとして誤構成を指定できるようになりました。
-2. CSM Misconfigurations では今後シグナルは生成されません。これは、通知を個別の検出ルールに対して有効にできなくなることも意味します。
+1. You will now be able to specify misconfiguration as a source type when creating notification rules.
+2. Signals are no longer generated for CSM Misconfigurations. This also means that notifications can no longer be enabled for individual detection rules.
 
-<div class="alert alert-warning">この動作の変更により、通知の生成数が増加していることに気付くかもしれません。通知ルールに設定された条件により通知の数が多くなる場合は、<strong>Preview of Matching Results</strong> パネルに警告メッセージが表示されます。</div>
+<div class="alert alert-warning">Due to this change in behavior, you may notice an increase in the number of notifications generated. If the conditions set in a notification rule results in a high number of notifications, a warning message is displayed in the <strong>Preview of Matching Results</strong> panel. To help control noise, you can use the new time aggregation mechanism.</div>
 
-3. CSM Misconfigurations シグナルのサポートは、2024 年後半に廃止されます。従来のシグナルはトリガー日から 15 か月間保持されます (無料)。
+3. Support for CSM Misconfigurations signals will be deprecated in late 2024. Legacy signals will be retained for 15 months from their trigger date (free of charge).
 
-## 通知ルールのソースタイプセレクター
+## Notification rules source types selector
 
-通知ルールを作成する際には、脆弱性および脅威 (シグナル) という 2 種類のソースタイプから選択する必要があります。
+When you create a notification rule, you are now required to choose between two different source types: Vulnerability or Threat (Signal).
 
-- 脆弱性とは、インフラストラクチャーにおける潜在的なセキュリティ上の欠陥のことです。
-- 脅威 (シグナル) とは、インフラストラクチャーに対するアクティブな脅威となる不審なアクティビティを意味します。
+- A vulnerability represents a potential security flaw in your infrastructure.
+- A threat (signal) represents suspicious activity that poses an active threat against your infrastructure.
 
-{{< img src="security/csm/notification_rules_new_selectors_2.png" alt="通知ルールの新しいソースタイプ" width="75%">}}
+{{< img src="security/csm/notification_rules_new_selectors_2.png" alt="New source types for notification rules" width="75%">}}
 
-## その他の変更
+## Additional changes
 
-- 通知ルールを、アイデンティティリスクと攻撃経路に対して設定できるようになりました。
-- CSM Misconfigurations の通知に、診断結果に関する完全なメタデータが含まれるようになりました。以前は、通知には限られたシグナルのメタデータしか含まれていませんでした。
-- レガシーの通知属性を使用した Terraform のカスタム検出ルールはサポートされなくなります。
+- Notification rules can now be configured for identity risks and attack paths.
+- CSM Misconfigurations notifications now contain the full finding metadata. Previously, the notification contained only limited signal metadata.
+- Terraformed custom detection rules using the legacy notifications attribute will no longer be supported after the final deprecation date. Terraform support for Notification Rules will be available at a later date. 
 
-## 既存の通知の移行方法
+## How to migrate existing notifications
 
-### 検出ルールの通知
+### Detection rule notifications
 
-個別の検出ルールに設定されている通知を移行するには:
+To migrate notifications that are configured for individual detection rules:
 
-1. [Misconfiguration Rules ページ][1]で、通知が有効になっている検出ルールを選択します。
-2. **Set severity and notifications** セクションに表示されるバナーで、**Update in 1-Click** をクリックします。
+1. On the [Misconfiguration Rules page][3], select a detection rule that has notifications enabled for it.
+2. In the banner displayed in the **Set severity and notifications** section, click **Update in 1-Click**.
 
-   **Notification Rules** エディターページが表示され、フィールドにはルールの情報があらかじめ入力されています。
+   The **Notification Rules** editor page is displayed with the fields pre-populated with the information from the rule.
 
-3. 必要に応じて設定を変更します。
-4. **Save and Activate** をクリックします。
+3. Modify the settings, if desired.
+4. Click **Save and Activate**.
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
 [1]: /ja/security/notifications/rules/
 [2]: /ja/security/misconfigurations
-[3]: https://app.datadoghq.com/security/configuration/compliance/rules
+[3]: https://app.datadoghq.com/security/configuration/compliance/rules?query=type%3A%28cloud_configuration%20OR%20infrastructure_configuration%29%20notification%3A%2A%20&deprecated=hide&groupBy=severity&sort=date
 [4]: /ja/security/cloud_security_management/ 
 [5]: /ja/security/application_security/
 [6]: /ja/security/cloud_siem/

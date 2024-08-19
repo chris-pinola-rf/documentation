@@ -3,48 +3,48 @@ disable_toc: false
 further_reading:
 - link: /dashboards/widgets/slo/
   tag: Documentation
-  text: SLO サマリーウィジェット
+  text: SLO ウィジェット
 title: メトリクスベースの SLO クエリをスコープする
 ---
 
-<div class="alert alert-info">この機能は、<strong>メトリクスベース</strong>の SLO クエリでのみ使用できます。</div>
+<div class="alert alert-info">This feature is only available for <strong>metric-based</strong> SLO queries.</div>
 
-## 概要
+## Overview
 
-[SLO サマリーウィジェット][1]は、テンプレート変数を使用して表示される結果を動的に範囲指定するなど、高度なメトリクスクエリフィルタリングをサポートしています。
+The [SLO widget][1] supports advanced metric query filtering, including the use of template variables to dynamically scope results displayed. 
 
-## SLO クエリの説明
+## Walk through of an SLO query
 
-### メトリクスベース SLO クエリ
-まず、[メトリクスベースの SLO][2] を作成します。この例では、APM のトレースメトリクスを使用して、`web-store` という例のサービスの可用性を測定しています。
+### Metric-based SLO query
+First, create a [metric-based SLO][2]. This example uses APM trace metrics to measure the availability of an example service called `web-store`.
 
-##### 良好イベント (分子)
+##### Good events (numerator)
 `sum:trace.rack.request.hits{service:web-store} by {resource_name}.as_count()` <br>
 `sum:trace.rack.request.errors{service:web-store} by {resource_name}.as_count()`
 
-##### 総イベント (分母)
+##### Total events (denominator)
 `sum:trace.rack.request.hits{service:web-store} by {resource_name}.as_count()`
 
-{{< img src="service_management/service_level_objectives/slo_graph_query/trace_metrics_slo.png" alt="トレースメトリクスの例を示す SLO 構成" style="width:100%;" >}}
+{{< img src="service_management/service_level_objectives/slo_graph_query/trace_metrics_slo.png" alt="SLO configuration showing example trace metrics" style="width:100%;" >}}
 
-### SLO サマリーウィジェット
+### SLO widget
 
-[SLO サマリーウィジェットエディター][1]で SLO を選択します。ウィジェット構成で追加のフィルターを適用して、表示される結果の範囲をさらに広げることができます。これにより、SLO の元の定義が変更されることはありません。この例では、ウィジェットの **filter by** フィールドに `$env` と `$availability-zone` タグを追加しています。
+Select the SLO in the [SLO widget editor][1]. You can apply additional filters in the widget configuration to further scope the results displayed. This does not modify the original definition of the SLO. In the example, we add the `$env` and `$availability-zone` tags to the **filter by** field of the widget. 
 
-{{< img src="service_management/service_level_objectives/slo_graph_query/slo_filter_by.png" alt="$env と $availability-zone のダイナミックタグがある SLO サマリーエディター" style="width:100%;" >}}
+{{< img src="service_management/service_level_objectives/slo_graph_query/slo_filter_by.png" alt="SLO Summary editor with dynamic tags for $env and $availability-zone" style="width:100%;" >}}
 
-この構成で、[Dashboard テンプレート変数][3]を `env:prod` と `availability-zone:northcentralus` に変更するとどうなりますか？
+With this configuration, what happens when the [Dashboard template variable][3] is changed to `env:prod` and `availability-zone:northcentralus`?
 
-SLO サマリーウィジェットは、視覚化を目的に SLO メトリクスクエリをこれらの追加タグでフィルターします。
+The SLO widget filters the SLO metric queries by those additional tags for your visualization purposes:
 
-##### 良好イベント (分子)
+##### Good events (numerator)
 `sum:trace.rack.request.hits{service:web-store, env:prod, availability-zone:northcentralus} by {resource_name}.as_count()` <br>
 `sum:trace.rack.request.errors{service:web-store, env:prod, availability-zone:northcentralus} by {resource_name}.as_count()`
 
-##### 総イベント (分母)
+##### Total events (denominator)
 `sum:trace.rack.request.hits{service:web-store, env:prod, availability-zone:northcentralus} by {resource_name}.as_count()`
 
-## その他の参考資料
+## Further reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

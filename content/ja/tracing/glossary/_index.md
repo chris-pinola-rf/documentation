@@ -7,9 +7,9 @@ further_reading:
 - link: /tracing/trace_collection/
   tag: ドキュメント
   text: アプリケーションで APM トレースをセットアップする方法
-- link: /tracing/services/services_list/
+- link: /tracing/service_catalog/
   tag: ドキュメント
-  text: Datadog に報告するサービスの一覧
+  text: Datadog に報告するサービスの発見とカタログ化
 - link: /tracing/services/service_page/
   tag: ドキュメント
   text: Datadog のサービスについて
@@ -27,74 +27,92 @@ title: APM の用語と概念
 
 {{< jqmath-vanilla >}}
 
-## 概要
+## Overview
 
-APM UI には、アプリケーションのパフォーマンスをトラブルシューティングし、これを製品全体で関連付けるための多くのツールが用意されています。これにより、分散されたシステムの問題を見つけて解決することができます。
+The APM UI provides many tools to troubleshoot application performance and correlate it throughout the product, enabling you to find and resolve issues in distributed systems.
 
-_スパン_ や _インデックス化_ など、APM の重要な用語の定義や説明については、[主な用語集][22]を参照してください。
+For additional definitions and descriptions of important APM terms such as _spans_ and _indexed_, see the [main Glossary][22]. 
 
-| コンセプト                         | 説明                                                                                                                                                                                                          |
+| Concept                         | Description                                                                                                                                                                                                          |
 |---------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [サービス](#services)            | サービスは、最新のマイクロサービスアーキテクチャの構成要素です。サービスは、アプリケーションを構築する目的で、エンドポイント、クエリ、またはジョブを広くグループ化します。                                  |
-| [リソース](#resources)          | リソースは、顧客アプリケーションの特定のドメインを表します。通常、これはインスツルメントされたウェブエンドポイント、データベースクエリ、またはバックグラウンドジョブです。                                                              |
-| [モニター][23]                   | APM メトリクスモニターは、通常のメトリクスモニターと同様に機能しますが、APM 専用に調整されたコントロールを備えています。このモニターを使用して、ヒット、エラー、さまざまなレイテンシー測定に関するサービスレベルでアラートを受信します。 |
-| [トレース](#trace)                 | トレースは、アプリケーションがリクエストを処理するのにかかった時間とこのリクエストのステータスを追跡するために使用されます。各トレースは、1 つ以上のスパンで構成されます。                                                             |
-| [Retention Filters](#retention-filters) | Retention Filter は Datadog UI 内に設定されたタグベースのコントロールで、15 日間にわたって Datadog でインデックスするスパンの種類を決定します。                                                                                              |
-| [Ingestion Controls](#ingestion-controls) | Ingestion controls は Datadog に最大 100% のトレースを送信し、 15 分間の Live Search および分析を行う際に使用されます。
+| [Service](#services)            | Services are the building blocks of modern microservice architectures - broadly a service groups together endpoints, queries, or jobs for the purposes of building your application.                                  |
+| [Resource](#resources)          | Resources represent a particular domain of a customer application - they are typically an instrumented web endpoint, database query, or background job.                                                              |
+| [Monitors][23]                   | APM metric monitors work like regular metric monitors, but with controls tailored specifically to APM. Use these monitors to receive alerts at the service level on hits, errors, and a variety of latency measures. |
+| [Trace](#trace)                 | A trace is used to track the time spent by an application processing a request and the status of this request. Each trace consists of one or more spans.                                                             |
+| [Trace Context Propagation](#trace-context-propagation)| The method of passing trace identifiers between services, enabling a Datadog to stitch together individual spans into a complete distributed trace. |
+| [Retention Filters](#retention-filters) | Retention filters are tag-based controls set within the Datadog UI that determine what spans to index in Datadog for 15 days.                                                                                              |
+| [Ingestion Controls](#ingestion-controls) | Ingestion controls are used to send up to 100% of traces to Datadog for live search and analytics for 15 minutes.
+| [Instrumentation](#instrumentation) | Instrumentation is the process of adding code to your application to capture and report observability data. |
 
-## サービス
+## Services
 
-[アプリケーションのインスツルメンテーション][3]の後、[サービス一覧画面][4]が APM データのメインランディングページになります。
+After [instrumenting your application][3], the [Service Catalog][4] is your main landing page for APM data.
 
-{{< img src="tracing/visualization/service_list.png" alt="サービス一覧画面" >}}
+{{< img src="tracing/visualization/service_catalog.png" alt="Service Catalog" >}}
 
-サービスは、最新のマイクロサービスアーキテクチャの構成要素です。サービスは、インスタンスをスケーリングする目的で、エンドポイント、クエリ、またはジョブを広くグループ化します。以下はその例です。
+Services are the building blocks of modern microservice architectures - broadly a service groups together endpoints, queries, or jobs for the purposes of scaling instances. Some examples:
 
-* URL エンドポイントのグループは、API サービスの下でグループ化できます。
-* 1 つのデータベースサービス内でグループ化された DB クエリのグループ。
-* crond サービスで構成された定期的なジョブのグループ。
+* A group of URL endpoints may be grouped together under an API service.
+* A group of DB queries that are grouped together within one database service.
+* A group of periodic jobs configured in the crond service.
 
-以下のスクリーンショットは、e コマースサイトビルダー向けのマイクロサービス分散システムです。`web-store`、`ad-server`、`payment-db`、`auth-service` はすべて、APM のサービスとして表されます。
+The screenshot below is a microservice distributed system for an e-commerce site builder. There's a `web-store`, `ad-server`, `payment-db`, and `auth-service` all represented as services in APM.
 
-{{< img src="tracing/visualization/service_map.png" alt="サービスマップ" >}}
+{{< img src="tracing/visualization/service_map.png" alt="service map" >}}
 
-すべてのサービスは[サービス一覧画面][4]にあり、[サービスマップ][5]に視覚的に表示されます。各サービスには独自の[サービス詳細画面][6]があり、スループット、レイテンシー、エラー率などの[トレースメトリクス](#trace-metrics)を表示および検査できます。これらのメトリクスを使用して、ダッシュボードウィジェットの作成、モニターの作成、およびサービスに属するウェブエンドポイントやデータベースクエリなどのすべてのリソースのパフォーマンスの確認を行います。
+All services can be found in the [Service Catalog][4] and visually represented on the [Service Map][5]. Each service has its own [Service page][6] where [trace metrics](#trace-metrics) like throughput, latency, and error rates can be viewed and inspected. Use these metrics to create dashboard widgets, create monitors, and see the performance of every resource such as a web endpoint or database query belonging to the service.
 
-{{< img src="tracing/visualization/service_page.mp4" video="true" alt="サービス詳細画面" >}}
+{{< img src="tracing/visualization/service_page.mp4" video="true" alt="service page" >}}
 
 <div class="alert alert-info">
-サービス詳細画面に期待していた HTTP エンドポイントが表示されませんか？APM では、エンドポイントはサービス名以上でサービスに接続されます。また、トレースのエントリポイントスパンの `span.name` を使用して行われます。たとえば、上記のウェブストアサービスでは、`web.request` がエントリポイントスパンです。詳細については<a href="/tracing/faq/resource-trace-doesn-t-show-up-under-correct-service/">こちら</a>をご覧ください。
+Don't see the HTTP endpoints you were expecting on the Service page? In APM, endpoints are connected to a service by more than the service name. It is also done with the `span.name` of the entry-point span of the trace. For example, on the web-store service above, `web.request` is the entry-point span. More info on this <a href="/tracing/faq/resource-trace-doesn-t-show-up-under-correct-service/">here</a>.
 </div>
 
-## リソース
+## Resources
 
-リソースは、顧客アプリケーションの特定のドメインを表します。通常は、インスツルメントされたウェブエンドポイント、データベースクエリ、またはバックグラウンドジョブです。ウェブサービスの場合、これらのリソースは、静的なスパン名 `web.request` でグループ化された動的なウェブエンドポイントの場合があります。データベースサービスでは、スパン名が `db.query` のデータベースクエリになります。例えば `web-store` サービスは、チェックアウト、カートの更新、アイテムの追加などを処理する Web エンドポイントというインスツルメンテーションを自動的に行うリソースを持ちます。リソース名には HTTP メソッドと HTTP ルートを指定することができます。
+Resources represent a particular domain of a customer application. They could typically be an instrumented web endpoint, database query, or background job. For a web service, these resources can be dynamic web endpoints that are grouped by a static span name -  `web.request`. In a database service, these would be database queries with the span name `db.query`. For example the `web-store` service has automatically instrumented resources - web endpoints - which handle checkouts, updating carts, adding items, and so on. A Resource name can be the HTTP method and the HTTP route, for example `GET /productpage` or `ShoppingCartController#checkout`. 
 
-各リソースには、特定のエンドポイントにスコープされた[トレースメトリクス][15]を持つ独自の[リソースページ][7]があります。トレースメトリクスは、他の Datadog メトリクスと同様に、ダッシュボードにエクスポートしたり、モニターを作成するために使用することができます。リソースページには、すべての[トレース](#trace)の[スパン][21]、リクエストの分散型トレーシング、およびこのエンドポイントへのリクエストを示すトレースの集計を表示するスパン要約ウィジェットもあります。
+Each resource has its own [Resource page][7] with [trace metrics][15] scoped to the specific endpoint. Trace metrics can be used like any other Datadog metric - they are exportable to a dashboard or can be used to create monitors. The Resource page also shows the span summary widget with an aggregate view of [spans][21] for all [traces](#trace), latency distribution of requests, and traces which show requests made to this endpoint.
 
-{{< img src="tracing/visualization/resource_page.mp4" video="true" alt="リソースステータス画面" >}}
+{{< img src="tracing/visualization/resource_page.mp4" video="true" alt="resource page" >}}
 
-## トレース
+## Trace
 
-トレースは、アプリケーションがリクエストを処理するのにかかった時間とこのリクエストのステータスを追跡するために使用されます。各トレースは、1 つ以上のスパンで構成されます。リクエストの存続期間中、サービス全体の分散呼び出し（[HTTP ヘッダーを介して trace-id が挿入/抽出される][8]ため）、[自動的にインスツルメントされたライブラリ][3]、[OpenTracing][10] などのオープンソースツールを使用した[手動インスツルメンテーション][9]をフレームグラフビューで見ることができます。トレースビューページで、各トレースは、[ログをトレースに接続する][11]、[タグをスパンに追加する][12]、[ランタイムメトリクスを収集する][13]など、プラットフォームの他の部分に接続する情報を収集します。
+A trace is used to track the time spent by an application processing a request and the status of this request. Each trace consists of one or more spans. During the lifetime of the request, you can see distributed calls across services (because a [trace-id is injected/extracted through HTTP headers][8]), [automatically instrumented libraries][3], and [manual instrumentation][9] using open-source tools like [OpenTracing][10] in the flame graph view. In the Trace View page, each trace collects information that connects it to other parts of the platform, including [connecting logs to traces][11], [adding tags to spans][12], and [collecting runtime metrics][13].
 
-{{< img src="tracing/visualization/trace_view.png" alt="トレースビュー" >}}
+{{< img src="tracing/visualization/trace_view.png" alt="trace view" >}}
 
-## Retention Filters
+## Trace context propagation
 
-UI で[タグベースのフィルター][19]を設定して 15 日間のスパンをインデックスし、[トレース検索と分析][14]で使用できるようにします。
+Trace context propagation is the method of passing trace identifiers between services in a distributed system. It enables Datadog to stitch together individual spans from different services into a single distributed trace. Trace context propagation works by injecting identifiers, such as the trace ID and parent span ID, into HTTP headers as the request flows through the system. The downstream service then extracts these identifiers and continues the trace. This allows the Datadog to reconstruct the full path of a request across multiple services.
+
+For more information, see the [propagating the trace context][27] for your application's language.
+
+## Retention filters
+
+[Set tag-based filters][19] in the UI to index spans for 15 days for use with [Trace Search and Analytics][14].
 
 ## Ingestion controls
 
-サービスから Datadog に[トレースの 100% を送信][20]し、[タグベースの Retention Filter](#Retention Filters) と結合させて 15 日間で最もビジネス的に重要なトレースを維持します。
+[Send 100% of traces][20] from your services to Datadog and combine with [tag-based retention filters](#retention-filters) to keep traces that matter for your business for 15 days.
 
-## その他の参考資料
+## Instrumentation
+
+Instrumentation is the process of adding code to your application to capture and report observability data to Datadog, such as traces, metrics, and logs. Datadog provides instrumentation libraries for various programming languages and frameworks.
+
+You can automatically instrument your application when you install the Datadog Agent with [Single Step Instrumentation][24] or when you [manually add Datadog tracing libraries][25] to your code.
+
+You can use custom instrumentation by embedding tracing code directly into your application code. This allows you to programmatically create, modify, or delete traces to send to Datadog.
+
+To learn more, read [Application Instrumentation][26].
+
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
 [2]: /ja/developers/guide/data-collection-resolution-retention/
 [3]: /ja/tracing/setup/
-[4]: /ja/tracing/services/services_list/
+[4]: /ja/tracing/service_catalog/
 [5]: /ja/tracing/services/services_map/
 [6]: /ja/tracing/services/service_page/
 [7]: /ja/tracing/services/resource_page/
@@ -102,9 +120,9 @@ UI で[タグベースのフィルター][19]を設定して 15 日間のスパ�
 [9]: /ja/tracing/manual_instrumentation/
 [10]: /ja/tracing/opentracing/
 [11]: /ja/tracing/other_telemetry/connect_logs_and_traces/
-[12]: /ja/tracing/guide/add_span_md_and_graph_it/
+[12]: /ja/tracing/trace_collection/custom_instrumentation/otel_instrumentation/
 [13]: /ja/tracing/metrics/runtime_metrics/
-[14]: /ja/tracing/guide/add_span_md_and_graph_it/
+[14]: /ja/tracing/trace_pipeline/trace_retention/#trace-search-and-analytics-on-indexed-spans
 [15]: /ja/tracing/metrics/metrics_namespace/
 [16]: https://app.datadoghq.com/metric/summary
 [17]: https://app.datadoghq.com/monitors#/create
@@ -114,3 +132,7 @@ UI で[タグベースのフィルター][19]を設定して 15 日間のスパ�
 [21]: /ja/glossary/#span
 [22]: /ja/glossary/
 [23]: /ja/monitors/types/apm/
+[24]: /ja/tracing/trace_collection/automatic_instrumentation/single-step-apm
+[25]: /ja/tracing/trace_collection/automatic_instrumentation/dd_libraries/
+[26]: /ja/tracing/trace_collection/
+[27]: /ja/tracing/trace_collection/trace_context_propagation

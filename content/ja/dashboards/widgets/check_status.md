@@ -13,32 +13,32 @@ title: チェックステータスウィジェット
 widget_type: check_status
 ---
 
-サービスチェックは、特定のサービスがアップ状態かダウン状態かを監視します。指定された回数連続して監視 Agent がサービスに接続できない場合、アラートが発生します。Check Status ウィジェットにより、ダッシュボード上でサービスの劣化、サービス障害、クラスター全体の問題、スループットの低下、レイテンシーの増加を視覚的に表示できます。詳細については、[サービスチェック][1]のドキュメントを参照してください。
+Service checks monitor the up or down status of a specific service. Alerts are triggered when the monitoring Agent fails to connect to the service in a specified number of consecutive checks. The Check Status widget can visually display service degradation, service failures, cluster-wide issues, drops in throughput, or increases in latency in your dashboard. For more information, see the [Service check][1] documentation.
 
-チェックステータスは、実行されたチェックの現在のステータスまたは結果の数を表示します。
+Check status shows the current status or number of results for any check performed:
 
-{{< img src="dashboards/widgets/check_status/check_status.png" alt="チェックステータスウィジェット" >}}
+{{< img src="dashboards/widgets/check_status/check_status.png" alt="Check status widget" >}}
 
-## 計画と使用
+## Setup
 
-### ブラウザトラブルシューティング
+### Configuration
 
-1. 以前に作成した[サービスチェック][1]を選択します。
-2. レポートの時間枠を選択します。この時間枠には常に現在までが含まれるため、`The past 10 minutes` (過去 10 分) や `The past 1 day` (過去 1 日) などのオプションを選択すると、現在までの時間枠を含むステータスが報告されます。`Global Time` を選択すると、ダッシュボードを使用する人は右上の時間枠セレクターを使用して範囲を選択できますが、_現在の瞬間を含むものを選択する必要があります_。つまり `past X` (過去X) の時間枠です。それ以外の場合、ウィジェットは空白になります。
-3. スコープを選択します。
-    * **A single check**: チェックステータスウィジェットが特定の要素 (例: 1 つの `host:<HOSTNAME>`、1 つの `service:<SERVICE_NAME>`) のみを対象とする場合は、このオプションを選択します。
-    * **A cluster of checks**: チェックステータスウィジェットが一定の範囲の要素 (すべての `host`、すべての `service`) を対象とする場合は、このオプションを選択します。
+1. Select a previously created [service check][1].
+2. Choose a reporting time frame. This time frame always includes up to the present, so you can choose an option such as `The past 10 minutes` or `The past 1 day` and it reports a status that includes that time frame up to the present moment. If you choose `Global Time`, the person using the dashboard can select a range using the time frame selector in the upper right, but _they must choose one that includes the present moment_, that is any `past X` time frame. Otherwise the widget is blank.
+3. Choose your scope:
+    * **A single check**: Select this option if your Check Status widget is for a specific element only, for example: one `host:<HOSTNAME>`, one `service:<SERVICE_NAME>`.
+    * **A cluster of checks**: Select this option if your Check Status widget is for a scope of elements as in all `host`s, or all `service`s.
 
-4. スコープを選択したら、**Reported by** フィールドで、チェックステータスウィジェットのコンテキストを定義します。
-5. **A Cluster of checks** スコープで、**Group by** フィールドを使用してサブセットを選択するオプションがあります。**注**: チェックステータスは、グループごとのチェック数を表示するのではなく、チェックを実行しているグループの数を表示します。例えば、Agent Up を `env` でグループ化して監視している場合、チェックステータスは、環境内の Agent の数ではなく、スコープ構成に一致し、Agent を実行している `env` の数を表示します。
+4. After selecting your scope, define your Check Status widget context with the **Reported by** field.
+5. For the scope **A Cluster of checks**, you have the option to select a subset with the **Group by** field. **Note**: The check status does not show you the count of checks per group, it shows the count of groups running the check. For example, if you are monitoring Agent Up, grouped by `env`, the check status shows you the number of `env` that matches your scope configurations and is running the Agent, not the count of Agents in an environment.
 
-## ヘルプ
+## API
 
-このウィジェットは **[Dashboards API][2]** で使用できます。[ウィジェット JSON スキーマ定義][3]については、以下の表を参照してください。
+This widget can be used with the **[Dashboards API][2]**. See the following table for the [widget JSON schema definition][3]:
 
 {{< dashboards-widgets-api >}}
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

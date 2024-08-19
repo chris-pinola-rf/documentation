@@ -15,132 +15,163 @@ further_reading:
 title: モニターステータス
 ---
 
-## 概要
+## Overview
 
-[モニターの作成][1]後、モニターのステータスページを使用して、経時的なステータスを表示します。
+After [creating your monitor][1], use the monitor status page to view the status over time.
 
-{{< img src="monitors/monitor_status/monitor_status_page.png" alt="モニターステータスページ" >}}
+{{< img src="monitors/monitor_status/monitor_status_page.png" alt="monitor status page" >}}
 
-## ヘッダー
+## Header
 
-ヘッダーには、モニターのステータス、ステータスの時間、モニターのタイトルが含まれます。右側には、**Mute**、**Resolve**、設定歯車ボタンがあります。
+The header contains the monitor's status, time of status, and monitor title. On the right are the **Mute**, **Resolve**, and settings cog buttons.
 
-### ミュート
+### Mute
 
-ミュートボタンを使用してモニター全体をミュートするか、**スコープ** を設定して部分的にミュートします。使用できるスコープは、モニターのグループタグに基づきます。複数のスコープまたはモニターを同時にミュートする方法の詳細については、[ダウンタイム][2]を参照してください。
+Use the mute button to mute the entire monitor or partially mute it by setting a **Scope**. The available scopes are based on the monitor's group tags. See [Downtimes][2] for details on muting multiple scopes or monitors at the same time.
 
-**注**: UI を使用してモニターをミュートまたはミュート解除すると、そのモニターに関連付けられているすべてのスケジュールされたダウンタイムが削除されます。
+**Note**: Muting or unmuting a monitor with the UI deletes all scheduled downtimes associated with that monitor.
 
-### 解決
+### Resolve
 
-モニターがアラート状態の場合、**Resolve** ボタンが表示されます。このボタンを使用して、モニターを手動で解決します。
+If your monitor is in an alert state, the **Resolve** button is visible. Use this button to resolve your monitor manually.
 
-モニターの `resolve` 機能を使用すると、次回のモニター評価に備えて、モニターのステータスを意図的に `OK` に切り替えることができます。通常は、モニターの元データに基づいて、次のモニター評価が実行されます。
+The monitor `resolve` function is artificially switching the monitor status to `OK` for its next evaluation. The next monitor evaluation is performed normally on the data the monitor is based on.
 
-現在のデータが `ALERT` 状態であるためにモニターでアラートが発生した場合は、`resolve` によってモニターの状態が `ALERT -> OK -> ALERT` の順に切り替わります。このため、アラートを確認したり、Datadog にアラートを無視させたりするために `resolve` を使用するのは不適切です。
+If a monitor is alerting because its current data corresponds to the `ALERT` state, `resolve` has the monitor follow the state switch `ALERT -> OK -> ALERT`. Therefore, using `resolve` is not appropriate for acknowledging the alert or telling Datadog to ignore the alert.
 
-データが断続的に報告される場合は、手動でモニターを解決しても問題ありません。たとえば、アラートがトリガーされると、モニターはデータを受信しなくなります。このため、モニターはアラートの条件を評価することや、`OK` の状態に回復することができなくなります。このような場合は、`resolve` 機能、またはタイマーにより自動的に解決する `Automatically resolve monitor after X hours` 機能を使用することで、モニターを `OK` の状態に戻すことができます。
+Manually resolving a monitor is appropriate for cases where data is reported intermittently. For example, after triggering an alert the monitor doesn't receive further data so it can no longer evaluate alerting conditions and recover to the `OK` state. In that case, the `resolve` function or the `Automatically resolve monitor after X hours` changes the monitor back to an `OK` state.
 
-**一般的な使用例**: エラーがない場合には生成されないエラーメトリクスに基づいたモニター (`aws.elb.httpcode_elb_5xx`、コード内に置かれて_エラーがある場合にのみ_エラーを報告する DogStatsD カウンター)
+**Typical use case**: A monitor based on error metrics that are not generated when there are no errors (`aws.elb.httpcode_elb_5xx`, or any DogStatsD counter in your code reporting an error _only when there is an error_).
 
-### インシデントを作成
-**Declare incident** を選択して、モニターからインシデントを作成します。重大度レベル、通知、および追加のメモを含む *Declare Incident* ポップアップモーダル を構成します。詳細については、[インシデント管理][3]のドキュメントを参照してください。
+### Create an incident
+Create an incident from a monitor by selecting **Declare incident**. Configure the *Declare Incident* pop-up modal with the severity level, notifications, and additional notes. For more information, see the [Incident Management][3] documentation.
 
-### 設定
+### Settings
 
-設定歯車をクリックして、使用可能なオプションを表示します。
+Click the settings cog to display the options available:
 
-| オプション | 説明                                                                                                                                                                                                    |
+| Option | Description                                                                                                                                                                                                    |
 |--------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 編集   | 現在のモニターを編集します。[モニターの構成][1]セクションの詳細を参照してください。                                                                                                                                            |
-| Clone  | 現在のモニターのコピーを作成します。                                                                                                                                                                            |
-| エクスポート | 現在のモニターの JSON 構成をエクスポートします。このオプションは、[モニターの作成][1]時でも使用できます。プログラムでモニターを管理する場合は、UI でモニターを定義し、JSON をエクスポートします。 |
-| 削除 | 現在のモニターを削除します。削除の確認を求められます。                                                                                                                                      |
+| Edit   | Edit the current monitor. See details in the [Configure Monitors][1] section.                                                                                                                                            |
+| Clone  | Make a copy of the current monitor.                                                                                                                                                                            |
+| Export | Export the JSON configuration for the current monitor. This option is also available when [creating your monitor][1]. If you manage monitors programmatically, define a monitor in the UI and export the JSON. |
+| Delete | Delete the current monitor. You will be prompted to confirm the deletion.                                                                                                                                      |
 
-## プロパティ
+## Properties
 
-プロパティセクションは、モニターの概要です。
+The properties section is the overview of your monitor's:
 
-| プロパティ     | 説明                                                                           |
+| Property     | Description                                                                           |
 |--------------|---------------------------------------------------------------------------------------|
-| ステータス       | アラート、警告、データなし、または OK                                                           |
-| タイプ         | [モニターの種類][4]の詳細をご覧ください。                                                  |
-| ID           | [モニター API][5] に使用されます。                                                        |
-| Date created | モニターが作成された日付。                                                     |
-| Author       | モニターを作成した人。                                                   |
-| タグ         | モニターレベルでアタッチされたタグ。鉛筆アイコンをクリックしてタグを編集します。 |
-| クエリ        | [クエリ][6]の詳細をご覧ください。                                                       |
-| メッセージ      | モニターの[通知][7]セクションで指定されたメッセージ。                |
+| Status       | Alert, Warn, No Data, or OK                                                           |
+| Type         | Learn more about [monitor types][4].                                                  |
+| ID           | Used for the [monitor API][5].                                                        |
+| Date created | The date the monitor was created.                                                     |
+| Author       | The person who created the monitor.                                                   |
+| Tags         | The tags attached at the monitor level. Edit the tags by clicking on the pencil icon. |
+| Query        | Learn more about [querying][6].                                                       |
+| Message      | The message specified in the [notification][7] section of the monitor.                |
 
-## ステータスと履歴
+## Status and history
 
-ステータスと履歴セクションには、モニターのクエリと状態の経時的な変化が表示されます。情報をフィルタリングするには、セクションの上の検索ボックス、ステータス、および時間セレクターを使用します。
+The status and history section displays the query and state changes of your monitor over time. To filter the information, use the search box, statuses, and time selector above the section.
 
-### ステータス
+### Status
 
-ステータスグラフは、時間の経過に伴うモニターのステータスをグループごとに示します。**注**: `None` または `no groups found` と表示される場合、次のいずれかの状況が当てはまる可能性があります。
+The status graph shows your monitor's status over time, broken out by group. **Note**: If you see `None` or `no groups found`, one of the following situations may apply:
 
-* 新しく作成されたモニターがまだ評価されていない。
-* モニターのクエリが最近変更された。
-* モニターのタイムフレームがメトリクスに対して短すぎるため、データの供給頻度が低くなっています。
-* 以前にクエリに含まれていたホストの名前が変更されました。ホスト名の変更は、2 時間以内に UI から期限切れになります。
+* The monitor is newly created and has not evaluated yet.
+* The monitor's query was recently changed.
+* The monitor's timeframe is too short for a metric that provides data infrequently.
+* A host's name previously included in the query has changed. Hostname changes age out of the UI within 2 hours.
+* The query you are filtering by is not working as expected.
 
-ステータスグラフには、モニタークエリのディメンションではなく、アラート用に構成したディメンションが表示されます。例: モニタークエリは `service` と `host` でグループ化されているが、`service` のアラートのみを受信したい。ステータスグラフは、モニターのステータスを `service` でグループ化して表示します。`host` サブグループは、**View all** をクリックすると、各サブグループのステータスグラフを表示するパネルが表示されます。アラートのグループ化の詳細については、[モニターの構成][13]を参照してください。
+ステータスグラフには、モニタークエリのディメンションではなく、アラート用に構成したディメンションが表示されます。例えば、モニタークエリは `service` と `host` でグループ化されていますが、`service` のアラートのみを受信したい場合、ステータスグラフはモニターのステータスを `service` でグループ化して表示します。`host` サブグループは、View all をクリックすると、各サブグループのステータスグラフを表示するパネルが開きます。アラートのグループ化の詳細については、[モニターの構成][14]を参照してください。
 
-{{< img src="monitors/monitor_status/monitor_status_group_subgroup.png" alt="モニターステータスをサービス別にグループ化し、サブグループを表示するオプションをハイライトしています" style="width:100%;" >}}
+{{< img src="monitors/monitor_status/monitor_status_group_subgroup.png" alt="Monitor status grouped by service, highlighting option to view subgroups " style="width:100%;" >}}
 
-#### ノートブックのモニターを調査する
+#### Filter the monitor status by groups or events
 
-メトリクスの進化をさらに詳しく調べるには、ステータスグラフの横にある **Open in a notebook** をクリックします。これにより、モニタークエリのフォーマットされたグラフを含む調査用[ノートブック][8]が生成されます。
+To scope down the **Status & History** view to specific groups, use the filter field and enter the attributes you want to filter by. The group filter syntax follows the same principles of the [Monitor Search query][30]. Some best practices to follow:
 
-{{< img src="monitors/monitor_status/notebook-button2.png" alt="Open in notebook ボタン" style="width:90%;">}}
+- Filters are case sensitive, `env:prod` and `env:Prod` do not return the same monitor groups. Datadog recommends practicing uniformity in tags. For more information, see [Getting Started with Tags][31]. 
+- Queries automatically append a wildcard. To apply specific filters, surround your query with double quotes (`"`).
+  For example, take the following query which does not use double quotes:
+  ```
+  availability-zone:us-central1-a,instance-type:*,name:gke-demo-1
+  ```
+  The monitor returns the follow groups even though you expect the query to show one specific group.
+  ```
+  availability-zone:us-central1-a,instance-type:*,name:gke-demo-10
+  availability-zone:us-central1-a,instance-type:*,name:gke-demo-12
+  ```
 
-ノートブックはモニターの評価期間と一致し、関連する場合は関連するログを含んでいます。
+  Surrounding the query with double quotes returns the expected group: 
+  `"availability-zone:us-central1-a,instance-type:*,name:gke-demo-1"`
 
-### 履歴
+#### Investigate a Monitor in a Notebook
 
-履歴グラフは、収集されたデータをステータスグラフと並べて表示します。これは、モニターのメトリクスクエリに送信される生のデータポイントを表示します。モニターステータスページでは、ノートブックやダッシュボードで使用されているのと同じ時系列グラフウィジェットを使用します。
+For further investigation into your metrics evolution, click **Open in a notebook** by the status graph. This generates an investigation [notebook][8] with a formatted graph of the monitor query.
 
-### 評価グラフ
+{{< img src="monitors/monitor_status/notebook-button2.png" alt="Open in notebook button" style="width:90%;">}}
 
-評価グラフは、モニターに固有のものです。履歴グラフと同じクエリロジックを使用しますが、履歴グラフの時間枠ブラケットにスコープされます。表示されたポイントが正しく集計されるように、モニターの[評価ウィンドウ][9]に対応する固定でズームされたウィンドウを持ちます。たとえば、過去 15 分間のクエリの平均を評価するようにモニターが構成されている場合、評価グラフの各データポイントは、前の 15 分間の評価ウィンドウのメトリクスの集計値を表示します。
+The notebook matches the monitor evaluation period time range and includes related logs where relevant.
 
-このグラフは、モニターで構成した評価条件に対して適用した、あるメトリクスの生データポイントからの結果を示しています。この視覚化は、モニタークエリを通過した後のデータの値を表示しているため、履歴グラフとは異なります。
+#### Follow monitor group retention
 
-{{< img src="monitors/monitor_status/status_monitor_history.mp4" alt="ステータスモニター履歴" video="true" width="100%" >}}
+Datadog keeps monitor groups available in the UI for 24 hours unless the query is changed. Host monitors and service checks that are configured to notify on missing data are available for 48 hours. If a monitor graph displays a dotted line and is marked as non-reporting, it can be for the following reasons:
 
-## イベント
+- 新しいグループは、モニター作成後しばらくして評価されます。評価グラフには、期間の開始からグループが最初に評価されるまでの点線が表示されます。
+- グループは報告を停止し、脱落し、その後再び報告を開始します。点線は、グループが脱落した時点から再び評価を開始する時点まで表示されます。
 
-モニターから生成されたイベント (アラート、警告、回復など) は、**Status & History** セクションの上の時間セレクターに基づいてこのセクションに表示されます。イベントは[イベントエクスプローラー][10]にも表示されます。
+{{< img src="monitors/monitor_status/dotted-line.png" alt="グループ維持率を表示" style="width:90%;">}}
 
-### 監査イベント
+**Note**: Non-reporting is not the same as no data. Non-reporting status is specific to groups.
 
-すべてのモニターの種類で、モニターを変更 (たとえばモニターを編集) するとイベントエクスプローラーにイベントが作成され、変更内容と変更を行ったユーザーが表示されます。詳しくは、[イベント][11]のドキュメントをご覧ください。
+### History
 
-モニターを変更した場合、イベント検索を実行すると以下の例のように表示されます。
+The history graph shows the collected data aligned with the status graph. It shows the raw data points being submitted for the metric query in the monitor. The monitor status page uses the same timeseries graph widget that is used in Notebooks and Dashboards.
 
-```text
-https://app.datadoghq.com/event/stream?per_page=30&query=tags%3Aaudit%20status%3Aall%20priority%3Aall%20monitor%20modified
-```
+### Evaluation graph
 
-Datadog は、作成したモニターへの変更に対する通知オプションも提供しています。モニターエディターの下部にある、**Define permissions and audit notifications** の下にある *If this monitor is modified, notify monitor creator and alert recipients.* (このモニターが変更された場合、モニターの作成者とアラート受信者に通知する) の隣のドロップダウンで、**Notify** を選択します。
+The evaluation graph is specific to the monitor. It uses the same query logic as the history graph, however it is scoped to the timeframe bracket on the history graph. It has a fixed, zoomed window that corresponds to your monitor [evaluation window][9] to ensure the displayed points are aggregated correctly. For example, if the monitor is configured to evaluate the average of the query over the last 15 minutes, each datapoint in the evaluation graph shows the aggregate value of the metric for the previous 15 minute evaluation window.
 
-この設定により、モニター監査イベントに関する電子メールが、特定のモニターの全アラート受信者とモニター作成者に送信されます。モニター監査イベントは[イベントエクスプローラー][10]にも表示されます。
+This graph shows the results from the raw data points of a metric applied against the evaluation conditions you configure in the monitor. This visualization is different from the History graph because it's showing the value of the data after it has gone through the monitor query. 
 
-## エクスポートとインポート
+{{< img src="monitors/monitor_status/status_monitor_history.mp4" alt="status monitor history" video="true" width="100%" >}}
 
-モニターのステータスページから、任意のモニターのエクスポートを JSON で取得できます。右上にある歯車アイコン（設定）をクリックし、メニューから **Export** を選択します。
+## Events
 
-メインナビゲーションで、*Monitors --> New Monitor --> Import* の順に選択し、Datadog に JSON で[モニターをインポート][12]します。
+Events generated from your monitor (alerts, warnings, recoveries, etc.) are shown in this section based on the time selector above the **Status & History** section. The events are also displayed in your [Events Explorer][10].
 
-## その他の参考資料
+### Audit trail
+Audit Trail automatically captures monitor changes for all monitor types and creates an event. This event documents the changes to the monitor.
+
+例えば、モニターを編集した場合、監査証跡イベントには次のように表示されます。
+ - 以前のモニター構成
+ - 現在のモニター構成
+ - 変更を行ったユーザー
+
+ 詳細については、[監査証跡][11]ドキュメントを参照し、[監査証跡のベストプラクティス][12]ブログをお読みください。
+
+Datadog also provides a notification option for changes to monitors you create. At the bottom of the monitor editor, under **Define permissions and audit notifications**, select **Notify** in the dropdown next to: *If this monitor is modified, notify monitor creator and alert recipients.*.
+
+The notify setting sends an email with the monitor audit event to all people who are alerted in the specific monitor as well as to the monitor creator. The monitor audit event also appears in the [Events Explorer][10].
+
+## Export and import
+
+You can obtain a JSON export of any monitor from the monitor's status page. Click the settings cog (top right) and choose **Export** from the menu.
+
+メインナビゲーションで、*Monitors --> New Monitor --> Import* の順に選択し、JSON を使用して Datadog に[モニターをインポート][13]します。
+
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
 
 [1]: /ja/monitors/configuration/
-[2]: /ja/monitors/notify/downtimes/
-[3]: /ja/monitors/incident_management/#from-a-monitor
+[2]: /ja/monitors/downtimes/
+[3]: /ja/service_management/incident_management/#from-a-monitor
 [4]: /ja/monitors/types/
 [5]: /ja/api/v1/monitors/
 [6]: /ja/dashboards/querying/
@@ -148,6 +179,9 @@ Datadog は、作成したモニターへの変更に対する通知オプショ
 [8]: /ja/notebooks
 [9]: /ja/monitors/configuration/?tab=thresholdalert#evaluation-window
 [10]: https://app.datadoghq.com/event/explorer
-[11]: /ja/events/
-[12]: https://app.datadoghq.com/monitors#create/import
-[13]: /ja/monitors/configuration/?tab=thresholdalert#notification-aggregation
+[11]: /ja/account_management/audit_trail/
+[12]: https://www.datadoghq.com/blog/audit-trail-best-practices/
+[13]: https://app.datadoghq.com/monitors#create/import
+[14]: /ja/monitors/configuration/?tab=thresholdalert#configure-notifications-and-automations
+[30]: /ja/monitors/manage/search/#query
+[31]: /ja/getting_started/tagging/

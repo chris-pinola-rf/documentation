@@ -39,79 +39,81 @@ further_reading:
 title: ダッシュボード
 ---
 
-## 概要
+## Overview
 
-ダッシュボードは、組織内のシステムとアプリケーションのパフォーマンスと健全性に関するリアルタイムの洞察を提供します。これにより、ユーザーはデータを視覚的に分析し、キーパフォーマンス指標 (KPI) を追跡し、傾向を効率的に監視できます。ダッシュボードを使用することで、チームは異常の特定、問題の優先順位付け、問題のプロアクティブな検出、根本原因の診断、信頼性目標の達成を確実にすることができます。重要なメトリクスとパフォーマンス指標をモニタリングおよび分析するための一元化された使いやすいインターフェイスを提供することで、十分な情報に基づいた意思決定、システム運用の最適化、ビジネスの成功へと導く力をチームに与えます。
+Dashboards provide real-time insights into the performance and health of systems and applications within an organization. They allow users to visually analyze data, track key performance indicators (KPIs), and monitor trends efficiently. With dashboards, teams can identify anomalies, prioritize issues, proactively detect problems, diagnose root causes, and ensure that reliability goals are met. Empower your teams to make informed decisions, optimize system operations, and drive business success by providing a centralized and user-friendly interface for monitoring and analyzing critical metrics and performance indicators.
 
-{{< whatsnext desc="ダッシュボード機能:">}}
-    {{< nextlink href="/dashboards/configure" >}}Configure: ダッシュボードの構成オプションの概要{{< /nextlink >}}
-    {{< nextlink href="/dashboards/configure" >}}Dashboard List: ダッシュボードやリストを検索、表示、作成{{< /nextlink >}}
-    {{< nextlink href="/dashboards/template_variables" >}}Template Variable: ダッシュボードのウィジェットを動的にフィルタリング{{< /nextlink >}}
+{{< whatsnext desc="Dashboard features:">}}
+    {{< nextlink href="/dashboards/configure" >}}Configure: Overview of the configuration options for dashboards{{< /nextlink >}}
+    {{< nextlink href="/dashboards/configure" >}}Dashboard List: Search, view, or create dashboards and lists{{< /nextlink >}}
+    {{< nextlink href="/dashboards/template_variables" >}}Template Variable: Dynamically filter widgets in a dashboard{{< /nextlink >}}
     {{< nextlink href="/service_management/incident_management/datadog_clipboard/" >}}Datadog Clipboard{{< /nextlink >}}
-    {{< nextlink href="/api/latest/dashboards" >}}API: ダッシュボードをプログラムで管理{{< /nextlink >}}
+    {{< nextlink href="/api/latest/dashboards" >}}API: Manage dashboards programmatically{{< /nextlink >}}
 {{< /whatsnext >}}
 
-{{< whatsnext desc="グラフ機能:">}}
-    {{< nextlink href="/dashboards/widgets" >}}ウィジェット: さまざまな視覚化の構成を学ぶ{{< /nextlink >}}
-    {{< nextlink href="/dashboards/querying" >}}クエリ: グラフクエリのフォーマットオプションを参照{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions" >}}関数: メトリクスクエリとその結果のグラフを修正{{< /nextlink >}}
-    {{< nextlink href="/dashboards/change_overlays" >}}オーバーレイ: 変更イベントを自動的にグラフにオーバーレイ{{< /nextlink >}}
+{{< whatsnext desc="Graphing features:">}}
+    {{< nextlink href="/dashboards/widgets" >}}Widgets: Learn the configuration for different visualizations{{< /nextlink >}}
+    {{< nextlink href="/dashboards/querying" >}}Querying: See the formatting options for graph queries{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions" >}}Functions: Modify metric queries and resulting graphs{{< /nextlink >}}
+    {{< nextlink href="/dashboards/change_overlays" >}}Overlays: Automatically overlay change events on graphs{{< /nextlink >}}
 {{< /whatsnext >}}
 
-## はじめに
+## Get started
 
-{{< whatsnext desc="以下のリソースをご覧ください:" >}}
-   {{< nextlink href="/getting_started/dashboards/" >}}ダッシュボードを始める{{< /nextlink >}}
-   {{< nextlink href="https://learn.datadoghq.com/courses/intro-dashboards" >}}学習コース: ダッシュボード入門{{< /nextlink >}}
-   {{< nextlink href="https://learn.datadoghq.com/courses/building-better-dashboards" >}}学習コース: より良いダッシュボードの構築{{< /nextlink >}}
+{{< whatsnext desc="See the following resources:" >}}
+   {{< nextlink href="/getting_started/dashboards/" >}}Getting Started with Dashboards{{< /nextlink >}}
+   {{< nextlink href="https://learn.datadoghq.com/courses/intro-dashboards" >}}Learning Course: Introduction to Dashboards{{< /nextlink >}}
+   {{< nextlink href="https://learn.datadoghq.com/courses/building-better-dashboards" >}}Learning Course: Building Better Dashboards{{< /nextlink >}}
 {{< /whatsnext >}}
 
-ダッシュボードを作成するには、[ダッシュボードリスト][4]ページの **+New Dashboard** をクリックするか、ナビゲーションメニューから **New Dashboard** をクリックします。ダッシュボード名を入力し、レイアウトオプションを選択します。
+To create a dashboard, click **+New Dashboard** on the [Dashboard List][4] page or **New Dashboard** from the navigation menu. Enter a dashboard name and choose a layout option.
 
-{{< img src="dashboards/create-dashboard.png" alt="新しいダッシュボードの追加" style="width:70%;">}}
+{{< img src="dashboards/create-dashboard.png" alt="Adding a new dashboard" style="width:70%;">}}
 
-ダッシュボード
-: 画像、グラフ、ログなどのさまざまなオブジェクトを含めることができるグリッドベースのレイアウト。これは通常、ステータスボードやストーリーテリングビューとして使用され、リアルタイムで更新され、過去の定点を表すことができます。グリッドの幅は最大 12 マスで、デバッグにも適しています。
+Dashboards 
+: A grid-based layout, which can include a variety of objects such as images, graphs, and logs. They are commonly used as status boards or storytelling views which update in real time, and can represent fixed points in the past. They have a maximum width of 12 grid squares and also work well for debugging.
 
-タイムボード
-: ダッシュボード全体を定刻またはリアルタイムで表示する自動レイアウト。通常、トラブルシューティング、共同作業、一般データの調査に使用します。
+Timeboards
+: Automatic layouts that represent a single point in time—either fixed or real-time—across the entire dashboard. They are commonly used for troubleshooting, correlation, and general data exploration.
 
-スクリーンボード
-: 画像やグラフ、ログなど、様々なオブジェクトを含めることができる自由形式のレイアウトのダッシュボード。リアルタイムに更新されたり、過去の定点を示すステータスボードやストーリーテリングビューとして使われるのが一般的です。
+Screenboards
+: Dashboards with free-form layouts which can include a variety of objects such as images, graphs, and logs. They are commonly used as status boards or storytelling views that update in real time or represent fixed points in the past.
 
-## リフレッシュレート
+## Refresh rate
 
-プライベートダッシュボードのリフレッシュレートは、表示している時間枠によって異なります。時間枠が短ければ短いほど、データの更新頻度は高くなります。公開共有ダッシュボードは、選択した時間枠に関係なく、30 秒ごとに更新されます。
+The refresh rate of a private dashboard depends on the time frame you are viewing. The shorter the time frame is, the more frequently the data is refreshed. Publicly shared dashboards refresh every thirty seconds, regardless of the selected time frame.
 
-| 時間枠   | リフレッシュレート |
+| Time frame   | Refresh rate |
 |--------------|--------------|
-| 1 分     | 10 秒   |
-| 2 分    | 10 秒   |
-| 5 分    | 10 秒   |
-| 10 分   | 10 秒   |
-| 30 分   | 20 秒   |
-| 1 時間       | 20 秒   |
-| 3 時間      | 1 分     |
-| 4 時間      | 1 分     |
-| 1 日        | 3 分     |
-| 2 日       | 10 分    |
-| 1 週間       | 1 時間       |
-| 1 か月      | 1 時間       |
-| 3 か月     | 1 時間       |
-| 6 か月     | 1 時間       |
-| 1 年       | 1 時間       |
+| 1 minute     | 10 seconds   |
+| 2 minutes    | 10 seconds   |
+| 5 minutes    | 10 seconds   |
+| 10 minutes   | 10 seconds   |
+| 30 minutes   | 20 seconds   |
+| 1 hour       | 20 seconds   |
+| 3 hours      | 1 minute     |
+| 4 hours      | 1 minute     |
+| 1 day        | 3 minutes     |
+| 2 days       | 10 minutes    |
+| 1 week       | 1 hour       |
+| 1 month      | 1 hour       |
+| 3 months     | 1 hour       |
+| 6 months     | 1 hour       |
+| 1 year       | 1 hour       |
 
-## モバイルデバイスでダッシュボードを表示する
+## View dashboards on mobile devices
 
-[Apple App Store][2] および [Google Play Store][3] で入手可能な Datadog モバイルアプリを使用すると、モバイルフレンドリーな形式でダッシュボードを表示できます。モバイルアプリには、モバイルアプリを開かなくてもサービスの健全性やインフラストラクチャーを監視できるモバイルホームスクリーンウィジェットが装備されています。
+View your dashboards in a mobile-friendly format with the Datadog Mobile App, available on the [Apple App Store][2] and [Google Play Store][3]. The Mobile App comes equipped with mobile home screen widgets that allow you to monitor service health and infrastructure without opening the mobile app.
 
-**注**: ダッシュボードをセットアップまたは編集するには、Datadog ブラウザ UI にログインする必要があります。アプリのインストールの詳細については、[Datadog モバイルアプリ][1]のドキュメントを参照してください。
+**Note**: To set up or edit a dashboard, you must log in to the Datadog browser UI. For more information on installing the app, see the [Datadog Mobile App][1] documentation.
 
-## その他の参考資料
+## Further Reading
+
+{{< learning-center-callout header="Datadog ラーニングセンターでグラフウィジェットを作成してみる" btn_title="Enroll Now" btn_url="https://learn.datadoghq.com/courses/dashboard-graph-widgets">}} 時系列、クエリ値、トップリスト、テーブル、分布、および円グラフのウィジェットを探索します。ウィジェットの構成方法を学び、各ウィジェットタイプをどのような場合に利用すべきかを理解します。 {{< /learning-center-callout >}}
 
 {{< partial name="whats-next/whats-next.html" >}}
 
-[1]: /ja/service_management/mobile/
+[1]: /ja/mobile/
 [2]: https://apps.apple.com/app/datadog/id1391380318
 [3]: https://play.google.com/store/apps/details?id=com.datadog.app
 [4]: https://app.datadoghq.com/dashboard/lists

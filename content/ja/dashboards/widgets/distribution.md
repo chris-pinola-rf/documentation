@@ -22,54 +22,54 @@ title: 分布ウィジェット
 widget_type: ディストリビューション
 ---
 
-分布を可視化することで、1 つまたは複数のタグ (*hosts* など) に対して集計されたメトリクスを表示します。[ヒートマップ][1]と異なり、分布グラフの x 軸は時間ではなく数量を表します。
+The Distribution visualization shows data aggregated across one or several tags, such as *hosts*. Unlike the [heatmap][1], a distribution graph's x-axis is quantity rather than time.
 
-この可視化機能は、1 つのクエリのみを表示します。追加のクエリは無視されます。
+This visualization displays only a single query; additional queries are disregarded.
 
-**注**: この可視化で外れ値の検出を行うことはできません。
+**Note**: Outlier detection cannot be performed for this visualization.
 
-{{< img src="/dashboards/widgets/distribution/distribution_fullscreen.png" alt="JVM ヒープ平均のホスト別分布グラフ">}}
+{{< img src="/dashboards/widgets/distribution/distribution_fullscreen.png" alt="Distribution graph for JVM heap average by host">}}
 
-## セットアップ
+## Setup
 
-### 構成
+### Configuration
 
-1. グラフ化するデータを選択します。ディストリビューションの視覚化は、メトリクス、ライブプロセス、APM リクエストレイテンシー、ログイベント、および RUM イベントをサポートしています。
-**注**: この可視化タイプは、データが `host` ごとなどの複数のタグキーに対して集計される場合にのみ有用です。
-1. "`avg`/`max`/`min`/`sum by`/" のコントロールで選択を行い、関連付けられているタグのデータを表示します。
-1. オプションを使用して、グラフをカスタマイズします。
+1. Choose the data to graph.The Distribution visualization supports metrics, live processes, APM request latency, log events, and RUM events.
+**Note**: This visualization type is useful only when data is aggregated across tag keys, such as for each `host`.
+1. Make a selection in the "`avg`/`max`/`min`/`sum by`/" control to see your data across the associated tags.
+1. Customize your graph with the available options.
 
-### オプション
+### Options
 
-#### パーセンタイルマーカー
+#### Percentile markers
 
-APM リクエスト分布で、X 軸にパーセンタイルマーカーを追加できます。
+With APM request distributions, you can add percentile markers on the x-axis.
 
-{{< img src="dashboards/widgets/options/distribution_marker_controls.jpg" alt="マーカーコントロール環境設定" style="width:80%;">}}
+{{< img src="dashboards/widgets/options/distribution_marker_controls.jpg" alt="Marker control preferences" style="width:80%;">}}
 
-#### X 軸と Y 軸の制御
+#### X-axis and Y-axis controls
 
-グラフ軸の制御は、UI または JSON エディターから使用できます。
+Axis controls are available through the UI and the JSON editor.
 
-以下を実行できます。
+They allow you to:
 
-* X 軸および Y 軸を特定の範囲にカット。
-* パーセンタイルしきい値または絶対しきい値に基づいて X 軸の境界を自動的に変更します。このしきい値をグラフの両端 (下側と上側) または一方に適用することで、「外れ値」のビンを除外できます。
-* Y 軸の目盛を線形目盛から対数に変更します。
+* Clip the x and y-axes to specific ranges.
+* Automatically change x-axis bounds based on a percentile or an absolute value threshold. This threshold can be applied to one or both ends of the graph (lower and upper) to remove "outlier" bins.
+* Change the y-axis scale from linear to log.
 
-{{< img src="dashboards/widgets/options/distribution_axis_controls.jpg" alt="ディストリビューション軸のコントロール環境設定" style="width:80%;">}}
+{{< img src="dashboards/widgets/options/distribution_axis_controls.jpg" alt="Distribution axis control preferences" style="width:80%;">}}
 
-### 全画面
+### Full screen
 
-[標準の全画面オプション][2]のほかに、X 軸のコントロールを使用して特定のパーセンタイルにズームインすることができます。
+In addition to the [standard full screen options][2], you can use x-axis controls to zoom in to a specific percentile.
 
 ## API
 
-このウィジェットは **[Dashboards API][3]** で使用できます。[ウィジェット JSON スキーマ定義][4]については、以下の表を参照してください。
+This widget can be used with the **[Dashboards API][3]**. See the following table for the [widget JSON schema definition][4]:
 
 {{< dashboards-widgets-api >}}
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

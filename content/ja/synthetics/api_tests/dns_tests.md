@@ -30,38 +30,40 @@ further_reading:
 title: DNS テスト
 ---
 
-## 概要
+## Overview
 
-DNS テストを使用すると、任意のネームサーバーを使用して、DNS レコードの解決可能性とルックアップ時間をプロアクティブに監視できます。解決が予想外に遅い場合、または DNS サーバーが予想外の A、AAAA、CNAME、TXT、または MX エントリで応答した場合、Datadog は失敗の詳細を含むアラートを送信し、問題の根本原因をすばやく特定、修正できるようにします。
+DNS tests allow you to proactively monitor the resolvability and lookup times of your DNS records using any nameserver. If resolution is unexpectedly slow or a DNS server answers with unexpected A, AAAA, CNAME, TXT, or MX entries, Datadog sends you an alert with details on the failure, allowing you to quickly pinpoint the root cause of the issue and fix it.
 
-DNS テストは、ネットワークの外部または内部からのテストの実行の好みに応じて、[管理ロケーション](#select-locations)と[プライベートロケーション][1]の両方から実行することができます。DNS テストは、スケジュール、オンデマンド、または [CI/CD パイプライン][2]内で直接実行することができます。
+DNS tests can run from both [managed](#select-locations) and [private locations][1] depending on your preference for running the test from outside or inside your network. DNS tests can run on a schedule, on-demand, or directly within your [CI/CD pipelines][2].
 
-## コンフィギュレーション
+## Configuration
 
-`DNS` テストの作成を選択した後、テストのリクエストを定義します。
+After choosing to create a `DNS` test, define your test's request.
 
-### リクエストを定義する
+### Define request
 
-1. テストでクエリする**ドメイン**を指定します (例: `www.example.com`)。
-2. 使用する **DNS サーバー** を指定します（任意）。ドメイン名または IP アドレスを使用できます。指定されていない場合、DNS テストは `8.8.8.8` を使用して解決を実行し、 `1.1.1.1` と内部 AWS DNS サーバーにフォールバックします。
-3. DNS サーバーの **ポート** を指定します（任意）。指定されていない場合、DNS サーバーのポートはデフォルトで 53 になります。
-4. テストがタイムアウトするまでの時間を秒単位で指定します (オプション)。
-5. DNS テストに**名前**を付けます。
-6. DNS テストに `env` **タグ**とその他のタグを追加します。次に、これらのタグを使用して、[Synthetic Monitoring & Continuous Testing ページ][3]で Synthetic テストをフィルタリングできます。
+1. Specify the **Domain** you want your test to query. For example, `www.example.com`.
+2. Specify the **DNS Server** to use (optional), it can be a domain name or an IP address. If not specified, your DNS test performs resolution using `8.8.8.8`, with a fallback on `1.1.1.1` and an internal AWS DNS server.
+3. Specify your DNS Server **Port** (optional). If not specified, the DNS Server port defaults to 53.
+4. Specify the amount of time in seconds before the test times out (optional).
+5. **Name** your DNS test.
+6. Add `env` **Tags** as well as any other tag to your DNS test. You can then use these tags to filter through your Synthetic tests on the [Synthetic Monitoring & Continuous Testing page][3].
 
-{{< img src="synthetics/api_tests/dns_test_config_new.png" alt="DNS クエリを定義する" style="width:90%;" >}}
+{{< img src="synthetics/api_tests/dns_test_config_new.png" alt="Define DNS query" style="width:90%;" >}}
 
-**Test URL** をクリックして、リクエストのコンフィギュレーションをテストします。画面の右側に応答プレビューが表示されます。
+Click **Test URL** to try out the request configuration. A response preview is displayed on the right side of your screen.
 
-### アサーションを定義する
+### Define assertions
 
-アサーションは、期待されるテスト結果が何であるかを定義します。**Test URL** をクリックした後、`response time` の基本的なアサーションと利用可能なレコードが追加されます。テストで監視するには、少なくとも 1 つのアサーションを定義する必要があります。
+Assertions define what an expected test result is. After you click **Test URL**, basic assertions on `response time` and available records are added. You must define at least one assertion for your test to monitor.
 
-| タイプ                | レコードタイプ                                                     | 演算子                                           | 値の型                 |
+| Type                | Record type                                                     | Operator                                           | Value type                 |
 |---------------------|-----------------------------------------------------------------|----------------------------------------------------|----------------------------|
-| response time       |                                                                 | `is less than`                                     | 整数 (ms)             |
-| 以下の利用可能なすべてのレコード        | タイプ A、タイプ AAAA、タイプ CNAME、タイプ MX、タイプ NS、タイプ TXT | `is`、`contains`、<br> `matches`、`does not match` | _文字列_ <br> _[正規表現][4]_ |
-| at least one record | タイプ A、タイプ AAAA、タイプ CNAME、タイプ MX、タイプ NS、タイプ TXT | `is`、`contains`、<br> `matches`、`does not match` | _文字列_ <br> _[正規表現][4]_ |
+| response time       |                                                                 | `is less than`                                     | _Integer (ms)_             |
+| every available record        | of type A, of type AAAA, of type CNAME, of type MX, of type NS, of type TXT | `is`, `contains`, <br> `matches`, `does not match` | _String_ <br> _[Regex][4]_ |
+| at least one record | of type A, of type AAAA, of type CNAME, of type MX, of type NS, of type TXT | `is`, `contains`, <br> `matches`, `does not match` | _String_ <br> _[Regex][4]_ |
+
+**Note**: SOA records are not available for testing using Synthetic tests.
 
 **New Assertion** をクリックするか、応答プレビューを直接クリックすることで、API テストごとに最大 20 個のアサーションを作成できます。
 

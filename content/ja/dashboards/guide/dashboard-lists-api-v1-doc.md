@@ -5,26 +5,26 @@ aliases:
 title: ダッシュボードリスト API (v1)
 ---
 
-APIを介してすべてのダッシュボードを簡単に整理、検索、およびチームや組織と共有できます。
+Interact with your dashboard lists through the API to make it easier to organize, find, and share all of your dashboards with your team and organization.
 
-- [ダッシュボードリストのアイテムを取得する](#get-items-of-a-dashboard-list)
-- [ダッシュボードリストにアイテムを追加する](#add-items-to-a-dashboard-list)
-- [ダッシュボードリストのアイテムを更新する](#update-items-of-a-dashboard-list)
-- [ダッシュボードリストからアイテムを削除する](#delete-items-from-a-dashboard-list)
+- [Get items of a dashboard list](#get-items-of-a-dashboard-list)
+- [Add items to a dashboard list](#add-items-to-a-dashboard-list)
+- [Update items of a dashboard list](#update-items-of-a-dashboard-list)
+- [Delete items from a dashboard list](#delete-items-from-a-dashboard-list)
 
-## ダッシュボードリストのアイテムを取得
+## Get items of a dashboard list
 
 <div class="alert alert-danger">
-このエンドポイントは旧バージョンです。代わりに、<a href="https://docs.datadoghq.com/api#get-items-of-a-dashboard-list">ダッシュボードリストのアイテムを取得する v2 エンドポイント</a>を使用してください。
+This endpoint is outdated. Use the <a href="https://docs.datadoghq.com/api#get-items-of-a-dashboard-list">get items of a dashboard list v2 endpoint</a> instead.
 </div>
 
-### シグニチャ
+### Signature
 
 `GET https://api.datadoghq.com/api/v1/dashboard/lists/manual/<LIST_ID>/dashboards`
 
-### 例
+### Examples
 
-#### リクエスト例
+#### Example request
 
 {{< tabs >}}
 {{% tab "Python" %}}
@@ -33,8 +33,8 @@ APIを介してすべてのダッシュボードを簡単に整理、検索、�
 from datadog import initialize, api
 
 options = {
-    'api_key': '<DATADOG_API_キー>',
-    'app_key': '<DATADOG_アプリケーションキー>'
+    'api_key': '<DATADOG_API_KEY>',
+    'app_key': '<DATADOG_APPLICATION_KEY>'
 }
 
 initialize(**options)
@@ -50,8 +50,8 @@ api.DashboardList.get_items(4741)
 require 'rubygems'
 require 'dogapi'
 
-api_key = '<DATADOG_API_キー>'
-app_key = '<DATADOG_アプリケーションキー>'
+api_key = '<DATADOG_API_KEY>'
+app_key = '<DATADOG_APPLICATION_KEY>'
 
 dog = Dogapi::Client.new(api_key, app_key)
 
@@ -62,8 +62,8 @@ result = dog.get_items_of_dashboard_list(4741)
 {{% tab "Curl" %}}
 
 ```sh
-api_key=<DATADOG_API_キー>
-app_key=<DATADOG_アプリケーションキー>
+api_key=<DATADOG_API_KEY>
+app_key=<DATADOG_APPLICATION_KEY>
 
 list_id=4741
 
@@ -74,7 +74,7 @@ curl -X GET \
 {{% /tab %}}
 {{< /tabs >}}
 
-#### 応答例
+#### Example response
 
 {{< tabs >}}
 {{% tab "Python" %}}
@@ -372,36 +372,36 @@ curl -X GET \
 {{% /tab %}}
 {{< /tabs >}}
 
-## ダッシュボードリストへの項目の追加
+## Add items to a dashboard list
 
 <div class="alert alert-danger">
-このエンドポイントは旧バージョンです。代わりに、<a href="https://docs.datadoghq.com/api#add-items-to-a-dashboard-list">ダッシュボードリストにアイテムを追加する v2 エンドポイント</a>を使用してください。
+This endpoint is outdated. Use the <a href="https://docs.datadoghq.com/api#add-items-to-a-dashboard-list">add items to a dashboard list v2 endpoint</a> instead.
 </div>
 
-### シグニチャ
+### Signature
 
 `POST https://api.datadoghq.com/api/v1/dashboard/lists/manual/<LIST_ID>/dashboards`
 
-### 引数
+### Arguments
 
-*   **`dashboards`** [必須]:
-    リストに追加するダッシュボードのリスト。
-    ダッシュボードの定義は、次の形式に従います。
-    *   **`type`** [必須]:
-        ダッシュボードのタイプ。
-        以下のいずれかでなければなりません。
+*   **`dashboards`** [*required*]:
+    A list of dashboards to add to the list.
+    Dashboard definitions follow this form:
+    *   **`type`** [*required*]:
+        The type of the dashboard.
+        The type must be one of:
 
         * `"custom_timeboard"`
         * `"custom_screenboard"`
         * `"integration_screenboard"`
         * `"integration_timeboard"`
         * `"host_timeboard"`
-    *   **`id`** [必須]:
-        ダッシュボードの ID。
+    *   **`id`** [*required*]:
+        The id of the dashboard.
 
-### 例
+### Examples
 
-#### リクエスト例
+#### Example request
 
 {{< tabs >}}
 {{% tab "Python" %}}
@@ -410,8 +410,8 @@ curl -X GET \
 from datadog import initialize, api
 
 options = {
-    'api_key': '<DATADOG_API_キー>',
-    'app_key': '<DATADOG_アプリケーションキー>'
+    'api_key': '<DATADOG_API_KEY>',
+    'app_key': '<DATADOG_APPLICATION_KEY>'
 }
 
 initialize(**options)
@@ -451,8 +451,8 @@ api.DashboardList.add_items(list_id, dashboards=dashboards)
 require 'rubygems'
 require 'dogapi'
 
-api_key = '<DATADOG_API_キー>'
-app_key = '<DATADOG_アプリケーションキー>'
+api_key = '<DATADOG_API_KEY>'
+app_key = '<DATADOG_APPLICATION_KEY>'
 
 dog = Dogapi::Client.new(api_key, app_key)
 
@@ -487,8 +487,8 @@ result = dog.add_items_of_dashboard_list(list_id, dashboards)
 {{% tab "Curl" %}}
 
 ```sh
-api_key=<DATADOG_API_キー>
-app_key=<DATADOG_アプリケーションキー>
+api_key=<DATADOG_API_KEY>
+app_key=<DATADOG_APPLICATION_KEY>
 
 list_id=4741
 
@@ -523,7 +523,7 @@ curl -X ADD -H "Content-type: application/json" \
 {{% /tab %}}
 {{< /tabs >}}
 
-#### 応答例
+#### Example response
 
 {{< tabs >}}
 {{% tab "Python" %}}
@@ -623,36 +623,36 @@ curl -X ADD -H "Content-type: application/json" \
 {{% /tab %}}
 {{< /tabs >}}
 
-## ダッシュボードリストのアイテムを更新する
+## Update items of a dashboard list
 
 <div class="alert alert-danger">
-このエンドポイントは旧バージョンです。代わりに、<a href="https://docs.datadoghq.com/api#update-items-of-a-dashboard-list">ダッシュボードリストのアイテムを更新する v2 エンドポイント</a>を使用してください。
+This endpoint is outdated. Use the <a href="https://docs.datadoghq.com/api#update-items-of-a-dashboard-list">update items of a dashboard list v2 endpoint</a> instead.
 </div>
 
-### シグニチャ
+### Signature
 
 `PUT https://api.datadoghq.com/api/v1/dashboard/lists/manual/<LIST_ID>/dashboards`
 
-### 引数
+### Arguments
 
-*   **`dashboards`** [必須]:
-    ダッシュボードリストのダッシュボードの新しいリスト。
-    ダッシュボードの定義は、次の形式に従います。
-    *   **`type`** [必須]:
-        ダッシュボードのタイプ。
-        以下のいずれかでなければなりません。
+*   **`dashboards`** [*required*]:
+    The new list of dashboards for the dashboard list.
+    Dashboard definitions follow this form:
+    *   **`type`** [*required*]:
+        The type of the dashboard.
+        The type must be one of:
 
         * `"custom_timeboard"`
         * `"custom_screenboard"`
         * `"integration_screenboard"`
         * `"integration_timeboard"`
         * `"host_timeboard"`
-    *   **`id`** [必須]:
-        ダッシュボードの ID。
+    *   **`id`** [*required*]:
+        The id of the dashboard.
 
-### 例
+### Examples
 
-#### リクエスト例
+#### Example request
 
 {{< tabs >}}
 {{% tab "Python" %}}
@@ -661,8 +661,8 @@ curl -X ADD -H "Content-type: application/json" \
 from datadog import initialize, api
 
 options = {
-    'api_key': '<DATADOG_API_キー>',
-    'app_key': '<DATADOG_アプリケーションキー>'
+    'api_key': '<DATADOG_API_KEY>',
+    'app_key': '<DATADOG_APPLICATION_KEY>'
 }
 
 initialize(**options)
@@ -702,8 +702,8 @@ api.DashboardList.update_items(list_id, dashboards=dashboards)
 require 'rubygems'
 require 'dogapi'
 
-api_key = '<DATADOG_API_キー>'
-app_key = '<DATADOG_アプリケーションキー>'
+api_key = '<DATADOG_API_KEY>'
+app_key = '<DATADOG_APPLICATION_KEY>'
 
 dog = Dogapi::Client.new(api_key, app_key)
 
@@ -740,8 +740,8 @@ result = dog.update_items_of_dashboard_list(list_id, dashboards)
 
 ```sh
 
-api_key=<DATADOG_API_キー>
-app_key=<DATADOG_アプリケーションキー>
+api_key=<DATADOG_API_KEY>
+app_key=<DATADOG_APPLICATION_KEY>
 
 list_id=4741
 
@@ -777,7 +777,7 @@ curl -X UPDATE -H "Content-type: application/json" \
 {{% /tab %}}
 {{< /tabs >}}
 
-##### 応答例
+##### Example response
 
 {{< tabs >}}
 {{% tab "Python" %}}
@@ -876,37 +876,36 @@ curl -X UPDATE -H "Content-type: application/json" \
 {{% /tab %}}
 {{< /tabs >}}
 
-## ダッシュボードリストからアイテムを削除する
+## Delete items from a dashboard list
 
 <div class="alert alert-danger">
-このエンドポイントは旧バージョンです。代わりに、<a href="https://docs.datadoghq.com/api#delete-items-from-a-dashboard-list">ダッシュボードリストからアイテムを削除する v2 エンドポイント</a>を使用してください。
+This endpoint is outdated. Use the <a href="https://docs.datadoghq.com/api#delete-items-from-a-dashboard-list">delete items from a dashboard list v2 endpoint</a> instead.
 </div>
 
-
-### シグニチャ
+### Signature
 
 `DELETE https://api.datadoghq.com/api/v1/dashboard/lists/manual/<LIST_ID>/dashboards`
 
-### 引数
+### Arguments
 
-*   **`dashboards`** [必須]:
-    リストから削除するダッシュボードのリスト。
-    ダッシュボードの定義は、次の形式に従います。
-    *   **`type`** [必須]:
-        ダッシュボードのタイプ。
-        以下のいずれかでなければなりません。
+*   **`dashboards`** [*required*]:
+    A list of dashboards to remove from the list.
+    Dashboard definitions follow this form:
+    *   **`type`** [*required*]:
+        The type of the dashboard.
+        The type must be one of:
 
         * `"custom_timeboard"`
         * `"custom_screenboard"`
         * `"integration_screenboard"`
         * `"integration_timeboard"`
         * `"host_timeboard"`
-    *   **`id`** [必須]:
-        ダッシュボードの ID。
+    *   **`id`** [*required*]:
+        The id of the dashboard.
 
-### 例
+### Examples
 
-#### リクエスト例
+#### Example request
 
 {{< tabs >}}
 {{% tab "Python" %}}
@@ -915,8 +914,8 @@ curl -X UPDATE -H "Content-type: application/json" \
 from datadog import initialize, api
 
 options = {
-    'api_key': '<DATADOG_API_キー>',
-    'app_key': '<DATADOG_アプリケーションキー>'
+    'api_key': '<DATADOG_API_KEY>',
+    'app_key': '<DATADOG_APPLICATION_KEY>'
 }
 
 initialize(**options)
@@ -956,8 +955,8 @@ api.DashboardList.delete_items(list_id, dashboards=dashboards)
 require 'rubygems'
 require 'dogapi'
 
-api_key = '<DATADOG_API_キー>'
-app_key = '<DATADOG_アプリケーションキー>'
+api_key = '<DATADOG_API_KEY>'
+app_key = '<DATADOG_APPLICATION_KEY>'
 
 dog = Dogapi::Client.new(api_key, app_key)
 
@@ -994,8 +993,8 @@ result = dog.delete_items_from_dashboard_list(list_id, dashboards)
 
 ```sh
 
-api_key=<DATADOG_API_キー>
-app_key=<DATADOG_アプリケーションキー>
+api_key=<DATADOG_API_KEY>
+app_key=<DATADOG_APPLICATION_KEY>
 
 list_id=4741
 
@@ -1031,7 +1030,7 @@ curl -X DELETE -H "Content-type: application/json" \
 {{% /tab %}}
 {{< /tabs >}}
 
-#### 応答例
+#### Example response
 
 {{< tabs >}}
 {{% tab "Python" %}}

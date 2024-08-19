@@ -9,133 +9,131 @@ further_reading:
 title: CoScreen
 ---
 
-{{< img src="coscreen/collab-v2.mp4" alt="3 人のユーザーが同時に 3 つのウィンドウを共有。" width=80% video="true">}}
+{{< img src="coscreen/collab-v2.mp4" alt="Three users share three windows at the same time." width=80% video="true">}}
 
-## 概要
-[CoScreen][1] は、複数の参加者が同時にデスクトップ上の任意のアプリケーションウィンドウを共有し、対話することができるコラボレーションミーティングツールです。特にエンジニアリング向けに設計されており、ペアプログラミング、インシデント管理、共同トラブルシューティング、チームスタンドアップ、従業員のオンボーディングなどのユースケースに対応しています。
+## Overview
+[CoScreen][1] is a collaborative meeting tool that allows multiple participants to simultaneously share and interact with any application window on their desktops. It is specifically designed for engineering use cases—such as pair programming, incident management, joint troubleshooting, team standups, and employee onboarding.
 
-## セットアップ
-#### 要件
+## Setup
+#### Requirements
 {{< tabs >}}
-{{% tab "デスクトップ" %}}
-CoScreen は、Windows 10 および macOS v10.15 Catalina 以降で利用可能なデスクトップアプリです。
+{{% tab "Desktop" %}}
+The CoScreen desktop app is available for Windows 10 and macOS v10.15 Catalina and higher.
 
-[CoScreen をダウンロードします][1]。
+[Download CoScreen][1].
 
-CoScreen をインストール後、デスクトップアプリを起動します。Datadog アカウントでサインインできます。
+After installing CoScreen, launch the desktop app. You can sign in with your Datadog account.
 
 [1]: https://www.coscreen.co/download
 {{% /tab %}}
 {{% tab "Web" %}}
-[CoScreen Web アプリ][1]は、Chrome v87+、Edge v87+、Safari v16+ に対応しています。
+The [CoScreen web app][1] is supported in Chrome v87+, Edge v87+, and Safari v16+.
 
-CoScreen Web アプリの機能は限られています。CoScreen の機能をフルに利用するには、デスクトップアプリを使用してください。
+The CoScreen web app has limited functionality. To make full use of CoScreen's features, use the desktop app.
 
 [1]: https://app.coscreen.co/
 {{% /tab %}}
 {{< /tabs >}}
 
-## 使用方法
-### CoScreen に参加する
+## Usage
+### Join a CoScreen
 
-CoScreen に招待された場合は、リンクをクリックしてください。**Join from browser** をクリックして Web アプリから CoScreen に参加することも、デスクトップアプリを起動することもできます。また、ミーティングリンクまたは ID を入力して手動で参加することもできます。
+If you were invited to a CoScreen, click on the link. You can click on **Join from browser** to join the CoScreen through the web app, or you can launch the desktop app. You can also join manually by entering your meeting link or ID.
 
-CoScreen に参加すると、メインメニューの _Recent CoScreens_ のリストに追加されます。これらはいつでも再参加することができます。
+When you join a CoScreen, it is added to your list of _Recent CoScreens_ in the main menu. You can rejoin these at any time.
 
-デスクトップアプリでノイズ除去を有効にするには、**Settings** > **Audio**に移動し、_Apply noise reduction to my microphone (マイクにノイズ除去を適用する)_を選択してください。
+To enable noise reduction in the desktop app, go to **Settings** > **Audio** and select _Apply noise reduction to my microphone_.
 
-macOS の場合は、**Settings** > **Camera** > **Video Effects** から背景ぼかしを有効にすることができます。.
+On macOS, you can enable background blurring under **Settings** > **Camera** > **Video Effects**.
 
-### コラボレーターを招待する
+### Invite your collaborators
 
-リンクを共有することで、コラボレーターを招待することができます。
+Invite collaborators by sharing the link.
 
-また、メインメニューの _Your Collaborators_ のリストに、よく連携するコラボレーターを追加することができます。コラボレーターがあなたのリクエストを受け入れた後、その人がオンラインで利用可能かどうかを確認し、ワンクリックで呼び出すことができます。
+You can also add your closest collaborators to the list of _Your Collaborators_ in the main menu. After a collaborator accepts your request, you can see if they are online and available and call them with a click.
 
-### ウィンドウを共有する
+### Share windows
 
-CoScreen デスクトップアプリを使用すると、複数の方法でアプリケーションウィンドウを共有できます。
+With the CoScreen desktop app, you can share application windows in multiple ways.
 
-#### 共有するウィンドウを個別に選択する
+#### Select individual windows to be shared
 
-{{< img src="coscreen/sharewindow2.mp4" alt="ウィンドウの上部には、「Share window」というタブ状のボタンが取り付けられています。このボタンをクリックすると、ウィンドウが紫色にハイライトされます。テキストは「Unshare window」に変わります。" width=50% video="true">}}
+{{< img src="coscreen/sharewindow2.mp4" alt="A 'Share window' tab-shaped button is attached to the top of a window. Clicking on this button highlights the window in purple. The text changes to 'Unshare window.'" width=50% video="true">}}
 
-CoScreen に参加すると、どのディスプレイでもウィンドウの上にカーソルを置くと、** Share** タブが表示されます。このタブをクリックすることで、ウィンドウの共有と共有解除ができます。ウィンドウ共有ダイアログを使って、参加した CoScreen の他のメンバーと共有したいアプリケーションウィンドウを選択することもできます。
+Once you have joined a CoScreen, you can hover over any window in any of your displays, and a **Share** tab appears. Share and unshare windows by clicking on this tab. You can also use the window sharing dialog to select the application window(s) that you want to share with other members of the CoScreen you've joined.
 
-複数のユーザーが同時に複数のウィンドウを共有することができます。共有されたウィンドウの周囲には、CoScreen の参加者ごとに割り当てられた異なる色のボーダーが表示されます。
+Multiple users can share multiple windows at the same time. Shared windows have a border around them, in a different color assigned to each CoScreen participant.
 
-#### ウィンドウ共有ダイアログを使用して、ディスプレイ全体または個々のウィンドウを共有する
+#### Use the window sharing dialog to share entire displays or individual windows
 
-**Share windows** ボタンをクリックすると、ウィンドウの共有ダイアログが表示されます。
+Click on the **Share windows** button to open the window sharing dialog.
 
-{{< img src="coscreen/share_windows_button.png" alt="CoScreen デスクトップ UI のボタンパネル。「Share windows」ボタンがハイライトされている。" style="width:50%;">}}
+{{< img src="coscreen/share_windows_button.png" alt="A panel of buttons from the CoScreen desktop UI. The 'Share windows' button is highlighted." style="width:50%;">}}
 
-複数のディスプレイを使用している場合、ディスプレイを選択して **Share the entire display** をクリックすると、そのディスプレイ上で開いているすべてのウィンドウを共有できます。画面共有が有効になっている間は、共有ディスプレイに開いたりドラッグしたウィンドウもすべて共有されます。
+If you have multiple displays, you can select a display and click **Share the entire display** to share all open windows on that display. While screen sharing is enabled, all windows that you open or drag onto your shared display are also shared.
 
-また、共有するディスプレイのウィンドウをいくつでも選択できます。
+You can also select any number of windows on any of your displays to share.
 
-CoScreen に参加すると、画面共有はデフォルトで無効化されます。
+Screen sharing is deactivated by default when you join a CoScreen.
 
-### 共有ウィンドウでのコラボレーション
+### Collaborate in shared windows
 
-{{< img src="coscreen/v5-control-tabs.mp4" alt="2 つのカーソルが同時に共有ウィンドウを操作する。" video="true" width=70% >}}
+{{< img src="coscreen/v5-control-tabs.mp4" alt="Two cursors interact with a shared window at the same time." video="true" width=70% >}}
 
-リモート参加者が共有ウィンドウ上でマウスポインタを動かすと、リモート参加者のマウスポインタを見ることができます。リモートウィンドウを表示すると、2 つのタブが表示されます。**Control** はウィンドウの操作、ボタンのクリック、テキストフィールドへの入力を可能にし、**Draw** はウィンドウへの描画を可能にします。
+You can see the mouse pointers of remote participants whenever they move their pointers over a shared window. When viewing a remote window, two tabs appear: **Control**, which enables you to interact with the window, click on buttons, and type into text fields; and **Draw**, which enables you to draw on the window.
 
-### 共有ターミナル CoTerm での共同作業
+### Collaborate in a shared terminal
 
-CoTerm は CoScreen に組み込まれた共同ターミナルで、ユーザーがコマンドを実行したり、一緒にコードを書いたりデバッグしたりすることができます。
+CoScreen includes a shared, collaborative terminal that enables users to run commands and to write and debug code together.
 
-共有ターミナルを起動するには、ミーティングメニューの **Share terminal** ボタンをクリックします。
+To start a shared terminal, click on the **Share terminal** button in the meeting menu:
 
-{{< img src="coscreen/share_terminal.png" alt="CoScreen デスクトップ UI のボタンパネル。「Share terminal」ボタンがハイライトされている。" style="width:70%;">}}
+{{< img src="coscreen/share_terminal.png" alt="A panel of buttons from the CoScreen desktop UI. The 'Share terminal' button is highlighted." style="width:70%;">}}
 
-次に、オンボーディングダイアログを確認します。
+The shared terminal appears for you and all other participants in the CoScreen session. If you enable remote control in CoScreen, other users can type and click into your terminal.
 
-{{< img src="coscreen/coterm_dialog.png" alt="リモートコントロールを許可するオプションが選択された CoTerm オンボーディングダイアログ。" style="width:50%;">}}
+{{< img src="coscreen/coterm.png" alt="A shared CoScreen terminal window." style="width:60%;">}}
 
-あなたと CoScreen セッションの他の参加者全員に共有ターミナルが表示されます。CoScreenでリモートコントロールを有効にすると、他のユーザーがあなたのターミナルでタイピングやクリックをすることができます。
+To stop sharing, click the **Unshare** tab on the terminal window, or on the button in the meeting menu. 
 
-{{< img src="coscreen/coterm.png" alt="CoTerm ウィンドウ。" style="width:60%;">}}
+For privacy, CoScreen uses [Sensitive Data Scanner][8] and entropy filters to detect and obfuscate sensitive data.
 
-共有を停止するには、ターミナルウィンドウの **Unshare** タブをクリックするか、ミーティングメニューのボタンをクリックします。
+### Integrations
 
-プライバシーのために、CoTerm は[機密データスキャナー][8]とエントロピーフィルターを使って機密データを検出し、難読化します。
-
-**注**: 共有を解除するとターミナルが閉じます。
-
-### インテグレーション
-
-CoScreen は、Slack、Google Calendar、VS Code などのアプリとインテグレーションできます。[すべての CoScreen インテグレーションを見る][3]。
+You can integrate CoScreen with Slack, Google Calendar, VS Code, and other apps. [See all CoScreen integrations.][3]
 
 #### CoScreen + Slack
 
-CoScreen Slack アプリをインストールするには、[coscreen.co/slack][4] に行き、_Add to Slack_ をクリックします。プライベートチャンネルで CoScreen を有効にするには、`@coscreen` と入力し、エンター/リターンを押して、_Invite to Channel_ をクリックします。マルチユーザー DM で CoScreen を有効にするには、_View Member List_ -> _Add People_ -> _CoScreen_ と進みます。
+To install the CoScreen Slack app, go to [coscreen.co/slack][4] and click on _Add to Slack_. To enable CoScreen in private channels, type `@coscreen` and hit enter/return, then click on _Invite to Channel_. To enable CoScreen in multi-user DMs, go to _View Member List_ -> _Add People_ -> _CoScreen_.
 
 #### CoScreen + Google Calendar
 
-このインテグレーションを構成するには、[CoScreen Chrome 拡張機能][5]をインストールし、サインインします。Google カレンダーのイベントを開き、**Add CoScreen** ボタンを使って、イベントを CoScreen ミーティングにします。
+To configure this integration, install the [CoScreen Chrome extension][5] and sign in. Open any Google Calendar event and use the **Add CoScreen** button to make the event a CoScreen meeting.
 
-## セキュリティとプライバシー
+#### CoScreen + Datadog Incident Management
 
- - **ネットワークセキュリティ**
+In [Incident Management][9], use the **Meet on CoScreen** button to start a CoScreen meeting with incident responders. To configure this, go to your [Incident Management Integration Settings][10] page and toggle on **Enable click-to-join CoScreen meeting buttons**.
 
-CoScreen は、あなたと他の参加者が直接接続できる場合 (例えば、参加者間に企業のファイアウォールやプロキシがない場合)、P2P (ピアツーピア) 接続を使用します。オーディオ、ビデオ、ウィンドウ、またはコントロール入力のフィードは、CoScreen のサーバーに触れることはありません。接続は、DTLS-SRTP を使用してエンドツーエンドで暗号化されています。セッションに 3 人以上のユーザーがいる場合、接続はビデオブリッジを介して行われます。
+## Security and privacy
 
- - **ビデオインフラストラクチャー**
+ - **Network security**
 
-参加者は、Jitsi フレームワークを実行する数百台のサーバーからなる、エンタープライズグレードの HIPAA 対応ビデオインフラストラクチャーを使用して、コラボレーションを行うことができます。すべてのビデオデータは、送信時に DTLS-SRTP で暗号化されます。
+CoScreen uses a P2P (peer-to-peer) connection whenever you and another participant can connect directly (for example, when there are no corporate firewalls or proxies between you). None of your audio, video, window, or control input feeds touch CoScreen's servers. Connections are end-to-end encrypted using DTLS-SRTP. If there are three or more users in a session, the connection is over a video bridge.
+
+ - **Video infrastructure**
+
+Participants collaborate using an enterprise-grade, HIPAA-compatible video infrastructure with hundreds of servers that run the Jitsi framework. All video data is encrypted using DTLS-SRTP during transmission.
 
 
- - **データストレージ**
+ - **Data storage**
 
-CoScreen は、共有情報 (例えば、共有ウィンドウ、オーディオ、ビデオ、リモコン入力など) を記録または保存しません。
+CoScreen does not record or store any shared information (for example, shared windows, audio, video or remote control input).
 
-CoScreen は、使用されたアプリの機能やセッションの統計など、一般的な利用データをキャプチャして、バグや利用パターンを調査しています。CoScreen は、ウィンドウのコンテンツやコントロールを仲間と交換できるようにする以外には、共有ウィンドウやコントロール入力を記録したりアクセスしたりすることはありません。詳しくは、[CoScreen のプライバシーポリシー][6]をご覧ください。
+CoScreen captures general usage data, like used app features and session statistics, to learn about bugs and usage patterns. CoScreen never records or accesses shared windows or control input apart from enabling you to exchange window content and controls with your peers. See [CoScreen's Privacy Policy][6] for more details.
 
-CoScreen がどのように安全なコラボレーションを可能にするかの詳細については、[CoScreen Security Whitepaper][7] をご覧ください。
+For all the details on how CoScreen enables secure collaboration, read the [CoScreen Security Whitepaper][7].
 
-## その他の参考資料
+## Further reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
@@ -147,3 +145,5 @@ CoScreen がどのように安全なコラボレーションを可能にする�
 [6]: https://www.datadoghq.com/legal/privacy/
 [7]: https://www.coscreen.co/security
 [8]: /ja/sensitive_data_scanner/
+[9]: /ja/service_management/incident_management/
+[10]: https://app.datadoghq.com/incidents/settings#Integrations

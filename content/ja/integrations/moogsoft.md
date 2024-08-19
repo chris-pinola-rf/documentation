@@ -31,6 +31,7 @@ categories:
 - マーケットプレイス
 - notifications
 - ai/ml
+custom_kind: integration
 dependencies: []
 display_on_public_website: true
 draft: false
@@ -39,7 +40,6 @@ integration_id: moogsoft
 integration_title: Moogsoft
 integration_version: ''
 is_public: true
-custom_kind: integration
 legal_terms:
   eula: assets/eula.pdf
 manifest_version: 2.0.0
@@ -68,7 +68,6 @@ tile:
   - Category::Notifications
   - Category::AI/ML
   - Offering::Integration
-  - Offering::Software License
   - Supported OS::Linux
   - Supported OS::Windows
   - Supported OS::macOS
@@ -95,34 +94,34 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/marketplace -->
 
 
-## 概要
+## Overview
 
-Datadog と Moogsoft を簡単に統合して、AI モニタリングと可観測性を組み合わせます。完全にデジタルであるか、レガシーアプリケーションを使用しているか、またはその両方のハイブリッドであるかにかかわらず、このソリューションはアラートノイズを低減し、チームおよび IT 運用全体の運用効率を向上させます。
+Easily integrate Datadog and Moogsoft for combined AI monitoring and observability power!  Whether you are completely digital or have legacy applications, or a hybrid of both, this solution reduces the alert noise and improves operational efficiency across teams and IT Operations.
 
-Moogsoft は、高度なセルフサービス AI 駆動の可観測性プラットフォームを提供します。これにより、ソフトウェアエンジニア、開発者、運用者は、すべてを即座に確認し、何が問題であるかを認識し、問題をより迅速に修正できます。
+Moogsoft provides an advanced self-servicing AI-driven observability platform that allows software engineers, developers, and operations to instantly see everything, know what's wrong, and fix things faster.
 
-Moogsoft は、エンタープライズクラスのクラウドネイティブプラットフォームを提供します。これにより、お客様は、はるかに低いコストで自分のペースで導入を推進できます。
+Moogsoft delivers an enterprise-class, cloud-native platform that empowers customers to drive adoption at their own pace at a much lower cost.
 
-### 観察する
+### Observe
 
-サービス提供の品質を向上させます。私たちが行うのは、お客様のチームが迅速に行動し、集中力を保ち、中断が発生する前にインシデントを解決することができるように、重大な状況をエスカレーションするだけです。
+Improve service delivery quality. We only elevate critical situations, so you and your team can move swiftly, stay focused, and resolve incidents before they cause outages.
 
-### モニター
+### Monitor
 
-アラート量の削減と生産性の向上を体感しましょう。統合された監視パネルを使用し、同様のイベントを相互に関連付けてアクション可能なアラートを最小限に抑えることで、イベントによる疲弊を解消します。
+Watch alert volumes go down and see productivity go up. We help eliminate event fatigue with a consolidated monitoring panel and by correlating similar events to significantly minimize actionable alerts.
 
-### コラボレーション
+### Collaborate
 
-すべてを 1 つのビューで確認しましょう。すべてのアプリ、サービス、インフラストラクチャーのアラートを単一のコンソールに集約して、俊敏性を高め、アラートを減らし、解決時間を短縮します。
+See everything in one view. We aggregate all of your apps, services, and infrastructure alerts to a single console for increased agility, fewer alerts, and faster resolution times.
 
-### Moogsoft データフロー
+### Moogsoft Data Flow
 
-データは Moogsoft の中を流れ、各ステップでコンテキストを獲得し、ノイズを低減します。メトリクスはイベントとなり、イベントはステートフルアラートとなり、アラートはインシデントに関連付けられます。
+Data flows through Moogsoft gaining context and reducing noise at each step. Metrics become events, events become stateful alerts, and alerts are correlated into incidents.
 
-## Agent
-Moogsoft サポート ([https://support.moogsoft.com][1]) までお問い合わせください。
+## Support
+Contact Moogsoft Support at [https://support.moogsoft.com][1].
 
 [1]: https://support.moogsoft.com
 
 ---
-このアプリケーションは Marketplace から入手でき、Datadog テクノロジーパートナーによってサポートされています。このアプリケーションを購入するには、<a href="https://app.datadoghq.com/marketplace/app/moogsoft" target="_blank">こちらをクリック</a>してください。
+This application is made available through the Marketplace and is supported by a Datadog Technology Partner. <a href="https://app.datadoghq.com/marketplace/app/moogsoft" target="_blank">Click Here</a> to purchase this application.

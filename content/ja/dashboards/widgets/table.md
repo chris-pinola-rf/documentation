@@ -12,55 +12,55 @@ title: テーブルウィジェット
 widget_type: query_table
 ---
 
-## 概要
+## Overview
 
-テーブルの視覚化では、タグキーでグループ化された集計データの列が表示されます。テーブルを使用して、多数のデータグループの値を比較し、傾向、変化、外れ値を確認できます。
+The table visualization displays columns of aggregated data grouped by tag key. Use tables to compare values across many groups of data and see trends, changes, and outliers.
 
-{{< img src="/dashboards/widgets/table/table_conditional_formatting.png" alt="条件付きフォーマットがあるテーブルウィジェット" style="width:100%;">}}
+{{< img src="/dashboards/widgets/table/table_conditional_formatting.png" alt="Table widget with conditional formatting" style="width:100%;">}}
 
-## セットアップ
+## Setup
 
-### 構成
+### Configuration
 
-1. グラフ化するデータを選択します。
-    * メトリクス: メトリクスクエリの構成については、[グラフ作成方法に関するドキュメント][1]を参照してください。
-    * メトリクス以外のデータソース: イベントクエリを構成するには、[ログ検索ドキュメント][2]を参照してください。
+1. Choose the data to graph:
+    * Metric: See the [Main graphing documentation][1] to configure a metric query.
+    * Non-metric data sources: See the [Log search documentation][2] to configure an event query.
 
-2. **+ Add Query** と **+ Add Formula** のボタンを使用して、テーブルに列を追加します。
+2. Add additional columns to the table by using the **+ Add Query** and **+ Add Formula** buttons.
 
-### オプション
+### Options
 
-* エイリアスを設定することで、列ヘッダーの名前を変更できます。**as...** ボタンをクリックします。
-* 検索バーを表示するかどうかを構成します。デフォルトは **Auto** で、ウィジェットの大きさに応じて検索バーを表示します。つまり、画面が小さい場合はウィジェット上のデータの表示を優先し、検索バーは非表示になります（全画面モードになると表示されます）。
+* Rename column headers by setting aliases, click the **as...** button.
+* Configure whether or not the search bar displays. **Auto** is the default and shows the search bar depending on the size of the widget, this means if your screen gets too small, it prioritizes displaying the data on the widget and hides the search bar, but is still available in full-screen mode.
 
-#### 列のフォーマット
-列のフォーマットルールを使用して、各列のセル値の視覚化をカスタマイズします。トレンドや変化を視覚化するために、データにカラーコードを作成します。
-* しきい値フォーマット: 特定の値範囲を満たすとセルを色でハイライトします。
-* 範囲フォーマット: 値の範囲を持つセルを色分けします。
-* テキストフォーマット: 読みやすさを向上させるために、セルをエイリアステキスト値に置き換えます。
+#### Column formatting
+Customize the visualization of cell values for each column with Column Formatting Rules. Create color codes for your data to visualize trends and changes.
+* Threshold formatting: highlight cells with colors when specific value ranges are met.
+* Range formatting: color code cells with a range of values.
+* Text formatting: replace cells with alias text values to improve readability.
 
-{{< img src="/dashboards/widgets/table/range_conditional_formatting.png" alt="列フォーマットオプションを表示するウィジェット構成" style="width:90%;" >}}
+{{< img src="/dashboards/widgets/table/range_conditional_formatting.png" alt="Widget configuration showing the column formatting options" style="width:90%;" >}}
 
-#### コンテキストリンク
+#### Context links
 
-[コンテキストリンク][10]は、デフォルトで有効になっており、オンまたはオフに切り替えることができます。コンテキストリンクは、ダッシュボードウィジェットと Datadog またはサードパーティアプリケーションの他のページの橋渡しをします。
+[Context links][10] are enabled by default, and can be toggled on or off. Context links bridge dashboard widgets with other pages in Datadog, or third party applications.
 
 
-## N/A 値
+## N/A values
 
-テーブルウィジェットの列は、それぞれ独立してクエリが実行されます。名前が同じで重複するグループはリアルタイムで結合されて、テーブルの行が作成されます。このプロセスの結果、重複するグループがなく、セルに N/A が表示される状況が発生する可能性があります。これを回避するには、次の対策を講じます。
-  * クエリ数の上限を大きくして、できるだけ多くの列が組み合わさるようにします。
-  * インサイトを"生み出している"と思われる列でテーブルをソートします。
+Columns in the table widget are queried independently from one another. Overlapping groups with matching names are joined realtime to form the rows of the table. As a result of that process, there might be situations with no total overlap, showing N/A cells. To mitigate this:
+  * Extend the limit of queries to higher numbers, to maximize overlap between columns
+  * Sort tables according to the one column that you could consider as "driving" the insight
 
-## 課金
+## API
 
-このウィジェットは、**ダッシュボード API** とともに使用できます。詳しくは、[ダッシュボード API][8] ドキュメントをご参照ください。
+This widget can be used with the **Dashboards API**. See the [Dashboards API documentation][8] for additional reference.
 
-テーブルウィジェットの[ウィジェット JSON スキーマ定義][9]は次のとおりです。
+The dedicated [widget JSON schema definition][9] for the table widget is:
 
 {{< dashboards-widgets-api >}}
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

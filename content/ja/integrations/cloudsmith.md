@@ -26,6 +26,7 @@ author:
 categories:
 - クラウド
 - メトリクス
+custom_kind: integration
 dependencies:
 - https://github.com/DataDog/integrations-extras/blob/master/cloudsmith/README.md
 display_on_public_website: true
@@ -35,7 +36,6 @@ integration_id: cloudsmith
 integration_title: Cloudsmith
 integration_version: 0.0.2
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: cloudsmith
 public_title: Cloudsmith
@@ -52,6 +52,7 @@ tile:
   - Supported OS::Linux
   - Supported OS::Windows
   - Supported OS::macOS
+  - Offering::Integration
   configuration: README.md#Setup
   description: Cloudsmith メトリクスを監視する
   media: []
@@ -63,58 +64,58 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/integrations-extras -->
 
 
-## 概要
+## Overview
 
-このチェックは、Datadog Agent を通じて [Cloudsmith][1] を監視します。
-- Cloudsmith アカウントのストレージ、帯域幅、トークンの使用状況を監視します。
+This check monitors [Cloudsmith][1] through the Datadog Agent.
+- Monitor storage, bandwidth and token usage in your Cloudsmith account. 
 
 
-## 計画と使用
+## Setup
 
-Cloudsmith チェックは [Datadog Agent][2] パッケージに含まれていないため、お客様自身でインストールする必要があります。
+The Cloudsmith check is not included in the [Datadog Agent][2] package, so you need to install it.
 
-### インフラストラクチャーリスト
+### Installation
 
-Agent v7.21 / v6.21 以降の場合は、下記の手順に従い Cloudsmith チェックをホストにインストールします。Docker Agent または 上記バージョン以前の Agent でインストールする場合は、[コミュニティインテグレーションの使用][3]をご参照ください。
+For Agent v7.21+ / v6.21+, follow the instructions below to install the Cloudsmith check on your host. See [Use Community Integrations][3] to install with the Docker Agent or earlier versions of the Agent.
 
-1. 以下のコマンドを実行して、Agent インテグレーションをインストールします。
+1. Run the following command to install the Agent integration:
 
    ```shell
    datadog-agent integration install -t datadog-cloudsmith==<INTEGRATION_VERSION>
    ```
 
-2. コアの[インテグレーション][4]と同様にインテグレーションを構成します。
+2. Configure your integration similar to core [integrations][4].
 
-### ブラウザトラブルシューティング
+### Configuration
 
-1. Agent のコンフィギュレーションディレクトリのルートにある `conf.d/` フォルダーの `cloudsmith.d/conf.yaml` ファイルを編集し、Cloudsmith のパフォーマンスデータを収集します。使用可能なすべてのコンフィギュレーションオプションについては、[cloudsmith.d/conf.yaml のサンプル][5]を参照してください。
+1. Edit the `cloudsmith.d/conf.yaml` file, in the `conf.d/` folder at the root of your Agent's configuration directory to start collecting your Cloudsmith performance data. See the [sample cloudsmith.d/conf.yaml][5] for all available configuration options.
 
-2. [Agent を再起動します][6]。
+2. [Restart the Agent][6].
 
-### 検証
+### Validation
 
-[Agent の status サブコマンドを実行][7]し、Checks セクションで `cloudsmith` を探します。
+[Run the Agent's status subcommand][7] and look for `cloudsmith` under the Checks section.
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "cloudsmith" >}}
 
 
-### ヘルプ
+### Events
 
-収集された Cloudsmith 関連のイベントはすべて、Datadog イベントストリーム内で `source:cloudsmith` プロパティを指定して表示されます。Cloudsmith API に送信されるリクエスト数を減らすために、5 分ごとに収集されます。
+All Cloudsmith related events collected appear within the Datadog Event Stream with the `source:cloudsmith` property. They are collected every five minutes to reduce the number of requests sent to the Cloudsmith API.
 
-イベントには 2 種類あります。
+There are two types of events:
 
-- セキュリティスキャンイベント
-- 監査ログイベント
+- Security Scan event
+- Audit Logs event
 
-これらは集計キー `@aggregation_key:audit_log` と `@aggregation_key:vulnerabilities` でアクセス可能です。
+They are accessible with aggregation keys: `@aggregation_key:audit_log` and `@aggregation_key:vulnerabilities`.
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Cloudsmith サポート][10]までお問い合わせください。
+Need help? Contact [Cloudsmith support][10].
 
 [1]: https://cloudsmith.com
 [2]: https://app.datadoghq.com/account/settings/agent/latest

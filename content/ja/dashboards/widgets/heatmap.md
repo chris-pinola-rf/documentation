@@ -4,8 +4,11 @@ aliases:
 - /ja/dashboards/widgets/heat_map/
 description: 特定のメトリクスの時系列ヒートマップを構築する
 further_reading:
-- link: /ja/dashboards/graphing_json/
+- link: /product_analytics/heatmaps/
   tag: Documentation
+  text: ヒートマップについて
+- link: /ja/dashboards/graphing_json/
+  tag: ドキュメント
   text: JSON を使用したダッシュボードの構築
 - link: https://www.datadoghq.com/blog/visualize-behavior-datadog-heatmaps/
   tag: ブログ
@@ -14,51 +17,49 @@ title: ヒートマップウィジェット
 widget_type: ヒートマップ
 ---
 
-{{< img src="dashboards/widgets/heatmap/heatmap.png" alt="ヒートマップグラフの視覚化例" style="width:100%;">}}
+{{< img src="dashboards/widgets/heatmap/heatmap.png" alt="Example heatmap graph visualization" style="width:100%;">}}
 
-ヒートマップウィジェットは、複数のタグに集計されたメトリクスを表示します。ヒートマップウィジェットは、OpenTelemetry のヒストグラム、ディストリビューションメトリクス、高解像度、データ表示などを視覚化するために使用します。
+The heatmap widget shows metrics aggregated across multiple tags. Use heatmap widgets to visualize OpenTelemetry histograms, distribution metrics, high resolution and data display.
 
-## セットアップ
+## Setup
 
-### コンフィギュレーション
+### Configuration
 
-通常通り、メトリクスクエリを構成します。'counters' ヒストグラムモードを使用して、OpenTelemetry ヒストグラムをグラフ化します。
+Configure your metric query as usual. Graph OpenTelemetry histograms by using the 'counters' histogram mode.
 
-`avg`/`max`/`min`/`sum by` のコントロールで選択を行い、関連付けられているタグのデータを表示します。
+Make a selection in the "`avg`/`max`/`min`/`sum by`/etc." control to see your data across the associated tags.
 
-### オプション
+### Options
 
-#### Y 軸コントロール
+#### Y-axis controls
 
-Y 軸の制御は、UI または JSON エディターから使用できます。
+Y-axis controls are available through the UI and the JSON editor.
 
-以下を実行できます。
+They allow you to:
 
-* Y 軸を特定の範囲にクリップできます。
-* 絶対値しきい値に基づいて Y 軸の境界を自動的に変更します。このしきい値をグラフの両端 (下側と上側) または一方に適用することで、「外れ値」系列を除外できます。
-* Y 軸の目盛を線形から対数、累乗、または平方根に変更できます。
+* Clip the y-axis to specific ranges.
+* Automatically change y-axis bounds based on an absolute value threshold. This threshold can be applied to one or both ends of the graph (lower and upper) to remove the "outlier" series.
+* Change the y-axis scale from linear to log, pow, or sqrt.
 
-Y 軸の目盛を変更するには、Y-Axis Controls ボタンを展開します。
+Change the Y-axis scale by expanding the *Y-Axis Controls* button.
 
-使用できる構成オプションは、次のとおりです。
+The following configuration options are available:
 
-| オプション                | 必須 | 説明                                                                                                                                                                                                       |
+| Option                | Required | Description                                                                                                                                                                                                       |
 |-----------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `Min`/`Max`           | ✕       | Y 軸に表示する最小値または最大値、またはその両方を指定します。数値または `Auto` (デフォルト値を使用) を指定します。                                                                                                   |
-| `Scale`               | ✕       | 目盛のタイプを指定します。使用可能な値:<br>- linear: 線形目盛 (デフォルト)<br>- log: 対数目盛<br>- pow: 2 の累乗目盛 (2 はデフォルトです。JSON で変更できます)<br>- sqrt: 平方根目盛 |
-| `Always include zero` | ✕       | 常に 0 を含めるか、軸をデータの範囲に合わせるかを指定します。デフォルトは、常に 0 を含めます。                                                                                                                     |
+| `Min`/`Max`           | No       | Specify the minimum and / or maximum value to show on y-axis. It takes a number or `Auto` as the default value.                                                                                                   |
+| `Scale`               | No       | Specifies the scale type. Possible values:<br>- *linear*: A linear scale (default)<br>- *log*: A logarithmic scale<br>- *pow*: A Power of 2 scale (2 is default, modify in JSON)<br>- *sqrt*: A square root scale |
+| `Always include zero` | No       | Always include zero or fit the axis to the data range. The default is to always include zero.                                                                                                                     |
 
-**注**: 対数関数には負の値を適用できないため、Datadog の対数目盛は、値の符号がすべて同じ (すべて正またはすべて負) の場合にのみ機能します。そうでない場合は、空のグラフが返されます。
+**Note**: Because the mathematical log function doesn't accept negative values, the Datadog log scale only works if values are of the same sign (everything > 0 or everything < 0). Otherwise an empty graph is returned.
 
 ## API
 
-このウィジェットは、**ダッシュボード API** とともに使用できます。詳しくは、[ダッシュボード API][2] を参照してください。
-
-ヒートマップウィジェットの[ウィジェット JSON スキーマ定義][3]は、以下の表を参照してください。
+This widget can be used with the **[Dashboards API][2]**. See the following table for the [widget JSON schema definition][3]:
 
 {{< dashboards-widgets-api >}}
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

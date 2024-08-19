@@ -7,33 +7,32 @@ further_reading:
   tag: ドキュメント
   text: JSON を使用したダッシュボードの構築
 title: イメージウィジェット
+widget_type: image
 ---
 
-イメージウィジェットを使用すると、ダッシュボードにイメージを埋め込むことができます。イメージには、URLでアクセスできる場所でホストされている PNG、JPG、またはアニメーション GIF を使用できます。
+The image widget allows you to embed an image on your dashboard. An image can be a PNG, JPG, or animated GIF, hosted where it can be accessed by URL.
 
-{{< img src="dashboards/widgets/image/image.mp4" alt="イメージ" video="true" style="width:80%;" >}}
+{{< img src="dashboards/widgets/image/image.mp4" alt="Image" video="true" style="width:80%;" >}}
 
-## セットアップ
+## Setup
 
-{{< img src="dashboards/widgets/image/image_setup.png" alt="イメージのセットアップ" style="width:80%;">}}
+{{< img src="dashboards/widgets/image/image_setup.png" alt="Image setup" style="width:80%;">}}
 
-1. イメージの URL を入力します。
-2. 外観を選択します。
-    * Zoom image to cover whole tile (タイル全体を覆うようにイメージを拡大縮小)
-    * Fit image on tile (イメージをタイル内に収める)
-    * Center image on tile (イメージをタイルの中心に配置する)
+1. Enter your image URL.
+2. Choose an appearance:
+    * Zoom image to cover whole title
+    * Fit image on tile
+    * Center image on tile
 
 ## API
 
-このウィジェットは、**ダッシュボード API** とともに使用できます。詳しくは、[ダッシュボード API][1] ドキュメントをご参照ください。
-
-イメージウィジェットの[ウィジェット JSON スキーマ定義][2]は次のとおりです。
+This widget can be used with the **[Dashboards API][1]**. See the following table for the [widget JSON schema definition][2]:
 
 {{< dashboards-widgets-api >}}
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
-[1]: /ja/api/v1/dashboards/
+[1]: /ja/api/latest/dashboards/
 [2]: /ja/dashboards/graphing_json/widget_json/

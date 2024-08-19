@@ -13,33 +13,33 @@ title: サービスサマリーウィジェット
 widget_type: trace_service
 ---
 
-サービスサマリーは、選択された[サービス][1]のグラフをダッシュボードに表示します。
+サービスとは、例えば Web フレームワークやデータベースなど、同じ作業を行う一連のプロセスのことです。Datadog は、サービスページに表示されるような、サービス情報を表示するためのすぐに使えるグラフを提供します。サービスサマリーウィジェットを使用して、選択した[サービス][1]のグラフをダッシュボードに表示します。
 
-{{< img src="dashboards/widgets/service_summary/service_summary.png" alt="サービスサマリー" >}}
+{{< img src="dashboards/widgets/service_summary/service_summary.png" alt="service summary" >}}
 
-## セットアップ
+## Setup
 
-### 構成
+### Configuration
 
-1. [環境][2]と[サービス][1]を選択します。
-2. ウィジェットのサイズを選択します。
-3. 表示する情報を選択します。
+1. Select an [environment][2] and a [service][1].
+2. Select a widget size.
+3. Select the information to display:
     * Hits
-    * エラー
-    * レイテンシー
+    * Errors
+    * Latency
     * Breakdown
     * Distribution
-    * リソース (**注**: このオプションを表示するには、大きなウィジェットサイズを選択する必要があります)
-4. グラフの表示に使用する列数を選択して、表示設定を行います。
-5. グラフのタイトルを入力します。
+    * Resource (**Note**: You need to select the large widget size to see this option.)
+4. Choose your display preference by selecting the number of columns to display your graphs across.
+5. Enter a title for your graph.
 
 ## API
 
-このウィジェットは **[Dashboards API][3]** で使用できます。[ウィジェット JSON スキーマ定義][4]については、以下の表を参照してください。
+This widget can be used with the **[Dashboards API][3]**. See the following table for the [widget JSON schema definition][4]:
 
 {{< dashboards-widgets-api >}}
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

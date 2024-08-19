@@ -10,60 +10,59 @@ further_reading:
   tag: ドキュメント
   text: 円グラフウィジェット
 title: ツリーマップウィジェット
+widget_type: ツリーマップ
 ---
 
-ツリーマップウィジェットは、1 つのデータセットまたはデータセットの比率を表示することができます。このウィジェットは、単一のデータセットとそれに対応する比率、または複数のデータセットを入れ子にして比率を表示することができます。
+The treemap widget allows you to display proportions of one or more datasets. This widget can display a single dataset with corresponding proportions, or multiple datasets with nested proportions.
 
-{{< img src="dashboards/widgets/treemap/treemap_overview.png" alt="リアルユーザーモニタリング (RUM) データセットから得られたユニークなページビューを、国とブラウザレベルで表示したツリーマップウィジェットです。外側のグループ (色で区別) は、ユーザーの国を示しています。">}}
+{{< img src="dashboards/widgets/treemap/treemap_overview.png" alt="A treemap widget with unique page views stemming from the Real User Monitoring (RUM) dataset are shown at both the country and browser level. The outer groups - distinguished by color - shows the user's country.">}}
 
-## コンフィギュレーション
+## Configuration
 
-1. 利用可能なデータソースから選択します。
-2. クエリを構成します。詳しくは、次の資料をご覧ください。
-    * メトリクス: メトリクスのクエリを構成するには、[クエリ作成][1]のドキュメントを参照してください。
-    * イベント: ログイベントクエリの構成については、[ログ検索][2]に関するドキュメントを参照してください。
-3. (オプション) [式][3]でクエリを修正します。
-4. グラフをカスタマイズします。
+1. Select from the available data sources. 
+2. Configure the query, see the following resources for more information:
+    * Metrics: See the [querying ][1] documentation to configure a metric query.
+    * Events: See the [log search][2] documentation to configure a log event query.
+3. (Optional) Modify query with a [formula][3].
+4. Customize your graph.
 
-## 内容
+## Customization
 
-### コンテキストリンク
+### Context links
 
-[コンテキストリンク][4]は、デフォルトで有効になっており、オンまたはオフに切り替えることができます。コンテキストリンクは、ダッシュボードウィジェットと他のページ (Datadog 内、またはサードパーティ製) の橋渡しをします。
+[Context links][4] are enabled by default, and can be toggled on or off. Context links bridge dashboard widgets with other pages (in Datadog, or third-party).
 
-## 表示とインタラクション
+## Display and interaction
 
-### フィルターとフォーカス
+### Filter and focus
 
-複数のデータ群を一度にプロットする場合、ウィジェットを 1 つのカテゴリーにフィルターし、その中での比率を表示することが可能です。
+In the case where multiple groups of data are plotted at once, you can filter the widget to a single category and view proportions within it.
 
-フィルタリングして 1 つのカテゴリーにフォーカスするには、カテゴリーの外側の部分にカーソルを合わせてクリックします。前のビューに戻るには、ウィジェットの左上のヘッダーにある **back** ボタンをクリックします。
+To filter and focus on a single category, hover over the outer portion of the category, and click. To go back to the previous view, click the **back** button on the top left header of the widget.
 
-{{< img src="dashboards/widgets/treemap/focus_animation.mp4" alt="ツリーマップウィジェットで、カテゴリーを 1 つずつフィルタリングして表示する方法をアニメーションで説明します。" video="true">}}
+{{< img src="dashboards/widgets/treemap/focus_animation.mp4" alt="Animation showing how to filter and view a single category at a time in the treemap widget." video="true">}}
 
-### コンテキストメニューにアクセスする
+### Accessing the context menu
 
-コンテキストメニューにアクセスするには、まず個々のカテゴリーにカーソルを合わせます。カテゴリーは、ネストしたカテゴリーやグループ (次の例では **Canada** や **Canada &gt; Chrome** など) であることがあります。これにより、右上隅に垂直方向の省略記号ボタンが表示されます。クリックすると、コンテキストメニューが表示されます。
+To access the context menu, first hover over an individual category: this can be a nested category, or group - such as **Canada**, or **Canada > Edge** in the following example. This reveals a dropdown button in the top right corner. When clicked, the context menu appears.
 
-{{< img src="dashboards/widgets/treemap/context_menu.png" alt="カテゴリーにカーソルを合わせると三重省略記号のボタンが表示されるようになりました">}}
+{{< img src="dashboards/widgets/treemap/context_menu_dropdown.png" alt="The dropdown arrow button is revealed when hovering over a category">}}
 
-### 全画面
+### Full-screen
 
-ツリーマップウィジェットを全画面表示すると、標準の[全画面表示オプション][5]のセットが表示されます。
+Viewing the treemap widget in full-screen reveals the standard set of [full-screen options][5].
+
+## Pie chart widget
+
+Like the treemap widget, the [pie chart widget][8] can also be used to display nested proportions. The primary difference between the two is that the pie chart displays proportions in radial slices, and the treemap displays nested rectangles.
 
 ## API
 
-このウィジェットは、[Dashboards API][6] で使用することができます。
-
-ツリーマップウィジェットの[ウィジェット JSON スキーマ定義][7]は次のとおりです。
+This widget can be used with the **[Dashboards API][6]**. See the following table for the [widget JSON schema definition][7]:
 
 {{< dashboards-widgets-api >}}
 
-## 円グラフウィジェット
-
-ツリーマップウィジェットのように、[円グラフウィジェット][8]もネストされた比率を表示するために使用することができます。両者の主な違いは、円グラフは放射状のスライスで比率を表示し、ツリーマップはネストされた長方形を表示する点です。
-
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

@@ -6,6 +6,7 @@ assets:
     Snowflake: assets/dashboards/snowflake.json
     Snowflake Organization Metrics: assets/dashboards/organization_metrics.json
   integration:
+    auto_install: true
     configuration:
       spec: assets/configuration/spec.yaml
     events:
@@ -16,9 +17,10 @@ assets:
       prefix: snowflake.
     service_checks:
       metadata_path: assets/service_checks.json
+    source_type_id: 10123
     source_type_name: Snowflake
   monitors:
-    Snowflake failed logins: assets/recommended_monitors/snowflake_failed_logins.json
+    Snowflake failed logins: assets/monitors/snowflake_failed_logins.json
 author:
   homepage: https://www.datadoghq.com
   name: Datadog
@@ -26,7 +28,7 @@ author:
   support_email: help@datadoghq.com
 categories:
 - cloud
-- data store
+- data stores
 - コスト管理
 dependencies:
 - https://github.com/DataDog/integrations-core/blob/master/snowflake/README.md
@@ -35,9 +37,8 @@ draft: false
 git_integration_title: snowflake
 integration_id: snowflake
 integration_title: Snowflake
-integration_version: 4.5.4
+integration_version: 5.6.0
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: snowflake
 public_title: Snowflake
@@ -53,7 +54,7 @@ tile:
   - Supported OS::macOS
   - Supported OS::Windows
   - Category::Cloud
-  - Category::Data Store
+  - Category::Data Stores
   - Category::Cost Management
   configuration: README.md#Setup
   description: クレジットの使用状況、ストレージ、クエリ、ユーザー履歴などの主要なメトリクスを監視します。
@@ -63,6 +64,7 @@ tile:
   title: Snowflake
 ---
 
+<!--  SOURCED FROM https://github.com/DataDog/integrations-core -->
 
 
 ## 概要
@@ -72,25 +74,17 @@ tile:
 
 <div class="alert alert-info"><bold>注</bold>: メトリクスは Snowflake へのクエリとともに収集されます。Datadog インテグレーションによるクエリは、Snowflake によって課金されます。</div>
 
-## セットアップ
+## Setup
 
 以下の手順に従って、このチェックをインストールし、ホストで実行中の Agent に対して構成します。
 
-### インストール
+### Installation
 
 Snowflake チェックは [Datadog Agent][2] パッケージに含まれています。
 
 **注**: Python 2 を使用する Datadog Agent v6 では、Snowflake チェックは利用できません。Agent v6 で Snowflake を使用するには、[Datadog Agent v6 で Python 3 を使用する][3]を参照するか、Agent v7 にアップグレードしてください。
 
-<div class="alert alert-warning"><code>v7.23.0</code> でインテグレーションを構成している場合は、バージョンを <code>2.0.1</code> にアップグレードして最新機能をご利用ください。
-下記の<a href=https://docs.datadoghq.com/agent/guide/integration-management/#install>コマンド</a>を使用してインテグレーションをアップグレードできます。<br>
-
-```text
-datadog-agent integration install datadog-snowflake==2.0.1
-```
-</div>
-
-### コンフィギュレーション
+### Configuration
 <div class="alert alert-warning">Snowflake は、`SYSADMIN` などの代替ロールにアクセス許可を付与することをお勧めします。詳細については、<a href="https://docs.snowflake.com/en/user-guide/security-access-control-considerations.html#control-the-assignment-of-the-accountadmin-role-to-users">ACCOUNTADMIN ロール</a>の制御の詳細をご覧ください。</div>
 
 1. Snowflake を監視するための Datadog 固有のロールとユーザーを作成します。Snowflake で、以下を実行して、ACCOUNT_USAGE スキーマにアクセスできるカスタムロールを作成します。
@@ -108,17 +102,20 @@ datadog-agent integration install datadog-snowflake==2.0.1
     ```
 
 
-    または、`ACCOUNT_USAGE` にアクセスできる `DATADOG` カスタムロールを作成することもできます。
+    Alternatively, you can create a `DATADOG` custom role with access to `ACCOUNT_USAGE`.
 
 
     ```text
-    -- Snowflake の使用状況を監視することを目的とした新しいロールを作成します。
+    -- Create a new role intended to monitor Snowflake usage.
     create role DATADOG;
 
-    -- SNOWFLAKE データベースに対する権限を新しいロールに付与します。
+    -- Grant privileges on the SNOWFLAKE database to the new role.
     grant imported privileges on database SNOWFLAKE to role DATADOG;
 
-    -- ユーザーを作成します。既存のユーザーを使用している場合は、この手順をスキップしてください。
+    -- Grant usage to your default warehouse to the role DATADOG.
+   grant usage on warehouse <WAREHOUSE> to role DATADOG;
+
+    -- Create a user, skip this step if you are using an existing user.
     create user DATADOG_USER
     LOGIN_NAME = DATADOG_USER
     password = '<PASSWORD>'
@@ -126,7 +123,7 @@ datadog-agent integration install datadog-snowflake==2.0.1
     default_role = DATADOG
     default_namespace = SNOWFLAKE.ACCOUNT_USAGE;
 
-    -- ユーザーにモニターのロールを付与します。
+    -- Grant the monitor role to the user.
     grant role DATADOG to user <USER>;
     ```
 
@@ -175,7 +172,7 @@ datadog-agent integration install datadog-snowflake==2.0.1
         # disable_generic_tags: true
     ```
 
-    <div class="alert alert-info">In the default `conf.yaml`, the <code>min_collection_interval</code> is 1 hour. 
+    <div class="alert alert-info">In the default `conf.yaml`, the <code>min_collection_interval</code> is 1 hour.
     Snowflake metrics are aggregated by day, you can increase the interval to reduce the number of queries.<br>
     <bold>Note</bold>: Snowflake ACCOUNT_USAGE views have a <a href="https://docs.snowflake.com/en/sql-reference/account-usage.html#data-latency">known latency</a> of 45 minutes to 3 hours.</div>
 
@@ -277,9 +274,9 @@ Snowflake インテグレーションは、カスタムクエリに対応して�
 
 | オプション        | 必須 | 説明                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 |---------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| query         | 〇      | 実行する SQL です。簡単なステートメントにすることも、複数行のスクリプトにすることもできます。結果のすべての行が評価されます。複数行のスクリプトが必要な場合は、パイプを使用します。                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| columns       | 〇      | 列を表すリストです。左から右へ順に並べられます。<br><br>次の 2 つの必須データがあります。<br> - **`name`**: サフィックスとして metric_prefix に付加され、完全な名前を形成します。`type` が `tag` と指定されている場合、この列は、このクエリによって収集されるすべてのメトリクスにタグとして適用されます。<br> - **`type`**: 送信方法 (`gauge`、`count`、`rate` など)。`tag` と設定し、この列のアイテムの名前と値 (`<name>:<row_value>`) で行の各メトリクスにタグ付けすることができます。 |
-| タグ          | ✕       | 各メトリクスに適用する静的タグのリスト。                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| クエリ         | はい      | 実行する SQL です。簡単なステートメントにすることも、複数行のスクリプトにすることもできます。結果のすべての行が評価されます。複数行のスクリプトが必要な場合は、パイプを使用します。                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| 列       | はい      | 列を表すリストです。左から右へ順に並べられます。<br><br>次の 2 つの必須データがあります。<br> - **`name`**: サフィックスとして metric_prefix に付加され、完全な名前を形成します。`type` が `tag` と指定されている場合、この列は、このクエリによって収集されるすべてのメトリクスにタグとして適用されます。<br> - **`type`**: 送信方法 (`gauge`、`count`、`rate` など)。`tag` と設定し、この列のアイテムの名前と値 (`<name>:<row_value>`) で行の各メトリクスにタグ付けすることができます。 |
+| tags          | いいえ       | 各メトリクスに適用する静的タグのリスト。                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 
 
 ##### 注
@@ -308,7 +305,7 @@ custom_queries:
 select count(*), DATABASE_NAME, SCHEMA_NAME, WAREHOUSE_NAME from QUERY_HISTORY group by 2, 3, 4;
 ```
 
-##### コンフィギュレーション
+##### Configuration
 
 `instances` のカスタムクエリのコンフィギュレーションは、以下のようになります。
 
@@ -339,14 +336,14 @@ custom_queries:
 
 [Agent の status サブコマンドを実行][14]し、Checks セクションで `snowflake` を探します。
 
-## 収集データ
+## Data Collected
 
 <div class="alert alert-info"><bold>注</bold>: デフォルトでは、以下のメトリクスグループのメトリクスのみが有効になっています。<code>snowflake.query.*</code>、<code>snowflake.billing.*</code>、<code>snowflake.storage.*</code>、<code>snowflake.logins.*</code>
 
 他のメトリクスグループのメトリクスを収集する場合は、<a href="https://github.com/DataDog/integrations-core/blob/master/snowflake/datadog_checks/snowflake/data/conf.yaml.example"></a>でこのインテグレーションのコンフィグファイル例を参照してください。
 </div>
 
-### メトリクス
+### Metrics
 {{< get-metrics-from-git "snowflake" >}}
 
 

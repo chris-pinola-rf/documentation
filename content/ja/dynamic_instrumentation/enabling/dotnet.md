@@ -13,36 +13,40 @@ title: .NET のダイナミックインスツルメンテーションを有効�
 type: multi-code-lang
 ---
 
-ダイナミックインスツルメンテーションは、Datadog のトレーシングライブラリをサポートする機能です。すでに [APM を使用してアプリケーションのトレースを収集][1]している場合は、Agent とトレーシングライブラリが必要なバージョンであることを確認し、ステップ 4 のダイナミックインスツルメンテーションの有効化に直接進みます。
+Dynamic Instrumentation is a feature of supporting Datadog tracing libraries. If you are already using [APM to collect traces][1] for your application, ensure your Agent and tracing library are on the required version, and go directly to enabling Dynamic Instrumentation in step 4.
 
-## インストール
+## Prerequisites
 
-1. Agent のバージョン[7.44.0][2] 以上をインストールするか、アップグレードします。
-2. まだ APM を有効にしていない場合は、Agent の構成で `DD_APM_ENABLED` 環境変数を `true` に設定し、ポート `8126/TCP` をリッスンします。
-3. [.NET Framework][2] または [.NET Core][3] の関連する指示に従って、.NET トレーシングライブラリをバージョン 2.42 にインストールまたはアップグレードしてください。
+For a better experience, Datadog recommends enabling [autocomplete and search (open beta)][8].
 
-   **注**: ダイナミックインスツルメンテーションは、バージョン 2.42.0 以降の `dd-trace-dotnet` ライブラリで利用可能です。
+## Installation
 
-4. `DD_DYNAMIC_INSTRUMENTATION_ENABLED` 環境変数を `true` に設定し、ダイナミックインスツルメンテーションを有効にしてサービスを稼働させます。`DD_SERVICE`、`DD_ENV`、`DD_VERSION` の統合サービスタグを指定すると、プローブをフィルターしたりグループ化したり、アクティブなクライアントをこれらの次元でターゲットにすることができるようになります。
-5. ダイナミックインスツルメンテーションを有効にした状態でサービスを起動すると、[APM > ダイナミックインスツルメンテーションページ][4]でダイナミックインスツルメンテーションの利用を開始することができます。
+1. Install or upgrade your Agent to version [7.45.0][7] or higher.
+2. If you don't already have APM enabled, in your Agent configuration, set the `DD_APM_ENABLED` environment variable to `true` and listening to the port `8126/TCP`.
+3. Install or upgrade the .NET tracing libraries to version 2.54.0, by following the relevant instructions for [.NET Framework][2] or [.NET Core][3].
 
-## コンフィギュレーション
+   **Note**: Dynamic Instrumentation is available in the `dd-trace-dotnet` library in versions 2.54.0 and later.
 
-以下の環境変数を使用してダイナミックインスツルメンテーションを構成します。
+4. Run your service with Dynamic Instrumentation enabled by setting the `DD_DYNAMIC_INSTRUMENTATION_ENABLED` environment variable to `true`. Specify `DD_SERVICE`, `DD_ENV`, and `DD_VERSION` Unified Service Tags so you can filter and group your probes and target active clients across these dimensions.
+5. After starting your service with Dynamic Instrumentation enabled, you can start using Dynamic Instrumentation on the [APM > Dynamic Instrumentation page][4].
 
-| 環境変数                             | タイプ          | 説明                                                                                                               |
+## Configuration
+
+Configure Dynamic Instrumentation using the following environment variables:
+
+| Environment variable                             | Type          | Description                                                                                                               |
 | ------------------------------------------------ | ------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `DD_DYNAMIC_INSTRUMENTATION_ENABLED`             | Boolean       | ダイナミックインスツルメンテーションを有効にするには、`true` に設定します。                                                                          |
-| `DD_SERVICE`                                     | 文字列        | [サービス][5]名 (例: `web-backend`)。                                                                        |
-| `DD_ENV`                                         | 文字列        | [環境][5]名 (例: `production`)。                                                                     |
-| `DD_VERSION`                                     | 文字列        | サービスの[バージョン][5]。                                                                                         |
-| `DD_TAGS`                                        | 文字列        | 生成されたデータに適用するタグ。タグは `<key>:<value>` をカンマで区切ったリストである必要があります。例: `layer:api,team:intake`   |
+| `DD_DYNAMIC_INSTRUMENTATION_ENABLED`             | Boolean       | Set to `true` to enable Dynamic Instrumentation.                                                                          |
+| `DD_SERVICE`                                     | String        | The [service][5] name, for example, `web-backend`.                                                                        |
+| `DD_ENV`                                         | String        | The [environment][5] name, for example: `production`.                                                                     |
+| `DD_VERSION`                                     | String        | The [version][5] of your service.                                                                                         |
+| `DD_TAGS`                                        | String        | Tags to apply to produced data. Must be a list of `<key>:<value>` separated by commas such as: `layer:api,team:intake`.   |
 
-## 次にやるべきこと
+## What to do next
 
-スナップショットやメトリクスプローブの設定、データの参照やインデックス作成については、[ダイナミックインスツルメンテーション][6]を参照してください。
+See [Dynamic Instrumentation][6] for information about setting snapshot and metric probes and browsing and indexing the data.
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
@@ -52,3 +56,5 @@ type: multi-code-lang
 [4]: https://app.datadoghq.com/dynamic-instrumentation
 [5]: /ja/getting_started/tagging/unified_service_tagging
 [6]: /ja/dynamic_instrumentation/
+[7]: https://app.datadoghq.com/account/settings/agent/latest?platform=overview
+[8]: /ja/dynamic_instrumentation/symdb/

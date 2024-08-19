@@ -2,8 +2,9 @@
 categories:
 - collaboration
 - notifications
+custom_kind: integration
 dependencies: []
-description: Datadog のアラートとグラフをチームの Chatwork ルームに送信。
+description: Send Datadog alerts and graphs to your team's Chatworks room.
 doc_link: https://docs.datadoghq.com/integrations/chatwork/
 draft: false
 git_integration_title: chatwork
@@ -12,7 +13,6 @@ integration_id: chatwork
 integration_title: Chatwork
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: '1.0'
 name: chatwork
 public_title: Datadog-Chatwork インテグレーション

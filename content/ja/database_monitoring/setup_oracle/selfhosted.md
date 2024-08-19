@@ -87,17 +87,20 @@ CREATE USER datadog IDENTIFIED BY &password ;
 
 {{< /tabs >}}
 
-### ビューの作成
+### Securely store your password
+{{% dbm-secret %}}
 
-`sysdba` としてログオンし、`sysdba` スキーマに新しい `view` を作成し、Agent ユーザーにアクセス権を与えます。
+### Create a view
+
+Log on as `sysdba`, create a new `view` in the `sysdba` schema, and give the Agent user access to it:
 
 {{< tabs >}}
 
-{{% tab "マルチテナント" %}}
+{{% tab "Multi-tenant" %}}
 {{% dbm-multitenant-view-create-sql %}}
 {{% /tab %}}
 
-{{% tab "非 CDB" %}}
+{{% tab "Non-CDB" %}}
 {{% dbm-non-cdb-view-create-sql %}}
 {{% /tab %}}
 
@@ -107,43 +110,43 @@ CREATE USER datadog IDENTIFIED BY &password ;
 
 {{< /tabs >}}
 
-### Agent のインストール
+### Install the Agent
 
-インストール手順については、[Agent インストール手順][1]を参照してください。
+For installation steps, see the [Agent installation instructions][1].
 
-### Agent の構成
+### Configure the Agent
 
-Oracle Agent のコンフィギュレーションファイル `/etc/datadog-agent/conf.d/oracle.d/conf.yaml` を作成します。使用可能なすべての構成オプションは、[サンプルコンフィギュレーションファイル][4]を参照してください。
+Create the Oracle Agent conf file `/etc/datadog-agent/conf.d/oracle.d/conf.yaml`. See the [sample conf file][4] for all available configuration options.
 
-**注:** `7.53.0` 未満の Agent リリースの構成サブディレクトリは `oracle-dbm.d` です。
+**Note:** The configuration subdirectory for the Agent releases below `7.53.0` is `oracle-dbm.d`.
 
 {{< tabs >}}
-{{% tab "マルチテナント" %}}
+{{% tab "Multi-tenant" %}}
 ```yaml
 init_config:
 instances:
   - server: '<HOSTNAME_1>:<PORT>'
-    service_name: "<CDB_SERVICE_NAME>" # Oracle CDB サービス名
+    service_name: "<CDB_SERVICE_NAME>" # The Oracle CDB service name
     username: 'c##datadog'
-    password: '<PASSWORD>'
+    password: 'ENC[datadog_user_database_password]'
     dbm: true
-    tags:  # オプション
+    tags:  # Optional
       - 'service:<CUSTOM_SERVICE>'
       - 'env:<CUSTOM_ENV>'
   - server: '<HOSTNAME_2>:<PORT>'
-    service_name: "<CDB_SERVICE_NAME>" # Oracle CDB サービス名
+    service_name: "<CDB_SERVICE_NAME>" # The Oracle CDB service name
     username: 'c##datadog'
-    password: '<PASSWORD>'
+    password: 'ENC[datadog_user_database_password]'
     dbm: true
-    tags:  # オプション
+    tags:  # Optional
       - 'service:<CUSTOM_SERVICE>'
       - 'env:<CUSTOM_ENV>'
 ```
 
-Agent は、root マルチテナントコンテナデータベース (CDB) にのみ接続します。root CDB に接続している間、PDB に関する情報をクエリします。個々の PDB への接続を作成しないでください。
+The Agent connects only to the root multitenant container database (CDB). It queries the information about PDB while connected to the root CDB. Don't create connections to individual PDBs.
 {{% /tab %}}
 
-{{% tab "非 CDB" %}}
+{{% tab "Non-CDB" %}}
 {{% dbm-oracle-selfhosted-config %}}
 {{% /tab %}}
 
@@ -153,27 +156,27 @@ Agent は、root マルチテナントコンテナデータベース (CDB) に�
 {{% /tab %}}
 {{< /tabs >}}
 
-すべての Agent の構成が完了したら、[Datadog Agent を再起動][9]します。
+Once all Agent configuration is complete, [restart the Datadog Agent][9].
 
-### Oracle インテグレーションをインストールまたは検証する
+### Install or verify the Oracle integration
 
-#### 初めてインストールする場合
+#### First-time installations
 
-Datadog の Integrations ページで、組織用の [Oracle インテグレーション][7]をインストールしてください。これにより、Oracle データベースのパフォーマンスをモニタリングするために使用できる [Oracle ダッシュボード][2]がアカウントにインストールされます。
+On the Integrations page in Datadog, install the [Oracle integration][7] for your organization. This installs an [Oracle dashboard][2] in your account that can be used to monitor the performance of your Oracle databases.
 
-#### すでにインストール済みの場合
+#### Existing installations
 
 {{% dbm-existing-oracle-integration-setup %}}
 
-### セットアップの検証
+### Validate the setup
 
-[Agent の status サブコマンドを実行][8]し、**Checks** セクションで `oracle` を探します。Datadog の[ダッシュボード][2]と[データベース][3]のページに移動して開始します。
+[Run the Agent's status subcommand][8] and look for `oracle` under the **Checks** section. Navigate to the [Dashboard][2] and [Databases][3] page in Datadog to get started.
 
-## カスタムクエリ
+## Custom queries
 
-Database Monitoring は、Oracle データベースのカスタムクエリをサポートしています。使用可能な構成オプションの詳細については、[conf.yaml.example][4] を参照してください。
+Database Monitoring supports custom queries for Oracle databases. See the [conf.yaml.example][4] to learn more about the configuration options available.
 
-<div class="alert alert-warning">カスタムクエリを実行すると、Oracle によって追加コストまたは手数料が課される場合があります。</div>
+<div class="alert alert-warning">Running custom queries may result in additional costs or fees assessed by Oracle.</div>
 
 [1]: https://app.datadoghq.com/account/settings/agent/latest?platform=overview
 [2]: https://app.datadoghq.com/dash/integration/30990/dbm-oracle-database-overview
@@ -185,6 +188,6 @@ Database Monitoring は、Oracle データベースのカスタムクエリを�
 [8]: /ja/agent/configuration/agent-commands/#agent-status-and-information
 [9]: /ja/agent/guide/agent-commands/#start-stop-and-restart-the-agent
 
-## 参考資料
+## Further reading
 
 {{< partial name="whats-next/whats-next.html" >}}

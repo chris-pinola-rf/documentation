@@ -4,156 +4,156 @@ aliases:
 title: スムーシング
 ---
 
-## 自動スムーズ
+## Autosmooth
 
-| 関数       | 説明                                                           | 例                        |
+| Function       | Description                                                           | Example                        |
 | :----          | :-------                                                              | :---------                     |
-| `autosmooth()` | メトリクスのトレンドを維持しつつ自動的にノイズを除去します。 | `autosmooth(<METRIC_NAME>{*})` |
+| `autosmooth()` | Automatically removes noise while preserving the trend of the metric. | `autosmooth(<METRIC_NAME>{*})` |
 
-`autosmooth()` 関数は、自動的に選択されたスパンで移動平均を適用し、トレンドを維持しつつ時系列を滑らかにします。この例では、関数が最適なスパンを選択して時系列を滑らかにしています。
+The `autosmooth()` function applies a moving average with an automatically selected span. It smooths a timeseries while preserving its trend. In this example, the function chooses the optimal span to smooth the timeseries:
 
-{{< img src="dashboards/functions/smoothing/autosmooth_illustration.png" alt="イラストレーションを自動スムーズ" style="width:80%;">}}
+{{< img src="dashboards/functions/smoothing/autosmooth_illustration.png" alt="autosmooth illustration" style="width:80%;">}}
 
-`avg by` などの `group by` クエリで使用すると、すべての時系列で同じスパンが適用されます。同じグラフ内の複数のメトリクスで使用された場合、メトリクスの時系列それぞれが最適に滑らかになるように、異なるスパンを選択できます。
+When used on a `group by` query, such as `avg by`, the same span is applied on all the timeseries. If used on several metrics in the same graph, different spans can be selected to optimally smooth each one of the metric timeseries.
 
-アルゴリズムは、[ASAP アルゴリズム][1]の派生型です。詳細については、この[ブログ記事][2]を参照してください。
+The algorithm is inspired by the [ASAP algorithm][1]-you can read more about it in this [blog post][2].
 
-`autosmooth()` 関数はモニターでは使用できません。スパンは動的に選択されるため、関数を適用した結果が分刻みで変化し、しきい値設定が困難になり、不規則なアラート動作につながる可能性があります。
+The `autosmooth()` function cannot be used in monitors. Being that the span is chosen dynamically, the result of applying the function could change from minute to minute, making threshold setting difficult and leading to alert flapping.
 
-## 指数加重移動平均 (EWMA)
+## Exponentially weighted moving average
 
-### EWMA 3
+### Ewma 3
 
-| 関数   | 説明                                                         | 例                    |
+| Function   | Description                                                         | Example                    |
 | :----      | :-------                                                            | :---------                 |
-| `ewma_3()` | 3 スパンの指数加重移動平均を計算します。 | `ewma_3(<METRIC_NAME>{*})` |
+| `ewma_3()` | Compute the exponentially weighted moving average over a span of 3. | `ewma_3(<METRIC_NAME>{*})` |
 
-注: スパン値はデータポイントの数です。したがって、`ewma_3()` は、最後の 3 つのデータポイントを使用して平均を計算します。
+注: スパン値は系列の加重平均年齢の 2 倍です。したがって、`ewma_3()` は 3 日間の移動平均と比較できます。
 
-例:
+Example:
 
-メトリクス `10 + x%10 {*}` は、10 から 1 ずつ増え、データポイントが 10 個になると 10 に戻ります。これに対して、`ewma3(10 + x%10 {*})` は次のようなグラフになります。
+If a metric `10 + x%10 {*}` increments itself by 1 starting from 10 until it drops back to 10 after 10 data points, then `ewma3(10 + x%10 {*})` has the following shape:
 
 {{< img src="dashboards/functions/smoothing/ewma3.png" alt="EWMA3" style="width:80%;">}}
 
-### EWMA 5
+### Ewma 5
 
-| 関数   | 説明                                                         | 例                    |
+| Function   | Description                                                         | Example                    |
 | :----      | :-------                                                            | :---------                 |
-| `ewma_5()` | 5 スパンの指数加重移動平均を計算します。 | `ewma_5(<METRIC_NAME>{*})` |
+| `ewma_5()` | Compute the exponentially weighted moving average over a span of 5. | `ewma_5(<METRIC_NAME>{*})` |
 
-注: スパン値はデータポイントの数です。したがって、`ewma_5()` は、最後の 5 つのデータポイントを使用して平均を計算します。
+注: スパン値は系列の加重平均年齢の 2 倍です。したがって、`ewma_5()` は 5 日間の移動平均と比較できます。
 
-例:
+Example:
 
-メトリクス `10 + x%10 {*}` は、10 から 1 ずつ増え、データポイントが 10 個になると 10 に戻ります。これに対して、`ewma5(10 + x%10 {*})` は次のようなグラフになります。
+If a metric `10 + x%10 {*}` increments itself by 1 starting from 10 until it drops back to 10 after 10 data points, then `ewma5(10 + x%10 {*})` has the following shape:
 
 {{< img src="dashboards/functions/smoothing/ewma5.png" alt="EWMA5" style="width:80%;">}}
 
 ### Ewma 7
 
-| 関数   | 説明                                                         | 例                    |
+| Function   | Description                                                         | Example                    |
 | :----      | :-------                                                            | :---------                 |
-| `ewma_7()` | 7 スパンの指数加重移動平均を計算します。 | `ewma_7(<METRIC_NAME>{*})` |
+| `ewma_7()` | Compute the exponentially weighted moving average over a span of 7. | `ewma_7(<METRIC_NAME>{*})` |
 
-注: スパン値はデータポイントの数です。したがって、`ewma_7()` は、最後の 7 つのデータポイントを使用して平均を計算します。
+注: スパン値は系列の加重平均年齢の 2 倍です。したがって、`ewma_7()` は 7 日間の移動平均と比較できます。
 
-### EWMA 10
+### Ewma 10
 
-| 関数    | 説明                                                          | 例                     |
+| Function    | Description                                                          | Example                     |
 | :----       | :-------                                                             | :---------                  |
-| `ewma_10()` | 10 スパンの指数加重移動平均を計算します。 | `ewma_10(<METRIC_NAME>{*})` |
+| `ewma_10()` | Compute the exponentially weighted moving average over a span of 10. | `ewma_10(<METRIC_NAME>{*})` |
 
-注: スパン値はデータポイントの数です。したがって、`ewma_10()` は、最後の 10 つのデータポイントを使用して平均を計算します。
+注: スパン値は系列の加重平均年齢の 2 倍です。したがって、`ewma_10()` は 10 日間の移動平均と比較できます。
 
-例:
+Example:
 
-メトリクス `10 + x%10 {*}` は、10 から 1 ずつ増え、データポイントが 10 個になると 10 に戻ります。これに対して、`ewma10(10 + x%10 {*})` は次のようなグラフになります。
+If a metric `10 + x%10 {*}` increments itself by 1 starting from 10 until it drops back to 10 after 10 data points, then `ewma10(10 + x%10 {*})` has the following shape:
 
 {{< img src="dashboards/functions/smoothing/ewma10.png" alt="EWMA10" style="width:80%;">}}
 
-### EWMA 20
+### Ewma 20
 
-| 関数    | 説明                                                          | 例                     |
+| Function    | Description                                                          | Example                     |
 | :----       | :-------                                                             | :---------                  |
-| `ewma_20()` | 20 スパンの指数加重移動平均を計算します。 | `ewma_20(<METRIC_NAME>{*})` |
+| `ewma_20()` | Compute the exponentially weighted moving average over a span of 20. | `ewma_20(<METRIC_NAME>{*})` |
 
-注: スパン値はデータポイントの数です。したがって、`ewma_20()` は、最後の 20 つのデータポイントを使用して平均を計算します。
+注: スパン値は系列の加重平均年齢の 2 倍です。したがって、`ewma_20()` は 20 日間の移動平均と比較できます。
 
-例:
+Example:
 
-メトリクス `10 + x%10 {*}` は、10 から 1 ずつ増え、データポイントが 10 個になると 10 に戻ります。これに対して、`ewma20(10 + x%10 {*})` は次のようなグラフになります。
+If a metric `10 + x%10 {*}` increments itself by 1 starting from 10 until it drops back to 10 after 10 data points, then `ewma20(10 + x%10 {*})` has the following shape:
 
 {{< img src="dashboards/functions/smoothing/ewma20.png" alt="EWMA20" style="width:80%;">}}
 
-## 中央値 
+## Median
 
-### 中央値 3
+### Median 3
 
-| 関数     | 説明                      | 例                      |
+| Function     | Description                      | Example                      |
 | :----        | :-------                         | :---------                   |
-| `median_3()` | スパン 3 のローリング中央値。 | `median_3(<METRIC_NAME>{*})` |
+| `median_3()` | Rolling median with a span of 3. | `median_3(<METRIC_NAME>{*})` |
 
-注: スパン値はデータポイントの数です。したがって、`median_3()` は、最後の 3 つのデータポイントを使用して中央値を計算します。
+Note: The span value is the number of data points. So `median_3()` uses the last 3 data points to calculate the median.
 
-### 中央値 5
+### Median 5
 
-| 関数     | 説明                      | 例                      |
+| Function     | Description                      | Example                      |
 | :----        | :-------                         | :---------                   |
-| `median_5()` | スパン 5 のローリング中央値。 | `median_5(<METRIC_NAME>{*})` |
+| `median_5()` | Rolling median with a span of 5. | `median_5(<METRIC_NAME>{*})` |
 
-注: スパン値はデータポイントの数です。したがって、`median_5()` は、最後の 5 つのデータポイントを使用して中央値を計算します。
+Note: The span value is the number of data points. So `median_5()` uses the last 5 data points to calculate the median.
 
-### 中央値 7
+### Median 7
 
-| 関数     | 説明                      | 例                      |
+| Function     | Description                      | Example                      |
 | :----        | :-------                         | :---------                   |
-| `median_7()` | スパン 7 のローリング中央値。 | `median_7(<METRIC_NAME>{*})` |
+| `median_7()` | Rolling median with a span of 7. | `median_7(<METRIC_NAME>{*})` |
 
-注: スパン値はデータポイントの数です。したがって、`median_7()` は、最後の 7 つのデータポイントを使用して中央値を計算します。
+Note: The span value is the number of data points. So `median_7()` uses the last 7 data points to calculate the median.
 
-### 中央値 9
+### Median 9
 
-| 関数     | 説明                      | 例                      |
+| Function     | Description                      | Example                      |
 | :----        | :-------                         | :---------                   |
-| `median_9()` | スパン 9 のローリング中央値。 | `median_9(<メトリクス名>{*})` |
+| `median_9()` | Rolling median with a span of 9. | `median_9(<METRIC_NAME>{*})` |
 
-注: スパン値はデータポイントの数です。したがって、`median_9()` は、最後の 9 つのデータポイントを使用して中央値を計算します。
+Note: The span value is the number of data points. So `median_9()` uses the last 9 data points to calculate the median.
 
 ## Weighted 
-<div class="alert alert-info">Weighted() は、ゲージタイプのメトリクスで `SUM BY` をクエリする場合にのみ使用できます。</div> 
+<div class="alert alert-info">Weighted() is only available when querying `SUM BY` on gauge type metrics.</div> 
 
-| 関数       | 説明                                                           | 例                        |
+| Function       | Description                                                           | Example                        |
 | :----          | :-------                                                              | :---------                     |
-| `weighted()`   | 一過性タグの適切な重み付けを維持したまま、ノイズを自動的に除去します。 | `sum:(<GAUGE_METRIC_NAME>{*}).weighted()` |
+| `weighted()`   | Automatically removes noise while preserving the proper weight of transient tags. | `sum:(<GAUGE_METRIC_NAME>{*}).weighted()` |
 
-`weighted()` 関数は、人工的なスパイクを防ぐために、ゲージメトリクスを空間で合計する際に、一過性で変化するタグの値の短命な寿命を考慮します。
+The `weighted()` function accounts for the short-lived lifespan of transient, churning tag values when summing gauge metrics in space to prevent artificial spikes. 
 
-この関数は、以下の両方の条件を満たす場合、ゲージメトリクスに関するクエリに自動的に付加されます。
-1. このメトリクスは、メトリクスサマリーにも指定されている定期的で一貫した送信間隔を持っています。
-2. このメトリクスは `SUM by` で集計されます (例: `sum: mygaugemetric{*}`)
+This function is automatically appended to queries on gauge metrics if both of the following conditions are met: 
+1. The metric has a regular, consistent submission interval that is also specified on Metrics Summary
+2. The metric is aggregated with `SUM by` (for example, `sum: mygaugemetric{*}`)
 
-ここでは、不正確なスパイクを持つ元のクエリ (紫) と、適切に重み付け計算されたクエリ (緑) のグラフの例を示します。
+Here is an example graph of the original query with inaccurate spikes (in purple) and the query with the properly weighted calculation (in green): 
 
-{{< img src="dashboards/functions/smoothing/weighted.png" alt="重み付け修飾子を持つクエリと持たないクエリを比較したグラフ例" style="width:80%;">}}
+{{< img src="dashboards/functions/smoothing/weighted.png" alt="Example graph comparing queries with and without the weighted modifier" style="width:80%;">}}
 
-weighted() 修飾子の詳細については、[weighted() の仕組みは？][3]を参照してください。
+For more information on the weighted() modifier, see [How does weighted() work?][3].
 
-## その他の関数
+## Other functions
 
 {{< whatsnext desc="Consult the other available functions:" >}}
-    {{< nextlink href="/dashboards/functions/algorithms" >}}アルゴリズム: メトリクスに異常値や外れ値の検出機能を実装します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/arithmetic" >}}算術: メトリクスに対して算術演算を実行します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/count" >}}カウント: メトリクスの 0 以外または null 以外の値をカウントします。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/exclusion" >}}除外: メトリクスの特定の値を除外します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/interpolation" >}}補間: メトリクスにデフォルト値を挿入または設定します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/rank" >}}ランク: メトリクスの一部のみを選択します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/rate" >}}レート: メトリクスに対してカスタム微分係数を計算します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/regression" >}}回帰: メトリクスに何らかの機械学習関数を適用します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/rollup" >}}ロールアップ: メトリクスに使用される元ポイントの数を制御します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/timeshift" >}}タイムシフト: メトリクスのデータポイントをタイムラインに沿って移動させます。{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/algorithms" >}}Algorithmic: Implement Anomaly or Outlier detection on your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/arithmetic" >}}Arithmetic: Perform Arithmetic operation on your metric.  {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/count" >}}Count: Count non zero or non null value of your metric. {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/exclusion" >}}Exclusion: Exclude certain values of your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/interpolation" >}}Interpolation: Fill or set default values for your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/rank" >}}Rank: Select only a subset of metrics. {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/rate" >}}Rate: Calculate custom derivative over your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/regression" >}}Regression: Apply some machine learning function to your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/rollup" >}}Rollup: Control the number of raw points used in your metric. {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/timeshift" >}}Timeshift: Shift your metric data point along the timeline. {{< /nextlink >}}
 {{< /whatsnext >}}
 
-[1]: http://futuredata.stanford.edu/asap
+[1]: https://github.com/stanford-futuredata/ASAP
 [2]: https://www.datadoghq.com/blog/auto-smoother-asap
 [3]: /ja/dashboards/guide/how-weighted-works

@@ -16,25 +16,25 @@ further_reading:
 title: 推定使用量メトリクスを使用する
 ---
 
-## 概要 
+## Overview 
 
-Synthetic テストには[推定使用量メトリクス][1]が付属しており、使用量を追跡できます。このメトリクスにより、特に次のことが可能になります。
+Synthetic tests come with [estimated usage metrics][1] that allow you to keep track of your usage. These metrics notably enable you to:
 
-* 時間の経過とともに使用量がどのように変化するかを理解します。
-* Synthetics の使用量に最も寄与しているチーム、アプリケーション、またはサービスを視覚化します。
-* 請求に影響を与える可能性のある予期しない使用量の急増について警告します。
+* Understand how your usage evolves over time.
+* Visualize which teams, applications, or services are contributing the most to your Synthetics usage.
+* Alert on unexpected usage spikes that can impact your billing.
 
-Synthetics の使用量を視覚化または警告するには、次のクエリを使用します。
+To visualize or alert on your Synthetics usage, use the following queries:
 
-* [単一][2]および[マルチステップ API テスト][3]: `sum:datadog.estimated_usage.synthetics.api_test_runs{*}.as_count()`
+* [Single][2] and [Multistep API tests][3]: `sum:datadog.estimated_usage.synthetics.api_test_runs{*}.as_count()`
 
-* [ブラウザテスト][4]: `sum:datadog.estimated_usage.synthetics.browser_test_runs{*}.as_count()`.
+* [Browser tests][4]: `sum:datadog.estimated_usage.synthetics.browser_test_runs{*}.as_count()`.
 
-より高いレベルの調整を行うには、これらのメトリクスを、`team` や `application など、テストに関連付けられたタグでスコープまたはグループ化します。
+For a higher level of refinement, scope or group these metrics by tags associated with your test, such as `team` or `application`. 
 
-これらのメトリクスを静的なしきい値に対してグラフ化して監視したり、[異常検出][5]や[予測][6]などの機械学習ベースのアルゴリズムを使用して、予想される使用量の増加についてアラートを受け取らないようにすることができます。
+You can graph and monitor these metrics against static thresholds as well as use machine learning based algorithms like [anomaly detection][5] or [forecast][6] to ensure you do not get alerted for expected usage growth.
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

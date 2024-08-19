@@ -23,6 +23,7 @@ author:
   support_email: jean@tripping.com
 categories:
 - os & system
+custom_kind: integration
 dependencies:
 - https://github.com/DataDog/integrations-extras/blob/master/filebeat/README.md
 display_on_public_website: true
@@ -32,7 +33,6 @@ integration_id: filebeat
 integration_title: Filebeat
 integration_version: 1.3.0
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: filebeat
 public_title: Filebeat
@@ -48,8 +48,9 @@ tile:
   - Supported OS::Linux
   - Supported OS::Windows
   - Supported OS::macOS
+  - Offering::Integration
   configuration: README.md#Setup
-  description: 軽量ログシッパー
+  description: Lightweight Shipper for Logs
   media: []
   overview: README.md#Overview
   support: README.md#Support
@@ -59,56 +60,56 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/integrations-extras -->
 
 
-## 概要
+## Overview
 
-Filebeat サービスからメトリクスをリアルタイムに取得して、以下のことができます。
+Get metrics from Filebeat service in real time to:
 
-- Filebeat の状態を視覚化および監視できます。
-- Filebeat のフェイルオーバーとイベントの通知を受けることができます。
+- Visualize and monitor Filebeat states.
+- Be notified about Filebeat failovers and events.
 
-## 計画と使用
+## Setup
 
-Filebeat チェックは [Datadog Agent][1] パッケージに含まれていないため、お客様自身でインストールする必要があります。
+The Filebeat check is not included in the [Datadog Agent][1] package, so you need to install it.
 
-### インフラストラクチャーリスト
+### Installation
 
-Agent v7.21 / v6.21 以降の場合は、下記の手順に従い Filebeat チェックをホストにインストールします。Docker Agent または 上記バージョン以前の Agent でインストールする場合は、[コミュニティインテグレーションの使用][2]をご参照ください。
+For Agent v7.21+ / v6.21+, follow the instructions below to install the Filebeat check on your host. See [Use Community Integrations][2] to install with the Docker Agent or earlier versions of the Agent.
 
-1. 以下のコマンドを実行して、Agent インテグレーションをインストールします。
+1. Run the following command to install the Agent integration:
 
    ```shell
    datadog-agent integration install -t datadog-filebeat==<INTEGRATION_VERSION>
    ```
 
-2. コアの[インテグレーション][3]と同様にインテグレーションを構成します。
+2. Configure your integration similar to core [integrations][3].
 
-### ブラウザトラブルシューティング
+### Configuration
 
-1. Filebeat の[メトリクス](#metrics)を収集するには、[Agent のコンフィギュレーションディレクトリ][4]のルートにある `conf.d/` フォルダーの `filebeat.d/conf.yaml` ファイルを編集します。使用可能なすべてのコンフィギュレーションオプションについては、[サンプル filebeat.d/conf.yaml][5] を参照してください。
+1. Edit the `filebeat.d/conf.yaml` file in the `conf.d/` folder at the root of your [Agent's configuration directory][4] to start collecting your Filebeat [metrics](#metrics). See the [sample filebeat.d/conf.yaml][5] for all available configuration options.
 
-2. [Agent を再起動します][6]。
+2. [Restart the Agent][6]
 
-## 検証
+## Validation
 
-[Agent の status サブコマンドを実行][7]し、Checks セクションで `filebeat` を探します。
+Run the [Agent's status subcommand][7] and look for `filebeat` under the Checks section.
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "filebeat" >}}
 
 
-### ヘルプ
+### Events
 
-Filebeat チェックには、イベントは含まれません。
+The Filebeat check does not include any events.
 
-### ヘルプ
+### Service Checks
 {{< get-service-checks-from-git "filebeat" >}}
 
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][10]までお問合せください。
+Need help? Contact [Datadog support][10].
 
 
 [1]: https://app.datadoghq.com/account/settings/agent/latest

@@ -22,6 +22,7 @@ author:
   support_email: support@gremlin.com
 categories:
 - 問題追跡
+custom_kind: integration
 dependencies:
 - https://github.com/DataDog/integrations-extras/blob/master/gremlin/README.md
 display_on_public_website: true
@@ -31,7 +32,6 @@ integration_id: gremlin
 integration_title: Gremlin
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: gremlin
 public_title: Gremlin
@@ -47,10 +47,14 @@ tile:
   - Supported OS::Linux
   - Supported OS::Windows
   - Supported OS::macOS
+  - Offering::Integration
   configuration: README.md#Setup
   description: Gremlin で発生したイベントを Datadog に送信
   media: []
   overview: README.md#Overview
+  resources:
+  - resource_type: blog
+    url: https://www.datadoghq.com/blog/gremlin-datadog/
   support: README.md#Support
   title: Gremlin
 ---
@@ -58,50 +62,50 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/integrations-extras -->
 
 
-## 概要
+## Overview
 
-Gremlin の攻撃の表示、再実行、停止を Datadog から直接行うことができます。
+View, rerun, and halt Gremlin attacks directly from Datadog!
 
-Gremlin を Datadog の[イベント][1]と組み合わせると、Datadog のワークフローに障害テストのコンテキストを効果的に追加できます。
+Pairing Gremlin with Datadog's [Events][1] is an effective way to add failure-testing context to your Datadog workflows.
 
-- ダッシュボードに攻撃イベントを重ねて表示することで、Gremlin がメトリクスにいつどのように影響しているかを正確に特定できます。
-- Datadog の[イベントストリーム][2]から Gremlin の攻撃を表示、再実行、停止できます。
+- Overlay attack events on top of your dashboards to pinpoint exactly how and when Gremlin is impacting your metrics.
+- Show, Rerun, and Halt Gremlin attacks from your Datadog [Event Stream][2]
 
-![スナップショット][3]
+![snapshot][3]
 
-## 計画と使用
+## Setup
 
-### ブラウザトラブルシューティング
+### Configuration
 
-このインテグレーションを有効にするには、Gremlin に Datadog API キーを渡す必要があります。それには、[インテグレーションページ][4]で、**Datadog** の行にある **Add** ボタンをクリックします。**Datadog API キー**の入力を求められます。キーを入力すると、インテグレーションが初期化されます。
+To activate this integration, you need to pass your Datadog API key to Gremlin. This is done on the [Integrations Page][4], by clicking the **Add** button on the row for **Datadog**. You are prompted for your **Datadog API key**. Once entered, the integration is initialized.
 
-- API キー: <span class="hidden-api-key">\${api_key}</span>
+- API key: <span class="hidden-api-key">\${api_key}</span>
 
-これで、このインテグレーションからのイベントが[イベントストリーム][2]に表示されるようになります。
+You should start seeing events from this integration in your [Event Stream][2].
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 
-Gremlin インテグレーションは、メトリクスを提供しません。
+The Gremlin integration does not provide any metrics.
 
-### ヘルプ
+### Events
 
-Gremlin で攻撃が開始または停止されると、Gremlin インテグレーションがイベントを [Datadog のイベントストリーム][4]に送信します。
+The Gremlin integration sends events to your [Datadog Event Stream][4] when attacks are started or stopped on Gremlin.
 
-### ヘルプ
+### Service Checks
 
-Gremlin インテグレーションには、サービスのチェック機能は含まれません。
+The Gremlin integration does not include any service checks.
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][5]までお問い合わせください。
+Need help? Contact [Datadog support][5].
 
-## その他の参考資料
+## Further Reading
 
-お役に立つドキュメント、リンクや記事:
+Additional helpful documentation, links, and articles:
 
-- [Gremlin が Datadog を使用して自社の Chaos Engineering サービスを監視する方法][6]
+- [How Gremlin monitors its own Chaos Engineering service with Datadog][6]
 
 [1]: https://docs.datadoghq.com/ja/getting_started/#events
 [2]: https://app.datadoghq.com/event/stream

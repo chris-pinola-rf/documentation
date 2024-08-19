@@ -2,7 +2,7 @@
 categories:
 - developer tools
 - notifications
-custom_custom_kind: integration
+custom_kind: インテグレーション
 dependencies: []
 description: 「Datadog のアラートやイベントで任意の Webhook を通知チャンネルとして使用します。」
 doc_link: https://docs.datadoghq.com/integrations/webhooks/
@@ -261,9 +261,9 @@ $SYNTHETICS_FIRST_FAILING_STEP_NAME
 : Synthetics テストの最初の失敗したステップの名前。
 
 $SYNTHETICS_SUMMARY
-: Synthetic テストの詳細の概要<br />
-**例**:
-```
+: Summary of Synthetic test details.<br />
+**Example**:
+: {{< code-block lang="json">}}
 {
   "result_id": "1871796423670117676",
   "test_type": "browser",
@@ -283,68 +283,68 @@ $SYNTHETICS_SUMMARY
     }
   ]
 }
-```
+{{< /code-block >}}
 
 $TAGS
-: イベントタグのカンマ区切りリスト。<br />
-**例**: `monitor, name:myService, role:computing-node`
+: Comma-separated list of the event tags.<br />
+**Example**: `monitor, name:myService, role:computing-node`
 
 $TAGS[key]
-: `key` タグの値。もし `key` タグがない場合、あるいは `key` タグに値がない場合、この式は空の文字列に評価されます。
-**例**: もし `$TAGS` が `role:computing-node` を含むなら、`$TAGS[role]` は `computing-node` と評価されます。
+: Value of the `key` tag. If there is no `key` tag or the `key` tag has no value, this expression evaluates to an empty string.
+**Example**: If `$TAGS` includes `role:computing-node`, then `$TAGS[role]` evaluates to `computing-node`
 
 $TEXT_ONLY_MSG
-: マークダウン書式設定なしのイベントのテキスト。
+: Text of the event without Markdown formatting.
 
 $USER
-: Webhook をトリガーしたイベントをポストしたユーザー。<br />
-**例**: `rudy`
+: User posting the event that triggered the webhook.<br />
+**Example**: `rudy`
 
 $USERNAME
-: Webhook をトリガーしたイベントをポストしたユーザーのユーザー名。
+: Username of the user posting the event that triggered the webhook.
 
-### カスタム変数
+### Custom variables
 
-組み込み変数のリストに加えて、インテグレーションタイルで独自のカスタム変数を作成することができます。これらの変数は、Webhook URL、ペイロード、カスタムヘッダーで使用することができます。一般的な使用例は、ユーザー名やパスワードのような資格情報の保存です。
+In addition to the list of built-in variables, you can create your own custom ones in the integration tile. You can use these variables in webhook URLs, payloads, and custom headers. A common use case is storing credentials, like usernames and passwords.
 
-また、セキュリティを高めるために、カスタム変数の値を非表示にすることもできます。値を非表示にするには、カスタム変数を編集または追加する際に、**hide from view** チェックボックスを選択します。
+You can also hide custom variable values for extra security. To hide a value, select the **hide from view** checkbox when you edit or add a custom variable:
 
-{{< img src="/integrations/webhooks/webhook_hidefromview.png" alt="Hide from view チェックボックスでカスタム変数の値をマスキング" style="width:100%;" >}}
+{{< img src="/integrations/webhooks/webhook_hidefromview.png" alt="Hide from view checkbox masks custom variable values" style="width:100%;" >}}
 
-### 認証
+### Authentication
 
-#### HTTP Basic 認証
+#### HTTP Basic Authentication
 
-認証を必要とするサービスに Webhook をポストする場合は、URL を `https://my.service.example.com` から `https://<USERNAME>:<PASSWORD>@my.service.example.com` に変更することで、Basic HTTP 認証を使用できます。
+If you want to post your webhooks to a service requiring authentication, you can use basic HTTP authentication by modifying your URL from `https://my.service.example.com` to `https://<USERNAME>:<PASSWORD>@my.service.example.com`.
 
-#### OAuth 2.0 認証
+#### OAuth 2.0 Authentication
 
-OAuth 2.0 認証を必要とするサービスに Webhook をポストしたい場合は、認証方式を設定します。認証方式には、サービスから OAuth トークンを取得するために必要なすべての情報が含まれます。認証方式が設定され、Webhook に関連付けられると、Datadog が OAuth トークンの取得、必要に応じたトークンの更新、Bearer トークンとしての Webhook リクエストへの追加を処理します。
+If you want to post your webhooks to a service that requires OAuth 2.0 authentication, you can setup an Auth Method. An Auth Method includes all of the information required to obtain an OAuth token from your service. Once an Auth Method is configured and associated with a webhook, Datadog will handle obtaining the OAuth token, refreshing it if necessary, and adding it to the webhook request as a Bearer token.
 
-認証方式を追加するには、Auth Methods タブ をクリックし、New Auth Method ボタンをクリックします。認証方式にに分かりやすい名前を付け、以下の情報を入力します。
+To add an Auth Method, click the Auth Methods tab then click the New Auth Method button. Give the Auth Method a descriptive name, then enter the following information:
 
-* アクセストークン URL
+* Access Token URL
 * Client ID
 * Client Secret
-* スコープ (オプション)
-* オーディエンス (オプション)
+* Scope (optional)
+* Audience (optional)
 
-Save をクリックして認証方式を作成します。この認証方式を Webhook に適用するには、Configuration タブに戻り、既存の Webhook 構成を選択して Edit ボタンをクリックします。作成した認証方式が認証方式選択リストに表示されます。
+Click Save to create the Auth Method. To apply this Auth Method to a webhook, go back to the Configuration tab and select an existing webhook configuration and click the Edit button. The Auth Method that you created should now appear in the Auth Method select list.
 
-### 複数の Webhook
+### Multiple webhooks
 
-モニターアラートで、2 つ以上の Webhook エンドポイントが通知を受けた場合、サービスレベルごとに 1 つの Webhook キューが作成されます。たとえば、PagerDuty と Slack にアクセスする場合、Slack Webhook での再試行は PagerDuty の Webhook に影響しません。
+In a monitor alert, if 2 or more webhook endpoints are notified, then a webhook queue is created on a per service level. For instance, if you reach out to PagerDuty and Slack, a retry on the Slack webhook does not affect the PagerDuty one.
 
-ただし、PagerDuty のスコープ内では、いくつかイベントは常に他のイベントより前に送信されます。たとえば、"Acknowledge" ペイロードは必ず "Resolution" の前に送信されます。"Acknowledge" の ping が失敗すると、"Resolution" の ping は、再試行ロジックによってキューに入れられます。
+However, in the PagerDuty scope, certain events always go before others—specifically, an "Acknowledge" payload always goes before "Resolution". If an "Acknowledge" ping fails, the "Resolution" ping is queued due to the retry logic.
 
-## 例
+## Examples
 
-### Twilio を使用した SMS の送信
+### Sending SMS through Twilio
 
-URL として使用する:
+Use as URL:
 `https://<ACCOUNT_ID>:<AUTH_TOKEN>@api.twilio.com/2010-04-01/Accounts/<ACCOUNT_ID>/Messages.json`
 
-ペイロードの例:
+and as a payload:
 
 ```json
 {
@@ -354,14 +354,14 @@ URL として使用する:
 }
 ```
 
-`To` は自分の電話番号、`From` は Twilio から割り当てられた番号に置き換えます。**Encode as form** チェックボックスは、オンにします。
+Replace `To` with your phone number and `From` with the one Twilio attributed to you. Check the **Encode as form** checkbox.
 
-### Jira での課題の作成
+### Creating an issue in Jira
 
-使用する URL:
+Use as URL:
 `https://<JIRA_USER_NAME>:<JIRA_PASSWORD>@<YOUR_DOMAIN>.atlassian.net/rest/api/2/issue`
 
-ペイロードの例:
+and as a payload:
 
 ```json
 {
@@ -372,36 +372,36 @@ URL として使用する:
         "issuetype": {
             "name": "Task"
         },
-        "description": "問題が発生しました。グラフ: $SNAPSHOT およびイベント: $LINK"を参照してください,
+        "description": "There's an issue. See the graph: $SNAPSHOT and event: $LINK",
         "summary": "$EVENT_TITLE"
     }
 }
 ```
 
-"Encode as form" チェックボックスはオンにしないでください。
+Do not check the "Encode as form" checkbox.
 
-### Webhook ペイロードのイベントタイプ一覧 {#event-types}
+### List of event types in the Webhooks payload {#event-types}
 
-| イベントタイプ | 関連するモニター |
+| Event Type | Associated Monitors |
 | ---------  | ------------------- |
-| `ci_pipelines_alert` | CI パイプライン |
-| `ci_tests_alert` | CI テスト |
-| `composite_monitor` | コンポジット |
+| `ci_pipelines_alert` | CI Pipelines |
+| `ci_tests_alert` | CI Tests |
+| `composite_monitor` | Composite |
 | `error_tracking_alert` | Error Tracking |
-| `event_alert` | V1 エンドポイントを使用したイベント |
-| `event_v2_alert` | V2 エンドポイントを持つイベント |
+| `event_alert` | Event using V1 endpoint |
+| `event_v2_alert` | Event with V2 endpoint |
 | `log_alert` | Logs |
-| `monitor_slo_alert` | モニターベース SLO |
-| `metric_slo_alert` | メトリクスベース SLO |
-| `outlier_monitor` | 外れ値 |
-| `process_alert` | プロセス |
-| `query_alert_monitor` | メトリクス、異常値、予測 |
+| `monitor_slo_alert` | Monitor based SLO |
+| `metric_slo_alert` | Metric based SLO |
+| `outlier_monitor` | Outlier |
+| `process_alert` | Process |
+| `query_alert_monitor` | Metric, Anomaly, Forecast |
 | `rum_alert` | RUM |
-| `service_check` | ホスト、サービスチェック |
-| `synthetics_alert` | テストを一時停止または開始する |
-| `trace_analytics_alert` | トレース分析 |
+| `service_check` | Host, Service Check |
+| `synthetics_alert` | Synthetics |
+| `trace_analytics_alert` | Trace Analytics |
 
-## その他の参考資料
+## Further reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

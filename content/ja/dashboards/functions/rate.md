@@ -8,65 +8,73 @@ further_reading:
 title: レート
 ---
 
-## 毎秒
+## Per second
 
-| 関数       | 説明                                                | 例                        |
+| Function       | Description                                                | Example                        |
 |:---------------|:-----------------------------------------------------------|:-------------------------------|
-| `per_second()` | 1 秒あたりのメトリクスの変化の割合をグラフ化します。 | `per_second(<METRIC_NAME>{*})` |
+| `per_second()` | Graph the rate at which the metric is changing per second. | `per_second(<METRIC_NAME>{*})` |
 
-## 毎分
+## Per minute
 
-| 関数       | 説明                                                | 例                        |
+| Function       | Description                                                | Example                        |
 |:---------------|:-----------------------------------------------------------|:-------------------------------|
-| `per_minute()` | 1 分あたりのメトリクスの変化の割合をグラフ化します。 | `per_minute(<METRIC_NAME>{*})` |
+| `per_minute()` | Graph the rate at which the metric is changing per minute. | `per_minute(<METRIC_NAME>{*})` |
 
-## 毎時
+## Per hour
 
-| 関数     | 説明                                              | 例                      |
+| Function     | Description                                              | Example                      |
 |:-------------|:---------------------------------------------------------|:-----------------------------|
-| `per_hour()` | 1 時間あたりのメトリクスの変化の割合をグラフ化します。 | `per_hour(<METRIC_NAME>{*})` |
+| `per_hour()` | Graph the rate at which the metric is changing per hour. | `per_hour(<METRIC_NAME>{*})` |
 
-## 時間の差
+## Time difference
 
-| 関数 | 説明                                                    | 例                |
+| Function | Description                                                    | Example                |
 |:---------|:---------------------------------------------------------------|:-----------------------|
-| `dt()`   | 送信されたポイント間の時間の差 (秒単位) をグラフ化します。 | `dt(<METRIC_NAME>{*})` |
+| `dt()`   | Graph the time difference in seconds between submitted points. | `dt(<METRIC_NAME>{*})` |
 
-## 値の差
+The dt() function returns only one timeseries regardless of how many groups are involved. Within that one timeseries, it considers the time difference of all the submitted points across the various groups.
 
-| 関数 | 説明                    | 例                  |
+## Value difference
+
+| Function | Description                    | Example                  |
 |:---------|:-------------------------------|:-------------------------|
-| `diff()` | メトリクスの差分をグラフ化します。 | `diff(<METRIC_NAME>{*})` |
+| `diff()` | Graph the delta of the metric. | `diff(<METRIC_NAME>{*})` |
 
-各インターバルの差をインターバル単位で計算します。例えば、メトリクスが 15 秒間隔でデータポイントを送信した場合、`diff()` 修飾子は 15 秒率で表示します。**注:** この計算は、時間集計を適用した後、空間集計が行われる前に行われます。
+Calculates the difference between each interval on a per interval basis. For example, a metric submits data points with a 15 second interval, the `diff()` modifier would show it over 15 second rate. **Note:** The calculation is done after applying time aggregation and before space aggregation takes place.
 
-## 単調差
+## Monotonic difference
 
-| 関数           | 説明                                                                     | 例                            |
+| Function           | Description                                                                     | Example                            |
 |:-------------------|:--------------------------------------------------------------------------------|:-----------------------------------|
-| `monotonic_diff()` | `diff()` などのメトリクスの差分をグラフ化します（ただし、差分が正の場合のみ）。 | `monotonic_diff(<メトリクス名>{*})` |
+| `monotonic_diff()` | Graph the delta of the metric like `diff()` but only if the delta is positive. | `monotonic_diff(<METRIC_NAME>{*})` |
 
-## 微分係数
+## Derivative
 
-| 関数       | 説明                                   | 例                        |
+| Function       | Description                                   | Example                        |
 |:---------------|:----------------------------------------------|:-------------------------------|
-| `derivative()` | メトリクスの微分係数 (diff/dt) をグラフ化します。 | `derivative(<METRIC_NAME>{*})` |
+| `derivative()` | Graph the derivative (diff/dt) of the metric. | `derivative(<METRIC_NAME>{*})` |
 
-## その他の関数
+## Throughput
 
-{{< whatsnext desc="他に利用できる関数を参照します。" >}}
-    {{< nextlink href="/dashboards/functions/algorithms" >}}アルゴリズム: メトリクスに異常値や外れ値の検出機能を実装します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/arithmetic" >}}算術: メトリクスに対して算術演算を実行します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/count" >}}カウント: メトリクスの 0 以外または null 以外の値をカウントします。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/exclusion" >}}除外: メトリクスの特定の値を除外します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/interpolation" >}}補間: メトリクスにデフォルト値を挿入または設定します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/rank" >}}ランク: メトリクスの一部のみを選択します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/regression" >}}回帰: メトリクスに何らかの機械学習関数を適用します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/rollup" >}}ロールアップ: メトリクスに使用される元ポイントの数を制御します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/smoothing" >}}スムーシング: メトリクスの変動を滑らかにします。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/timeshift" >}}タイムシフト: メトリクスのデータポイントをタイムラインに沿って移動させます。{{< /nextlink >}}
+| Function       | Description                                                                                                                                        | Example                          |
+|:---------------|:---------------------------------------------------------------------------------------------------------------------------------------------------|:---------------------------------|
+| `throughput()` | 時系列を秒あたりのレートに変換します。各値を時間バケットの秒数で割って、秒あたりの値を生成します。 | `throughput(<METRIC_NAME>{*})` |
+
+## Other functions
+
+{{< whatsnext desc="Consult the other available functions:" >}}
+    {{< nextlink href="/dashboards/functions/algorithms" >}}Algorithmic: Implement Anomaly or Outlier detection on your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/arithmetic" >}}Arithmetic: Perform Arithmetic operation on your metric.  {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/count" >}}Count: Count non zero or non null value of your metric. {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/exclusion" >}}Exclusion: Exclude certain values of your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/interpolation" >}}Interpolation: Fill or set default values for your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/rank" >}}Rank: Select only a subset of metrics. {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/regression" >}}Regression: Apply some machine learning function to your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/rollup" >}}Rollup: Control the number of raw points used in your metric. {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/smoothing" >}}Smoothing: Smooth your metric variations.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/timeshift" >}}Timeshift: Shift your metric data point along the timeline. {{< /nextlink >}}
 {{< /whatsnext >}}
 
-
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}

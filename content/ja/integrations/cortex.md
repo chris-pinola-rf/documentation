@@ -22,6 +22,7 @@ author:
   support_email: support@getcortexapp.com
 categories:
 - インシデント
+custom_kind: integration
 dependencies:
 - https://github.com/DataDog/integrations-extras/blob/master/cortex/README.md
 display_on_public_website: true
@@ -31,7 +32,6 @@ integration_id: cortex
 integration_title: Cortex
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: cortex
 public_title: Cortex
@@ -47,6 +47,7 @@ tile:
   - Supported OS::Linux
   - Supported OS::Windows
   - Supported OS::macOS
+  - Offering::Integration
   configuration: README.md#Setup
   description: Cortex ダッシュボードから直接 Datadog インシデントを作成
   media: []
@@ -58,48 +59,48 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/integrations-extras -->
 
 
-## 概要
+## Overview
 
-[Cortex][1] インテグレーションにより、Cortex ダッシュボードから直接 Datadog インシデントをトリガーできます。
+The [Cortex][1] integration enables you to trigger Datadog incidents directly from the Cortex dashboard.
 
-## 計画と使用
+## Setup
 
-このインテグレーションをセットアップするには、Cortex アカウント、Datadog API 、アプリケーションキーが必要です。
+To set up this integration, you must have a Cortex account, along with Datadog API and Application keys.
 
-### ブラウザトラブルシューティング
+### Configuration
 
-1. 初めてのお客様でデモをご希望の場合、Cortex までお問い合わせください。
-2. [Datadog API キー][2]を作成します。
-3. [Datadog アプリケーションキー][3]を作成します。
-4. Datadog API およびアプリケーションキーを [Cortex Datadog インテグレーション][4]に追加します。
+1. Contact Cortex for a demo if not a current customer.
+2. Create a [Datadog API key][2].
+3. Create a [Datadog Application key][3].
+4. Add Datadog API and Application keys to the [Cortex Datadog Integration][4].
 
-### 検証
+### Validation
 
-1. [Cortex のホームページ][5]に移動します。
-2. 既存のサービスを選択するか、[新しいサービスを作成します][6]。
-3. サイドバーの "INTEGRATIONS" で、"See all" をクリックし、"Datadog" を選択します。
-4. "Incidents" の上の赤い "Trigger Incident" ボタンをクリックします。
-5. フォームに情報を入力し、緑の "Trigger Incident" ボタンをクリックします。
-6. 画面に以下のメッセージが表示されます。「インシデントがトリガーされました。Datadog で確認するには、こちらをクリックします。」
-7. また、新しいインシデントは "Incidents" でも確認できます。
+1. Go to the [Cortex homepage][5].
+2. Click on an existing service or [create a new service][6].
+3. On the sidebar under "INTEGRATIONS", click "See all" and choose "Datadog".
+4. Click the red "Trigger Incident" button above "Incidents".
+5. Fill in information in the form and click green "Trigger Incident" button.
+6. You should get a message on screen that says: "Incident has been triggered! Click here to see it in Datadog."
+7. Additionally, the new incident should be displayed under "Incidents".
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 
-Cortex には、メトリクスは含まれません。
+Cortex does not include any metrics.
 
-### ヘルプ
+### Service Checks
 
-Cortex には、サービスのチェック機能は含まれません。
+Cortex does not include any service checks.
 
-### ヘルプ
+### Events
 
-Cortex には、イベントは含まれません。
+Cortex does not include any events.
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[support@getcortexapp.com][7] までお問い合わせください。
+Need help? Contact [support@getcortexapp.com][7].
 
 [1]: https://www.getcortexapp.com/
 [2]: https://docs.datadoghq.com/ja/account_management/api-app-keys/#api-keys

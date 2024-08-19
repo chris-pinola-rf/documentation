@@ -16,39 +16,39 @@ further_reading:
 title: JSON を使用したグラフ作成
 ---
 
-## 概要
+## Overview
 
-{{< img src="/dashboards/graphing_json/json_editor.png" alt="JSON エディターで時系列ウィジェットを構成する様子" style="width:100%;" >}}
+{{< img src="/dashboards/graphing_json/json_editor.png" alt="Configure a timeseries widget with the JSON editor" style="width:100%;" >}}
 
-[GUI グラフエディター][6]に加え、ダッシュボードウィジェットでは JSON エディターを使用して視覚化を構成することができます。JSON エディターに表示されるスキーマは、Dashboard API のリクエスト本文のスキーマを反映しています。JSON のパラメーターおよび必須フィールドの詳細については、[ダッシュボード API のドキュメント][2]を参照してください。 
+In addition to the [GUI graph editor][6], you can use the JSON editor in your dashboard widgets to configure your visualizations. The schema displayed in the JSON editor mirrors the request body schema of the Dashboard API. For more information on the JSON parameters and required fields see the [Dashboard API documentation][2]. 
 
-## ウィジェット JSON スキーマ
+## Widget JSON schema
 
-ダッシュボードに追加したウィジェットタイプを見つけ、それぞれのドキュメントに記載されている JSON フィールドを適用します。ウィジェットタイプの一覧については、[ウィジェットの索引][7]を参照してください。
+Find the widget type you want to add to your dashboard and apply the JSON fields listed in the respective documentation. For a full list of widget types, see the [Widget index][7].
 
-### Y 軸スキーマ
+### Y-Axis schema
 
-Datadog の Y 軸コントロールには以下の機能があります。
+The Datadog y-axis controls allow you to:
 
-*   Y 軸を特定の範囲にクリップします。
-*   割合または絶対値を指定して、系列をフィルタリングします。
-*   Y 軸の目盛を線形目盛から対数、平方根、または指数目盛に変更します。
+*   Clip the y-axis to specific ranges
+*   Filter series either by specifying a percentage or an absolute value
+*   Change the y-axis scale from linear to log, sqrt, or power scale
 
-### マーカースキーマ
+### Markers schema
 
-マーカーを使用すると、視覚的な条件付き書式をグラフに追加できます。たとえば、 ALERT、WARNING、OKなどです。
+Markers allow you to add visual conditional formatting for your graphs. For example, ALERT, WARNING, or OK.
 
-{{< img src="dashboards/graphing_json/markers.png" alt="マーカー" style="width:80%;">}}
+{{< img src="dashboards/graphing_json/markers.png" alt="Markers" style="width:80%;">}}
 
-## テンプレート変数スキーマ
+## Template variable schema
 
-ダッシュボードテンプレート変数は、ダッシュボード上の 1 つ以上のグラフに新しいスコープを適用します。これにより、特定のタグではなく変数を使用することで、複数のタグセットにまたがってメトリクスを動的に調査することができます。[Datadog UI のテンプレート変数][4]に関する詳細を参照してください。
+Dashboard template variables apply a new scope to one or more graphs on your dashboard. This allows you to dynamically explore metrics across different sets of tags by using variables instead of specific tags. Learn more about [template variable in the Datadog UI][4].
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
-[1]: /ja/dashboards/#timeboards
+[1]: /ja/dashboards/#get-started
 [2]: /ja/api/v1/dashboards/
 [3]: /ja/dashboards/graphing_json/widget_json/
 [4]: /ja/dashboards/template_variables/

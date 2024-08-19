@@ -29,18 +29,18 @@ title: Datadog ライブラリを使ったカスタムインスツルメンテ�
 type: multi-code-lang
 ---
 
-カスタムインスツルメンテーションにより、Datadog へ送信するトレースをプログラムで作成、変更、削除できます。これは、自動インスツルメンテーションでキャプチャできない社内コードのトレースや、不要なスパンのトレースからの削除、そして希望するスパンタグの追加などスパンのより詳細な可視化とコンテキストの提供に役立ちます。
+Custom instrumentation allows programmatic creation, modification, or deletion of traces to send to Datadog. This is useful for tracing in-house code not captured by automatic instrumentation, removing unwanted spans from traces, and for providing deeper visibility and context into spans, including adding any desired span tags.
 
-アプリケーションのインスツルメンテーション前に、Datadog の [APM 用語][2] を確認し、Datadog APM の基本理念をよく理解してください。
+Before instrumenting your application, review Datadog's [APM Terminology][2] and familiarize yourself with the core concepts of Datadog APM.
 
-オープンスタンダードを利用してインスツルメンテーションを行う場合は、[OpenTracing によるインスツルメンテーション][3]、[OpenTelemetry によるインスツルメンテーション][4]をご参照ください。
+If you use an open standard to instrument your code, see [Instrumenting with OpenTracing][3] or [Instrumenting with OpenTelemetry][4].
 
 {{< partial name="apm/apm-manual-instrumentation.html" >}}
 
 
 <br>
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

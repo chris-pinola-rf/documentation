@@ -24,7 +24,7 @@ categories:
 - aws
 - クラウド
 - モニター
-custom_custom_kind: integration
+custom_kind: インテグレーション
 dependencies: []
 display_on_public_website: true
 draft: false
@@ -45,6 +45,7 @@ tile:
   - Category::Cloud
   - Category::Metrics
   - Submitted Data Type::Metrics
+  - Offering::Integration
   configuration: README.md#Setup
   description: Amazon OpenSearch Serverless は、多様なワークロードを処理するために自動的に調整される検索コンフィギュレーションです。
   media: []
@@ -54,41 +55,41 @@ tile:
 ---
 
 <!--  SOURCED FROM https://github.com/DataDog/integrations-internal-core -->
-## 概要
+## Overview
 
-Amazon OpenSearch Serverlessは、OpenSearch 向けのオンデマンドのサーバーレスコンフィギュレーションで、大量のデータのクエリと分析が簡単に行えるようになります。OpenSearch Serverless コレクションは、自己管理型クラスターと同じメリットを提供し、コンフィギュレーションとチューニングが複雑化することもありません。
+Amazon OpenSearch Serverless is an on-demand serverless configuration for OpenSearch, providing an easy way to query and analyze large volumes of data. OpenSearch Serverless collections provide the same benefits as self-managed clusters, without the added complexity of configuration and tuning.
 
-ベクトル検索コレクションは、機械学習 (ML) および人工知能 (AI) アプリケーションで高性能な類似検索を実現するために特別に設計されており、Bedrock 上でナレッジベースを自動的に作成するために使用することができます。
+Vector search collections are specifically designed for high-performance similarity searches in machine learning (ML) and artificial intelligence (AI) applications, and can be used to automatically create knowledge bases on Bedrock.
 
-## セットアップ
+## Setup
 
-### インストール
+### Installation
 
-[Amazon Web Services インテグレーション][1]をまだセットアップしていない場合は、最初にセットアップします。
+If you haven't already, set up the [Amazon Web Services integration][1] first.
 
-### 構成
+### Configuration
 
-1. [AWS インテグレーションページ][2]で、**Metric Collection** タブの下にある OpenSearch Serverless が有効になっていることを確認します。
-2. [Datadog - Amazon OpenSearch Serverless インテグレーション][3]をインストールします。
+1. In the [AWS integration page][2], ensure that OpenSearch Serverless is enabled under the **Metric Collection** tab.
+2. Install the [Datadog - Amazon OpenSearch Serverless integration][3].
 
 
-## 収集データ
+## Data Collected
 
 ### Metrics
 {{< get-metrics-from-git "amazon_opensearch_serverless" >}}
 
 
-### サービスチェック
+### Service Checks
 
-Amazon OpenSearch Serverless には、サービスのチェック機能は含まれません。
+Amazon OpenSearch Serverless does not include any service checks.
 
-### イベント
+### Events
 
-Amazon OpenSearch Serverless には、イベントは含まれません。
+Amazon OpenSearch Serverless does not include any events.
 
-## トラブルシューティング
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][5]までお問い合わせください。
+Need help? Contact [Datadog support][5].
 
 [1]: https://docs.datadoghq.com/ja/integrations/amazon_web_services/
 [2]: https://app.datadoghq.com/integrations/amazon-web-services

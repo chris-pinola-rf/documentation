@@ -3,7 +3,7 @@ algolia:
   tags:
   - ecs
 aliases:
-- /agent/amazon_ecs/
+- /ja/agent/amazon_ecs/
 further_reading:
 - link: /agent/amazon_ecs/logs/
   tag: ドキュメント

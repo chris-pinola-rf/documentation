@@ -13,12 +13,12 @@ title: 互換性要件
 type: multi-code-lang
 ---
 
-Datadog APM の互換性要件とサポートされているインテグレーションを確認するには、言語を選択してください。
+Choose your language to see the compatibility requirements and supported integrations for Datadog APM.
 
 {{< partial name="apm/apm-compatibility.html" >}}
 
 <br>
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}

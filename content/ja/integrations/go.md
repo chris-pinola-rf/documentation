@@ -2,6 +2,7 @@
 categories:
 - 言語
 - トレーシング
+custom_kind: integration
 dependencies: []
 description: Datadog のクライアントライブラリを使用して Go アプリケーションからランタイムメトリクスを送信。
 doc_link: https://docs.datadoghq.com/integrations/go/
@@ -12,14 +13,13 @@ further_reading:
   text: Golang ログの収集、標準化、一元化方法
 - link: https://www.datadoghq.com/blog/go-memory-metrics/
   tag: ブログ
-  text: Go メモリメトリクスの謎解き
+  text: Go のメモリメトリクスを解明
 git_integration_title: go
 has_logo: true
 integration_id: go
 integration_title: Go
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: '1.0'
 name: go
 public_title: Datadog-Go インテグレーション
@@ -32,7 +32,7 @@ version: '1.0'
 
 Go インテグレーションを利用して、Go アプリケーションのログ、トレース、カスタムメトリクスを収集および監視できます。
 
-## 計画と使用
+## Setup
 
 ### メトリクスの収集
 
@@ -52,21 +52,21 @@ _Agent v6.0 以上で使用可能_
 
 [Go プロファイラを有効にするための][4]専用ドキュメントをご覧ください。
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "go" >}}
 
 
-### ヘルプ
+### Events
 
 Go インテグレーションには、イベントは含まれません。
 
-### ヘルプ
+### Service Checks
 
 Go インテグレーションには、サービスのチェック機能は含まれません。
 
-## ヘルプ
+## Troubleshooting
 
 ご不明な点は、[Datadog のサポートチーム][5]までお問い合わせください。
 

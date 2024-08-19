@@ -4,87 +4,87 @@ aliases:
 title: 算術演算
 ---
 
-## 絶対値
+## Absolute
 
-| 関数 | 説明                             | 例                 |
+| Function | Description                             | Example                 |
 | :----    | :-------                                | :---------              |
-| `abs()`  | メトリクスの絶対値をグラフ化します。 | `abs(<METRIC_NAME>{*})` |
+| `abs()`  | Graph the absolute value of the metric. | `abs(<METRIC_NAME>{*})` |
 
-変換するのは、この正弦波時系列 `sin{*}` です。 
+Transforms this sine timeseries `sin{*}`:
 
-{{< img src="dashboards/functions/arithmetic/sinus.png" alt="Sinus 関数" style="width:80%;">}}
+{{< img src="dashboards/functions/arithmetic/sinus.png" alt="Sinus function" style="width:80%;">}}
 
-次の `abs(sin{*})` に変換します。
+into this one `abs(sin{*})`:
 
-{{< img src="dashboards/functions/arithmetic/sinus_abs.png" alt="abs を使用した Sinus 関数" style="width:80%;">}}
+{{< img src="dashboards/functions/arithmetic/sinus_abs.png" alt="Sinus function with abs" style="width:80%;">}}
 
-## 対数
+## Logarithm
 
-### ログベース 2
+### Log base 2
 
-| 関数 | 説明                               | 例                  |
+| Function | Description                               | Example                  |
 | :----    | :-------                                  | :---------               |
-| `log2()` | メトリクスの底 2 の対数をグラフ化します。 | `log2(<METRIC_NAME>{*})` |
+| `log2()` | Graph the Base-2 logarithm of the metric. | `log2(<METRIC_NAME>{*})` |
 
-例:
+Example:
 
-データポイントごとに 1 ずつ増えるメトリクス `x{*}` があるとすると、`log2(x{*})` は次のようなグラフになります。
+If a metric, `x{*}`, increments itself by 1 for each data point, then `log2(x{*})` has the following shape:
 
-{{< img src="dashboards/functions/arithmetic/log2.png" alt=" log2 関数" style="width:80%;">}}
+{{< img src="dashboards/functions/arithmetic/log2.png" alt=" log2 function" style="width:80%;">}}
 
-### ログベース 10
+### Log base 10
 
-| 関数  | 説明                                | 例                   |
+| Function  | Description                                | Example                   |
 | :----     | :-------                                   | :---------                |
-| `log10()` | メトリクスの底 10 の対数をグラフ化します。 | `log10(<METRIC_NAME>{*})` |
+| `log10()` | Graph the Base-10 logarithm of the metric. | `log10(<METRIC_NAME>{*})` |
 
-例:
+Example:
 
-データポイントごとに 1 ずつ増えるメトリクス `x{*}` があるとすると、`log10(x{*})` は次のようなグラフになります。
+If a metric, `x{*}`, increments itself by 1 for each data point, then `log10(x{*})` has the following shape:
 
-{{< img src="dashboards/functions/arithmetic/log10.png" alt="log10 関数" style="width:80%;">}}
+{{< img src="dashboards/functions/arithmetic/log10.png" alt="log10 function" style="width:80%;">}}
 
-## 累積合計
+## Cumulative sum
 
-| 関数   | 説明                                                          | 例                    |
+| Function   | Description                                                          | Example                    |
 | :----      | :-------                                                             | :---------                 |
-| `cumsum()` | 可視のタイムウィンドウに対するメトリクスの累積合計をグラフ化します。 | `cumsum(<METRIC_NAME>{*})` |
+| `cumsum()` | Graph the cumulative sum of the metric over the visible time window. | `cumsum(<METRIC_NAME>{*})` |
 
-例:
+Example:
 
-値 `1` の定数であるメトリクス `const_1{*}` があるとすると、`cumsum(const_1{*})` は次のようなグラフになります。
+If a metric, `const_1{*}`, is a constant with the value of `1`, then `cumsum(const_1{*})` has the following shape:
 
-{{< img src="dashboards/functions/arithmetic/cumsum.png" alt="abs を使用した累計関数" style="width:80%;">}}
+{{< img src="dashboards/functions/arithmetic/cumsum.png" alt="cum sum function with abs" style="width:80%;">}}
 
-## モニターの累積和
+## Cumulative sum in monitors
 
-累積和関数は視覚的な関数であるため、モニタークエリでは避ける必要があります。ダッシュボードやノートブックで使用する場合、ポイントは選択したタイムフレームに基づく値を反映することになります。モニターでは、どのタイムフレームを使用するかという感覚がないため、これはモニターではうまく反映されません。
+Cumulative sum should be avoided in monitor queries, because the cumulative sum function is a visual function. When used in a dashboard or notebook, the points will reflect values based on the selected timeframe. This doesn't translate well in a monitor as the monitor doesn't have a sense of which timeframe to use.
 
-その代わり、モニター評価期間中に[累積タイムウィンドウ][1]を構成してください。
+Instead, configure [Cumulative Time Windows][1] in your monitor evaluation period.
 
 ## Integral
 
-| 関数     | 説明                       | 例                             |
+| Function     | Description                       | Example                             |
 | :----        | :-------                          | :---------                          |
-| `integral()` | メトリクスの積分をグラフ化します。 | `integral(<METRIC_NAME>{*})` |
+| `integral()` | Graph the integral of the metric. | `integral(<METRIC_NAME>{*})` |
 
-**注**: Datadog の `integral()` は、特定のメトリクスの可視のタイムウィンドウにおける、すべての隣接ポイントペアの `[時間増分] x [値増分]` の累積合計です。
+**Note**: Datadog's `integral()` is the cumulative sum of `[time delta] x [value delta]` over all consecutive pairs of points in the visible time window for a given metric.
 
-{{< img src="dashboards/functions/arithmetic/integral.png" alt="abs を使用した積分関数"  style="width:80%;">}}
+{{< img src="dashboards/functions/arithmetic/integral.png" alt="integral function with abs" style="width:80%;">}}
 
-## その他の関数
+## Other functions
 
-{{< whatsnext desc="他に利用できる関数を参照します。" >}}
-    {{< nextlink href="/dashboards/functions/algorithms" >}}アルゴリズム: メトリクスに異常値や外れ値の検出機能を実装します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/count" >}}カウント: メトリクスの 0 以外または null 以外の値をカウントします。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/exclusion" >}}除外: メトリクスの特定の値を除外します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/interpolation" >}}補間: メトリクスにデフォルト値を挿入または設定します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/rank" >}}ランク: メトリクスの一部のみを選択します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/rate" >}}レート: メトリクスに対してカスタム微分係数を計算します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/regression" >}}回帰: メトリクスに何らかの機械学習関数を適用します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/rollup" >}}ロールアップ: メトリクスに使用される元ポイントの数を制御します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/smoothing" >}}スムーシング: メトリクスの変動を滑らかにします。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/timeshift" >}}タイムシフト: メトリクスのデータポイントをタイムラインに沿って移動させます。{{< /nextlink >}}
+{{< whatsnext desc="Consult the other available functions:" >}}
+    {{< nextlink href="/dashboards/functions/algorithms" >}}Algorithmic: Implement Anomaly or Outlier detection on your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/count" >}}Count: Count non zero or non null value of your metric. {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/exclusion" >}}Exclusion: Exclude certain values of your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/interpolation" >}}Interpolation: Fill or set default values for your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/rank" >}}Rank: Select only a subset of metrics. {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/rate" >}}Rate: Calculate custom derivative over your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/regression" >}}Regression: Apply some machine learning function to your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/rollup" >}}Rollup: Control the number of raw points used in your metric. {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/smoothing" >}}Smoothing: Smooth your metric variations.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/timeshift" >}}Timeshift: Shift your metric data point along the timeline. {{< /nextlink >}}
 {{< /whatsnext >}}
 
 [1]: /ja/monitors/configuration/?tab=thresholdalert#cumulative-time-windows

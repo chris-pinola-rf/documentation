@@ -25,6 +25,7 @@ author:
   support_email: help@datadoghq.com
 categories:
 - OS & システム
+custom_kind: integration
 dependencies:
 - https://github.com/DataDog/integrations-core/blob/master/ibm_i/README.md
 display_on_public_website: true
@@ -34,7 +35,6 @@ integration_id: ibm-i
 integration_title: IBM i
 integration_version: 2.2.0
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: ibm_i
 public_title: IBM i
@@ -48,6 +48,7 @@ tile:
   - Supported OS::Linux
   - Supported OS::macOS
   - Category::OS & System
+  - Offering::Integration
   configuration: README.md#Setup
   description: ジョブ、ジョブキュー、ASP などを含む IBM i システムをリモートで監視します。
   media: []
@@ -59,40 +60,40 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/integrations-core -->
 
 
-## 概要
+## Overview
 
-このチェックは、Datadog Agent を通して [IBM i][1] をリモートで監視します。
+This check monitors [IBM i][1] remotely through the Datadog Agent.
 
-## 計画と使用
+## Setup
 
-ホストで実行されている Agent 用にこのチェックをインストールおよび構成する場合は、以下の手順に従ってください。コンテナ環境の場合は、[オートディスカバリーのインテグレーションテンプレート][2]のガイドを参照してこの手順を行ってください。
+Follow the instructions below to install and configure this check for an Agent running on a host. For containerized environments, see the [Autodiscovery Integration Templates][2] for guidance on applying these instructions.
 
-**注**: Unix 系 OS に特有の `fcntl()` システムコールを使用するため、このチェックは Windows では利用できません。
+**Note**: This check is not available on Windows as it uses the `fcntl()` system call, which is specific to Unix-like operating systems.
 
-### インフラストラクチャーリスト
+### Installation
 
-IBM i チェックは [Datadog Agent][3] パッケージに含まれています。
-サーバーに追加でインストールする必要はありません。
+The IBM i check is included in the [Datadog Agent][3] package.
+No additional installation is needed on your server.
 
-#### ODBC ドライバー
+#### ODBC driver
 
-IBM i チェックでは、IBM i ODBC ドライバーを使用して、IBM i ホストにリモートで接続します。
+The IBM i check uses the IBM i ODBC driver to connect remotely to the IBM i host. 
 
-[IBM i Access - Client Solutions][4] のページから、ドライバーをダウンロードします。`Downloads for IBM i Access Client Solutions` をクリックし、ログインしてダウンロードページにアクセスしてください。
+Download the driver from the [IBM i Access - Client Solutions][4] page. Click on `Downloads for IBM i Access Client Solutions` and login to gain access to the downloads page.
 
-Linux ホスト用の `ACS Linux App Pkg` など、お使いのプラットフォーム用の `ACS App Pkg` パッケージを選択します。パッケージをダウンロードし、インストール手順に従って、ドライバーをインストールします。
+Choose the `ACS App Pkg` package for your platform, such as `ACS Linux App Pkg` for Linux hosts. Download the package and follow the installation instructions to install the driver.
 
-### ブラウザトラブルシューティング
+### Configuration
 
-IBM i チェックは、Datadog Agent を実行しているホストから IBM i システムにリモートでクエリを実行します。IBM i システムと通信するには、Datadog Agent を実行しているホストで IBM i ODBC ドライバーをセットアップする必要があります。
+The IBM i check queries an IBM i system remotely from a host running the Datadog Agent. To communicate with the IBM i system, you need to set up the IBM i ODBC driver on the host running the Datadog Agent.
 
-#### ODBC ドライバー
+#### ODBC driver
 
-ODBC ドライバーがインストールされたら、ODBC のコンフィギュレーションファイルである `odbc.ini` と `odbcinst.ini` を探します。場所は、お使いのシステムによって異なるかもしれません。Linux では、`/etc` ディレクトリか、`/etc/unixODBC` ディレクトリにあります。
+Once the ODBC driver is installed, find the ODBC configuration files: `odbc.ini` and `odbcinst.ini`. The location may vary depending on your system. On Linux they may be located in the `/etc` directory or in the `/etc/unixODBC` directory.
 
-これらのコンフィギュレーションファイルを、Linux ホスト上の `/opt/datadog-agent/embedded/etc/` などの組み込み Agent 環境にコピーします。
+Copy these configuration files to the embedded Agent environment, such as `/opt/datadog-agent/embedded/etc/` on Linux hosts.
 
-`odbcinst.ini` ファイルは、Agent が利用できる ODBC ドライバーを定義します。各セクションは 1 つのドライバーを定義します。例えば、次のセクションは `IBM i Access ODBC Driver 64-bit` という名前のドライバーを定義しています。
+The `odbcinst.ini` file defines the available ODBC drivers for the Agent. Each section defines one driver. For instance, the following section defines a driver named `IBM i Access ODBC Driver 64-bit`:
 ```
 [IBM i Access ODBC Driver 64-bit]
 Description=IBM i Access for Linux 64-bit ODBC Driver
@@ -103,32 +104,32 @@ DontDLClose=1
 UsageCount=1
 ```
 
-IBM i ODBC ドライバーの名前は、IBM i のチェックを構成するために必要です。
+The name of the IBM i ODBC driver is needed to configure the IBM i check.
 
-#### IBM i チェック
+#### IBM i check
 
-1. IBM i のパフォーマンスデータを収集するには、Agent のコンフィギュレーションディレクトリのルートにある `conf.d/` フォルダーの `ibm_i.d/conf.yaml` ファイルを編集します。使用可能なすべてのコンフィギュレーションオプションについては、[サンプル ibm_i.d/conf.yaml][5] を参照してください。
-   `obdcinst.ini` ファイルにあるドライバー名を使用します。
+1. Edit the `ibm_i.d/conf.yaml` file, in the `conf.d/` folder at the root of your Agent's configuration directory to start collecting your IBM i performance data. See the [sample ibm_i.d/conf.yaml][5] for all available configuration options.
+   Use the driver name from the `obdcinst.ini` file.
 
-2. [Agent を再起動します][6]。
+2. [Restart the Agent][6].
 
-### 検証
+### Validation
 
-[Agent の status サブコマンドを実行][7]し、Checks セクションの `ibm_i` を探します。
+[Run the Agent's status subcommand][7] and look for `ibm_i` under the Checks section.
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "ibm_i" >}}
 
 
-### ヘルプ
+### Events
 
-IBM i チェックには、イベントは含まれません。
+The IBM i check does not include any events.
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][10]までお問合せください。
+Need help? Contact [Datadog support][10].
 
 [1]: https://www.ibm.com/it-infrastructure/power/os/ibm-i
 [2]: https://docs.datadoghq.com/ja/agent/kubernetes/integrations/

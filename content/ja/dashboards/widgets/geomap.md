@@ -12,34 +12,34 @@ title: ジオマップ ウィジェット
 widget_type: ジオマップ
 ---
 
-ジオマップウィジェットは、陰影をつけた地域や点を使って地理データを視覚化します。これにより、以下のようなことが可能になります。
-- 国別のユーザーセッションを表示。
-- フィルターをかけて、新しいタブで全セッションのリストを表示。
-- 従業員別にフィルターされたユーザーセッションを表示。
-- ロード時間、コア Web バイタル、エラーがあるビューの割合など、パフォーマンスメトリクスを監視。
+The geomap widget visualizes geographic data with shaded regions or points. It can be used to:
+- View user sessions by country.
+- Filter to see a list of all sessions in a new tab.
+- View user sessions filtered by employee.
+- Monitor performance metrics like load time, core web vitals, and percent of views with errors.
 
-{{< img src="/dashboards/widgets/geomap/geomap-points.png" alt="ポイントオーバーレイによるジオマップの視覚化" >}}
+{{< img src="/dashboards/widgets/geomap/geomap-points.png" alt="Geomap visualization with the points overlay" >}}
 
-## 計画と使用
+## Setup
 
-{{< img src="dashboards/widgets/geomap/geomap_setup2.png" alt="ウィジェット構成の Geomap Graph your data セクション">}}
+{{< img src="dashboards/widgets/geomap/geomap_setup2.png" alt="Geomap Graph your data section of widget configuration">}}
 
-### ブラウザトラブルシューティング
-1. 視覚化レイヤーを選択します。
-    * **Regions**: 国レベルでメジャーを集計します。
-    * **Points**: イベントをマップ上でポイントとしてオーバーレイし、地理的なイベントデータを表示します。
+### Configuration
+1. Choose the visualization layer:
+    * **Regions**: Aggregate measures at a country level.
+    * **Points**: Overlay events as points on the map to display geographic event data.
 
-2. グラフ化するデータを選択します。<br>
-  **注**: データソースのサポートは、選択した視覚化レイヤーによって異なります。
+2. Choose the data to graph: <br>
+  **Note**: Support for data sources varies based on the visualization layer you select.
   {{< tabs >}}
   {{% tab "Regions" %}}
-  |  データソース    | 備考    | 
+  |  Data source    | Notes    | 
   | --------------  | -------- |
-  |ログイベント   | group by タグには、alpha-2 の ISO フォーマットに従った国の ISO コードを含める必要があります。これを行うには、[GeoIP Processor][1] を使用するか、手動で[取り込み時にタグ][2]を含めます。ログイベントクエリを構成するには、[ログ検索ドキュメント][3]を参照してください。|
-  |メトリクス   | group by タグには、alpha-2 の ISO フォーマットに従った国の ISO コードを含める必要があります。[取り込んだログからメトリクスを生成する][4]か、手動で[取り込み時にタグ][2]を含めます。メトリクスクエリを構成するには、[クエリのドキュメント][5]を参照してください。|
-  |RUM   | RUM クエリを構成するには、[RUM ドキュメント][6]を参照してください。|
-  |SLO | SLO クエリを構成するには、[SLO 検索ドキュメント][7]を参照してください。 |
-  |セキュリティシグナル <br> アプリケーションセキュリティ <br> 監査証跡 | クエリを構成するには、[ログ検索ドキュメント][3]を参照してください。 |
+  |Log Events   | The group by tag must include a country ISO Code following the alpha-2 ISO format. You can use the [GeoIP Processor][1] to do this, or manually include the [tags on ingest][2]. See the [Log search documentation][3] to configure a log event query.|
+  |Metric   | The group by tag must include a country ISO Code following the alpha-2 ISO format. You can [generate metrics from ingested logs][4], or manually include the [tags on ingest][2]. See the [querying documentation][5] to configure a metric query.|
+  |RUM   | See the [RUM documentation][6] to configure a RUM query. |
+  |SLO | See the [SLO search documentation][7] to configure an SLO query. |
+  |Security Signals <br> Application Security <br> Audit Trail | See the [Log search documentation][3] to configure a query. |
 
   [1]: /logs/log_configuration/processors/#geoip-parser
   [2]: /getting_started/tagging/#define-tags
@@ -51,10 +51,10 @@ widget_type: ジオマップ
   {{% /tab %}}
 
   {{% tab "Points" %}}
-  |  データソース | 備考 |
+  |  Data source | Notes |
   | -----------  | ----- | 
-  |ログイベント   | group by タグには、alpha-2 の ISO フォーマットに従った国の ISO コードを含める必要があります。これを行うには、[GeoIP Processor][1] を使用するか、手動で[取り込み時にタグ][2]を含めます。ログイベントクエリを構成するには、[ログ検索ドキュメント][3]を参照してください。 |
-  |RUM   | RUM クエリを構成するには、[RUM ドキュメント][4]を参照してください。 |
+  |Log Events   | The group by tag must include a country ISO Code following the alpha-2 ISO format. You can use the [GeoIP Processor][1] to do this, or manually include the [tags on ingest][2]. See the [Log search documentation][3] to configure a log event query. |
+  |RUM   | See the [RUM documentation][4] to configure a RUM query. |
 
   [1]: /logs/log_configuration/processors/#geoip-parser
   [2]: /getting_started/tagging/#define-tags
@@ -63,21 +63,21 @@ widget_type: ジオマップ
   {{% /tab %}}
   {{< /tabs >}}
 
-3. オプション: マップを最初にフォーカスする場所を指定するために、ビューボックスを構成します。
+3. Optional: Configure your view box to specify where you want to focus the map initially.
 
-### オプション
+### Options
 
-#### コンテキストリンク
+#### Context links
 
-[コンテキストリンク][7]はデフォルトで有効になっていますが、有効/無効を切り替えることができます。コンテキストリンクは、ダッシュボードウィジェットと他のページ (Datadog 内またはサードパーティ) を接続します。
+[Context links][7] are enabled by default, you can toggle them on or off. Context links connect dashboard widgets with other pages (in Datadog, or third-party).
 
-## ヘルプ
+## API
 
-このウィジェットは **[Dashboards API][8]** で使用できます。[ウィジェット JSON スキーマ定義][9]については、以下の表を参照してください。
+This widget can be used with the **[Dashboards API][8]**. See the following table for the [widget JSON schema definition][9]:
 
 {{< dashboards-widgets-api >}}
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

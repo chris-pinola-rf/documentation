@@ -28,6 +28,7 @@ categories:
 - クラウド
 - ai/ml
 - 開発ツール
+custom_kind: integration
 dependencies: []
 display_on_public_website: true
 draft: false
@@ -36,7 +37,6 @@ integration_id: amazon-codewhisperer
 integration_title: Amazon CodeWhisperer
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: amazon_codewhisperer
 public_title: Amazon CodeWhisperer
@@ -51,6 +51,7 @@ tile:
   - Category::AI/ML
   - Category::Developer Tools
   - Submitted Data Type::Metrics
+  - Offering::Integration
   configuration: README.md#Setup
   description: Amazon CodeWhisperer は ML を搭載したコード提案サービスです。
   media: []
@@ -60,40 +61,40 @@ tile:
 ---
 
 <!--  SOURCED FROM https://github.com/DataDog/integrations-internal-core -->
-## 概要
+## Overview
 
-Amazon CodeWhisperer は、自然言語によるコメントと統合開発環境 (IDE) 内のコードに基づいてコードの提案を生成することで、開発者の生産性向上を支援する機械学習搭載サービスです。
+Amazon CodeWhisperer is a machine learning–powered service that helps improve developer productivity by generating code recommendations based on their comments in natural language and code in the integrated development environment (IDE).
 
-このインテグレーションを有効にすると、Datadog にすべての CodeWhisperer メトリクスを表示できます。
+Enable this integration to see all your CodeWhisperer metrics in Datadog.
 
-## セットアップ
+## Setup
 
-### インストール
+### Installation
 
-[Amazon Web Services インテグレーション][1]をまだセットアップしていない場合は、最初にセットアップします。
+If you haven't already, set up the [Amazon Web Services integration][1] first.
 
-### メトリクスの収集
+### Metric collection
 
-1. [AWS インテグレーションページ][2]で、`Metric Collection` タブの下にある `CodeWhisperer` が有効になっていることを確認します。
-2. [Datadog - Amazon CodeWhisperer インテグレーション][3]をインストールします。
+1. In the [AWS integration page][2], ensure that `CodeWhisperer` is enabled under the `Metric Collection` tab.
+2. Install the [Datadog - Amazon CodeWhisperer integration][3].
 
-## データ収集
+## Data Collected
 
-### メトリクス
+### Metrics
 {{< get-metrics-from-git "amazon_codewhisperer" >}}
 
 
-### イベント
+### Events
 
-Amazon CodeWhisperer インテグレーションには、イベントは含まれません。
+The Amazon CodeWhisperer integration does not include any events.
 
-### サービスチェック
+### Service Checks
 
-Amazon CodeWhisperer インテグレーションには、サービスのチェック機能は含まれません。
+The Amazon CodeWhisperer integration does not include any service checks.
 
-## トラブルシューティング
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][5]までお問い合わせください。
+Need help? Contact [Datadog support][5].
 
 [1]: https://docs.datadoghq.com/ja/integrations/amazon_web_services/
 [2]: https://app.datadoghq.com/integrations/amazon-web-services

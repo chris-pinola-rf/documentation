@@ -24,6 +24,7 @@ author:
 categories:
 - キャッシュ
 - data stores
+custom_kind: integration
 dependencies:
 - https://github.com/DataDog/integrations-extras/blob/master/eventstore/README.md
 display_on_public_website: true
@@ -33,7 +34,6 @@ integration_id: eventstore
 integration_title: Eventstore
 integration_version: 2.0.0
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: eventstore
 public_title: Eventstore
@@ -50,6 +50,7 @@ tile:
   - Supported OS::Linux
   - Supported OS::Windows
   - Supported OS::macOS
+  - Offering::Integration
   configuration: README.md#Setup
   description: Eventstore のメトリクスを収集
   media: []
@@ -61,61 +62,61 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/integrations-extras -->
 
 
-## 概要
+## Overview
 
-EventStore からメトリクスをリアルタイムに取得して、以下のことができます。
+Get metrics from EventStore in real time to:
 
-* EventStore のキューを視覚化および監視できます。
-* 以下の API エンドポイントで、使用可能なすべてのメトリクスをキャプチャします。統計、ノード情報、非過渡的な予測、サブスクリプション、クラスターゴシップ（スクレープするエンドポイントのリストは構成できます）
+* Visualize and monitor EventStore queues
+* Capture all available metrics within the following API endpoints: stats, node info, non-transient projections, subscriptions, cluster gossip (the list of endpoints to scrape is configurable)
 
-## 計画と使用
+## Setup
 
-EventStore チェックは [Datadog Agent][1] パッケージに含まれていないため、お客様自身でインストールする必要があります。
+The EventStore check is not included in the [Datadog Agent][1] package, so you need to install it.
 
-### インフラストラクチャーリスト
+### Installation
 
-Agent v7.21 / v6.21 以降の場合は、下記の手順に従い EventStore チェックをホストにインストールします。Docker Agent または 上記バージョン以前の Agent でインストールする場合は、[コミュニティインテグレーションの使用][2]をご参照ください。
+For Agent v7.21+ / v6.21+, follow the instructions below to install the EventStore check on your host. See [Use Community Integrations][2] to install with the Docker Agent or earlier versions of the Agent.
 
-1. 以下のコマンドを実行して、Agent インテグレーションをインストールします。
+1. Run the following command to install the Agent integration:
 
    ```shell
    datadog-agent integration install -t datadog-eventstore==<INTEGRATION_VERSION>
    ```
 
-2. コアの[インテグレーション][3]と同様にインテグレーションを構成します。
+2. Configure your integration similar to core [integrations][3].
 
-### ブラウザトラブルシューティング
+### Configuration
 
-1. EventStore の[メトリクス](#metrics)の収集を開始するには、[Agent のコンフィギュレーションディレクトリ][4]のルートにある `conf.d/` フォルダーの `eventstore.d/conf.yaml` ファイルを編集します。
-   使用可能なすべてのコンフィギュレーションオプションについては、[サンプル eventstore.d/conf.yaml][5] を参照してください。
+1. Edit the `eventstore.d/conf.yaml` file in the `conf.d/` folder at the root of your [Agent's configuration directory][4] to start collecting your EventStore [metrics](#metrics).
+   See the [sample eventstore.d/conf.yaml][5] for all available configuration options.
 
-2. [Agent を再起動します][6]。
+2. [Restart the Agent][6].
 
-### 検証
+### Validation
 
-[Agent の status サブコマンドを実行][7]し、Checks セクションで `eventstore` を探します。
+[Run the Agent's status subcommand][7] and look for `eventstore` under the Checks section.
 
-## 互換性
+## Compatibility
 
-このチェックは、すべての主要プラットフォームと互換性があります。
+The check is compatible with all major platforms.
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "eventstore" >}}
 
 
-### ヘルプ
+### Events
 
-eventstore チェックには、イベントは含まれません。
+The eventstore check does not include any events.
 
-### ヘルプ
+### Service Checks
 
-eventstore チェックには、サービスのチェック機能は含まれません。
+The eventstore check does not include any service checks.
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、このインテグレーションの[メインテナー][9]までお問い合わせください。
+Need help? Contact the [maintainer][9] of this integration.
 
 [1]: https://app.datadoghq.com/account/settings/agent/latest
 [2]: https://docs.datadoghq.com/ja/agent/guide/use-community-integrations/

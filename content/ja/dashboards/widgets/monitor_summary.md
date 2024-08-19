@@ -10,87 +10,75 @@ title: モニターサマリーウィジェット
 widget_type: manage_status
 ---
 
-モニターサマリーウィジェットは、Datadog のすべてのモニターまたはクエリに基づく一部のモニターの概要を表示します。
+The monitor summary widget displays a summary view of all your Datadog monitors, or a subset based on a query.
 
-{{< img src="dashboards/widgets/monitor_summary/monitor-summary-overview.png" alt="モニターサマリー" >}}
+{{< img src="dashboards/widgets/monitor_summary/monitor-summary-overview.png" alt="monitor summary" >}}
 
-## セットアップ
+## Setup
 
-{{< img src="dashboards/widgets/monitor_summary/monitor-summary-setup.png" alt="Monitor サマリーの設定" style="width:80%;">}}
+### Configuration
 
-### コンフィギュレーション
+1. Select one of the three summary types: `Monitor`, `Group` or `Combined`
+    - The `Monitor` summary type lists statuses and names of monitors matching the [monitor query][1]. Multi alert monitors have only one row in the results list and their status is the multi alert monitor's overall status. The Status Counts are the number of matching monitors with each status type.
 
-1. 3 つのサマリータイプ `Monitor`、`Group`、`Combined` のいずれかを選択します。
-    - `Monitor` サマリータイプには、[モニタークエリ][1]に一致するモニターのステータスと名前が一覧表示されます。マルチアラートモニターの結果リストには 1 行しかなく、そのステータスはマルチアラートモニターの全体的なステータスです。ステータスカウントは、各ステータスタイプと一致するモニターの数です。
+    {{< img src="dashboards/widgets/monitor_summary/monitor_summary_type.png" alt="monitor summary type" style="width:80%;">}}
 
-    {{< img src="dashboards/widgets/monitor_summary/monitor_summary_type.png" alt="Monitor サマリータイプ" style="width:80%;">}}
+    - The `Group` summary type lists statuses, names, and groups of monitors matching the monitor query. Multi alert monitors are broken into several rows in the results list and correspond to each group and that group's specific status in the multi alert monitor. The `Group` summary type also supports `group` and `group_status` facets in its monitor query similar to the [Triggered Monitors][2] page. The Status Counts are the number of matching monitor groups with each status type.
 
-    - `Group` サマリータイプには、モニタークエリに一致するモニターのステータス、名前、グループが一覧表示されます。マルチアラートモニターは結果リストで複数行に分割され、各グループとマルチアラートモニター内のそのグループの特定のステータスに対応します。また、`Group` サマリータイプは、[Triggered Monitors][2] ページと同様に、モニタークエリで `group` と `group_status` ファセットをサポートしています。ステータスカウントは、各ステータスタイプと一致するモニターグループの数です。
+    {{< img src="dashboards/widgets/monitor_summary/group_summary_type.png" alt="group summary type" style="width:80%;">}}
 
-    {{< img src="dashboards/widgets/monitor_summary/group_summary_type.png" alt="Group サマリータイプ" style="width:80%;">}}
+    - The `Combined` summary type lists the number of group statuses and names of the monitors matching the monitor query. Multi alert monitors have only one row in the results list like in the `Monitor` summary type but the groups column displays the number of groups in each status type instead of the monitor's overall status. Similar to the `Group` summary type, the `Combined` summary type also supports the `group` and `group_status` facets in its monitor query. The Status Counts still show the count of overall monitor statuses like in the `Monitor` summary type.
 
-    - `Combined` サマリータイプには、モニタークエリに一致するグループステータスの数とモニターの名前が一覧表示されます。マルチアラートモニターの結果リストには、`Monitor` サマリータイプのように 1 行しかありませんが、グループ列には、モニターの全体的なステータスではなく、各ステータスタイプのグループ数が表示されます。また `Group` サマリータイプと同様に、`Combined` サマリータイプは、モニタークエリで `group` と `group_status` ファセットをサポートしています。ステータスカウントには、やはり `Monitor` サマリータイプのように、全体的なモニターステータスのカウントが表示されます。
+    {{< img src="dashboards/widgets/monitor_summary/combined_summary_type.png" alt="combined summary type" style="width:80%;">}}
 
-    {{< img src="dashboards/widgets/monitor_summary/combined_summary_type.png" alt="Combined サマリータイプ" style="width:80%;">}}
+2. Enter a monitor query to display the monitor summary widget over a subset of your monitors.
 
-2. 一部のモニターを対象としてモニターサマリーウィジェットを表示する場合は、モニタークエリを入力します。
+    **Note** In addition to the facets listed in the link above, the `Group` and `Combined` summary types also support the `group` and `group_status` facets for group-level searching, similar to the [Triggered Monitors][2] page.
 
-   **注** 上記のリンクにリストされたファセットに加えて、`Group` と `Combined` サマリータイプは、[Triggered Monitors][2] ページと同様に、グループレベルの検索用に `group` と `group_status` ファセットもサポートします。
+#### Template variables
 
-#### テンプレート変数
+To use template variables created in your dashboard in the monitor summary search query, follow the same query format as the Manage Monitor page.
 
-ダッシュボードで作成したテンプレート変数をモニターサマリーの検索クエリで使用するには、Manage Monitor ページと同じクエリ形式に従ってください。
+**Example**
 
-**例**
+1. Filtering on Monitor `scope` with a `$service` template variable.
 
-1. テンプレート変数 `$service` を使って、モニター `scope` でフィルタリングを行う。
+   To leverage `scope` in the manage or triggered monitor page, you have to do `scope:service:web-store`.
+   Therefore in the widget you have to do `scope:$service` to then apply the template variable value to the widget.
 
-   管理ページやトリガーされたモニターページで `scope` を利用するには、`scope:service:web-store` を実行する必要があります。
-   したがって、ウィジェットで `scope:$service` を実行し、テンプレート変数の値をウィジェットに適用する必要があります。
-
-   {{< img src="dashboards/widgets/monitor_summary/templatevariable-example-scope.png" alt="テンプレート変数のスコープ" style="width:80%;">}}
+   {{< img src="dashboards/widgets/monitor_summary/templatevariable-example-scope.png" alt="Scope Template variable" style="width:80%;">}}
 
 
-2. テンプレート変数 `$env` を使って、モニター `group` でフィルタリングを行う。
+2. Filtering on Monitor `group` with a `$env` template variable.
 
-   管理ページやトリガーされたモニターページで `group` を利用するには、`group:env:prod` を実行する必要があります。
-   したがって、ウィジェットで `group:$env` を実行し、テンプレート変数の値をウィジェットに適用する必要があります。
+   To leverage `group` in the manage or triggered monitor page, you have to do `group:env:prod`.
+   Therefore in the widget you have to do `group:$env` to then apply the template variable value to the widget.
 
-   {{< img src="dashboards/widgets/monitor_summary/templatevariable-example-group.png" alt="テンプレート変数のグループ化" style="width:80%;">}}
+   {{< img src="dashboards/widgets/monitor_summary/templatevariable-example-group.png" alt="Group Template variable" style="width:80%;">}}
 
-## オプション
+## Options
 
-#### 表示設定
+#### Display preferences
 
-モニターステータスタイプごとのモニターの `Count` のみ、モニターの `List`、または `Both` のどれを表示するかを選択します。`Text` と `Background` オプションは、ステータスカウントのテキストまたは背景にステータスの色を適用するかどうかを指定します。`Hide empty Status Counts` オプションを有効にすると、結果リストにモニターがゼロより多いステータスのステータスカウントのみが表示されます。
+Choose to show only the `Count` of monitors per monitor status type, a `List` of monitors, or `Both`. The `Text` and `Background` options specify whether the status colors should be applied to the text or background of the Status Counts. The `Hide empty Status Counts` option, when enabled, only shows the Status Counts for statuses that have more than zero monitors in the result list.
 
-{{< img src="dashboards/widgets/monitor_summary/display-preferences.png" alt="表示設定" style="width:80%;">}}
+{{< img src="dashboards/widgets/monitor_summary/display-preferences.png" alt="display preferences" style="width:80%;">}}
 
-`Show triggered column` オプションを選択すると、トリガーされた状態（`Alert`、`Warn`、または `No Data`）のモニターまたはモニターグループに結果がフィルターされ、最近トリガーされたものから順にソートされます。モニター/グループが最後にトリガーされてから経過した時間を示す列が追加されます。
+Selecting the `Show triggered column` option filters the results to monitors or monitor groups that are in a triggered state (`Alert`, `Warn`, or `No Data`) and sorts them from most recently triggered to least recently triggered. An additional column is added indicating the amount of time that has elapsed since the monitor/group last triggered.
 
-{{< img src="dashboards/widgets/monitor_summary/monitor-summary.png" alt="表示設定" style="width:80%;">}}
-
-#### タイトル
-
-`Show a title` チェックボックスをオンにして、ウィジェットのカスタムタイトルを表示します。
-
-{{< img src="dashboards/widgets/monitor_summary/widget_title.png" alt="ウィジェットのタイトル" style="width:80%;">}}
-
-オプションで、タイトルのサイズと配置を定義できます。
+{{< img src="dashboards/widgets/monitor_summary/monitor-summary.png" alt="display preferences" style="width:80%;">}}
 
 ## API
 
-このウィジェットは、**ダッシュボード API** とともに使用できます。詳しくは、[ダッシュボード API][3] ドキュメントをご参照ください。
-
-モニターサマリーウィジェットの[ウィジェット JSON スキーマ定義][4]は次のとおりです。
+This widget can be used with the **[Dashboards API][3]**. See the following table for the [widget JSON schema definition][4]:
 
 {{< dashboards-widgets-api >}}
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
 [1]: /ja/monitors/manage/
-[2]: /ja/monitors/manage/#manage-triggered-monitors-with-group-level-granularity
-[3]: /ja/api/v1/dashboards/
+[2]: /ja/monitors/manage/#grouped-results
+[3]: /ja/api/latest/dashboards/
 [4]: /ja/dashboards/graphing_json/widget_json/

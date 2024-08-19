@@ -1,122 +1,84 @@
 ---
+algolia:
+  tags:
+  - uninstall
+  - uninstalling
 aliases:
 - /ja/guides/basic_agent_usage/fedora/
 further_reading:
 - link: /logs/
   tag: Documentation
-  text: ログの収集
+  text: Collect your logs
 - link: /infrastructure/process/
   tag: Documentation
-  text: プロセスの収集
+  text: Collect your processes
 - link: /tracing/
   tag: Documentation
-  text: トレースの収集
+  text: Collect your traces
 - link: /agent/basic_agent_usage/#agent-architecture
   tag: Documentation
-  text: Agent のアーキテクチャを詳しく見る
+  text: Find out more about the Agent's architecture
 - link: /agent/configuration/network#configure-ports
   tag: Documentation
-  text: インバウンドポートの構成
+  text: Configure inbound ports
 platform: Fedora
 title: Fedora 用 Agent の基本的な使用方法
 ---
 
-## 概要
+## Overview
 
-このページでは、Fedora 用 Datadog Agent の基本的な機能について説明します。Agent をまだインストールしていない場合は、[Datadog Agent インテグレーションに関するドキュメント][1]で手順を参照してください。
+This page outlines the basic features of the Datadog Agent for Fedora. If you haven't installed the Agent yet, instructions can be found in the [Datadog Agent Integration][1] documentation.
 
-64-bit x86 および Arm v8 アーキテクチャ用のパッケージをご用意しています。その他のアーキテクチャについては、ソースインストールをご利用ください。
+Packages are available for 64-bit x86 and Arm v8 architectures. For other architectures, use the source install.
 
-**注**: Fedora 26 以降は、64 ビット x86 アーキテクチャでサポートされています。Fedora 27 以降は、64 ビット Arm v8 アーキテクチャでサポートされています。
+**Note**: Fedora 26 and above are supported on the 64-bit x86 architecture. Fedora 27 and above are supported on the 64-bit Arm v8 architecture.
 
-## コマンド
+## Commands
 
-Agent v6 & v7 では、オペレーティングシステムから提供されるサービスマネージャーが Agent のライフサイクルを担う一方で、他のコマンドは Agent バイナリから直接実行する必要があります。Agent v5 では、ほぼすべてがサービスマネージャーによって実行されます。
+In Agent v6 and v7, the service manager provided by the operating system is responsible for the Agent lifecycle, while other commands must be run through the Agent binary directly. In Agent v5, almost everything is done through the service manager.
 
-{{< tabs >}}
-{{% tab "Agent v6 & v7" %}}
-
-| 説明                        | コマンド                                                |
+| Description                        | Command                                                |
 |------------------------------------|--------------------------------------------------------|
-| Agent をサービスとして起動           | `sudo systemctl start datadog-agent`                   |
-| サービスとして実行中の Agent の停止    | `sudo systemctl stop datadog-agent`                    |
-| サービスとして実行中の Agent の再起動 | `sudo systemctl restart datadog-agent`                 |
-| Agent サービスのステータス            | `sudo systemctl status datadog-agent`                  |
-| 実行中の Agent のステータスページ       | `sudo datadog-agent status`                            |
-| フレアの送信                         | `sudo datadog-agent flare`                             |
-| コマンドの使用方法の表示              | `sudo datadog-agent --help`                            |
-| チェックの実行                        | `sudo -u dd-agent -- datadog-agent check <CHECK_NAME>` |
+| Start Agent as a service           | `sudo systemctl start datadog-agent`                   |
+| Stop Agent running as a service    | `sudo systemctl stop datadog-agent`                    |
+| Restart Agent running as a service | `sudo systemctl restart datadog-agent`                 |
+| Status of Agent service            | `sudo systemctl status datadog-agent`                  |
+| Status page of running Agent       | `sudo datadog-agent status`                            |
+| Send flare                         | `sudo datadog-agent flare`                             |
+| Display command usage              | `sudo datadog-agent --help`                            |
+| Run a check                        | `sudo -u dd-agent -- datadog-agent check <CHECK_NAME>` |
 
-{{% /tab %}}
-{{% tab "Agent v5" %}}
+**Note**: If the `service` wrapper is not available on your system, use:
 
-| 説明                        | コマンド                                           |
-|------------------------------------|---------------------------------------------------|
-| Agent をサービスとして起動           | `sudo service datadog-agent start`                |
-| サービスとして実行中の Agent の停止    | `sudo service datadog-agent stop`                 |
-| サービスとして実行中の Agent の再起動 | `sudo service datadog-agent restart`              |
-| Agent サービスのステータス            | `sudo service datadog-agent status`               |
-| 実行中の Agent のステータスページ       | `sudo service datadog-agent info`                 |
-| フレアの送信                         | `sudo service datadog-agent flare`                |
-| コマンドの使用方法の表示              | `sudo service datadog-agent`                      |
-| チェックの実行                        | `sudo -u dd-agent -- dd-agent check <CHECK_NAME>` |
+* On `upstart`-based systems: `sudo start/stop/restart/status datadog-agent`
+* On `systemd`-based systems: `sudo systemctl start/stop/restart/status datadog-agent`
 
-**注**: ご使用のシステムで `service` ラッパーを使用できない場合は、以下を使用してください。
+## Configuration
 
-* `upstart` ベースのシステムの場合: `sudo start/stop/restart/status datadog-agent`
-* `systemd` ベースのシステムの場合: `sudo systemctl start/stop/restart/status datadog-agent`
-
-[サービスライフサイクルコマンドについては、こちらを参照してください][2]。
-
-{{% /tab %}}
-{{< /tabs >}}
-
-## コンフィギュレーション
-
-{{< tabs >}}
-{{% tab "Agent v6 & v7" %}}
-Agent の構成ファイルおよびフォルダーの場所:
+The configuration files and folders for the Agent are located in:
 
 * `/etc/datadog-agent/datadog.yaml`
 
-[インテグレーション][1]用構成ファイルの場所
+Configuration files for [Integrations][4]:
 
 * `/etc/datadog-agent/conf.d/`
 
-[1]: /ja/integrations/
-{{% /tab %}}
-{{% tab "Agent v5" %}}
+## Uninstall the Agent
 
-Agent の構成ファイルおよびフォルダーの場所
-
-* `/etc/dd-agent/datadog.conf`
-
-[インテグレーション][1]用構成ファイルの場所
-
-* `/etc/dd-agent/conf.d/`
-
-[1]: /ja/integrations/
-{{% /tab %}}
-{{< /tabs >}}
-
-## Agent のアンインストール
-
-{{< tabs >}}
-{{% tab "Agent v6 & v7" %}}
-
+To uninstall the Agent, run the following command:
 
 ```shell
 sudo yum remove datadog-agent
 ```
 
-このコマンドでは、Agent は削除されますが以下は削除されません。
-* `datadog.yaml` コンフィギュレーションファイル
-* `/etc/datadog-agent` コンフィギュレーションフォルダ内のユーザー作成ファイル
-* `/opt/datadog-agent` フォルダ内のユーザー作成ファイル
-* `dd-agent` ユーザー
-* Datadog ログファイル
+This command removes the Agent, but does not remove:
+* The `datadog.yaml` configuration file
+* User-created files in the `/etc/datadog-agent` configuration folder
+* User-created files in the `/opt/datadog-agent` folder
+* The `dd-agent` user
+* Datadog log files
 
-以上の要素も削除したい場合は、Agent 削除後に次のコマンドを実行します。
+If you also want to remove these elements, run this command after removing the Agent:
 
 ```shell
 sudo userdel dd-agent \
@@ -124,46 +86,24 @@ sudo userdel dd-agent \
 && sudo rm -rf /etc/datadog-agent/ \
 && sudo rm -rf /var/log/datadog/
 ```
-{{% /tab %}}
 
-{{% tab "Agent v5" %}}
-```shell
-sudo yum remove datadog-agent
-```
+{{% apm-ssi-uninstall-linux %}}
 
-このコマンドでは、Agent は削除されますが以下は削除されません。
+## Troubleshooting
 
-* `datadog.yaml` コンフィギュレーションファイル
-* `/etc/dd-agent` コンフィギュレーションフォルダ内のユーザー作成ファイル
-* `/opt/datadog-agent` フォルダ内のユーザー作成ファイル
-* `dd-agent` ユーザー
-* Datadog ログファイル
+See the [Agent Troubleshooting documentation][2].
 
-以上の要素も削除したい場合は、Agent 削除後に次のコマンドを実行します。
+## Working with the embedded Agent
 
-```shell
-sudo userdel dd-agent \
-&& sudo rm -rf /opt/datadog-agent/ \
-&& sudo rm -rf /etc/dd-agent/ \
-&& sudo rm -rf /var/log/datadog/
-```
-{{% /tab %}}
-{{< /tabs >}}
+The Agent contains an embedded Python environment at `/opt/datadog-agent/embedded/`. Common binaries such as `python` and `pip` are contained within `/opt/datadog-agent/embedded/bin/`.
 
-## ヘルプ
+See the instructions on how to [add packages to the embedded Agent][3] for more information.
 
-[Agent のトラブルシューティングに関するドキュメント][2]を参照してください。
-
-## 埋め込み Agent の使用
-
-Agent には、埋め込み Python 環境が `/opt/datadog-agent/embedded/` に含まれています。`python`、`pip` などの共通バイナリは `/opt/datadog-agent/embedded/bin/` に含まれています。
-
-詳細については、[埋め込み Agent へのパッケージの追加方法][3]の手順を参照してください。
-
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
 [1]: https://app.datadoghq.com/account/settings/agent/latest?platform=fedora
 [2]: /ja/agent/troubleshooting/
 [3]: /ja/developers/guide/custom-python-package/
+[4]: /ja/integrations/

@@ -6,45 +6,45 @@ title: タイムボード API
 ---
 
 <div class="alert alert-danger">
-このエンドポイントは旧バージョンです。代わりに、<a href="https://docs.datadoghq.com/api/v1/dashboards/">新しいダッシュボードエンドポイント</a>を使用してください。
+This endpoint is outdated. Use the <a href="https://docs.datadoghq.com/api/v1/dashboards/"> new Dashboard endpoint</a> instead.
 </div>
 
-`Timeboard` エンドポイントを使用すると、タイムボードをプログラムで作成、更新、削除、およびクエリできます。
+The `Timeboard` endpoint allows you to programmatically create, update delete and query timeboards.
 
-## タイムボードの作成
+## Create a timeboard
 
-### シグニチャ
+### Signature
 
 `POST https://api.datadoghq.com/api/v1/dash`
 
-### 引数
+### Arguments
 
-* **`title`** [必須]:
-    ダッシュボードの名前。
-* **`description`** [必須]:
-    ダッシュボードの内容の説明。
-* **`graphs`** [オプション、デフォルト = **None**]:
-    グラフ定義のリスト。グラフの定義は、次の形式に従います。
-    * **`title`** [必須]:
-        グラフの名前。
-    * **`definition`** [オプション、デフォルト = **None**]:
-        * `events` [オプション、デフォルト = **None**]:
-          イベントオーバーレイのクエリ。
-        * `requests` [オプション、デフォルト = **None**]:
-          メトリクスクエリ、線の種類、スタイル、条件付き書式、および集計関数。
-        * `viz` [オプション、デフォルト = **timeseries**]:
-          可視化タイプ。
+* **`title`** [*required*]:
+    The name of the dashboard.
+* **`description`** [*required*]:
+    A description of the dashboard's content.
+* **`graphs`** [*optional*, *default*=**None**]:
+    A list of graph definitions. Graph definitions follow this form:
+    * **`title`** [*required*]:
+        The name of the graph.
+    * **`definition`** [*optional*, *default*=**None**]:
+        * `events` [*optional*, *default*=**None**]:
+          The query for event overlay.
+        * `requests` [*optional*, *default*=**None**]:
+          The metric query, line type, style, conditional formats, and aggregator.
+        * `viz` [*optional*, *default*=**timeseries**]:
+          The type of visualization.
 
-* **`template_variables`** [オプション、デフォルト = **None**]:
-    ダッシュボードのテンプレートを使用するためのテンプレート変数のリスト。テンプレート変数の定義は、次の形式に従います。
-    * **`name`** [必須]:
-        変数の名前。
-    * **`prefix`** [オプション、デフォルト = **None**]:
-        変数に関連付けられるタグプレフィックス。このプレフィックスを持つタグだけが変数ドロップダウンに表示されます。
-    * **`default`** [オプション、デフォルト = **None**]:
-        ダッシュボード読み込み時のテンプレート変数のデフォルト値。
+* **`template_variables`** [*optional*, *default*=**None**]:
+    A list of template variables for using Dashboard templating. Template variable definitions follow this form:
+    * **`name`** [*required*]:
+        The name of the variable.
+    * **`prefix`** [*optional*, *default*=**None**]:
+        The tag prefix associated with the variable. Only tags with this prefix appear in the variable dropdown.
+    * **`default`** [*optional*, *default*=**None**]:
+        The default value for the template variable on dashboard load.
 
-### 例
+### Examples
 
 {{< tabs >}}
 {{% tab "Python" %}}
@@ -59,8 +59,8 @@ options = {
 
 initialize(**options)
 
-title = "マイタイムボード"
-description = "有益なタイムボード。"
+title = "My Timeboard"
+description = "An informative timeboard."
 graphs = [{
     "definition": {
         "events": [],
@@ -69,7 +69,7 @@ graphs = [{
         ],
         "viz": "timeseries"
     },
-    "title": "平均メモリ空き容量"
+    "title": "Average Memory Free"
 }]
 
 template_variables = [{
@@ -99,9 +99,9 @@ app_key = '<DATADOG_APPLICATION_KEY>'
 
 dog = Dogapi::Client.new(api_key, app_key)
 
-# タイムボードを作成する。
-title = 'はじめてのメトリクス'
-description = 'しかもとても素晴らしい。'
+# Create a timeboard.
+title = 'My First Metrics'
+description = 'And they are marvelous.'
 graphs = [{
     "definition" => {
         "events" => [],
@@ -110,7 +110,7 @@ graphs = [{
         }],
         "viz" => "timeseries"
     },
-    "title" => "平均メモリ空き容量"
+    "title" => "Average Memory Free"
 }]
 template_variables = [{
     "name" => "host1",
@@ -131,7 +131,7 @@ app_key=<DATADOG_APPLICATION_KEY>
 curl  -X POST -H "Content-type: application/json" \
 -d '{
       "graphs" : [{
-          "title": "平均メモリ空き容量",
+          "title": "Average Memory Free",
           "definition": {
               "events": [],
               "requests": [
@@ -140,8 +140,8 @@ curl  -X POST -H "Content-type: application/json" \
               "viz": "timeseries"
           }
       }],
-      "title" : "平均メモリ空き容量 シェル",
-      "description" : "メモリ情報を含むダッシュボード",
+      "title" : "Average Memory Free Shell",
+      "description" : "A dashboard with memory info.",
       "template_variables": [{
           "name": "host1",
           "prefix": "host",
@@ -155,38 +155,38 @@ curl  -X POST -H "Content-type: application/json" \
 {{% /tab %}}
 {{< /tabs >}}
 
-## タイムボードの更新
+## Update a timeboard
 
-### シグニチャ
+### Signature
 
 `PUT https://api.datadoghq.com/api/v1/dash/<TIMEBOARD_ID>`
 
-### 引数
+### Arguments
 
-* **`title`** [必須]:
-    ダッシュボードの名前。
-* **`description`** [必須]:
-    ダッシュボードの内容の説明。
-* **`graphs`** [必須]:
-    グラフ定義のリスト。グラフの定義は、次の形式に従います。
-    * **`title`** [必須]:
-        グラフの名前。
-    * **`definition`** [必須]:
-    グラフの定義です。例:
+* **`title`** [*required*]:
+    The name of the dashboard.
+* **`description`** [*required*]:
+    A description of the dashboard's contents.
+* **`graphs`** [*required*]:
+    A list of graph definitions. Graph definitions follow this form:
+    * **`title`** [*required*]:
+        The name of the graph.
+    * **`definition`** [*required*]:
+    The graph definition. Example:
     `{"requests": [{"q": "system.cpu.idle{*} by {host}"}`
 
-* **`template_variables`** [オプション、デフォルト = **None**]:
-    ダッシュボードのテンプレートを使用するためのテンプレート変数のリスト。テンプレート変数の定義は、次の形式に従います。
-    * **`name`** [必須]:
-     変数の名前。
+* **`template_variables`** [*optional*, *default*=**None**]:
+    A list of template variables for using Dashboard templating. Template variable definitions follow this form:
+    * **`name`** [*required*]:
+     The name of the variable.
 
-    * **`prefix`** [オプション、デフォルト = **None**]:
-    変数に関連付けられるタグプレフィックス。このプレフィックスを持つタグだけが変数ドロップダウンに表示されます。
+    * **`prefix`** [*optional*, *default*=**None**]:
+    The tag prefix associated with the variable. Only tags with this prefix appear in the variable dropdown.
 
-    * **`default`** [オプション、デフォルト = **None**]:
-    ダッシュボード読み込み時のテンプレート変数のデフォルト値。
+    * **`default`** [*optional*, *default*=**None**]:
+    The default value for the template variable on dashboard load.
 
-### 例
+### Examples
 
 {{< tabs >}}
 {{% tab "Python" %}}
@@ -199,13 +199,13 @@ options = {'api_key': '<DATADOG_API_KEY>',
 
 initialize(**options)
 
-title = 'マイタイムボード'
-description = '新しく進化したタイムボード！'
+title = 'My Timeboard'
+description = 'A new and improved timeboard!'
 graphs = [{'definition': {'events': [],
                           'requests': [{
                             'q': 'avg:system.mem.free{*} by {host}'}],
                           'viz': 'timeseries'},
-          'title': 'ホストごとの平均メモリ空き容量'}]
+          'title': 'Average Memory Free By Host'}]
 template_variables = [{'name': 'host1', 'prefix': 'host',
                        'default': 'host:my-host'}]
 read_only = True
@@ -233,8 +233,8 @@ app_key = '<DATADOG_APPLICATION_KEY>'
 dog = Dogapi::Client.new(api_key, app_key)
 
 dash_id = '2551'
-title = '新しく進化したダッシュボード'
-description = '新しい機能を全て搭載。'
+title = 'New and Improved Timeboard'
+description = 'This has all the new hotness.'
 graphs = [{
     "definition" => {
         "events" => [],
@@ -243,7 +243,7 @@ graphs = [{
         }],
         "viz" => "timeseries"
     },
-    "title" => "平均メモリ空き容量"
+    "title" => "Average Memory Free"
 }]
 template_variables = [{
     "name" => "host1",
@@ -262,11 +262,11 @@ api_key=<DATADOG_API_KEY>
 app_key=<DATADOG_APPLICATION_KEY>
 dash_id=2532
 
-# 取得するダッシュボードを作成します。(http://stedolan.github.io/jq/download/) を使用してダッシュボード ID を取得します。
+# Create a dashboard to get. Use jq (http://stedolan.github.io/jq/download/) to get the dash id.
 dash_id=$(curl  -X POST -H "Content-type: application/json" \
 -d '{
       "graphs" : [{
-          "title": "平均メモリ空き容量",
+          "title": "Average Memory Free",
           "definition": {
               "events": [],
               "requests": [
@@ -275,8 +275,8 @@ dash_id=$(curl  -X POST -H "Content-type: application/json" \
               "viz": "timeseries"
           }
       }],
-      "title" : "平均メモリ空き容量 シェル",
-      "description" : "メモリ情報を含むダッシュボード",
+      "title" : "Average Memory Free Shell",
+      "description" : "A dashboard with memory info.",
       "template_variables": [{
           "name": "host1",
           "prefix": "host",
@@ -288,7 +288,7 @@ dash_id=$(curl  -X POST -H "Content-type: application/json" \
 curl  -X PUT -H "Content-type: application/json" \
 -d '{
       "graphs" : [{
-          "title": "メモリ空き容量の合計",
+          "title": "Sum of Memory Free",
           "definition": {
               "events": [],
               "requests": [
@@ -297,8 +297,8 @@ curl  -X PUT -H "Content-type: application/json" \
               "viz": "timeseries"
           }
       }],
-      "title" : "メモリ空き容量の合計 シェル",
-      "description" : "メモリ情報を含む更新済みダッシュボード",
+      "title" : "Sum Memory Free Shell",
+      "description" : "An updated dashboard with memory info.",
       "template_variables": [{
           "name": "host1",
           "prefix": "host",
@@ -311,20 +311,20 @@ curl  -X PUT -H "Content-type: application/json" \
 {{% /tab %}}
 {{< /tabs >}}
 
-## タイムボードの削除
+## Delete a timeboard
 
-既存のタイムボードを削除します。
-このエンドポイントは、JSON 引数を受け取りません。
+Delete an existing timeboard.
+*This end point takes no JSON arguments.*
 
-### シグニチャ
+### Signature
 
 `DELETE https://api.datadoghq.com/api/v1/dash/<TIMEBOARD_ID>`
 
-### 引数
+### Arguments
 
-このエンドポイントは、JSON 引数を受け取りません。
+*This end point takes no JSON arguments.*
 
-### 例
+### Examples
 
 {{< tabs >}}
 {{% tab "Python" %}}
@@ -339,8 +339,8 @@ options = {
 
 initialize(**options)
 
-title = "マイタイムボード"
-description = "有益なタイムボード。"
+title = "My Timeboard"
+description = "An informative timeboard."
 graphs = [{
     "definition": {
         "events": [],
@@ -349,7 +349,7 @@ graphs = [{
         ],
         "viz": "timeseries"
     },
-    "title": "平均メモリ空き容量"
+    "title": "Average Memory Free"
 }]
 
 template_variables = [{
@@ -390,11 +390,11 @@ api_key=<DATADOG_API_KEY>
 app_key=<DATADOG_APPLICATION_KEY>
 dash_id=2471
 
-# 削除するダッシュボードを作成します。(http://stedolan.github.io/jq/download/) を使用してダッシュボード ID を取得します。
+# Create a dashboard to delete. Use jq (http://stedolan.github.io/jq/download/) to get the dash id.
 dash_id=$(curl  -X POST -H "Content-type: application/json" \
 -d '{
       "graphs" : [{
-          "title": "平均メモリ空き容量",
+          "title": "Average Memory Free",
           "definition": {
               "events": [],
               "requests": [
@@ -403,8 +403,8 @@ dash_id=$(curl  -X POST -H "Content-type: application/json" \
               "viz": "timeseries"
           }
       }],
-      "title" : "平均メモリ空き容量 シェル",
-      "description" : "メモリ情報を含むダッシュボード",
+      "title" : "Average Memory Free Shell",
+      "description" : "A dashboard with memory info.",
       "template_variables": [{
           "name": "host1",
           "prefix": "host",
@@ -419,19 +419,19 @@ curl -X DELETE "https://api.datadoghq.com/api/v1/dash/${dash_id}?api_key=${api_k
 {{% /tab %}}
 {{< /tabs >}}
 
-## タイムボードの取得
+## Get a timeboard
 
-既存のダッシュボードの定義を取得します。
+Fetch an existing dashboard's definition.
 
-### シグニチャ
+### Signature
 
 `GET https://api.datadoghq.com/api/v1/dash/<TIMEBOARD_ID>`
 
-### 引数
+### Arguments
 
-このエンドポイントは、JSON 引数を受け取りません。
+*This end point takes no JSON arguments.*
 
-### 例
+### Examples
 
 {{< tabs >}}
 {{% tab "Python" %}}
@@ -473,11 +473,11 @@ api_key=<DATADOG_API_KEY>
 app_key=<DATADOG_APPLICATION_KEY>
 dash_id=2473
 
-# 取得するダッシュボードを作成します。(http://stedolan.github.io/jq/download/) を使用してダッシュボード ID を取得します。
+# Create a dashboard to get. Use jq (http://stedolan.github.io/jq/download/) to get the dash id.
 dash_id=$(curl  -X POST -H "Content-type: application/json" \
 -d '{
       "graphs" : [{
-          "title": "平均メモリ空き容量",
+          "title": "Average Memory Free",
           "definition": {
               "events": [],
               "requests": [
@@ -486,8 +486,8 @@ dash_id=$(curl  -X POST -H "Content-type: application/json" \
               "viz": "timeseries"
           }
       }],
-      "title" : "平均メモリ空き容量 シェル",
-      "description" : "メモリ情報を含むダッシュボード",
+      "title" : "Average Memory Free Shell",
+      "description" : "A dashboard with memory info.",
       "template_variables": [{
           "name": "host1",
           "prefix": "host",
@@ -502,19 +502,19 @@ curl "https://api.datadoghq.com/api/v1/dash/${dash_id}?api_key=${api_key}&applic
 {{% /tab %}}
 {{< /tabs >}}
 
-## すべてのタイムボードの取得
+## Get all timeboards
 
-タイムボードの定義をすべて取得します。
+Fetch all of your timeboard definitions.
 
-### シグニチャ
+### Signature
 
 `GET https://api.datadoghq.com/api/v1/dash`
 
-### 引数
+### Arguments
 
-このエンドポイントは、JSON 引数を受け取りません。
+*This end point takes no JSON arguments.*
 
-### 例
+### Examples
 
 {{< tabs >}}
 {{% tab "Python" %}}

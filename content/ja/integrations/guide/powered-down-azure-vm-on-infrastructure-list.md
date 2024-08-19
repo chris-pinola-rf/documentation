@@ -11,13 +11,13 @@ further_reading:
 title: インフラストラクチャーリストのパワーダウンした Azure VM
 ---
 
-Azure の VM をパワーダウンしても、Datadog Azure インテグレーションは、その VM のメトリクス `azure.vm.status` を収集します。このメトリクスには、`status:running`、`status:not_running`、または `status:unknown` というタグが付けられています。
+When you power down your VMs in Azure, the Datadog Azure integration still collects the metric `azure.vm.status` for that VM. This metric is tagged with `status:running`, `status:not_running`, or `status:unknown`.
 
-これは意図的なものですが、その VM はインフラストラクチャーリストに残ります。VM がこのメトリクスのみを報告する場合、請求可能なホスト数にはカウントされません。請求に関する詳細については、Datadog [請求セクション][1]を参照してください。
+This is intended, but causes the VM to remain on your infrastructure list. If your VM reports only this metric, it does not count towards your billable host-count. See the Datadog [Billing section][1] for more info on billing matters.
 
-Azure VM を破壊した場合、3 時間以内にインフラストラクチャーリストからフェイズアウトします。
+If you destroy your Azure VM, it phases out of your infrastructure list within 3 hours.
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

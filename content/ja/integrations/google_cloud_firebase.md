@@ -4,8 +4,9 @@ categories:
 - google cloud
 - log collection
 - mobile
+custom_kind: integration
 dependencies: []
-description: Firebase サービスに関するネットワークとデータストアの使用状況を追跡。
+description: Track network and data store usage attributable to your Firebase services.
 doc_link: https://docs.datadoghq.com/integrations/google_cloud_firebase/
 draft: false
 git_integration_title: google_cloud_firebase
@@ -14,7 +15,6 @@ integration_id: google-cloud-firebase
 integration_title: Google Cloud Firebase
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: '1.0'
 name: google_cloud_firebase
 public_title: Datadog-Google Cloud Firebase インテグレーション
@@ -32,9 +32,9 @@ Google Firebase からメトリクスを取得して、以下のことができ�
 - Firebase のデータベースおよびホスティングサービスのパフォーマンスを視覚化。
 - Firebase ツールのパフォーマンスをアプリケーションと関連付け。
 
-## 計画と使用
+## Setup
 
-### インフラストラクチャーリスト
+### Installation
 
 [Google Cloud Platform インテグレーション][1]をまだセットアップしていない場合は、最初にセットアップします。これ以外に必要なインストール手順はありません。
 
@@ -49,21 +49,21 @@ Google Firebase のログは Google Cloud Logging で収集され、Cloud Pub/Su
 3. 宛先として "Cloud Pub/Sub" を選択し、その目的で作成された Pub/Sub トピックを選択します。**注**: Pub/Sub トピックは別のプロジェクトに配置できます。
 4. **作成**をクリックし、確認メッセージが表示されるまで待ちます。
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "google_cloud_firebase" >}}
 
 
-### ヘルプ
+### Events
 
 Google Firebase インテグレーションには、イベントは含まれません。
 
-### ヘルプ
+### Service Checks
 
 Google Firebase インテグレーションには、サービスのチェック機能は含まれません。
 
-## ヘルプ
+## Troubleshooting
 
 ご不明な点は、[Datadog のサポートチーム][5]までお問い合わせください。
 

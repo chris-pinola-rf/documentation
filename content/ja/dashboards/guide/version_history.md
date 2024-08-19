@@ -13,52 +13,52 @@ further_reading:
 title: ダッシュボードのバージョン履歴
 ---
 
-## 概要
-バージョン履歴は、ダッシュボードに加えられた変更を自動的に追跡し、以前のバージョンを保存してくれるため、誰が何を変更したのかを正確に確認することができます。以前のバージョンを確認したり、ダッシュボードを保存済みのバージョンに復元したり、任意のバージョンを複製して新しいダッシュボードを作成したりすることができます。
+## Overview
+Version History automatically tracks changes made to your dashboards and saves previous versions so you can see exactly what was changed and by whom. You can view previous versions, restore your dashboard to any saved version, or clone a version to create a new dashboard.
 
-## 前提条件
-デフォルトでは、すべてのダッシュボードで 30 日分のバージョン履歴が保持されます。以前のバージョンを見るには、過去 30 日以内に編集が行われている必要があります。
+## Prerequisites
+All dashboards retain 30 days worth of version history by default. In order to see any previous versions, an edit must be made within the last 30 days. 
 
-[監査証跡][1]を有効にすると、バージョン履歴が 30 日から 90 日に延長されます。監査証跡を有効にした後は、既存のすべてのダッシュボードで、30 ～ 90 日前の間に行われたすべての編集を見ることができます。
+With [Audit Trail][1] enabled, the version history is extended from 30 days to 90 days. After enabling Audit Trail, you are able to see any edits made between 30 to 90 days ago on all existing dashboards. 
 
-## バージョンの確認
-個々のダッシュボードから、ページ右上の **Configure** をクリックし、**Version History** を選択します。保持期間内に編集がない場合、バージョン履歴は無効になります。
+## View versions
+From an individual dashboard, click **Configure** on the top right of the page and select **Version History**. If there are no edits within the retention period, Version History is disabled.
 
-{{< img src="/dashboards/guide/version_history/configure_actions_version_history.png" alt="ダッシュボードの Configure Actions メニューで、バージョン履歴オプションを無効にした様子" style="width:50%;" >}}
+{{< img src="/dashboards/guide/version_history/configure_actions_version_history.png" alt="Disabled version history option in the dashboard Configure Actions menu" style="width:50%;" >}}
 
-Version History サイドパネルでは、各バージョンごとに以下の情報を確認できます。
-- 変更を行った Datadog ユーザー
-- 変更日時
-- 変更の概要と、前のバージョンと比べた詳細な変更内容の説明
+In the Version History side panel, for each version you can see:
+- Which Datadog user made the change
+- The date and time of the change
+- A summary of the change and a detailed change description of the version to its predecessor
 
-## バージョンのプレビュー
-Version History サイドパネルから任意のバージョンをクリックすると、ダッシュボードをそのバージョンに復元した場合にどのように見えるかをプレビューすることができます。任意のバージョン上でクリックすると、変更箇所までスクロールされ、変更されたウィジェットやセルがハイライト表示されます。
+## Preview a version
+From the Version History side panel, click on a version to preview what your dashboard would look like if you choose to restore to that version. Click on any version to scroll to the location of the change and highlight any widgets or cells that were changed.
 
-**注**: 任意のバージョンをクリックしてプレビューしても、そのバージョンに復元するという選択を自ら行わない限り、変更内容は一切保存されず、他のユーザーに表示される内容にも影響を及ぼしません。
+**Note**: Clicking on a version to preview it does not save any changes or impact what other users see until you actively choose to restore to that version.
 
-## バージョンの復元
-ダッシュボードを以前のバージョンに復元するには、2 つの方法があります。
+## Restore a version
+There are two ways you can restore your dashboard to a previous version.
 
-{{< img src="/dashboards/guide/version_history/dashboard_version_history_options.png" alt="画像の説明" style="width:100%;" >}}
+{{< img src="/dashboards/guide/version_history/dashboard_version_history_options.png" alt="Version History side panel shows past dashboard versions and ways to restore them." style="width:100%;" >}}
 
-- Version History サイドパネルから復元するバージョンを決め、ユーザープロファイルの右側にあるケバブメニューをクリックし、**Restore this version** を選択します。
-- Version History サイドパネルが開いた際に、ページ上部に **Restore this version** ボタンが表示されます。
+- From the Version History side panel, after you choose the version to restore, click the kebab menu to the right of a user profile and select **Restore this version**.
+- When the Version History side panel opens up, a button appears at the top of the page to **Restore this version**.
 
-バージョンを復元すると、すべてのユーザーを対象にダッシュボードがそのバージョンにアップデートされ、バージョン履歴には復元を示す新しいエントリが追加されます。これによって変更履歴が上書きされることはなく、引き続き保持期間内の任意のバージョンのプレビューと復元が可能です。
+Restoring a version updates the dashboard to that version for all users and a new entry is added to the version history showing the restore. This does not overwrite the history of your changes, so you are still able preview and restore to any versions within your retention period. 
 
-## バージョンの複製
-現在のダッシュボードを変更せずに、以前のバージョンのコピーを作成したい場合は、バージョン履歴内の任意のバージョンからクローンを作成することができます。Version History サイドパネルからコピーしたいバージョンを決め、ユーザープロファイルの右側にあるケバブメニューをクリックして、**Clone** を選択します。
+## Clone a version
+If you do not want to change your current dashboard but you'd like to create a copy of a previous version, you can create a clone from any version in your version history. From the Version History side panel after you choose the version you want to make a copy of, click the kebab menu to the right of a user profile and select **Clone**.
 
-## バージョン履歴の保持
+## Version History retention
 
-|                          | 保持期間    |
+|                          | Retention Period    |
 | -----------------------  | ------- |
-| 監査証跡が**無効**な場合 | 30 日 |
-| 監査証跡が**有効**な場合  | 90 日 |
+| Audit Trail **Disabled** | 30 days |
+| Audit Trail **Enabled**  | 90 days |
 
 
-[1]:/ja/account_management/audit_trail/
+[1]: /ja/account_management/audit_trail/
 
-## その他の参考資料
+## Further reading
 
 {{< partial name="whats-next/whats-next.html" >}}

@@ -6,130 +6,132 @@ further_reading:
 title: Active Protection で暗号マイニングの脅威を積極的にブロック
 ---
 
-<div class="alert alert-info">CSM Threats Active Protection はベータ版です。</div>
+<div class="alert alert-warning">Please contact <a href="https://docs.datadoghq.com/help/">Datadog Support</a> to enable Active Protection.</div>
 
-このトピックでは、CSM Threats の **Active Protection** 機能を使用して暗号マイニングの脅威を自動的にブロックする方法を説明します。
+<div class="alert alert-info">CSM Threats Active Protection is in beta.</div>
 
-デフォルトでは、Agent のすぐに使える[脅威検出ルール][4]がすべて有効になっており、暗号マイニングの脅威を積極的に監視しています。
+This topic explains how to use the CSM Threats **Active Protection** feature to block crypto mining threats automatically. 
 
-Active Protection を使用すると、Datadog Agent の脅威検出ルールによって特定された暗号マイニングの脅威を積極的にブロックし、終了させることができます。
+By default, all OOTB Agent [threat detection rules][4] are enabled and actively monitoring for crypto threats. 
 
-Active Protection は、脅威検出と標的型対応を合理化し、リスクを削減することで、DevSecOps およびセキュリティチームが進化する暗号マイニングの脅威に効果的に対処できるようにします。
+Active Protection enables you to proactively block and terminate crypto mining threats identified by the Datadog Agent threat detection rules.
 
-- セキュリティチームは自動アクションが必要な脅威を決定します。
-- DevOps チームは、どのアプリケーションとリソースが標的型防御に耐えられるだけの回復力があるかを決定します。
+Active Protection streamlines threat detection and targeted response, resulting in risk reduction, allowing DevSecOps and security teams to tackle evolving crypto mining threats effectively:
 
-最終的な結果は、暗号マイニングの脅威を検出し、高信頼性かつ真陽性の攻撃に対して即座に精密な緩和措置を講じることです。
+- Security decides which threats warrant an automated action.
+- DevOps decides which applications and resources are resilient enough to withstand targeted protection.
 
-## 保護オプション
+The end result is crypto mining threat detection followed by immediate surgical mitigation against high confidence, true positive attacks.
 
-Agent ルールには 3 つのオプションがあります。
+## Protection options
 
-- **監視:** Active Protection が有効かどうかに関係なく、有効なルールのデフォルト設定です。Agent は有効化されたルールを監視し、[シグナル][1]に検出結果を表示します。
-- **ブロック:**
-  - Active Protection が有効な場合に使用できます。高信頼性かつ真陽性のすぐに使えるルールの一部においてブロックが可能です。
-  - Agent は有効化されたルールを監視し、対応するアクションを即座に終了し、[シグナル][1]に検出結果を表示します。
-- **無効:** Agent はルールイベントを監視せず、検出結果を Datadog バックエンドに送信しません。
+You have three options for Agent rules:
 
-<div class="alert alert-info">ブロックが有効化された後に検出されたすべての脅威に対してブロックが適用されます。ブロックは遡及的ではありません。</div>
+- **Monitoring:** This is the default setting for enabled rules, regardless of whether Active Protection is enabled. The Agent monitors for the enabled rule and displays detections in [Signals][1]. 
+- **Blocking:** 
+  - Blocking is available when Active Protection is enabled. Blocking is available on select OOTB rules that have high confidence, true positives.
+  - The Agent monitors for the enabled rule, terminates the corresponding actions instantly, and displays detections in [Signals][1].
+- **Disabled:** The Agent does not monitor for the rule events and does not send detections to the Datadog backend.
 
-## Active Protection の利用可否
+<div class="alert alert-info">Blocking is applied to all threats detected after blocking is enabled. Blocking is not retroactive.</div>
 
-Active Protection は組織レベルで有効です。
+## Active Protection availability
 
-<div class="alert alert-info">Active Protection のブロック機能は、すぐに使える Agent ルールの一部でのみ利用可能です。Agent ルールの監視は、Active Protection が有効かどうかに関係なく実行されます。</div>
+Active Protection is enabled at the organization level. 
 
-お客様の組織で Active Protection がすでに有効かどうかを確認するには、[Agent 構成][2]にアクセスしてください。Active Protection が有効になっている場合、Agent ルールリストに **Protection** 列が表示されます。
+<div class="alert alert-info">Active Protection blocking functionality is available in a subset of the OOTB Agent rules only. Agent rule monitoring runs regardless of whether Active Protection is enabled.</div>
 
-{{< img src="security/cws/guide/protection-column.png" alt="保護列に、組織で Active Protection が有効であることが示されています" style="width:100%;" >}}
+To check if Active Protection is already enabled in your organization, go to [Agent Configuration][2]. If Active Protection is enabled, a **Protection** column is displayed in the Agent rule list.
 
-暗号マイニングルールで Active Protection が利用可能な場合、**Protection** 列に **Monitoring** または **Blocking** が表示されます。
+{{< img src="security/cws/guide/protection-column.png" alt="The protection column indicates that Active Protection is enabled in the org" style="width:100%;" >}}
 
-**Protection** 列に **Monitoring** または **Blocking** が表示されない場合、その暗号マイニングルールでは Active Protection がまだ利用できません。
+If Active Protection is available for a crypto mining rule, then **Monitoring** or **Blocking** is listed in the **Protection** column.
 
-Active Protection が有効で、シグナルを生成した暗号マイニングルールに適用される場合、次の操作で確認できます。
+If there is no **Monitoring** or **Blocking** in the **Protection** column, then Active Protection is not available for that crypto mining rule yet.
 
-1. [シグナル][1]でシグナルを開きます。
-2. シグナル内で **Next Steps** を表示します。
-   - Active Protection が有効な場合、**Proactively block threats** に **Active Protection Enabled** が表示されます。
-   - Active Protection が有効でない場合、**Active Protection Enabled** は表示されません。
+When Active Protection is enabled, and applies to a crypto mining rule that generated a signal, you can see it by doing the following:
 
-Agent の暗号マイニングルールで Active Protection が有効かつ利用可能な場合、ルールを確認することで確認できます。
+1. In [Signals][1], open a signal.
+2. In the signal, view **Next Steps**. 
+   - If Active Protection is enabled, in **Proactively block threats**, the **Active Protection Enabled** is displayed.
+   - If Active Protection is not enabled, **Active Protection Enabled** is not displayed.
 
-1. [Agent 構成][2]で暗号マイニングルールを選択します。
-2. 暗号マイニングルールで、Active Protection が有効かつ利用可能な場合、**Protection** セクションがあります。
+If Active Protection is enabled and available for an Agent crypto mining rule, you can see it by looking at the rule:
 
-## Active Protection の有効化
+1. In [Agent Configuration][2], select a crypto mining rule.
+2. In the crypto mining rule, if Active Protection is enabled and available, there is a **Protection** section.
 
-Active Protection を有効にすると、Datadog 組織全体の Active Protection 機能が有効になります。Active Protection は個々のユーザーに限定されません。
+## Enable Active Protection
 
-デフォルトでは、すべてのすぐに使える Agent 暗号マイニングルールは監視状態になっています。Active Protection を有効にしても、デフォルトの状態が直ちに変更されるわけではありません。Active Protection を有効にすることで、暗号マイニングルールの状態を監視からブロックに変更できます。
+When you enable Active Protection, you are enabling the Active Protection capability for your entire Datadog org. Active Protection is not limited to individual users.
 
-そのため、Active Protection を有効にすると、脅威検出の状態がすぐに変更されることを心配する必要はありません。
+By default, all OOTB Agent crypto mining rules are in a monitoring state. Enabling Active Protection does not immediately change the default state. Enabling Active Protection allows you to change the state of a crypto mining rule from monitoring to blocking.
 
-Active Protection を有効にするには
+Consequently, you do not need to worry that enabling Active Protection immediately changes the state of threat detection.
 
-1. CSM [Agent 構成][2]ルールに移動します。
-2. **Enable Active Protection** を選択します。
+To enable Active Protection:
 
-   {{< img src="security/cws/guide/enable-active-protection.png" alt="Enable Active Protection ボタン" style="width:100%;" >}}
+1. Go to CSM [Agent Configuration][2] rules.
+2. Select **Enable Active Protection**.
 
-Active Protection が有効になると、Agent 構成ルールリストに **Protection** 列が表示されます。
+    {{< img src="security/cws/guide/enable-active-protection.png" alt="Enable Active Protection button" style="width:100%;" >}}
 
-**Protection** 列は、ルールが **Monitoring** 状態であるか **Blocking** 状態であるかを示します。Active Protection を初めて有効にした場合、ルールは監視状態のみです。ブロックオプションは手動で構成する必要があります。
+After Active Protection is enabled, the Agent Configuration rules list contains a **Protection** column.
 
-### Active Protection の無効化
+The **Protection** column indicates if a rule is in the **Monitoring** or **Blocking** state. When you first enable Active Protection, rules are only in a monitoring state. You must configure the blocking option manually.
 
-Active Protection を有効にした後、各 Agent 構成ルールで無効にできます。
+### Disabling Active Protection
 
-## Agent ルールで検出された脅威のブロック
+After Active Protection is enabled, you can disable it on each Agent Configuration rule.
 
-Active Protection を有効にした後、Agent 暗号マイニングルールで **Blocking** オプションを構成すると、Agent は対応する暗号マイニングアクションを即座に終了します。
+## Block threats detected by an Agent rule
 
-Agent ルールでブロックを有効にするには
+After Active Protection is enabled, you can configure the **Blocking** option on an Agent crypto mining rule and the Agent will terminate the corresponding crypto mining actions instantly.
 
-1. [Agent 構成][2]で、**Protection** 列に **Monitoring** がある暗号マイニングルールを開きます。**Protection** 列に **Monitoring** または **Blocking** がない場合、そのルールで Active Protection はまだ使用できません。
-2. Agent ルールの **Protection** で、**Blocking** を選択します。
+To enable blocking on an Agent rule:
 
-   {{< img src="security/cws/guide/protection-blocking-option.png" alt="ブロックオプションを表示する Agent ルールの Protection セクション" style="width:100%;" >}}
-3. **Where** で、**Everywhere** または **Custom** を選択します。これらのオプションの詳細については、以下の [Agent ルールの範囲][3]を参照してください。
-4. **Save Changes** を選択します。
-5. Agent 構成で、**Deploy Agent Policy** を選択します。
+1. In [Agent Configuration][2], open a crypto mining rule that has **Monitoring** in the **Protection** column. If there is no **Monitoring** or **Blocking** in the **Protection** column, then Active Protection is not available for that rule yet.
+2. In the Agent rule, in **Protection**, select **Blocking**.
+
+   {{< img src="security/cws/guide/protection-blocking-option.png" alt="An Agent rule Protection section displaying the Blocking option" style="width:100%;" >}}
+3. In **Where**, select **Everywhere** or **Custom**. For details on these options, see [Scoping the Agent rule][3] below.
+4. Select **Save Changes**.
+5. In Agent Configuration, select **Deploy Agent Policy**.
 
 
-### Agent ルールの範囲
+### Scoping the Agent rule
 
-Active Protection を有効にした後に Agent 暗号マイニングルールを作成または編集する場合、ルールの **Protection** 設定で **Blocking** を選択できます。
+When you create or edit an Agent crypto mining rule after Active Protection is enabled, you can select **Blocking** in the rule **Protection** setting. 
 
-**Blocking** を選択すると、**Everywhere** および **Custom** オプションを使用して、Datadog がルールを適用する場所を選択できます。
+When you select **Blocking**, you can scope where Datadog should apply the rule using the **Everywhere** and **Custom** options. 
 
 #### Everywhere
 
-ルールは、すべてのサービス、ホスト、イメージに適用されます。
+The rule applies to all services, hosts, and images.
 
 #### Custom
 
-**Custom** では、サービスまたはタグを指定して、ブロック保護を適用する場所の式を自動的に生成できます。
+In **Custom**, you can specify services or tags to automatically generate an expression for where to apply blocking protection.
 
-<div class="alert alert-info">式に一致しないサービスまたはイメージはブロックされませんが、監視は継続されます。</div>
+<div class="alert alert-info">Any service or image that is not matched by the expression is not blocked, but it is still monitored.</div>
 
-サービスやタグを使用して式を生成できます。Datadog は、指定したサービスやタグを使用してルールを照合します。
+You can use services and tags to generate an expression. Datadog matches the rule using the services or tags you provide.
 
-- **サービス:** 1 つ以上のサービス名を入力します。ワイルドカードを使用できます。例えば、`a*` と入力すると、`process.envp in ["DD_SERVICE=a*"]` という式が生成されます。
-- **タグ:** 1 つ以上のコンテナイメージのタグを入力します。複数のタグを入力した場合、**Protection** を適用するにはすべてのタグが一致する必要があります。オプションは 2 つあります。
-  - `image_tag`: イメージタグのみ。例えば `stable-perl`。
-  - `short_image`: タグなしのイメージ名。例えば `nginx`。
-  - 例えば、`ghcr.io/MY_NAMESPACE/MY_IMAGE:2.5` のような Github コンテナレジストリのイメージは、次のように参照できます。
-    - `image_tag`: `2.5`。
-    - `short_image`: `MY_IMAGE`。
+- **Services:** Enter one or more service names. You can use wildcards. For example, entering `a*` generates the expression `process.envp in ["DD_SERVICE=a*"]`.
+- **Tags:** Enter one or more tags for container images. If you enter multiple tags, all tags must match for the **Protection** to apply. There are two options:
+  - `image_tag`: The image tag only. For example, `stable-perl`.
+  - `short_image`: The image name without a tag. For example, `nginx`.
+  - For example, a Github Container registry image such as `ghcr.io/MY_NAMESPACE/MY_IMAGE:2.5` can be referenced using:
+    - `image_tag`: `2.5`.
+    - `short_image`: `MY_IMAGE`.
 
-## ブロックされた攻撃の例
+## Blocked attack example
 
-Active Protection が有効化され、Agent ルールで **Blocking** に設定されると、ブロックされた脅威が[シグナル][1]に表示されます。
+After Active Protection is enabled and set to **Blocking** for an Agent rule, blocked threats appear in [Signals][1].
 
-ブロックされた脅威のシグナルには、`SECURITY RESPONSE` と `The malicious process <THREAT NAME> has automatically been killed.` というメッセージが含まれます。
+A signal for a blocked threat contains the messages `SECURITY RESPONSE` and `The malicious process <THREAT NAME> has automatically been killed.`:
 
-{{< img src="security/cws/guide/active-protection-signal-messages.png" alt="シグナルメッセージ" style="width:100%;" >}}
+{{< img src="security/cws/guide/active-protection-signal-messages.png" alt="Signal messages" style="width:100%;" >}}
 
 
 [1]: https://app.datadoghq.com/security

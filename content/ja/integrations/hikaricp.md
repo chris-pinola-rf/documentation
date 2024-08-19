@@ -22,6 +22,7 @@ author:
   sales_email: damien.bertau@blablacar.com
   support_email: damien.bertau@blablacar.com
 categories: []
+custom_kind: integration
 dependencies:
 - https://github.com/DataDog/integrations-extras/blob/master/hikaricp/README.md
 display_on_public_website: true
@@ -31,7 +32,6 @@ integration_id: hikaricp
 integration_title: HikariCP
 integration_version: 1.2.0
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: hikaricp
 public_title: HikariCP
@@ -46,6 +46,7 @@ tile:
   - Supported OS::Linux
   - Supported OS::Windows
   - Supported OS::macOS
+  - Offering::Integration
   configuration: README.md#Setup
   description: HikariCP と openmetrics v2 とのインテグレーション
   media: []
@@ -57,51 +58,51 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/integrations-extras -->
 
 
-## 概要
-[HikariCP][1] は、軽量かつ高速な JDBC コネクションプーリングフレームワークです。
-このチェックでは、Datadog Agent を通じて HikariCP を監視しています。
+## Overview
+[HikariCP][1] is a lightweight and fast JDBC connection pooling framework.
+This check monitors HikariCP through the Datadog Agent.
 
-## 計画と使用
+## Setup
 
-### インフラストラクチャーリスト
+### Installation
 
-HikariCP チェックをホストにインストールするには
+To install the HikariCP check on your host:
 
 
-1. [開発ツールキット][2]をインストールします。
- どのマシンでも。
+1. Install the [developer toolkit][2]
+ on any machine.
 
-2. `ddev release build hikaricp` を実行してパッケージをビルドします。
+2. Run `ddev release build hikaricp` to build the package.
 
-3. [Datadog Agent をダウンロードします][3]。
+3. [Download the Datadog Agent][3].
 
-4. ビルドの成果物を Agent をインストール済みのホストにアップロードし、以下を実行します。
- `datadog-agent integration install -w
+4. Upload the build artifact to any host with an Agent and
+ run `datadog-agent integration install -w
  path/to/hikaricp/dist/<ARTIFACT_NAME>.whl`.
 
-### ブラウザトラブルシューティング
+### Configuration
 
-1. HikariCP のパフォーマンスデータの収集を開始するには、Agent のコンフィギュレーションディレクトリのルートにある `conf.d/` フォルダーの `hikaricp/conf.yaml` ファイルを編集します。使用可能なすべてのコンフィギュレーションオプションの詳細については、[サンプル hikaricp/conf.yaml][4] を参照してください。
+1. Edit the `hikaricp/conf.yaml` file, in the `conf.d/` folder at the root of your Agent's configuration directory to start collecting your HikariCP performance data. See the [sample hikaricp/conf.yaml][4] for all available configuration options.
 
-2. [Agent を再起動します][5]。
+2. [Restart the Agent][5].
 
-### 検証
+### Validation
 
-[Agent の status サブコマンドを実行][6]し、Checks セクションで `hikaricp` を探します。
+[Run the Agent's status subcommand][6] and look for `hikaricp` under the Checks section.
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "hikaricp" >}}
 
 
-### ヘルプ
+### Events
 
-HikariCP には、イベントは含まれません。
+HikariCP does not include any events. 
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][9]までお問い合わせください。
+Need help? Contact [Datadog support][9].
 
 
 [1]: https://github.com/brettwooldridge/HikariCP

@@ -18,121 +18,121 @@ further_reading:
 title: Datadog の開始
 ---
 
-{{< learning-center-callout header="ラーニングセンターで Datadog Foundation をお試しください" btn_title="今すぐ登録" btn_url="https://learn.datadoghq.com/courses/datadog-foundation">}}
-  Datadog のトライアルアカウントと実際のクラウドコンピュートキャパシティを使用して、コストをかけずに学ぶことができます。ハンズオンラボを開始して、サービス、ログ、メトリクス、インテグレーション、ダッシュボードを使いこなしましょう。
+{{< learning-center-callout header="Try Datadog Foundation in the Learning Center" btn_title="Enroll Now" btn_url="https://learn.datadoghq.com/courses/datadog-foundation">}}
+  Learn without cost on real cloud compute capacity and a Datadog trial account. Start these hands-on labs to get up to speed with services, logs, metrics, integrations, and dashboards.
 {{< /learning-center-callout >}}
 
-## 概要
+## Overview
 
-このページでは、[Datadog サイト][1]で利用可能な機能の概要を説明します。
+This page provides a high-level overview of capabilities available on the [Datadog site][1].
 
-Datadog サイトのナビゲーションは、ブラウザの幅に応じて変化します。最大で 3 種類のナビゲーションを用意することができます。ナビゲーションの種類を変更するには、ブラウザの幅を調節してください。
+The Datadog site navigation varies based on the width of your browser. You can have up to three types of navigation. To change the navigation type, adjust your browser width.
 
-## ヘルプ
+## Integrations
 
-{{< img src="getting_started/application/integrations-2024.png" alt="インテグレーション" >}}
+{{< img src="getting_started/application/integrations-2024.png" alt="Integrations" >}}
 
-- Datadog では、{{< translate key="integration_count" >}} 個以上のインテグレーションが[公式にリストされています][2]。
-- [Datadog API の使用][3]によるカスタムインテグレーションも使用可能です。
-- Agent は[オープンソース][4]です。
-- インテグレーションの構成後は、データセンターやオンラインサービス内のすべてのデータが Datadog で一元管理されます。
+- Datadog has over {{< translate key="integration_count" >}} integrations [officially listed][2].
+- Custom integrations are available through the [Datadog API][3].
+- The Agent is [open source][4].
+- Once integrations have been configured, all data is treated the same throughout Datadog, whether it is living in a datacenter or in an online service.
 
-## ライブラリ
+## Dashboards
 
-[ダッシュボード][12]には、リアルタイムのパフォーマンスメトリクスがグラフで表示されます。
+[Dashboards][12] contain graphs with real-time performance metrics.
 
-- [スクリーンボード][13]にあるすべてのグラフは、同じマウス操作で閲覧可能。
-- 棒グラフはイベントです。これによってコンテキストにメトリクスを与えることができます。
-- グラフ内の特定のタイムフレームをクリックアンドドラッグで拡大表示できます。
-- グラフ内にマウスポインターを合わせて、イベントストリームを移動させることができます。
-- ゾーン、ホスト、総使用量別に表示。
-- Datadog はグラフの JSON エディターを公開します。これにより、[数式][14]と[関数][15]をメトリクスに適用できます。
-- グラフのスナップショットをストリームに表示して共有できます。
-- グラフを iframe に埋め込むことができます。これにより、自社のデータやその他の情報へのアクセス権を付与しなくても、サードパーティにライブグラフを提供することができます。
+- Synchronous mousing across all graphs in a [screenboard][13].
+- Vertical bars are events. They put a metric into context.
+- Click and drag on a graph to zoom in on a particular timeframe.
+- As you hover over the graph, the event stream moves with you.
+- Display by zone, host, or total usage.
+- Datadog exposes a JSON editor for the graph, allowing for [arithmetic][14] and [functions][15] to be applied to metrics.
+- Share a graph snapshot that appears in the stream.
+- Graphs can be embedded in an iframe. This enables you to give a third party access to a live graph without also giving access to your data or any other information.
 
-## ログ管理
+## Monitors
 
-[モニター][16]は、メトリクスのしきい値、インテグレーションの有無、ネットワークエンドポイントなどに基づいて、アラートと通知を提供します。
+[Monitors][16] provide alerts and notifications based on metric thresholds, integration availability, network endpoints, and more.
 
-- Datadog に報告される任意のメトリクスを使用できます。
-- デバイス単位やホスト単位など、複数のアラートの設定
-- アラートメッセージで `@` を使用することで適切な相手に通知を届けることができます。
-- ダウンタイムをスケジューリングすると、システムシャットダウン時やオフラインメンテナンス時などに通知を停止できます。
+- Use any metric reporting to Datadog
+- Set up multi alerts by device, host, and more
+- Use `@` in alert messages to direct notifications to the right people
+- Schedule downtimes to suppress notifications for system shutdowns, off-line maintenance, and more
 
-## イベント
+## Events
 
-[イベントエクスプローラー][10]には、インフラストラクチャーやサービスによって生成された最新のイベントが表示されます。
+[The Event Explorer][10] displays the most recent events generated by your infrastructure and services.
 
-イベントには以下のようなものがあります。
+Events can include the following:
 
-- コードのデプロイ
-- サービスヘルスの変更
-- コンフィギュレーション変更
-- モニタリングアラート
+- Code deployments
+- Service health changes
+- Configuration changes
+- Monitoring alerts
 
-イベントエクスプローラーは、Agent とインストールされたインテグレーションによって収集されたイベントを自動的に収集します。
+The Event Explorer automatically gathers events collected by the Agent and installed integrations.
 
-また、Datadog API、カスタム Agent チェック、DogStatsD、Event email API を使用して、独自のカスタムイベントを送信することも可能です。
+You can also submit your own custom events using the Datadog API, custom Agent checks, DogStatsD, or the Events email API.
 
-イベントエクスプローラーでは、ファセットや検索クエリでイベントをフィルタリングします。イベントを属性でグループ化またはフィルタリングし、[イベント分析][11]でグラフィカルに表現します。
+In the Event Explorer, filter your events by facets or search queries. Group or filter events by attribute and graphically represent them with [event analytics][11].
 
-## インフラストラクチャー
+## Infrastructure
 
-- すべてのマシンは[インフラストラクチャー リスト][7]に表示されます。
-- 各マシンに適用されたタグを確認できます。タグ付けによって各マシンの目的を示すことができます。
-- Datadog では、サーバーの分類が自動的に試みられます。新しいマシンにタグ付けすれば、既にそのタグに設定されている情報に基づいて、そのマシンの統計情報を即座に確認できます。[タグ付けの詳細については、こちらを参照してください][8]。
+- All machines show up in the [infrastructure list][7].
+- You can see the tags applied to each machine. Tagging allows you to indicate which machines have a particular purpose.
+- Datadog attempts to automatically categorize your servers. If a new machine is tagged, you can immediately see the stats for that machine based on what was previously set up for that tag. [Read more on tagging][8].
 
-## ホストマップ
+## Host map
 
-{{< img src="getting_started/application/host_map_2024.png" alt="ホストマップの概要" >}}
+{{< img src="getting_started/application/host_map_2024.png" alt="Host Map Overview" >}}
 
-[ホストマップ][9]は、インフラストラクチャーメニューにある機能です。この機能を使用すると、以下のことができます。
+The [host map][9] can be found under the Infrastructure menu. It offers the ability to:
 
-- 環境のすばやい可視化
-- 外れ値の特定
-- 利用パターンの検出
-- リソースの最適化
+- Quickly visualize your environment
+- Identify outliers
+- Detect usage patterns
+- Optimize resources
 
-詳細については、[ホストマップ][9]を参照してください。
+See [Host Map][9] for more details.
 
-## ユーザーアクションの追跡
+## Serverless
 
-[サーバーレス][20]では、すべてのコンピューティングリソースをクラウドプロバイダーが管理し、ユーザーはイベント駆動型コードを記述したら、それをクラウドプロバイダーにアップロードして使用できます。Datadog Serverless は、サーバーレスアプリケーションを実行している AWS Lambda 関数からのメトリクス、トレース、ログを 1 つのビューにまとめて表示します。このため、エラー、高レイテンシー、またはコールドスタートを生成している関数に絞り込むことにより、パフォーマンスを最適化できます。
+[Serverless][20] lets you write event-driven code and upload it to a cloud provider, which manages all of the underlying compute resources. Datadog Serverless brings together metrics, traces, and logs from your AWS Lambda functions running serverless applications into one view, so that you can optimize performance by filtering to functions that are generating errors, high latency, or cold starts.
 
 ## APM & Continuous Profiler
 
-[Datadog Application Performance Monitoring][6] (APM またはトレース) を利用すると、ログやインフラストラクチャーの監視と合わせて、リクエストの量やレイテンシーなどの重要なメトリクスを監視するために自動生成されたダッシュボードから、個々のリクエストの詳細なトレースに至るまで、アプリケーションのパフォーマンスを深く理解することができます。アプリケーションに対してリクエストが行われると、Datadog は分散システム全体でトレースを確認できるため、このリクエストに対して何が起こっているかについての体系的かつ正確なデータを表示できます。
+[Datadog Application Performance Monitoring][6] (APM or tracing) provides you with deep insight into your application's performance—from automatically generated dashboards for monitoring key metrics, like request volume and latency, to detailed traces of individual requests—side by side with your logs and infrastructure monitoring. When a request is made to an application, Datadog can see the traces across a distributed system, and show you systematic data about precisely what is happening to this request.
 
-## イベント
+## Network Performance Monitoring
 
 {{< img src="getting_started/npm.png" alt="NPM" >}}
 
-Datadog [Network Performance Monitoring][17] (NPM) を使用すると、コンテナからホスト、サービス、アベイラビリティーゾーンまで、Datadog のタグ付きオブジェクト全体のネットワークトラフィックを可視化できます。データセンターからチーム、個々のコンテナまで、何でもグループ化します。タグを使用して、送信元と宛先でトラフィックをフィルタリングします。次に、フィルターはフローに集約され、それぞれがカスタマイズ可能なネットワークページとネットワークマップを通じて、1 つの送信元と 1 つの宛先間のトラフィックを示します。各フローには、スループット、帯域幅、再送信数、および IP、ポート、PID レベルまでの送信元/宛先情報などのネットワークメトリクスが含まれます。次に、トラフィック量や TCP 再送信などの主要なメトリクスを報告します。
+Datadog [Network Performance Monitoring][17] (NPM) gives you visibility into your network traffic across any tagged object in Datadog: from containers to hosts, services, and availability zones. Group by anything—from datacenters to teams to individual containers. Use tags to filter traffic by source and destination. The filters then aggregate into flows, each showing traffic between one source and one destination, through a customizable network page and network map. Each flow contains network metrics such as throughput, bandwidth, retransmit count, and source/destination information down to the IP, port, and PID levels. It then reports key metrics such as traffic volume and TCP retransmits.
 
-## ヘルプ
+## Synthetic Monitoring
 
-Datadog [Synthetic Monitoring][22] では、API やブラウザのテストを作成・実行し、アプリケーション上のユーザートランザクションを積極的にシミュレートし、システムの全てのレイヤーで内部および外部ネットワークエンドポイントを監視することができます。エラーの検出、回帰の特定、ロールバックの自動化により、本番環境での問題の顕在化を防止することができます。
+Datadog [Synthetic Monitoring][22] allow you to create and run API and browser tests that proactively simulate user transactions on your applications and monitor all internal and external network endpoints across your system's layers. You can detect errors, identify regressions, and automate rollbacks to prevent issues from surfacing in production.
 
-## RUM & セッションリプレイ
+## RUM & Session Replay
 
-Datadog [Real User Monitoring][18] (RUM) では、ユーザーの活動や体験をリアルタイムに視覚化し、分析することが可能です。[セッションリプレイ][19]を使用すると、ユーザーの Web ブラウジングセッションをキャプチャして表示し、ユーザーの行動をよりよく理解することができます。RUM エクスプローラーでは、ロードタイム、フロントエンドエラー、ページの依存関係を視覚化できるだけでなく、ビジネスとアプリケーションのメトリクスを関連付け、アプリケーション、インフラストラクチャー、ビジネスのメトリクスの問題を 1 つのダッシュボードでトラブルシューティングすることができます。
+Datadog [Real User Monitoring][18] (RUM) allows you to visualize and analyze real-time user activities and experiences. With [Session Replay][19], you can capture and view the web browsing sessions of your users to better understand their behavior. In the RUM Explorer, you can not only visualize load times, frontend errors, and page dependencies, but also you can correlate business and application metrics to troubleshoot issues with application, infrastructure, and business metrics in one dashboard.
 
-## ディメンショニング
+## Cloud SIEM
 
-Datadog [Cloud SIEM][21] (Security Information and Event Management) は、アプリケーションやインフラストラクチャーに対する脅威を自動検出します。たとえば、標的型攻撃、脅威のインテルリストに一致するシステムと通信する IP、安全でないコンフィギュレーションなどがあります。こうした脅威は、Datadog でセキュリティシグナルとして表面化され、セキュリティエクスプローラーで相関およびトリアージできます。
+Datadog [Cloud SIEM][21] (Security Information and Event Management) automatically detects threats to your application or infrastructure. For example, a targeted attack, an IP communicating with your systems matching a threat intel list, or an insecure configuration. These threats are surfaced in Datadog as Security Signals and can be correlated and triaged in the Security Explorer.
 
-## ログ管理
+## Log Management
 
-[Datadog ログ管理][5]を使用すると、アプリケーションとインフラストラクチャーによって生成されたすべてのログを送信して処理できます。インデックスを作成せずに、Live Tail を使用してリアルタイムにログを観察できます。アプリケーションとインフラストラクチャーからすべてのログを取り込み、フィルターを使用して動的にインデックス化するものを決定し、それらをアーカイブに保存できます。
+[Datadog Log Management][5] lets you send and process every log produced by your applications and infrastructure. You can observe your logs in real-time using the Live Tail, without indexing them. You can ingest all of the logs from your applications and infrastructure, decide what to index dynamically with filters, and then store them in an archive.
 
 
-## モバイル版 Datadog
+## Datadog on Mobile
 
-[Apple App Store][24] と [Google Play Store][25] で提供されている [Datadog モバイルアプリ][23]は、オンコールエンジニアやビジネスユーザーが、ノートパソコンを開かずにサービスの状態をフォローし、問題を迅速にトリアージするための重要なデータを提供します。組織のダッシュボード、モニター、インシデント、SLO などに、モバイルデバイスから直接アクセスできます。
+The [Datadog Mobile App][23], available on the [Apple App Store][24] and [Google Play Store][25], gives key data for on-call engineers and business users to follow their service health and triage issues quickly without opening their laptop. Access your organization's Dashboards, Monitors, Incidents, SLOs and more directly from your mobile device.
 
-{{< img src="getting_started/application/mobile-app-store-screens.png" style="width:100%; background:none; border:none; box-shadow:none;" alt="iOS 向けモバイルアプリ">}}
+{{< img src="getting_started/application/mobile-app-store-screens.png" style="width:100%; background:none; border:none; box-shadow:none;" alt="Mobile App on iOS">}}
 
-## その他の参考資料
+## Further Reading
 {{< partial name="whats-next/whats-next.html" >}}
 
 [1]: https://app.datadoghq.com
@@ -157,6 +157,6 @@ Datadog [Cloud SIEM][21] (Security Information and Event Management) は、ア�
 [20]: /ja/serverless
 [21]: /ja/security/cloud_siem/
 [22]: /ja/synthetics/
-[23]: /ja/service_management/mobile/
+[23]: /ja/mobile/
 [24]: https://apps.apple.com/app/datadog/id1391380318
 [25]: https://play.google.com/store/apps/details?id=com.datadog.app

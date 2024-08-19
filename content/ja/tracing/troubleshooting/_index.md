@@ -1,6 +1,13 @@
 ---
+algolia:
+  tags:
+  - apm issues
+  - apm faq
+  - tracing troubleshooting
+  - apm common issues
 aliases:
 - /ja/tracing/faq/my-trace-agent-log-renders-empty-service-error/
+- /ja/tracing/troubleshooting/faq_apm/
 further_reading:
 - link: /tracing/troubleshooting/connection_errors
   tag: Documentation
@@ -14,146 +21,329 @@ further_reading:
 - link: /tracing/troubleshooting/agent_apm_metrics/
   tag: ドキュメント
   text: Datadog Agent によって送信された APM メトリクス
+- link: /tracing/trace_pipeline/trace_retention/#create-your-own-retention-filter
+  tag: Documentation
+  text: Custom retention filter
+- link: /tracing/trace_pipeline/ingestion_mechanisms/?tab=java
+  tag: Documentation
+  text: Trace Ingestion Sampling
+- link: /tracing/troubleshooting/#data-volume-guidelines
+  tag: Documentation
+  text: Data volume guidelines
+- link: /integrations/
+  tag: Documentation
+  text: Datadog's full list of integrations
+- link: /tracing/guide/inferred-service-opt-in/
+  tag: Documentation
+  text: Inferred Service dependencies (beta)
 title: APM トラブルシューティング
 ---
 
-Datadog APM で予期しない動作が発生した場合に、ご自分で確認できるよくある問題を本ガイドでいくつかご紹介します。問題が解決しない場合は、[Datadog サポート][1] にお問い合わせください。また、各リリースには改善と修正が含まれているため、使用する Datadog トレースライブラリの最新バージョンに定期的に更新することをお勧めします。
+If you experience unexpected behavior while using Datadog APM, read the information on this page to help resolve the issue. Datadog recommends regularly updating to the latest version of the Datadog tracing libraries you use, as each release contains improvements and fixes. If you continue to experience issues, reach out to [Datadog support][1].
 
-## トラブルシューティングパイプライン
+The following components are involved in sending APM data to Datadog:
 
-APM データを Datadog に送信する際には、以下のコンポーネントが関与します。
+{{< img src="tracing/troubleshooting/troubleshooting_pipeline_info_1.png" alt="APM Troubleshooting Pipeline">}}
 
-{{< img src="tracing/troubleshooting/troubleshooting_pipeline_info_1.png" alt="APM トラブルシューティングパイプライン">}}
+For more information, see [Additional support](#additional-support).
 
-トレース (JSON データタイプ) と [Tracing Application Metrics][2] はアプリケーションから生成され、バックエンドに移動する前に Datadog Agent に送信されます。パイプラインの各セクションで、異なるトラブルシューティング情報を収集することができます。重要なのは、Tracer のデバッグログは、アプリケーションのログに書き込まれますが、これは Datadog Agent のフレアとは別のコンポーネントであることです。これらの項目についての詳細は、以下の [Datadog サポートから要求されたデータのトラブルシューティング](#troubleshooting-data-requested-by-datadog-support)で確認することができます。
+## Trace retention
 
-## APM のセットアップと APM ステータスの確認
+This section addresses issues related to trace data retention and filtering across Datadog.
 
-起動時、Datadog トレースライブラリは、JSON オブジェクトに適用された設定を反映するログおよび発生したエラーを出力します。それには、対応する言語で Agent に到達できるかも含まれます。一部の言語では、この起動ログが環境変数 `DD_TRACE_STARTUP_LOGS=true` で有効化されている必要があります。起動ログについて、詳しくはトラブルシューティング[関連ページ][3]を参照してください。
+{{% collapse-content title="There are more spans in the Trace Explorer than on the Monitors page" level="h4" %}}
 
-## 接続エラー
+If you haven't set up [custom retention filters][19], this is expected behavior. Here's why:
 
-トラブルの一般的な原因は、インスツルメントされたアプリケーションが Datadog Agent と通信できないことです。こうした問題を見つけて修正する方法については、[接続エラー][4]を参照してください。
+The [Trace Explorer][20] page allows you to search all ingested or indexed spans using any tag. Here, you can query any of your traces.
 
-## トレーサーのデバッグログ
+By default, after spans have been ingested, they are retained by the [Datadog intelligent filter][21]. Datadog also has other [retention filters][22] that are enabled by default to give you visibility over your services, endpoints, errors, and high-latency traces.
 
-Datadog トレーサーの詳細をすべて取得するには、`DD_TRACE_DEBUG` 環境変数を使いトレーサーのデバッグモードを有効にします。独自の調査のために有効にしたり、Datadog サポートもトリアージ目的で推奨していることを理由に、有効にしたりできます。ただし、ログのオーバーヘッドが発生するため、デバッグモードを有効のままにはしないでください。
+However, to use these traces in your monitors, you must set [custom retention filters][19].
 
-これらのログは、インスツルメンテーションエラーやインテグレーション固有のエラーを明らかにすることができます。デバッグログの有効化と取得に関する詳細は、[デバッグモードのトラブルシューティングページ][5]を参照してください。
+Custom retention filters allow you to decide which spans are indexed and [retained][23] by creating, modifying, and disabling additional filters based on tags. You can also set a percentage of spans matching each filter to be retained. These indexed traces can then be used in your monitors.
 
-## データボリュームガイドライン
+| PRODUCT                                                | SPAN SOURCE                                                      |
+|--------------------------------------------------------|------------------------------------------------------------------|
+| Monitors                                               | Spans from custom retention filters                              |
+| Other products <br> <i> (Dashboard, Notebook etc.)</i> | Spans from custom retention filters + Datadog intelligent filter |
 
-インスツルメント済みのアプリケーションは、現時点から最大過去18時間および未来2時間までのタイムスタンプのスパンを送信できます。
+{{% /collapse-content %}}
 
-Datadog では、以下の文字列が指定された文字数を超えた場合、切り捨てられます。
+## Trace metrics
 
-| 名前         | 文字 |
-|--------------|------------|
-| [サービス][6]    |  100       |
-| オペレーション    |  100       |
-| type         |  100       |
-| [リソース][7]   |  5000      |
-| [タグキー][8]    |  200       |
-| [タグの値][8]  |  5000      |
+This section covers troubleshooting discrepancies and inconsistencies with trace metrics.
 
-また、スパンに存在する[スパンタグ][8]の数が、1024 以上にならないようにしてください。
+{{% collapse-content title="Trace metrics and custom span-based metrics have different values" level="h4" %}}
 
-指定された 40 分間に、Datadog では以下の組み合わせが許容されます。より大きなボリュームに対応するには、特定のユースケースについて[サポート][1]までお問い合わせください。
+Trace metrics and custom span-based metrics can have different values because they are calculated based on different datasets:
 
-- 5000 件の一意な環境とサービスの組み合わせ
-- 環境ごとに 30 個のユニークな[第 2プライマリタグ][16]値
-- 環境およびサービス当たり100件の一意の操作名
-- 環境、サービス、操作名当たり1000件の一意のリソース
-- 環境およびサービス当たり30件の一意のバージョン
+- [Trace metrics][24] are calculated based on 100% of the application's traffic, regardless of your [trace ingestion sampling][25] configuration. The trace metrics namespace follows this format: `trace.<SPAN_NAME>.<METRIC_SUFFIX>`.
+- [Custom span-based metrics][26] are generated based on your ingested spans, which depend on your [trace ingestion sampling][25]. For example, if you are ingesting 50% of your traces, your custom span-based metrics are based on the 50% ingested spans.
 
-## APM レート制限
+To ensure that your trace metrics and custom span-based metrics have the same value, configure a 100% ingestion rate for your application or service.
 
-Datadog Agent ログで、レート制限や 1 秒あたりの最大イベント数に関するエラーメッセージが表示される場合、[以下の手順][9]に従い制限を変更します。ご不明な点は、Datadog [サポートチーム][1]までお問い合わせください。
+<div class="alert alert-info">Metric names must follow the <a href="/metrics/custom_metrics/#naming-custom-metrics">metric naming convention</a>. Metric names that start with <code>trace.*</code> are not permitted and are not saved.</div>
 
-## APM リソース使用量
+{{% /collapse-content %}}
 
-トレースコレクションの CPU 使用率の検出と Agent の適切なリソース制限の計算については、[Agent のリソース使用量][10]を参照してください。
+## Services
 
-## スパンの修正、破棄、難読化
+This section covers strategies to troubleshoot service-related issues.
 
-Datadog Agent またはトレースクライアント (一部の言語のみ) 内で構成可能なヘルスチェック、またその他不要なトラフィックに関連する機密データのスクラブやトレースの破棄に関しては数々のコンフィギュレーションオプションが用意されています。利用可能なオプションについては、[セキュリティと Agent のカスタマイズ][11]を参照してください。本文では代表的な例をご紹介していますが、これらのオプションをお使いの環境に適用する際にサポートが必要な場合は、[Datadog サポート][1]までお問い合わせください。
+{{% collapse-content title="One service is showing up as multiple services in Datadog" level="h4" %}}
 
-## サービスの命名規則に関する問題
+This can happen when the service name is not consistent across all spans.
 
-サービス数が[データ量ガイドライン](#data-volume-guidelines)で指定されている数を超える場合は、サービスの命名規則について以下のベストプラクティスを試してみてください。
+For example, you might have a single service such as `service:test` showing multiple services in the Datadog:
+- `service:test`
+- `service:test-mongodb`
+- `service:test-postgresdb`
 
-### サービス名から環境タグの値を除外する
+You can use [Inferred Service dependencies (beta)][30]. Inferred external APIs use the default naming scheme `net.peer.name`. For example: `api.stripe.com`, `api.twilio.com`, and `us6.api.mailchimp.com`. Inferred databases use the default naming `scheme db.instance`.
 
-デフォルトでは、環境 (`env`) は [Datadog APM][17] のプライマリタグになります。
+Or, you can merge the service names using an environment variable such as `DD_SERVICE_MAPPING` or `DD_TRACE_SERVICE_MAPPING`, depending on the language. 
 
-{{< img src="/tracing/troubleshooting/troubleshooting-service-naming-convention-issues-3.png" alt="Environment はデフォルトのプライマリタグです" style="width:100%;" >}}
+For more information, see [Configure the Datadog Tracing Library][27] or choose your language here:
 
-サービスは通常、`prod`、`staging`、`dev` などの複数の環境にデプロイされます。リクエスト数、レイテンシー、エラー率などのパフォーマンスメトリクスは、さまざまな環境間で異なっています。サービスカタログの環境ドロップダウンを使用すると、**Performance** タブのデータを特定の環境にスコープすることができます。
+{{< tabs >}}
+{{% tab "Java" %}}
 
-{{< img src="/tracing/troubleshooting/troubleshooting-service-naming-convention-issues-2.png" alt="サービスカタログの `env` ドロップダウンを使って、特定の環境を選択します" style="width:100%;" >}}
+`dd.service.mapping`
+: **Environment Variable**: `DD_SERVICE_MAPPING`<br>
+**Default**: `null`<br>
+**Example**: `mysql:my-mysql-service-name-db, postgresql:my-postgres-service-name-db`<br>
+Dynamically rename services with configuration. Useful for making databases have distinct names across different services.
 
-サービスの数が増えすぎて問題になりがちなのが、サービス名に環境値を含めるパターンです。例えば、`prod-web-store` と `dev-web-store` のように 2 つの環境で動作しているため、1 つではなく 2 つのユニークなサービスがある場合です。
+{{% /tab %}}
 
-Datadog では、サービス名を変更することでインスツルメンテーションを調整することを推奨しています。
+{{% tab "Python" %}}
 
-トレースメトリクスはアンサンプリングされるため、インスツルメンテーションされたアプリケーションでは、部分的なデータではなく、すべてのデータが表示されます。また、[ボリュームガイドライン](#data-volume-guidelines)も適用されます。
+`DD_SERVICE_MAPPING`
+: Define service name mappings to allow renaming services in traces, for example: `postgres:postgresql,defaultdb:postgresql`. Available in version 0.47+.
 
-### メトリクスパーティションを置いたり、変数をサービス名にグループ化する代わりに、第 2 プライマリタグを使用する
+{{% /tab %}}
+{{% tab "Go" %}}
 
-第 2 のプライマリタグは、トレースメトリクスのグループ化および集計に使用できる追加タグです。ドロップダウンを使用して、指定されたクラスター名またはデータセンターの値にパフォーマンスデータをスコープすることができます。
+`DD_SERVICE_MAPPING`
+: **Default**: `null` <br>
+Dynamically rename services through configuration. Services can be separated by commas or spaces, for example: `mysql:mysql-service-name,postgres:postgres-service-name`, `mysql:mysql-service-name postgres:postgres-service-name`.
 
-{{< img src="/tracing/troubleshooting/troubleshooting-service-naming-convention-issues-1.png" alt="ドロップダウンメニューを使用して、特定のクラスターまたはデータセンターの値を選択します" style="width:100%;" >}}
+{{% /tab %}}
+{{% tab "Node.js" %}}
 
-第 2 のプライマリタグを適用せず、サービス名にメトリクスパーティションやグループ化変数を含めると、アカウント内のユニークなサービス数が不必要に増加し、遅延やデータ損失の可能性があります。
+`DD_SERVICE_MAPPING`
+: **Configuration**: `serviceMapping`<br>
+**Default**: N/A<br>
+**Example**: `mysql:my-mysql-service-name-db,pg:my-pg-service-name-db`<br>
+Provide service names for each plugin. Accepts comma separated `plugin:service-name` pairs, with or without spaces.
 
-例えば、`web-store` というサービスの代わりに、`web-store-us-1`、`web-store-eu-1`、`web-store-eu-2` という異なるインスタンスの名前を付けて、これらのパーティションのパフォーマンスメトリクスを並べて表示することができます。Datadog では、第 2 プライマリタグとして、**region value** (`us-1`、`eu-1`、`eu-2`) を実装することを推奨しています。
+{{% /tab %}}
+{{% tab ".NET" %}}
 
-## Datadog サポートが収集するトラブルシューティングのデータ
+`DD_TRACE_SERVICE_MAPPING`
+: Rename services using configuration. Accepts a comma-separated list of key-value pairs of service name keys to rename, and the name to use instead, in the format `[from-key]:[to-name]`. <br>
+**Example**: `mysql:main-mysql-db, mongodb:offsite-mongodb-service`<br>
+The `from-key` value is specific to the integration type, and should exclude the application name prefix. For example, to rename `my-application-sql-server` to `main-db`, use `sql-server:main-db`. Added in version 1.23.0
 
-[サポートチケット][1]を作成する際、下記のような情報が必要となる場合がございます。
+{{% /tab %}}
+{{% tab "PHP" %}}
 
-1. **問題を確認することはできますか？たとえば、トレース (推奨) やスクリーンショットへのリンクを提供し、何が起こるかサポートまでお聞かせください。**
+`DD_SERVICE_MAPPING`
+: **INI**: `datadog.service_mapping`<br>
+**Default**: `null`<br>
+Change the default name of an APM integration. Rename one or more integrations at a time, for example: `DD_SERVICE_MAPPING=pdo:payments-db,mysqli:orders-db` (see [Integration names][1000]).
 
-   これにより、サポートチームはエラーを確認し、Datadog のテスト環境で問題の再現を試みることができます。
+[1000]: https://docs.datadoghq.com/ja/tracing/trace_collection/library_config/php#integration-names
 
-2. **[トレーサー起動ログ](#confirm-apm-setup-and-agent-status)**
+{{% /tab %}}
+{{% tab "Ruby" %}}
 
-    起動ログにより、トレーサーの設定ミスやトレーサーがDatadog Agent と通信できていないことが分かります。トレーサーが参照するコンフィギュレーションとアプリケーションやコンテナ内の設定を比べることで、サポートは設定が正しく適用されていない箇所を特定できます。
+Ruby does not support `DD_SERVICE_MAPPING` or `DD_TRACE_SERVICE_MAPPING`. See [Additional Ruby configuration][2000] for code options to change the service name.
 
-3. **[トレーサーデバッグログ](#tracer-debug-logs)**
+[2000]: https://docs.datadoghq.com/ja/tracing/trace_collection/automatic_instrumentation/dd_libraries/ruby/#advanced-configuration
 
-    トレーサーのデバッグログは起動ログよりさらに深く掘り下げ、トラフィックがアプリケーションを通過するまでチェックしがたい方法でインテグレーションが正しくインスツルメントされているか判断するのに役立ちます。デバッグログはトレーサーが作成するスパンの内容を確認したり、スパンを Agent に送信する際に接続に問題がある場合エラーを表面化させることもできます。トレーサーのデバッグログは、トレーサーの微妙な動作を確認するのに最も有益で信頼性の高いツールです。
+{{% /tab %}}
+{{< /tabs >}}
 
-4. **これらのログで探している情報に応じて、[デバッグまたはトレースモード][13]中にトレースが Datadog Agent に送信された期間の代表的なログサンプルをキャプチャする [Datadog Agent フレア][12] (ログおよび構成のスナップショット)**
+{{% /collapse-content %}}
 
-   Datadog Agent フレアにより Datadog Agent 内で起きていること (例えば、トレースが拒否または不正な形式にされているか) を確認できます。これはトレースが Datadog Agent に到達していない場合は役に立ちませんが、問題の原因やメトリクスの不一致を特定することはできます。
+{{% collapse-content title="There is an unexpected increase in ingested/indexed spans on the Plan and Usage page" level="h4" %}}
 
-    ログのレベルを `debug` または `trace` モードに調節する場合は、この操作によりログの量が劇的に増加し、システムリソースの消費量 (主に長期的なストレージスペースの増加) が見込まれることを考慮してください。Datadog は、この操作は一時的なトラブルシューティング目的のみで行い、完了後はレベルを `info` に戻すことを推奨します。 
+Spikes in data ingestion and indexing can be caused by various factors. To investigate the cause of an increase, use the [APM Traces Estimated Usage metrics][31]:
 
-    **注**: Datadog Agent v7.19+ および Datadog Helm チャートの[最新版][9]、または Datadog Agent とトレース Agent が別コンテナにある状況で DaemonSet をご利用の場合は、トレース Agent からフレアを取得するために `datadog.yaml` に `log_level: DEBUG` または `log_level: TRACE` を設定した状態で以下のコマンドを実行する必要があります。
+| USAGE TYPE | METRIC | DESCRIPTION |
+| ------- | ------------ |------------ |
+| APM Indexed Spans     | `datadog.estimated_usage.apm.indexed_spans` | Total number of spans indexed by tag-based retention filters.|
+| APM Ingested Spans     | `datadog.estimated_usage.apm.ingested_spans`| Total number of ingested spans. |
 
-    {{< code-block lang="shell" filename="trace-agent.sh" >}}
-kubectl exec -it <agent-pod-name> -c trace-agent -- agent flare <case-id> --local
-    {{< /code-block >}}
+The [APM Traces Usage dashboard][28] contains several widget groups displaying high-level KPIs and additional usage information.
 
-5. **環境の詳細**
+{{% /collapse-content %}}
 
-    アプリケーションのデプロイ方法を知ることで、サポートチームはトレーサーと Agent 間の通信の問題や設定ミスにおけるありがちな問題を特定することができます。問題が複雑な場合は、Kubernetes マニフェストや ECS タスク定義などを参照していただく場合もあります。
+{{% collapse-content title="Missing error message and stack trace" level="h4" %}}
 
-6. **トレーサーコンフィギュレーション、[カスタムインスツルメンテーション][14]、スパンタグの追加など、トレーシングライブラリを使用して書かれたカスタムコード**
+In some traces with an error status, the **Errors** tab shows `Missing error message and stack trace` rather than exception details. 
 
-   カスタムインスツルメンテーションは強力なツールですが、Datadog 内のトレース可視化に意図しない副作用を与える可能性があります。
+A span can show this message for two possible reasons:
+- The span contains an unhandled exception.
+- An HTTP response within the span returned an HTTP status code between 400 and 599.
 
-   さらに、自動インスツルメンテーションとコンフィギュレーションを尋ねることで、Datadog はトレーサのスタートアップとデバッグログの両方に表示されているものと一致するかどうかを確認することができます。
+When an exception is handled in a try/catch block, `error.msg`, `error.type`, and `error.stack` span tags are not populated. To populate the detailed error span tags, use [Custom Instrumentation][18] code.
 
-7. **次のバージョン:**
-   * **インスツルメントされたアプリケーションの構築に使用されるプログラミング言語、フレームワーク、依存関係**
-   * **Datadog トレーサー**
-   * **Datadog Agent**
+{{% /collapse-content %}}
 
-    使用するバージョンを知ることで、インテグレーションが [互換性要件][15]でサポートされていることを確認したり、既知の問題をチェックしたり、トレーサーや言語のバージョンに問題がある場合はその更新をお勧めすることができます。
+## Data volume guidelines
 
-## その他の参考資料
+If you encounter any of the following issues, you may be exceeding [Datadog's volume guidelines][29]:
+
+- Your trace metrics are not reporting as you would expect in the Datadog platform.
+- You are missing some of your resources that you expected to see in the Datadog platform.
+- You are seeing traces from your service but are not able to find this service on the [Service Catalog page][32].
+
+{{% collapse-content title="Data volume guidelines" level="h4" %}}
+
+Your instrumented application can submit spans with timestamps up to 18 hours in the past and two hours in the future from the current time.
+
+Datadog accepts the following combinations for a given 40-minute interval:
+
+- 1000 unique `environments` and `service` combinations
+- 30 unique `second primary tag values` per environment
+- 100 unique `operation names` per environment and service
+- 1000 unique `resources` per environment, service, and operation name
+- 30 unique `versions` per environment and service
+
+If you need to accommodate larger volumes, contact [Datadog support][1] with your use case.
+
+Datadog truncates the following strings if they exceed the indicated number of characters:
+
+| Name            | Characters |
+|-----------------|------------|
+| [service][6]    |  100       |
+| operation       |  100       |
+| type            |  100       |
+| [resource][7]   |  5000      |
+| [tag key][8]    |  200       |
+| [tag value][8]  |  25000     |
+
+Additionally, the number of [span tags][8] present on any span cannot exceed 1024.
+
+{{% /collapse-content %}}
+
+{{% collapse-content title="The number of services exceeds what is specified in the data volume guidelines" level="h4" %}}
+
+If the number of services exceeds what is specified in the [data volume guidelines](#data-volume-guidelines), try following these best practices for service naming conventions.
+
+### Exclude environment tag values from service names
+
+By default, the environment (`env`) is the primary tag for [Datadog APM][17].
+
+{{< img src="/tracing/troubleshooting/troubleshooting-service-naming-convention-issues-3.png" alt="Environment is the default primary tag" style="width:100%;" >}}
+
+A service is typically deployed in multiple environments, such as `prod`, `staging`, and `dev`. Performance metrics like request counts, latency, and error rate differ across various environments. The environment dropdown in the Service Catalog allows you to scope the data in the **Performance** tab to a specific environment.
+
+{{< img src="/tracing/troubleshooting/troubleshooting-service-naming-convention-issues-2.png" alt="Choose a specific environment using the `env` dropdown in the Service Catalog" style="width:100%;" >}}
+
+One pattern that often leads to issues with an overwhelming number of services is including the environment value in service names. For example, you might have two unique services instead of one since they are operating in two separate environments: `prod-web-store` and `dev-web-store`.
+
+Datadog recommends tuning your instrumentation by renaming your services.
+
+Trace metrics are unsampled, which means your instrumented application shows all data instead of subsections of them. The [volume guidelines](#data-volume-guidelines) are also applied.
+
+### Use the second primary tag instead of putting metric partitions or grouping variables into service names
+
+Second primary tags are additional tags that you can use to group and aggregate your trace metrics. You can use the dropdown to scope the performance data to a given cluster name or data center value.
+
+{{< img src="/tracing/troubleshooting/troubleshooting-service-naming-convention-issues-1.png" alt="Use the dropdown menu to select a specific cluster or data center value" style="width:100%;" >}}
+
+Including metric partitions or grouping variables in service names instead of applying the second primary tag unnecessarily inflates the number of unique services in an account and results in potential delay or data loss.
+
+For example, instead of the service `web-store`, you might decide to name different instances of a service `web-store-us-1`, `web-store-eu-1`, and `web-store-eu-2` to see performance metrics for these partitions side-by-side. Datadog recommends implementing the **region value** (`us-1`, `eu-1`, `eu-2`) as a second primary tag.
+
+{{% /collapse-content %}}
+
+## Connection errors
+
+This section provides guidance on diagnosing and resolving connection and communication issues between your applications and the Datadog Agent
+
+{{% collapse-content title="Your instrumented application isn't communicating with the Datadog Agent" level="h4" %}}
+
+Read about how to find and fix these problems in [Connection Errors][4].
+
+{{% /collapse-content %}}
+
+## Resource usage
+
+This section contains information on troubleshooting performance issues related to resource utilization.
+
+{{% collapse-content title="Out of memory errors" level="h4" %}}
+
+Read about detecting trace collection CPU usage and about calculating adequate resource limits for the Agent in [Agent Resource Usage][10].
+
+{{% /collapse-content %}}
+
+{{% collapse-content title="Rate limit or max event error messages" level="h4" %}}
+
+Within Datadog Agent logs, if you see error messages about rate limits or max events per second, you can change these limits by following [these instructions][9]. If you have questions, before you change the limits, consult with the Datadog [support team][1].
+
+{{% /collapse-content %}}
+
+## Security
+
+This section covers approaches for addressing security concerns in APM, including protecting sensitive data and managing traffic.
+
+{{% collapse-content title="Modifying, discarding, or obfuscating spans" level="h4" %}}
+
+There are several configuration options available to scrub sensitive data or discard traces corresponding to health checks or other unwanted traffic that can be configured within the Datadog Agent, or in some languages the tracing client. For details on the options available, see [Security and Agent Customization][11]. While this offers representative examples, if you require assistance applying these options to your environment, reach out to [Datadog Support][1].
+
+{{% /collapse-content %}}
+
+## Debugging and logging
+
+This section explains how to use debug and startup logs to identify and resolve issues with your Datadog tracer.
+
+{{% collapse-content title="Debug logs" level="h4" %}}
+
+To capture full details on the Datadog tracer, enable debug mode on your tracer by using the `DD_TRACE_DEBUG` environment variable. You might enable it for your own investigation or if Datadog support has recommended it for triage purposes. However, be sure to disable debug logging when you are finished testing to avoid the logging overhead it introduces.
+
+These logs can surface instrumentation errors or integration-specific errors. For details on enabling and capturing these debug logs, see the [debug mode troubleshooting page][5].
+
+{{% /collapse-content %}}
+
+{{% collapse-content title="Startup logs" level="h4" %}}
+
+During startup, Datadog tracing libraries emit logs that reflect the configurations applied in a JSON object, as well as any errors encountered, including if the Agent can be reached in languages where this is possible. Some languages require these startup logs to be enabled with the environment variable `DD_TRACE_STARTUP_LOGS=true`. For more information, see the [Startup logs][3].
+
+{{% /collapse-content %}}
+
+## Additional support
+
+If you still need additional support, open a ticket with Datadog Support.
+
+{{% collapse-content title="Open a Datadog Support ticket" level="h4" %}}
+
+When you open a [support ticket][1], the Datadog support team may ask for the following types of information:
+
+1. **Links to a trace or screenshots of the issue**: This helps reproduce your issues for troubleshooting purposes.
+
+2. **Tracer startup logs**: Startup logs help identify tracer misconfiguration or communication issues between the tracer and the Datadog Agent. By comparing the tracer's configuration with the application or container settings, support teams can pinpoint improperly applied settings.
+
+3. **Tracer debug logs**: Tracer debug logs provide deeper insights than startup logs, revealing:
+   - Proper integration instrumentation during application traffic flow
+   - Contents of spans created by the tracer
+   - Connection errors when sending spans to the Agent
+
+4. **Datadog Agent flare**: [Datadog Agent flares][12] enable you to see what is happening within the Datadog Agent, for example, if traces are being rejected or malformed. This does not help if traces are not reaching the Datadog Agent, but does help identify the source of an issue, or any metric discrepancies.
+
+5. **A description of your environment**: Understanding your application's deployment configuration helps the Support team identify potential tracer-Agent communication issues and identify misconfigurations. For complex problems, support may request Kubernetes manifests, ECS task definitions, or similar deployment configuration files.
+
+6. **Custom tracing code**: Custom instrumentation, configuration, and adding span tags can significantly impact trace visualizations in Datadog.
+
+7. **Version information**: Knowing what language, framework, Datadog Agent, and Datadog tracer versions you are using allows Support to verify [Compatiblity Requirements][15], check for known issues, or recommend a version upgrades. For example:
+
+{{% /collapse-content %}}
+
+## Further reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
@@ -174,3 +364,18 @@ kubectl exec -it <agent-pod-name> -c trace-agent -- agent flare <case-id> --loca
 [15]: /ja/tracing/compatibility_requirements/
 [16]: /ja/tracing/guide/setting_primary_tags_to_scope/?tab=helm#add-a-second-primary-tag-in-datadog
 [17]: /ja/tracing/guide/setting_primary_tags_to_scope/
+[18]: /ja/tracing/trace_collection/custom_instrumentation/?tab=datadogapi
+[19]: /ja/tracing/trace_pipeline/trace_retention/#create-your-own-retention-filter
+[20]: https://app.datadoghq.com/apm/traces
+[21]: /ja/tracing/trace_pipeline/trace_retention/#datadog-intelligent-retention-filter
+[22]: /ja/tracing/trace_pipeline/trace_retention/#retention-filters
+[23]: /ja/developers/guide/data-collection-resolution-retention/
+[24]: /ja/tracing/metrics/metrics_namespace/
+[25]: /ja/tracing/trace_pipeline/ingestion_mechanisms/?tab=java
+[26]: /ja/tracing/trace_pipeline/generate_metrics/
+[27]: /ja/tracing/trace_collection/library_config/
+[28]: https://app.datadoghq.com/dash/integration/apm_estimated_usage
+[29]: /ja/tracing/troubleshooting/#data-volume-guidelines
+[30]: /ja/tracing/guide/inferred-service-opt-in/?tab=java
+[31]: /ja/tracing/trace_pipeline/metrics/#apm-traces-estimated-usage-dashboard
+[32]: https://app.datadoghq.com/services

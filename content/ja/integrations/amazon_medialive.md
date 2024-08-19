@@ -24,6 +24,7 @@ categories:
 - AWS
 - メトリクス
 - クラウド
+custom_kind: integration
 dependencies: []
 display_on_public_website: true
 draft: false
@@ -32,7 +33,6 @@ integration_id: amazon-medialive
 integration_title: Amazon MediaLive
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: amazon_medialive
 public_title: Amazon MediaLive
@@ -44,6 +44,7 @@ tile:
   - Category::AWS
   - Category::Metrics
   - Category::Cloud
+  - Offering::Integration
   configuration: README.md#Setup
   description: AWS Elemental MediaLive は、ブロードキャストグレードのライブビデオ処理サービスです。
   media: []
@@ -53,41 +54,41 @@ tile:
 ---
 
 <!--  SOURCED FROM https://github.com/DataDog/integrations-internal-core -->
-## 概要
+## Overview
 
-AWS Elemental MediaLive は、ブロードキャストグレードのライブビデオ処理サービスです。
+AWS Elemental MediaLive is a broadcast-grade live video processing service.
 
-このインテグレーションを有効にすると、Datadog にすべての MediaLive メトリクスを表示できます。
+Enable this integration to see all your MediaLive metrics in Datadog.
 
-## 計画と使用
+## Setup
 
-### インフラストラクチャーリスト
+### Installation
 
-[Amazon Web Services インテグレーション][1]をまだセットアップしていない場合は、最初にセットアップします。
+If you haven't already, set up the [Amazon Web Services integration][1] first.
 
-### メトリクスの収集
+### Metric collection
 
-1. [AWS インテグレーションタイル][2]で、メトリクスコレクションの下にある `MediaLive` にチェックが入っていることを
-   確認します。
-2. [Datadog - MediaLive インテグレーション][3]をインストールします。
+1. In the [AWS integration tile][2], ensure that `MediaLive` is checked
+   under metric collection.
+2. Install the [Datadog - MediaLive integration][3].
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "amazon_medialive" >}}
 
 
-### ヘルプ
+### Events
 
-MediaLive インテグレーションには、イベントは含まれません。
+The MediaLive integration does not include any events.
 
-### ヘルプ
+### Service Checks
 
-MediaLive インテグレーションには、サービスのチェック機能は含まれません。
+The MediaLive integration does not include any service checks.
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][5]までお問い合わせください。
+Need help? Contact [Datadog support][5].
 
 [1]: https://docs.datadoghq.com/ja/integrations/amazon_web_services/
 [2]: https://app.datadoghq.com/integrations/amazon-web-services

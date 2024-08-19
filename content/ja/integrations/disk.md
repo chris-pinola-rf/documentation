@@ -21,6 +21,7 @@ author:
   support_email: help@datadoghq.com
 categories:
 - os & system
+custom_kind: integration
 dependencies:
 - https://github.com/DataDog/integrations-core/blob/master/disk/README.md
 display_name: Disk
@@ -28,11 +29,10 @@ display_on_public_website: true
 draft: false
 git_integration_title: disk
 guid: 94588b23-111e-4ed2-a2af-fd6e4caeea04
-integration_id: システム
+integration_id: system
 integration_title: Disk
 integration_version: 5.3.0
 is_public: true
-custom_kind: integration
 maintainer: help@datadoghq.com
 manifest_version: 2.0.0
 metric_prefix: system.
@@ -54,8 +54,9 @@ tile:
   - Supported OS::macOS
   - Supported OS::Windows
   - Category::OS とシステム
+  - Offering::Integration
   configuration: README.md#Setup
-  description: ディスクチェックで、マウントされたディスクのメトリクスを収集。
+  description: The disk check gathers metrics on mounted disks.
   media: []
   overview: README.md#Overview
   support: README.md#Support
@@ -65,59 +66,59 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/integrations-core -->
 
 
-## 概要
+## Overview
 
-ディスクの使用状況および IO に関連したメトリクスを収集します。
+Collect metrics related to disk usage and IO.
 
-## 計画と使用
+## Setup
 
-### インフラストラクチャーリスト
+### Installation
 
-ディスクチェックは [Datadog Agent][1] パッケージに含まれています。サーバーに追加でインストールする必要はありません。
+The disk check is included in the [Datadog Agent][1] package, so you don't need to install anything else on your server.
 
-### ブラウザトラブルシューティング
+### Configuration
 
-ディスクチェックはデフォルトで有効になっています。Agent は、すべてのローカルパーティションに関するメトリクスを収集します。カスタムオプション付きでチェックを構成する場合は、[Agent のコンフィギュレーションディレクトリ][2]のルートにある `conf.d/` フォルダーの `disk.d/conf.yaml` ファイルを編集します。使用可能なすべてのコンフィギュレーションオプションの詳細については、[サンプル disk.d/conf.yaml][3] を参照してください。
+The Disk check is enabled by default, and the Agent collects metrics on all local partitions. To configure the check with custom options, edit the `disk.d/conf.yaml` file, in the `conf.d/` folder at the root of your [Agent's configuration directory][2]. See the [sample disk.d/conf.yaml][3] for all available configuration options.
 
-#### Windows ホストに関する注意事項
-ディスクチェックの利用シーンは 3 つあります。
+#### Note for Windows hosts
+There are three scenarios where the Disk check can be used:
 
-1. 物理ドライブの監視
+1. Monitoring physical drives
 
-  ディスクレターで表される物理ドライブ (例: C:\、D:\ など) の監視は、ディスクチェックで特に考慮することなくそのままサポートされています。
+  Monitoring physical drives that are represented by a disk letter (for example. C:\, D:\, etc.) is supported out of the box by the disk check without any special considerations.
 
-2. ネストされたマウントポイントの監視
+2. Monitoring nested mount points
 
-  ファイルシステム内のマウントされたフォルダーを監視するには、Administrator 権限が必要です。これは、基盤となる Windows の関数呼び出し [FindFirstVolumeMountPoint][4] が管理者権限を必要とするためです。
-  Agent に Administrator 権限を付与せずにこれらのメトリクスを収集するには、[PDH チェック][5]を使用して対応する perf カウンターからマウントポイントメトリクスを収集するようにします。
+  Monitoring mounted folders within a filesystem requires Administrator permissions. This is because the underlying Windows function call [FindFirstVolumeMountPoint][4] requires administrative permissions.
+  To collect those metrics without granting Administrator permissions to the Agent, use the [PDH check][5] to collect mount point metrics from the corresponding perf counters.
 
-3. ファイル共有の監視
+3. Monitoring file shares
 
-  Windows 上のファイル共有のマウントポイントメトリクスの収集は、コンフィギュレーションで `create_mounts` オプションを使用した場合のみサポートされます。
-  Windows では、マウントされた各フォルダーは、その共有をマウントしたユーザーにのみ表示されます。
-  そのため、`create_mounts` オプションは、Agent のユーザーのコンテキストで監視するマウントポイントを作成することができます。
+  Collecting mount point metrics for file shares on Windows is only supported by using the `create_mounts` option in the configuration.
+  On Windows, each mounted folder is only visible to the user who mounted the share.
+  Therefore, the `create_mounts` option allows the Agent to create the mount points to monitor in the context of the Agent's user.
 
-### 検証
+### Validation
 
-[Agent の `status` サブコマンドを実行][6]し、Checks セクションで `disk` を探します。
+[Run the Agent's `status` subcommand][6] and look for `disk` under the Checks section.
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "disk" >}}
 
 
-### ヘルプ
+### Events
 
-Disk チェックには、イベントは含まれません。
+The Disk check does not include any events.
 
-### ヘルプ
+### Service Checks
 {{< get-service-checks-from-git "disk" >}}
 
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][9]までお問い合わせください。
+Need help? Contact [Datadog support][9].
 
 
 [1]: https://app.datadoghq.com/account/settings/agent/latest

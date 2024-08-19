@@ -20,32 +20,30 @@ title: ログコンフィギュレーション
 
 ## 概要
 
-Datadog Logging without Limits* は、ログの取り込みとインデックス作成を切り離します。[**Logs > Configuration**][1] のログ構成ページから、インデックスを作成して保持するログ、またはアーカイブするログを選択し、トップレベルで設定とコントロールを管理します。
+Datadog Logging without Limits* は、ログの取り込みとインデックス作成を切り離します。[**Logs > Pipelines**][1] のログ構成ページから、インデックスを作成して保持するログ、またはアーカイブするログを選択し、トップレベルで設定と制御を管理します。
 
 **注**: PCI 準拠の Datadog 組織をセットアップするための情報は、[PCI DSS 準拠][2]をご覧ください。
 
-{{< img src="logs/log_configuration_overview1.mp4" alt="Datadog アプリのログ構成セクション" video=true >}}
+## Configuration options
 
-## コンフィギュレーションオプション
+- Control how your logs are processed with [pipelines][3] and [processors][4].
+- Set [attributes and aliasing][5] to unify your logs environment.
+- [Generate metrics from ingested logs][6] as cost-efficient way to summarize log data from an entire ingested stream.
+- Institute fine-grained control over your log management budget with [log indexes][7].
+- Forward ingested logs to your own cloud-hosted storage bucket to keep as an [archive][8] for future troubleshooting or compliance audits.
+- [Rehydrate an archive][9] to analyze or investigate log events that are older or excluded from indexing.
+- Restrict [logs data access][10] with restriction queries.
 
-- [パイプライン][3]と[プロセッサ][4]を使用してログを処理する方法を制御します。
-- [属性とエイリアス][5]を設定し、ログ環境を一元化します。
-- 取り込んだストリーム全体からのログデータを要約するコスト効率の高い方法として、[取り込んだログからメトリクスを生成][6]します。
-- [ログインデックス][7]を使用して、ログ管理予算をきめ細かく管理します。
-- 取り込んだログを自身のクラウドホスティングされたストレージバケットに転送し、将来のトラブルシューティングやコンプライアンス監査用の[アーカイブ][8]として保管します。
-- [アーカイブをリハイドレート][9]して、古いログイベントまたはインデックス作成から除外されたログイベントを分析または調査します。
-- [ログデータアクセス][10]を制限クエリで制限します。
+## Log Explorer
 
-## Misconfigurations Explorer
+Once you've completed configuration, start investigating and troubleshooting logs in the [Log Explorer][11].
 
-コンフィギュレーションが完了したら、[ログエクスプローラー][11]でログの調査とトラブルシューティングを開始します。
-
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
 <br>
-*Logging without Limits は Datadog, Inc. の商標です。
+*Logging without Limits is a trademark of Datadog, Inc.
 
 [1]: https://app.datadoghq.com/logs/pipelines
 [2]: /ja/data_security/pci_compliance/

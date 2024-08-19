@@ -43,10 +43,10 @@ API を試すには [![Postman で実行][3]](https://god.gw.postman.com/run-col
 
 デフォルトでは、Datadog API Docs には cURL で例が示されています。各エンドポイントの公式[クライアントライブラリ][6]言語から 1 つを選択すると、選択したライブラリのコード例を閲覧できます。各ライブラリをインストールするには、
 
-{{< programming-lang-wrapper langs="java,python-legacy,python,ruby-legacy,ruby,go,typescript" class="api-reference" >}}
+{{< programming-lang-wrapper langs="java,python-legacy,python,ruby-legacy,ruby,go,typescript,rust" class="api-reference" >}}
 
 {{< programming-lang lang="java" >}}
-#### インフラストラクチャーリスト
+#### Installation
 Maven - この依存関係をプロジェクトの POM に追加します。
 ```xml
 <dependency>
@@ -62,7 +62,7 @@ Gradle - この依存関係をプロジェクトのビルドファイルに追�
 compile "com.datadoghq:datadog-api-client:{{< sdk-version "datadog-api-client-java" >}}"
 ```
 
-#### ガイド
+#### Usage
 
 ```java
 import com.datadog.api.client.ApiClient;
@@ -122,55 +122,55 @@ application {
 {{< /programming-lang >}}
 
 {{< programming-lang lang="python-legacy" >}}
-#### インフラストラクチャーリスト
+#### Installation
 ```sh
 pip install datadog
 ```
-#### ガイド
+#### Usage
 ```python
 import datadog
 ```
 {{< /programming-lang >}}
 
 {{< programming-lang lang="python" >}}
-#### インフラストラクチャーリスト
+#### Installation
 ```console
 pip3 install datadog-api-client
 ```
-#### ガイド
+#### Usage
 ```python
 import datadog_api_client
 ```
 {{< /programming-lang >}}
 
 {{< programming-lang lang="ruby-legacy" >}}
-#### インフラストラクチャーリスト
+#### Installation
 ```sh
 gem install dogapi
 ```
-#### ガイド
+#### Usage
 ```ruby
 require 'dogapi'
 ```
 {{< /programming-lang >}}
 
 {{< programming-lang lang="ruby" >}}
-#### インフラストラクチャーリスト
+#### Installation
 ```sh
 gem install datadog_api_client -v {{< sdk-version "datadog-api-client-ruby" >}}
 ```
-#### ガイド
+#### Usage
 ```ruby
 require 'datadog_api_client'
 ```
 {{< /programming-lang >}}
 
 {{< programming-lang lang="go" >}}
-#### インフラストラクチャーリスト
+#### Installation
 ```sh
 go mod init main && go get github.com/DataDog/datadog-api-client-go/v2/api/datadog
 ```
-#### ガイド
+#### Usage
 ```go
 import (
         "github.com/DataDog/datadog-api-client-go/v2/api/datadog"
@@ -181,7 +181,7 @@ import (
 {{< /programming-lang >}}
 
 {{< programming-lang lang="typescript" >}}
-#### インフラストラクチャーリスト
+#### Installation
 パッケージは [@datadog/datadog-api-client][1] の下にあり、NPM または Yarn を介してインストールできます。
 
 ```js
@@ -192,7 +192,7 @@ npm install @datadog/datadog-api-client
 yarn add @datadog/datadog-api-client
 ```
 
-#### ガイド
+#### Usage
 ```js
 import { <VERSION> } from 'datadog-api-client';
 ```
@@ -201,15 +201,46 @@ import { <VERSION> } from 'datadog-api-client';
 [1]: https://www.npmjs.com/package/@datadog/datadog-api-client
 {{< /programming-lang >}}
 
+{{< programming-lang lang="rust" >}}
+#### Installation
+Run `cargo add datadog-api-client`, or add the following to `Cargo.toml` under `[dependencies]`:
+
+```
+datadog-api-client = "0"
+```
+
+#### Usage
+Try the following snippet to validate your Datadog API key:
+```rust
+use datadog_api_client::datadog::Configuration;
+use datadog_api_client::datadogV1::api_authentication::AuthenticationAPI;
+
+#[tokio::main]
+async fn main() {
+    let configuration = Configuration::new();
+    let api = AuthenticationAPI::with_config(configuration);
+    let resp = api.validate().await;
+    if let Ok(value) = resp {
+        println!("{:#?}", value);
+    } else {
+        println!("{:#?}", resp.unwrap_err());
+    }
+}
+```
+
+[1]: https://crates.io/crates/datadog-api-client
+[2]: https://docs.rs/datadog-api-client/latest/datadog_api_client/
+{{< /programming-lang >}}
+
 {{< /programming-lang-wrapper >}}
 
-または、ライブラリディテクトリを参照します。
+Or check out the libraries directly:
 
 {{< partial name="api/sdk-languages.html" >}}
 </br>
-アプリケーションを使用して開始する場合は、Datadog の一般向けの[「はじめに」ドキュメント][7]をご覧ください。
+Trying to get started with the application instead? Check out Datadogs general [Getting Started docs][7].
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

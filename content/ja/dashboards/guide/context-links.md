@@ -6,175 +6,175 @@ further_reading:
 title: コンテキストリンク
 ---
 
-## 概要
+## Overview
 
-ダッシュボードは、複数のソースからデータを収集し、そのデータを視覚化として表示します。
+Dashboards collect data from multiple sources and display this data as visualizations. 
 
-ダッシュボードを[モニター通知][1]に関連付けたり、キーとなる技術指標やビジネス指標を観察するためにスクリーンボードとして使用したり、[ランブック][2]で参照してコンテキストを追加したりできます。ダッシュボードを使用すると、インタラクションだけでなく、プラットフォームの現在の状態のスナップショットを見ることができるため、問題を先取りして、専門ページでより深く分析することができます。
+You can attach dashboards to [monitor notifications][1], use them as screenboards to observe key technical or business indicators, or reference them in [runbooks][2] to provide additional context. With Dashboards, you can see snapshots of the current state of your platform as well as interactions, so you can preemptively see issues and analyze them more deeply in specialized pages.
 
-以下のビデオは、Web アプリケーションの概要ダッシュボードを見るユーザーを想定しています。ユーザーは、技術的なメトリクスでスパイクを特定し、詳細を確認するためにズームインし、根本的な原因をチェックするために基礎となるホストダッシュボードにアクセスします。
+The video below demonstrates a user looking at an overview dashboard for a web application. The user identifies a spike on a technical metric, zooms in for details, and accesses the underlying host dashboard to check for possible root causes.
 
-{{< img src="dashboards/guide/context_links/overview.mp4" alt="ダッシュボードのメトリクスグラフから、コンテキストリンクを使用して問題の根本原因を見つけるトラブルシューティングワークフロー" video="true" style="width:80%;" >}}
+{{< img src="dashboards/guide/context_links/overview.mp4" alt="Troubleshooting workflow from a dashboard metric graph, using context links to find the root cause of issue" video="true" style="width:80%;" >}}
 
-このガイドでは、ダッシュボードにおける**コンテキストリンク**を紹介し、以下の内容について説明します。
+This guide introduces **context links** in your dashboards and covers the following:
 
-1. [コンテキストリンクの仕組みと、それを正確なニーズに適合させる方法](#introduction-to-context-links)。
-2. [コンテキストリンク構成の使用例](#example-use-cases)。
+1. [How context links work, and how to adapt them to your exact needs](#introduction-to-context-links).
+2. [Example use cases of the context links configuration](#example-use-cases).
 
-## コンテキストリンクの紹介
+## Introduction to context links
 
-コンテキストリンクは、ダッシュボードウィジェットと Datadog の他のページ、およびワークフローに統合したサードパーティアプリケーションとの橋渡しをします。
+Context links bridge dashboard widgets with other pages in Datadog, as well as the third-party applications you have integrated into your workflows.
 
-ダッシュボードの[編集権限][3]を持つユーザーは、リンク一覧でアクセスできるリンクを構成することができます。
+Users with [edit permissions][3] to dashboards can configure which links are accessible in the link list.
 
-### デフォルトのコンテキストリンク
+### Default context links
 
- {{< img src="dashboards/guide/context_links/default-links.png" alt="デフォルトのリンク" style="width:75%;" >}}
+ {{< img src="dashboards/guide/context_links/default-links.png" alt="Default links" style="width:75%;" >}}
 
-デフォルトでは、ウィジェットメニューには、ホスト、[トレース][4]、[ログ][5]へのリンクと、ウィジェットのデータソースに対応するリンクが表示されます。たとえば、ウィジェットが [RUM データ][7]を使用している場合、メニューには [**RUM エクスプローラー**][6]へのリンクが表示されます。ドロップダウンメニューの他のリンクを表示するには、**More Related Data Actions** をクリックします。
+By default, the widget menu displays links to your host, [traces][4], and [logs][5]—along with links that correspond to the widget's data sources. For example, the menu displays a link to the [**RUM Explorer**][6] if your widget uses [RUM data][7]. Click **More Related Data Actions** to see additional links in the dropdown menu. 
 
-このウィジェットには、以下のページへのリンクが含まれています。 
+The widget contains links to the following pages:  
 
-| リンク           | 説明                                                                           |
+| Link           | Description                                                                           |
 |----------------|---------------------------------------------------------------------------------------|
-| ホスト          | シリーズが複数のホストで構成されている場合、[ホストマップ][8]にリンクします。シリーズが 1 つのホストで構成されている場合、[ホストダッシュボード][9]にリンクします。|
-| コンテナ     | [ライブコンテナ][10]ページにリンクします。                                                |
-| プロセス    | [ライブプロセス][11]ページにリンクします。                                                 |
-| APM トレース     | [トレースエクスプローラー][12]にリンクする基礎となるトレースを表示するサイドパネルを開きます。|
-| RUM イベント     | [RUM エクスプローラー][13]にリンクします。                                                      |
-| プロファイル       | APM [プロファイルエクスプローラー][14]にリンクします。                                              |
-| ログ管理           | [ログエクスプローラー][15]にリンクする基礎となるログを表示するサイドパネルを開きます。    |
+| Hosts          | Links to the [Host Map][8] if series consists of more than one host. Links to the [Host Dashboard][9] if series consists of one host.|
+| Containers     | Links to the [Live Container][10] page.                                                |
+| Processeses    | Links to the [Live Process][11] page.                                                 |
+| APM Traces     | Opens a side panel displaying underlying traces that link to the [Trace Explorer][12].|
+| RUM Events     | Links to the [RUM Explorer][13].                                                      |
+| Profiles       | Links to the APM [Profile Explorer][14].                                              |
+| Logs           | Opens a side panel displaying underlying logs that link to the [Log Explorer][15].    |
 
-該当する場合、コンテキストリンクは以下を埋め込みます。
+When applicable, context links embed:
 
-* ウィジェットフィルターとテンプレート変数 (もしあれば) を組み合わせた**フィルター**で、grouped-by クエリの場合、ユーザーがクリックするシリーズ。
-* **時間範囲**。時系列とヒートマップウィジェットでは、時間範囲はデータポイントの時間バケットに対応します。他のウィジェットでは、時間範囲はウィジェット全体の時間範囲となります。
-
-
-### コンテキストリンクのカスタマイズ
-
-[一般的なウィジェット][16]の場合、編集モードに入り、**Context Links** セクションにアクセスします。独自のコンテキストリンクを作成したり、デフォルトのリンクをオーバーライドしたり、リンクを表示または非表示にすることができます。
-
-{{< img src="dashboards/guide/context_links/edit-links.png" alt="リンクの編集" style="width:75%;" >}}
-
-カスタムリンクを定義したり、デフォルトリンクをオーバーライドするには、**Label** フィールドにリンク名を、**URL** フィールドにリンクパスを指定します。Key-value ヘルパーを使用するには、**+ Add URL Parameter** をクリックします。
+* A **filter** that combines the widget filter(s) with template variables (if any) and, for grouped-by queries, the one series users click on. 
+* A **time range**. For timeseries and heatmap widgets, the time range corresponds to the time bucket for the data point. For other widgets, the time range is the full widget time range.
 
 
-#### コンテキストリンク変数
+### Customize context links
 
-{{< img src="dashboards/guide/context_links/custom-link.png" alt="URL のパラメーターに key-value のペアを設定する" style="width:75%;" >}}
+For any [generic widget][16], enter its edit mode to access its **Context Links** section. You can create your own context links, override default links, and promote or hide links.
 
-コンテキストリンクで利用可能な変数タイプは以下の通りです。
+{{< img src="dashboards/guide/context_links/edit-links.png" alt="Edit links" style="width:75%;" >}}
 
-* **時間範囲変数** `{{timestamp_start}}`と `{{timestamp_end}}`。これらの変数は、ウィジェットの時間範囲に対応します。
-* **クエリ変数** (上記の例では `{@MerchantTier}` と `{@MerchantTier.value}}`)。これらの変数は、グループ化されたクエリを持つウィジェットのためのもので、ユーザーがクリックした特定のグループを識別します。
-* **ダッシュボードテンプレート変数** (上記の例では `{$env}}` と `{$env.value}}`)。これらの変数は、ユーザーがクリックしたときに、テンプレート変数に使用される現在の値を識別します。
-* **`{{tags}}`**、上記のすべての変数のデフォルトの組み合わせです。
-
-`{{something}}` と `{{something.value}}` のどちらかを選ばなければならないとき:
-
-* `{{something}}` は、そのキーにプレフィックスを付けた値を返します。例えば、`env:prod` です。
-* `{{something.value}}` は生の値を返します。例えば、`prod` です。
-* [複数の変数を構成するユースケース例](#configure-multiple-variables)を参照してください。
+To define custom links or override the default links, specify the link name in the **Label** field and the link path in the **URL** field. Click **+ Add URL Parameter** to use the key-value helper.
 
 
-この例では、**View in Acme** をクリックすると、リンク先が`https://prod.acme.io/search?what=basic&when=1643021787564` になります。
+#### Context Links variables
 
-{{< img src="dashboards/guide/context_links/view-in-acme.png" alt="Acme へのコンテキストリンク例" style="width:60%;" >}}
+{{< img src="dashboards/guide/context_links/custom-link.png" alt="Set a key-value pair for a URL parameter in the URL" style="width:75%;" >}}
 
-コンテキストリンク:
+Available variable types for context links include:
 
-* `{{env.value}}` を `prod` に置き換えます
-* `{{@MerchantTier.value}}` を `basic` に置き換えます
-* そして、`{{timestamp_end}}` を `1643021787564` に置き換えます。
+* **Time range variables** `{{timestamp_start}}` and `{{timestamp_end}}`. These variables correspond to the time range of the widget. 
+* **Query variables** (`{{@MerchantTier}}` and `{{@MerchantTier.value}}` in the example above). These variables are for widgets with grouped queries, and identify the specific group a user clicks on.
+* **Dashboard template variables** (`{{$env}}` and `{{$env.value}}` in the example above). These variables identify the current value in use for the template variable when user clicks.
+* **`{{tags}}`**, the default combination of all the variables above.
 
+When you have to choose between `{{something}}` and `{{something.value}}`:
 
-#### コピーアンドペーストによるコンテキストリンクのブートストラップ
-
-{{< img src="dashboards/guide/context_links/override-link.mp4" alt="リンクをコピーアンドペーストして構成をブートストラップする" video="true" style="width:75%;" >}}
-
-多種多様なパラメーターをエンコードする複雑なコンテキストリンクの場合、URL 全体を **URL** フィールドにコピーアンドペーストして構成をブートストラップし、そこから変数を作り直した方が便利な場合があります。
-
-
-#### URL エンコーディング
-
-{{< img src="dashboards/guide/context_links/url-encoding.png" alt="URL と Key-Value パラメーターのスクリーンショット" style="width:75%;" >}}
-
-Datadog は、コンテキストリンクの URL エンコーディングを処理します。
-
-上記の例では、クエリパラメーターに `status:error source:nginx {{@shopist.webstore.merchant.tier}}` を指定してリンクを表示しています。ここで、`{{@shopist.webstore.merchant.tier}}` は `@shopist.webstore.merchant.tier:basic` として解釈されます。そして、完全なクエリパラメーターは `&query=status%3Aerror%20source%3Anginx%20%40shopist.webstore.merchant.tier%3Abasic` に変換されます。
+* `{{something}}` returns the value prefixed by its key. For example, `env:prod`.
+* `{{something.value}}` returns the raw value. For example, `prod`.
+* See the [example use case to configure multiple variables](#configure-multiple-variables).
 
 
-## 使用例
+In this example, when you click **View in Acme**, the link directs you to `https://prod.acme.io/search?what=basic&when=1643021787564`.
 
-このセクションでは、コンテキストリンクを活用して、ダッシュボードをワークフローに統合する方法を示す例を紹介します。
+{{< img src="dashboards/guide/context_links/view-in-acme.png" alt="Example context link to Acme" style="width:60%;" >}}
 
-### ダッシュボードからカスタマーサポートソリューションへのリンク
+The context link:
 
-次の例では、ダッシュボード内のユーザーから、対応する Zendesk ユーザーページへのリンクを作成する方法を説明します。
+* Replaces `{{env.value}}` with `prod`
+* Replaces `{{@MerchantTier.value}}` with `basic`
+* And replaces `{{timestamp_end}}` with `1643021787564`.
 
-#### コンテキスト
 
-Datadog を使用して、マーチャントサイトを監視しています。カスタマーサポートチームは、[フロントエンド][17]と[セキュリティ][18]チームが設定したダッシュボードを使用して、最も関与している顧客や問題のある経験を持つ顧客を積極的に特定し、場合によっては彼らに連絡することができます。
+#### Bootstrap context link with copy-paste
 
-このトラブルシューティングのワークフローを加速するために、カスタマーサポートチームは、ダッシュボードとサポートソリューション (例: Zendesk) の間の直接接続を希望しています。
+{{< img src="dashboards/guide/context_links/override-link.mp4" alt="Copy-paste links to bootstrap configuration" video="true" style="width:75%;" >}}
 
-#### アプローチ
+For a complex context link that encodes a wide variety of parameters, it can be more convenient to copy-and-paste the entire URL in the **URL** field to bootstrap the configuration and rework the variables from there.
 
-Datadog でプラットフォーム全体のログに記録されたユーザーを追跡する主要な ID は、いくつかのダッシュボードウィジェットに表示されるファセットであるユーザーのメールアドレスです。
 
-{{< img src="dashboards/guide/context_links/zendesk_query.png" alt="Zendesk クエリ" style="width:90%;">}}
+#### URL encoding
 
-ユーザーを検索するための典型的な Zendesk のリンクは `https://acme.zendesk.com/agent/search/1?type=user&q=email%3Ashane%40doe.com` で、ユーザーのメールアドレスが検索パラメーターになります。
+{{< img src="dashboards/guide/context_links/url-encoding.png" alt="Screenshot of a URL and key-value parameters" style="width:75%;" >}}
 
-URL に変数を追加すると、テンプレートリンクが `https://acme.zendesk.com/agent/search/1?type=user&q=email:{{@usr.email.value}}` になります。
+Datadog handles URL encoding in context links.
 
-{{< img src="dashboards/guide/context_links/zendesk_link.png" alt="Zendesk ユーザーページコンテキストリンク" style="width:80%;">}}
+The example above displays a link with a query parameter, `status:error source:nginx {{@shopist.webstore.merchant.tier}}`. Here, `{{@shopist.webstore.merchant.tier}}` is interpreted as `@shopist.webstore.merchant.tier:basic`. The full query parameter is then translated into `&query=status%3Aerror%20source%3Anginx%20%40shopist.webstore.merchant.tier%3Abasic`.
 
-#### 結果
 
-カスタマーサポートチームのダッシュボードウィジェットには、適切なコンテキストを持つカスタマーサポートプラットフォームに移動するためのコンテキストリンクが含まれています。
+## Example use cases
 
-{{< img src="dashboards/guide/context_links/zendesk_interaction.png" alt="Zendesk ユーザーページコンテキストリンク" style="width:80%;">}}
+This section contains examples that demonstrate how you can take advantage of context links to integrate your dashboards into your workflows.
 
-**Zendesk User Page** のリンクをクリックすると、Zendesk のこのユーザーのページが表示されます。
+### Dashboards links to a customer support solution 
 
-{{< img src="dashboards/guide/context_links/zendesk_result.png" alt="Zendesk の結果" style="width:80%;">}}
+The following example explains how to create a link from a user in a dashboard to their corresponding Zendesk user page.
 
-### ダッシュボードから AWS コンソールへのリンク
+#### Context
 
-次の例では、ダッシュボードウィジェット内のホストから、AWS コンソールの対応する Amazon EC2 インスタンスページへのリンクを作成する方法を説明します。
+You use Datadog to monitor your merchant website. Your customer support team uses a dashboard that your [Frontend][17] and [Security][18] teams set up to proactively identify your most engaged customers—or customers with a troublesome experience, and potentially reach out to them.
 
-#### コンテキスト
+To accelerate this troubleshooting workflow, the customer support team would like a direct connection between dashboards and a support solution, for example: Zendesk.
 
-プラットフォームは [Amazon EC2][19] インスタンス上にホストされており、プラットフォームのアップスケールとダウンスケールの手順は、ほとんど手作業です。
+#### Approach
 
-Datadog のダッシュボードには、インフラストラクチャーの主要なヘルスメトリクスが集約されています。
+The primary ID that tracks logged users across your platform in Datadog is the user email, which is a facet that appears in some dashboard widgets.
 
-この運用ワークフローを加速するために、このダッシュボードと [AWS コンソール][20]を直接接続したいと考えます。例えば、`t2.micro` から `t2.large` にアップグレードするためです。
+{{< img src="dashboards/guide/context_links/zendesk_query.png" alt="Zendesk Query" style="width:90%;">}}
 
-#### アプローチ
+A typical Zendesk link to search for users is `https://acme.zendesk.com/agent/search/1?type=user&q=email%3Ashane%40doe.com`, where the user's email is a search parameter.
 
-典型的な Amazon EC2 インスタンスの概要リンクは `https://eu-west-3.console.aws.amazon.com/ec2/v2/home?region=eu-west-3#InstanceDetails:instanceId=i-04b737b9f8bf94a94` であり、そこで以下を確認することができます。
+Add a variable in the URL, and the templated link becomes `https://acme.zendesk.com/agent/search/1?type=user&q=email:{{@usr.email.value}}`.
 
-* `eu-west-3`: サブドメインと URL のパラメーターとして表示される、データセンターのリージョン。
-* `i-04b737b9f8bf94a94`: ハッシュパラメーターとして表示されるホスト ID。
+{{< img src="dashboards/guide/context_links/zendesk_link.png" alt="Zendesk User Page Context Link" style="width:80%;">}}
 
-プラットフォームが 1 つのリージョンでしか動作していない場合は、コンテキストリンクのテンプレートにホスト ID を注入して、`https://eu-west-3.console.aws.amazon.com/ec2/v2/home?region=eu-west-3#InstanceDetails:instanceId={{host.value}}` となるようにします。
+#### Result
 
-プラットフォームが複数のリージョンで動作している場合、ウィジェットの構成は以下に依存します。
+Your customer support team's dashboard widget contains a context link that takes you into the customer support platform with the appropriate context.
 
-* リージョンがクエリ集計の一部である場合 (例えば、以下のスクリーンショット)、テンプレートリンクは `https://{{region.value}}.console.aws.amazon.com/ec2/v2/home?region={{region.value}}#InstanceDetails:instanceId={{host.value}}` で、ここで `{{region.value}}` は **query** 変数です。
+{{< img src="dashboards/guide/context_links/zendesk_interaction.png" alt="Zendesk User Page Context Link" style="width:80%;">}}
+
+Clicking the **Zendesk User Page** link directs you to this user's page in Zendesk.
+
+{{< img src="dashboards/guide/context_links/zendesk_result.png" alt="Zendesk Result" style="width:80%;">}}
+
+### Dashboard links to the AWS Console
+
+次の例では、ダッシュボードウィジェットのホストから、AWS コンソールの対応する Amazon EC2 インスタンスページへのリンクを作成する方法を説明します。
+
+#### Context
+
+プラットフォームは [Amazon EC2][19] インスタンスでホストされており、プラットフォームのスケールアップおよびスケールダウンの手順は、ほとんど手作業です。
+
+You have a dashboard where you've consolidated key health metrics for your infrastructure in Datadog. 
+
+To accelerate this operations workflow, you would like a direct connection between this dashboard and your [AWS Console][20]—for example, to upgrade from `t2.micro` to `t2.large`.
+
+#### Approach
+
+典型的な Amazon EC2 インスタンスの概要リンクは `https://eu-west-3.console.aws.amazon.com/ec2/v2/home?region=eu-west-3#InstanceDetails:instanceId=i-04b737b9f8bf94a94` です。
+
+* `eu-west-3`: The data center region displayed as a subdomain and a URL parameter.
+* `i-04b737b9f8bf94a94`: The host ID displayed as a hash parameter.
+
+If your platform only runs on one region, inject the host ID into the context link template so that `https://eu-west-3.console.aws.amazon.com/ec2/v2/home?region=eu-west-3#InstanceDetails:instanceId={{host.value}}`.
+
+If your platforms runs on multiple regions, your widget configuration depends on the following:
+
+* If the region is part of the query aggregation (for example, in the screenshot below), the templated link is `https://{{region.value}}.console.aws.amazon.com/ec2/v2/home?region={{region.value}}#InstanceDetails:instanceId={{host.value}}`, where `{{region.value}}` is a **query** variable.
 
 {{< img src="dashboards/guide/context_links/ec2_query.png" alt="Amazon EC2 クエリ" style="width:90%;" >}}
 
-* リージョンがクエリ集計の一部である場合 (例えば、以下のスクリーンショット)、テンプレートリンクは `https://{{$region.value}}.console.aws.amazon.com/ec2/v2/home?region={{$region.value}}#InstanceDetails:instanceId={{host.value}}` で、ここで `{{region.value}}` は **template** 変数です。
+* If the region is part of the query aggregation (for example, in the screenshot below), the templated link is `https://{{$region.value}}.console.aws.amazon.com/ec2/v2/home?region={{$region.value}}#InstanceDetails:instanceId={{host.value}}`, where `{{region.value}}` is a **template** variable. 
 
 {{< img src="dashboards/guide/context_links/ec2_query2.png" alt="Amazon EC2 クエリ" style="width:90%;" >}}
 
-#### 結果
+#### Result
 
-ダッシュボードウィジェットには、AWS コンソールの適切なホストに移動するためのリンクが含まれています。
+Your dashboard widget contains a link that takes you to the appropriate host in the AWS Console.
 
 {{< img src="dashboards/guide/context_links/ec2_interaction.png" alt="Amazon EC2 クエリコンテキストリンク" style="width:90%;" >}}
 
@@ -182,73 +182,73 @@ Datadog のダッシュボードには、インフラストラクチャーの主
 
 {{< img src="dashboards/guide/context_links/ec2_result.png" alt="Amazon EC2 クエリの結果" style="width:70%;" >}}
 
-### ダッシュボードから Datadog の保存ビューとリマップされた属性へのリンク
+### Dashboard links to saved views and remapped attributes in Datadog
 
-次の例では、ダッシュボードウィジェットの RUM イベントから対応するログへのリンクを作成する方法を説明します。
+The following example explains how to create a link from a RUM event in a dashboard widget to its corresponding logs.
 
-#### コンテキスト
+#### Context
 
-Datadog で企業サイトを監視しています。[RUM][17] でユーザーを把握し、[Logs][21] でより技術的な観点から [API Gateways の監視][22]を行うことがあります。
+You monitor your corporate website with Datadog. You may use [RUM][17] to understand your users and [Logs][21] to [oversee your API Gateways][22] from a more technical perspective.
 
-フロントエンドエンジニアは通常、RUM の概要情報を表示するダッシュボードを使用します。API Gateways チームは、ログエクスプローラーの[保存ビュー][23]を維持します。これは、フロントエンドモニタリングチームが自分たちに関連する情報を監視するために信頼する、微調整された視点です。
+Your frontend engineers typically use dashboards with high-level RUM insights. You API Gateways team maintains a [Saved View][23] in the Log Explorer, which is a fine-tuned perspective that the frontend monitoring team relies on to monitor information that is relevant to them. 
 
-{{< img src="dashboards/guide/context_links/logs-saved-view_result.jpg" alt="Logs の保存ビューの結果" style="width:90%;" >}}
+{{< img src="dashboards/guide/context_links/logs-saved-view_result.jpg" alt="Logs Saved View result" style="width:90%;" >}}
 
-このトラブルシューティングのワークフローを加速するために、フロントエンドのモニタリングチームは、ダッシュボードの現在のコンテキストで保存ビューにアクセスしたいと考えています。
+To accelerate this troubleshooting workflow, the frontend monitoring teams would like to access the saved view with the current context of the dashboard.
 
-#### 保存ビューへのアプローチ
+#### Approach to Saved Views
 
-[保存ビュー][23]は、ログエクスプローラーのデフォルトのクエリ、視覚化、および構成オプションを定義します。典型的な保存ビューのリンクは `https://app.datadoghq.com/logs?saved_view=305130` で、これは内部でログエクスプローラーの URL をエンコードしています。
+[Saved Views][23] define the default query, visualization, and configuration options in the Log Explorer. A typical saved view link is `https://app.datadoghq.com/logs?saved_view=305130`, which encodes the Log Explorer URL under the hood. 
 
-保存ビューのショートリンクを追加して、結果のログエクスプローラー URL の任意のパラメーターをオーバーライドすることができます。
+You can append the saved view's short link to override any parameter in the resulting Log Explorer URL.
 
-例えば、`https://app.datadoghq.com/logs?saved_view=305130&query=@source:nginx @network.client.ip:123.123.12.1`  とすると、保存ビューを最初に開いたように[ログエクスプローラー][15]に移動しますが、デフォルトのクエリフィルターは `@source:nginx @network.client.ip:123.123.12.1` に置き換えられます。
+For example, `https://app.datadoghq.com/logs?saved_view=305130&query=@source:nginx @network.client.ip:123.123.12.1` takes you to the [Log Explorer][15] as if you opened the saved view first, but the default query filter is replaced with `@source:nginx @network.client.ip:123.123.12.1`.
 
-#### 属性のリマップへのアプローチ
+#### Approach to remapping attributes
 
-ウェブサイトでのナビゲーションが匿名の場合、ユーザーを特定するために IP アドレスをプロキシとして使用する場合があります。
+If navigation on your website is anonymous, you may use an IP address as a proxy to identify your users.
 
-RUM イベントの `@session.ip` 属性とログの `@network.client.ip` 属性を識別したいと思います。この 2 つの属性は一般的に異なる意味を持つため、異なる名前を持っていますが、この認証ログのコンテキストでは、両方を識別することができます。
+You would like to identify the `@session.ip` attribute from your RUM events with the `@network.client.ip` attribute from your logs. The two attributes have different names because they generally have different meanings, but in this context of authentication logs, you can identify both.
 
-そのためには、`@network.client.ip` を元にしたフィルターに `@session.ip` を注入し、適切なフィルター `@network.client.ip:{{@session.ip.value}}` を構築します。
+To do so, inject the `@session.ip` in a filter based on `@network.client.ip`, and build the appropriate filter `@network.client.ip:{{@session.ip.value}}`.
 
-{{< img src="dashboards/guide/context_links/logs-saved-view_query.png" alt="保存ビューの検索クエリの例" style="width:70%;">}}
+{{< img src="dashboards/guide/context_links/logs-saved-view_query.png" alt="Example search query for saved views" style="width:70%;">}}
 
-セッション IP ごと、および特定の国ごとのインサイトを表示する RUM ダッシュボードウィジェットについては、このリンクの構成に従います。
+For a RUM dashboard widget displaying insights per session IP and for specific countries, follow this link configuration.
 
-{{< img src="dashboards/guide/context_links/logs-saved-view_link.png" alt="保存ビューの URL 構成例" style="width:70%;">}}
+{{< img src="dashboards/guide/context_links/logs-saved-view_link.png" alt="Example URL configuration for saved views" style="width:70%;">}}
 
-#### 結果
+#### Result
 
-API Gateways チームは、受信ログの最新の更新を考慮して保存ビューを更新するため、コンテキストリンクは最新の状態に保たれます。
+As the API Gateways team updates the saved view to account for the latest updates on incoming logs, the context link remains up-to-date. 
 
-IP アドレスをリマップすることで、RUM イベントと対応するログをつなぐコンテキストリンクが作成されます。
+Remapping the IP address creates a context link that connects your RUM events with corresponding logs.
 
-### 複数の変数の構成
+### Configure multiple variables
 
-次の例では、コンテキストリンククエリで複数の変数と条件を構成する方法を説明します。
+The following example explains how to configure multiple variables and conditions in your context link query.
 
-#### コンテキスト
+#### Context
 
-特定のログや条件を調査するためのコンテキストリンクを追加します。
-- 同じコンテキストで複数のタグ値を持っている場合 (例: `env:production OR env:prod`)。
-- ログを複数の条件で絞り込みたい場合 (例: `env:prod AND service:backend`)
+Add context links to investigate specific logs or conditions. 
+- You have multiple tag values with the same context (for example, `env:production OR env:prod`). 
+- You want to filter down logs to multiple conditions (for example, `env:prod AND service:backend`)
 
-#### アプローチ
+#### Approach
 
-トラブルシューティングしたいテンプレート変数を選択すると、コンテキストリンク構成はそれらのテンプレート変数を取り込み、クエリに挿入します。**注**: 構文と括弧はクエリに影響します。
+After you select the template variables you want to troubleshoot, the context link configuration takes those template variables and inserts them into the query. **Note**: The syntax and the parenthesis enclosure impacts the query. 
 
-例えば、`service:backend` AND (`env:production` OR `env:prod`) でコンテキストリンクを構成したい場合は、以下の構成を使用します。
+For example, if you want to configure a context link with `service:backend` AND (`env:production` OR `env:prod`), use the following configuration:
 
 ```
 service:backend (env:{{$env.value}})
 ```
 
-#### 結果
+#### Result
 
-括弧は `(env:{{$env.value}})` を `(env:*)` に変換し、コンテキストリンククエリに複数の変数を入力できるようにします。
+The parenthesis translates the `(env:{{$env.value}})` to `(env:*)` which allows you to enter multiple variables into your context links query.
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

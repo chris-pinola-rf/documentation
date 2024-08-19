@@ -28,6 +28,7 @@ categories:
 - メトリクス
 - data stores
 - ai/ml
+custom_kind: integration
 dependencies: []
 display_on_public_website: true
 draft: false
@@ -36,7 +37,6 @@ integration_id: pinecone
 integration_title: Pinecone
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: pinecone
 public_title: Pinecone
@@ -55,6 +55,7 @@ tile:
   - Supported OS::Linux
   - Supported OS::Windows
   - Supported OS::macOS
+  - Offering::Integration
   configuration: README.md#Setup
   description: 高性能 AI アプリケーションのためのクラウドベースのベクターデータベース。
   media:
@@ -67,51 +68,51 @@ tile:
 ---
 
 <!--  SOURCED FROM https://github.com/DataDog/integrations-internal-core -->
-## 概要
+## Overview
 
-- **パフォーマンスの最適化と使用量の管理:** Pinecone 内で特定のアクション (リクエスト数など) を観測、追跡し、レイテンシーが高かったり使用量が多かったりするアプリケーションリクエストを特定します。傾向を監視し、実用的な洞察を得ることで、リソースの使用量を改善し、コストを削減します。
+- **Optimize performance and control usage:** Observe and track specific actions (e.g. request count) within Pinecone to identify application requests with high latency or usage. Monitor trends and gain actionable insights to improve resource utilization and reduce spend.
 
-- **メトリクスの自動アラート:** インデックスの空き状況が特定のしきい値に達したときにアラートを取得します。また、特定のメトリクスやしきい値にアラートする独自のカスタムモニターを作成することもできます。
+- **Automatically alert on metrics:** Get alerted when index fullness reaches a certain threshold. You can also create your own customized monitors to alert on specific metrics and thresholds.
 
-- **使用量やレイテンシーにおける予期せぬスパイクの発見とトリアージ:** Pinecone の Datadog ダッシュボードで、使用量やレイテンシーの異常をすばやく視覚化します。メトリクスを時系列で表示することで、傾向の理解を深め、スパイクの重大度を判断します。
+- **Locate and triage unexpected spikes in usage or latency:** Quickly visualize anomalies in usage or latency in Pinecone’s Datadog dashboard. View metrics over time to better understand trends and determine the severity of a spike.
 
-## 計画と使用
+## Setup
 
-### インフラストラクチャーリスト
+### Installation
 
-1. [Pinecone アカウント][1]にログインします。
-2. **API Keys** タブに移動します。
-3. API キーを作成します。
-4. 作成した API キーをクリップボードにコピーします。
+1. Login to your [Pinecone account][1].
+2. Navigate to **API Keys** tab.
+3. Create an API key.
+4. Copy the created API Key to your clipboard.
 
-### ブラウザトラブルシューティング
+### Configuration
 
-1. Datadog の [Pinecone インテグレーションタイル][2]内のコンフィギュレーションタブに移動します。
-2. プロジェクト ID を入力します。
-3. API キーをクリップボードにコピーした際に表示される、環境を入力します。
-4. コピーした API キーを入力します。
+1. Navigate to the configuration tab inside Datadog [Pinecone integration tile][2].
+2. Enter your project Id.
+3. Enter your environment, which could be found when copying your API key to clipboard.
+4. Enter your copied API key.
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "pinecone" >}}
 
 
-### ワークフローの自動化
+### Logs
 
-Pinecone には、収集ログは含まれません。
+Pinecone does not include collectings logs.
 
-### ヘルプ
+### Service Checks
 
-Pinecone には、サービスのチェック機能は含まれません。
+Pinecone does not include any service checks.
 
-### ヘルプ
+### Events
 
-Pinecone には、イベントは含まれません。
+Pinecone does not include any events.
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][4]までお問合せください。
+Need help? Contact [Datadog support][4].
 
 [1]: https://app.pinecone.io/
 [2]: https://app.datadoghq.com/account/settings#integrations/pinecone

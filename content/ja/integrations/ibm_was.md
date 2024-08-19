@@ -18,8 +18,6 @@ assets:
       metadata_path: assets/service_checks.json
     source_type_id: 10048
     source_type_name: IBM WAS
-  logs:
-    source: ibm_was
 author:
   homepage: https://www.datadoghq.com
   name: Datadog
@@ -28,6 +26,7 @@ author:
 categories:
 - ログの収集
 - OS & システム
+custom_kind: integration
 dependencies:
 - https://github.com/DataDog/integrations-core/blob/master/ibm_was/README.md
 display_on_public_website: true
@@ -35,9 +34,8 @@ draft: false
 git_integration_title: ibm_was
 integration_id: ibm-was
 integration_title: IBM WAS
-integration_version: 3.3.0
+integration_version: 3.3.1
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: ibm_was
 public_title: IBM WAS
@@ -54,6 +52,7 @@ tile:
   - Supported OS::Linux
   - Supported OS::Windows
   - Supported OS::macOS
+  - Offering::Integration
   configuration: README.md#Setup
   description: IBM Websphere Application Server は Java アプリケーションをホストするフレームワークです
   media: []
@@ -65,64 +64,64 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/integrations-core -->
 
 
-## 概要
+## Overview
 
-このチェックは、Datadog Agent を通じて [IBM Websphere Application Server (WAS)][1] を監視します。このチェックは IBM WAS バージョン >=  8.5.5 をサポートします。
+This check monitors [IBM Websphere Application Server (WAS)][1] through the Datadog Agent. This check supports IBM WAS versions >= 8.5.5.
 
-## 計画と使用
+## Setup
 
-ホストで実行されている Agent 用にこのチェックをインストールおよび構成する場合は、以下の手順に従ってください。コンテナ環境の場合は、[オートディスカバリーのインテグレーションテンプレート][2]のガイドを参照してこの手順を行ってください。
+Follow the instructions below to install and configure this check for an Agent running on a host. For containerized environments, see the [Autodiscovery Integration Templates][2] for guidance on applying these instructions.
 
-IBM WAS Datadog インテグレーションは、有効になっている PMI カウンターを WebSphere Application Server 環境から収集します。セットアップでは PerfServlet を有効にする必要があります。PerfServlet は、Datadog が WAS からパフォーマンスデータを取得する方法を提供します。
+The IBM WAS Datadog integration collects enabled PMI Counters from the WebSphere Application Server environment. Setup requires enabling the PerfServlet, which provides a way for Datadog to retrieve performance data from WAS.
 
-このチェックはデフォルトで、JDBC、JVM、スレッドプール、および Servlet Session Manager のメトリクスを収集します。オプションで追加のメトリクスを指定して、"custom_queries" セクションに収集することができます。例については、[サンプルチェック構成][3]を参照してください。
+By default, this check collects JDBC, JVM, thread pool, and Servlet Session Manager metrics. You may optionally specify additional metrics to collect in the "custom_queries" section. See the [sample check configuration][3] for examples.
 
-### インフラストラクチャーリスト
+### Installation
 
-IBM WAS チェックは [Datadog Agent][4] パッケージに含まれています。
+The IBM WAS check is included in the [Datadog Agent][4] package.
 
-#### `PerfServlet` の有効化
+#### Enable the `PerfServlet`
 
-サーブレットの .ear ファイル (PerfServletApp.ear) は、`<WAS_HOME>/installableApps` ディレクトリにあります。ここで、`<WAS_HOME>` は WebSphere Application Server のインストールパスです。
+The servlet's .ear file (PerfServletApp.ear) is located in the `<WAS_HOME>/installableApps` directory, where `<WAS_HOME>` is the installation path for WebSphere Application Server.
 
-パフォーマンスサーブレットは、他のサーブレットとまったく同様にデプロイされます。ドメイン内の単一のアプリケーションサーバーインスタンスに、サーブレットをデプロイします。
+The performance servlet is deployed exactly as any other servlet. Deploy the servlet on a single application server instance within the domain.
 
-**注**: バージョン 6.1 から PerfServlet を動作させるには、アプリケーションセキュリティを有効にする必要があります。
+**Note**: Starting with version 6.1, you must enable application security to get the PerfServlet working.
 
-### モニターされている統計セットの変更
+### Modify the monitored statistic set
 
-デフォルトでは、アプリケーションサーバーは "基本" 監視用に構成されています。JVM、JDBC 接続、およびサーブレット接続を可視化するには、モニターされているアプリケーションサーバーの統計セットを "基本" から "すべて" に変更します。
+By default, your application server is only configured for "Basic" monitoring. To gain visibility into your JVM, JDBC connections, and servlet connections, change the monitored statistic set for your application server from "Basic" to "All".
 
-この設定は、Websphere 管理コンソールの `Application servers >  <YOUR_APP_SERVER> > Performance Monitoring Infrastructure (PMI)` にあります。
+From the Websphere Administration Console, you can find this setting in `Application servers > <YOUR_APP_SERVER> > Performance Monitoring Infrastructure (PMI)`.
 
-この変更を行ったら、"適用" をクリックしてコンフィギュレーションを保存し、アプリケーションサーバーを再起動します。この変更を行ってからしばらくすると、追加した JDBC、JVM、およびサーブレットのメトリクスが Datadog に表示されます。
+Once you've made this change, click "Apply" to save the configuration and restart your application server. Additional JDBC, JVM, and servlet metrics should appear in Datadog shortly after this change.
 
-### ブラウザトラブルシューティング
+### Configuration
 
 {{< tabs >}}
-{{% tab "ホスト" %}}
+{{% tab "Host" %}}
 
-#### メトリクスベース SLO
+#### Host
 
-ホストで実行中の Agent に対してこのチェックを構成するには
+To configure this check for an Agent running on a host:
 
-##### メトリクスの収集
+##### Metric collection
 
-1. IBM WAS のパフォーマンスデータの収集を開始するには、Agent のコンフィギュレーションディレクトリのルートにある `conf.d/` フォルダーの `ibm_was.d/conf.yaml` ファイルを編集します。使用可能なすべてのコンフィギュレーションオプションの詳細については、[サンプル ibm_was.d/conf.yaml][1] を参照してください。
+1. Edit the `ibm_was.d/conf.yaml` file, in the `conf.d/` folder at the root of your Agent's configuration directory to collect your IBM WAS performance data. See the [sample ibm_was.d/conf.yaml][1] for all available configuration options.
 
-2. [Agent を再起動します][2]。
+2. [Restart the Agent][2].
 
-##### 収集データ
+##### Log collection
 
-_Agent バージョン 6.0 以降で利用可能_
+_Available for Agent versions >6.0_
 
-1. Datadog Agent で、ログの収集はデフォルトで無効になっています。以下のように、`datadog.yaml` ファイルでこれを有効にします。
+1. Collecting logs is disabled by default in the Datadog Agent, enable it in your `datadog.yaml` file:
 
    ```yaml
    logs_enabled: true
    ```
 
-2. 次に、下部にある `logs` 行のコメントを解除して、`ibm_was.d/conf.yaml` を編集します。ログの `path` を WAS ログファイルの正しいパスで更新してください。
+2. Next, edit `ibm_was.d/conf.yaml` by uncommenting the `logs` lines at the bottom. Update the logs `path` with the correct path to your WAS log files.
 
    ```yaml
    logs:
@@ -132,32 +131,32 @@ _Agent バージョン 6.0 以降で利用可能_
        service: websphere
    ```
 
-3. [Agent を再起動します][2]。
+3. [Restart the Agent][2].
 
 [1]: https://github.com/DataDog/integrations-core/blob/master/ibm_was/datadog_checks/ibm_was/data/conf.yaml.example
 [2]: https://docs.datadoghq.com/ja/agent/guide/agent-commands/#start-stop-and-restart-the-agent
 {{% /tab %}}
-{{% tab "コンテナ化" %}}
+{{% tab "Containerized" %}}
 
-#### コンテナ化
+#### Containerized
 
-コンテナ環境の場合は、[オートディスカバリーのインテグレーションテンプレート][1]のガイドを参照して、次のパラメーターを適用してください。
+For containerized environments, see the [Autodiscovery Integration Templates][1] for guidance on applying the parameters below.
 
-##### メトリクスの収集
+##### Metric collection
 
-| パラメーター            | 値                                                                         |
+| Parameter            | Value                                                                         |
 | -------------------- | ----------------------------------------------------------------------------- |
 | `<INTEGRATION_NAME>` | `ibm_was`                                                                     |
-| `<INIT_CONFIG>`      | 空白または `{}`                                                                 |
+| `<INIT_CONFIG>`      | blank or `{}`                                                                 |
 | `<INSTANCE_CONFIG>`  | `{"servlet_url": "http://%%host%%:%%port%%/wasPerfTool/servlet/perfservlet"}` |
 
-##### 収集データ
+##### Log collection
 
-_Agent バージョン 6.0 以降で利用可能_
+_Available for Agent versions >6.0_
 
-Datadog Agent で、ログの収集はデフォルトで無効になっています。有効にする方法については、[Kubernetes ログ収集][2]を参照してください。
+Collecting logs is disabled by default in the Datadog Agent. To enable it, see [Kubernetes Log Collection][2].
 
-| パラメーター      | 値                                                |
+| Parameter      | Value                                                |
 | -------------- | ---------------------------------------------------- |
 | `<LOG_CONFIG>` | `{"source": "ibm_was", "service": "<SERVICE_NAME>"}` |
 
@@ -166,27 +165,27 @@ Datadog Agent で、ログの収集はデフォルトで無効になっていま
 {{% /tab %}}
 {{< /tabs >}}
 
-### 検証
+### Validation
 
-[Agent の status サブコマンドを実行][5]し、Checks セクションの `ibm_was` を探します。
+[Run the Agent's status subcommand][5] and look for `ibm_was` under the Checks section.
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "ibm_was" >}}
 
 
-### ヘルプ
+### Events
 
-IBM WAS には、イベントは含まれません。
+IBM WAS does not include any events.
 
-### ヘルプ
+### Service Checks
 {{< get-service-checks-from-git "ibm_was" >}}
 
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][6]までお問合せください。
+Need help? Contact [Datadog support][6].
 
 
 [1]: https://www.ibm.com/cloud/websphere-application-platform

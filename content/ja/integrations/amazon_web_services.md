@@ -10,24 +10,25 @@ categories:
 - cloud
 - iot
 - log collection
+- event management
+custom_kind: integration
 dependencies: []
-description: AWS サービスを Datadog と統合。
+description: Integrate your AWS services with Datadog.
 doc_link: https://docs.datadoghq.com/integrations/amazon_web_services/
 draft: false
 further_reading:
 - link: https://www.datadoghq.com/blog/monitor-aws-control-plane-api-usage-metrics/
-  tag: ブログ
-  text: Datadog で AWS コントロールプレーン API の使用量メトリクスを監視する
+  tag: Blog
+  text: Monitor AWS control plane API usage metrics in Datadog
 - link: https://www.datadoghq.com/blog/aws-reinvent-2022-recap/
-  tag: ブログ
-  text: AWS re:Invent 2022 のハイライト
+  tag: Blog
+  text: Highlights from AWS re:Invent 2022
 git_integration_title: amazon_web_services
 has_logo: true
 integration_id: amazon-web-services
 integration_title: AWS
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: '1.0'
 name: amazon_web_services
 public_title: Datadog-AWS インテグレーション
@@ -51,7 +52,7 @@ AWS インテグレーションをすぐに使い始めるには、[AWS スタ�
 
 Datadog の Amazon Web Services インテグレーションは、[90 以上の AWS サービス][3]のログ、イベント、[CloudWatch からの全メトリクス][2]を収集します。
 
-## 計画と使用
+## Setup
 
 以下のいずれかの方法を使用して AWS アカウントを Datadog に統合し、メトリクス、イベント、タグ、ログを収集します。
 
@@ -61,7 +62,7 @@ Datadog の Amazon Web Services インテグレーションは、[90 以上の A
     CloudFormation で AWS インテグレーションを設定するには、[AWS スタートガイド][1]を参照してください。
 
   * **Terraform**  
-    AWS と Terraform のインテグレーションを設定するには、[AWS と Terraform のインテグレーション][4]を参照してください。
+      To set up the AWS integration with Terraform, see [the AWS integration with Terraform][4].
 
   * **Control Tower**  
     [Control Tower Account Factory][5] で新規に AWS アカウントをプロビジョニングする際の AWS インテグレーション設定は、[Control Tower セットアップガイド][6]をご覧ください。
@@ -86,132 +87,121 @@ Datadog の Amazon Web Services インテグレーションは、[90 以上の A
 
 {{% aws-permissions %}}
 
-## 収集データ
+{{% aws-resource-collection %}}
 
-AWSサービスログを Datadog に送信する方法はいくつかあります。
+## Log collection
 
-- [Amazon Data Firehose destination][11]: Amazon Data Firehose 配信ストリームで Datadog の宛先を使用して、ログを Datadog に転送します。CloudWatch から非常に大量のログを送信する際は、このアプローチを使用することが推奨されます。
-- [Forwarder Lambda 関数][12]: S3 バケットまたは CloudWatch ロググループにサブスクライブする Datadog Forwarder Lambda 関数をデプロイし、ログを Datadog に転送します。また、S3 またはデータを Amazon Data Firehose に直接ストリーミングできないその他のリソースからログを送信する場合、Datadog ではこのアプローチを使用することをお勧めしています。
+There are two ways of sending AWS service logs to Datadog:
 
-## メトリクスの収集
+- [Amazon Data Firehose destination][11]: Use the Datadog destination in your Amazon Data Firehose delivery stream to forward logs to Datadog. It is recommended to use this approach when sending logs from CloudWatch in a very high volume.
+- [Forwarder Lambda function][12]: Deploy the Datadog Forwarder Lambda function, which subscribes to S3 buckets or your CloudWatch log groups and forwards logs to Datadog. Datadog also recommends you use this approach for sending logs from S3 or other resources that cannot directly stream data to Amazon Data Firehose.
 
-メトリクスを Datadog に送信する方法は 2 つあります。
+## Metric collection
 
-- [メトリクスのポーリング][13]: AWS インテグレーションで利用できる API ポーリングです。CloudWatch API をメトリクス別にクロールしてデータを取得し、Datadog に送信します。新しいメトリクスの取得は平均 10 分毎に行われます。
-- [Amazon Data Firehose でのメトリクスストリーム][14]: Amazon CloudWatch Metric Streams と Amazon Data Firehose を使用してメトリクスを確認します。**注**: このメソッドには 2 - 3 分のレイテンシーがあり、別途設定が必要となります。
+There are two ways to send AWS metrics to Datadog:
 
-コスト管理のために特定のリソースを除外するオプションについては、[AWS Integration Billing ページ][15]を参照してください。
+- [Metric polling][13]: API polling comes out of the box with the AWS integration. A metric-by-metric crawl of the CloudWatch API pulls data and sends it to Datadog. New metrics are pulled every ten minutes, on average.
+- [Metric streams with Amazon Data Firehose][14]: You can use Amazon CloudWatch Metric Streams and Amazon Data Firehose to see your metrics. **Note**: This method has a two to three minute latency, and requires a separate setup.
 
-## リソース収集
+You can find a full list of the available sub-integrations on the [Integrations page][3]. Many of these integrations are installed by default when Datadog recognizes data coming in from your AWS account. See the [AWS Integration Billing page][15] for options to exclude specific resources for cost control.
 
-一部の Datadog 製品は、AWS リソース (S3 バケット、RDS スナップショット、CloudFront ディストリビューションなど) の構成方法に関する情報を活用します。Datadog は、AWS アカウントに対して読み取り専用の API 呼び出しを行うことにより、この情報を収集します。
+## Resource collection
 
-### AWS セキュリティ監査ポリシー
+Some Datadog products leverage information about how your AWS resources (such as S3 buckets, RDS snapshots, and CloudFront distributions) are configured. Datadog collects this information by making read-only API calls to your AWS account.
 
-<a href="https://docs.datadoghq.com/integrations/amazon_web_services/#resource-collection" target="_blank">リソースコレクション</a>を使用するには、AWS の管理する<a href="https://console.aws.amazon.com/iam/home#policies/arn:aws:iam::aws:policy/SecurityAudit" target="_blank">セキュリティ監査ポリシー</a>を Datadog IAM ロールに関連付けます。
-
-**注**: Datadog IAM ロールに AWS セキュリティ監査ポリシーが関連付けられていない状態でリソース収集を有効にすると、Datadog の AWS インテグレーションタイルに警告メッセージが表示されます。
+{{% aws-resource-collection %}}
 
 ### Cloud Security Management
 
-#### 計画と使用
+#### Setup
 
-お使いの AWS アカウントで AWS インテグレーションの設定を行っていない場合は、上記の[設定プロセス][16]を完了させます。Cloud Security Management が有効化されていることを適宜ご確認ください。
+If you do not have the AWS integration set up for your AWS account, complete the [set up process][16] above. Ensure that you enable Cloud Security Management when mentioned.
 
-**注:** この機能を使用するには、AWS インテグレーションに**ロールの委任**を設定する必要があります。
+**Note:** The AWS integration must be set up with **Role delegation** to use this feature.
 
-既存の AWS インテグレーションに Cloud Security Management を追加するには、以下の手順でリソース収集を有効にしてください。
+To add Cloud Security Management to an existing AWS integration, follow the steps below to enable resource collection.
 
-1. 自動**または**手動手順で Datadog IAM ロールに必要な権限を提供します。
+1. Provide the necessary permissions to the Datadog IAM role by attaching the AWS managed `SecurityAudit` policy to your Datadog AWS IAM role. You can find this policy in the [AWS console][17]. 
 
-   **自動** - CloudFormation テンプレートを更新します。
-   a. CloudFormation コンソールで Datadog インテグレーションのインストールに使用した主要なスタックを探し、`Update` を選択します。
-   b. `Replace current template` を選択します。
-   c. `Amazon S3 URL` を選択して `https://datadog-cloudformation-template.s3.amazonaws.com/aws/main.yaml` を入力し、`Next` をクリックします。
-   d. `CloudSecurityPostureManagementPermissions` を `true` に設定し、`Next` をクリックします。`Review` ページに到達するまでその他の既存のパラメーターは変更しないでください。ここで変更点をプレビューおよび確認します。
-   e. 下部にある 2 つの確認ボックスをオンにし、`Update stack` をクリックします。
+2. Complete the setup in the [Datadog AWS integration page][18] with the steps below. Alternatively, you can use the [Update an AWS Integration][8] API endpoint.
 
-   **手動** - [AWS が管理する `SecurityAudit` ポリシー][17]を Datadog AWS IAM ロールに関連付けます。このポリシーは [AWS コンソール][17]にあります。
+   1. Select the AWS account where you wish to enable resource collection.
+   2. Go to the **Resource collection** tab for that account and enable `Cloud Security Posture Management Collection`.
+   3. At the bottom right of the page, click `Save`.
 
-2. [Datadog AWS インテグレーションページ][18]で、以下の手順で設定を完了させます。または、[Update an AWS Integration][8] API エンドポイントを利用することも可能です。
+## Alarm collection
 
-   1. リソース収集を有効化したい AWS アカウントをクリックします。
-   2. そのアカウントの **Resource collection** タブに移動し、`Cloud Security Posture Management Collection` を有効にします。
-   3. ページの右下にある `Save` をクリックします。
+There are two ways to send AWS CloudWatch alarms to the Datadog Events Explorer:
 
-## アラームの収集
+- Alarm polling: Alarm polling comes out of the box with the AWS integration and fetches metric alarms through the [DescribeAlarmHistory][19] API. If you follow this method, your alarms are categorized under the event source `Amazon Web Services`. **Note**: The crawler does not collect composite alarms. 
+- SNS topic: You can see all AWS CloudWatch alarms in your Events Explorer by subscribing the alarms to an SNS topic, then forwarding the SNS messages to Datadog. To learn how to receive SNS messages as events in Datadog, see [Receive SNS messages][20]. If you follow this method, your alarms are categorized under the event source `Amazon SNS`.
 
-AWS CloudWatch アラームを Datadog イベントエクスプローラーに送信する方法は 2 つあります。
+## Data Collected
 
-- アラームポーリング: アラームポーリングは AWS インテグレーションですぐに使用でき、[DescribeAlarmHistory][19] API を介してメトリクスアラームをフェッチします。この方法に従うと、イベントソース `Amazon Web Services` の下にアラームが分類されます。**注**: クローラーは複合アラームを収集しません。
-- SNS トピック: アラームを SNS トピックにサブスクライブしてから、SNS メッセージを Datadog に転送することで、イベントエクスプローラー内のすべての AWS CloudWatch アラームを確認できます。Datadog でイベントとして SNS メッセージを受信する方法については、[SNS メッセージの受信][20]を参照してください。この方法に従うと、イベントソース `Amazon SNS` の下にアラームが分類されます。
-
-## リアルユーザーモニタリング
-
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "amazon_web_services" >}}
 
 
-### ヘルプ
+### Events
 
-AWS からのイベントは、AWS サービス単位で収集されます。収集されるイベントの詳細については、[お使いの AWS サービスのドキュメント][3]を参照してください。
+Events from AWS are collected on a per AWS-service basis. See [your AWS service's documentation][3] to learn more about collected events.
 
-### Lambda のトレースされた起動の 1 時間単位使用量の取得
+### Tags
 
-AWS インテグレーションにより以下のタグが収集されます。**注**: 一部のタグは、特定のメトリクスにのみ表示されます。
+The following tags are collected with the AWS integration. **Note**: Some tags only display on specific metrics.
 
-| Datadog クリップボード            | Datadog タグキー                                                                                                                                                                                              |
+| Integration            | Datadog Tag Keys                                                                                                                                                                                              |
 |------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | All                    | `region`                                                                                                                                                                                                      |
-| [API Gateway][22]      | `apiid`、apiname`、`method`、`resource`、`stage`                                                                                                                                                             |
-| [App Runner][23]      | `instance`、`serviceid`、`servicename`                                                                                                                                                                       |
-| [Auto Scaling][24]    | `autoscalinggroupname`、`autoscaling_group`                                                                                                                                                                   |
-| [Billing][25]          | `account_id`、`budget_name`、`budget_type`、`currency`、`servicename`、`time_unit`                                                                                                                            |
+| [API Gateway][22]      | `apiid`, `apiname`, `method`, `resource`, `stage`                                                                                                                                                             |
+| [App Runner][23]      | `instance`, `serviceid`, `servicename`                                                                                                                                                                       |
+| [Auto Scaling][24]    | `autoscalinggroupname`, `autoscaling_group`                                                                                                                                                                   |
+| [Billing][25]          | `account_id`, `budget_name`, `budget_type`, `currency`, `servicename`, `time_unit`                                                                                                                            |
 | [CloudFront][26]       | `distributionid`                                                                                                                                                                                              |
 | [CodeBuild][27]              | `project_name`                                                                                                                                                                                                |
-| [CodeDeploy][28]       | `application`、`creator`、`deployment_config`、`deployment_group`、`deployment_option`、`deployment_type`、`status`                                                                                           |
+| [CodeDeploy][28]       | `application`, `creator`, `deployment_config`, `deployment_group`, `deployment_option`, `deployment_type`, `status`                                                                                           |
 | [DirectConnect][29]    | `connectionid`                                                                                                                                                                                                |
-| [DynamoDB][30]         | `globalsecondaryindexname`、`operation`、`streamlabel`、`tablename`                                                                                                                                           |
-| [EBS][31]              | `volumeid`、`volume-name`、`volume-type`                                                                                                                                                                      |
-| [EC2][32]              | `autoscaling_group`、`availability-zone`、`image`、`instance-id`、`instance-type`、`kernel`、`name`、`security_group_name`                                                                                    |
-| [ECS][33]              | `clustername`、`servicename`、`instance_id`                                                                                                                                                                   |
+| [DynamoDB][30]         | `globalsecondaryindexname`, `operation`, `streamlabel`, `tablename`                                                                                                                                           |
+| [EBS][31]              | `volumeid`, `volume-name`, `volume-type`                                                                                                                                                                      |
+| [EC2][32]              | `autoscaling_group`, `availability-zone`, `image`, `instance-id`, `instance-type`, `kernel`, `name`, `security_group_name`                                                                                    |
+| [ECS][33]              | `clustername`, `servicename`, `instance_id`                                                                                                                                                                   |
 | [EFS][34]              | `filesystemid`                                                                                                                                                                                                |
-| [ElastiCache][35]      | `cachenodeid`、`cache_node_type`、`cacheclusterid`、`cluster_name`、`engine`、`engine_version`、`preferred_availability-zone`、`replication_group`                                                             |
-| [ElasticBeanstalk][36] | `environmentname`、`enviromentid`                                                                                                                                                                             |
-| [ELB][37]              | `availability-zone`、`hostname`、`loadbalancername`、`name`、`targetgroup`                                                                                                                                    |
-| [EMR][38]              | `cluster_name`、`jobflowid`                                                                                                                                                                                   |
-| [ES][39]               | `dedicated_master_enabled`、`ebs_enabled`、`elasticsearch_version`、`instance_type`、`zone_awareness_enabled`                                                                                                 |
+| [ElastiCache][35]      | `cachenodeid`, `cache_node_type`, `cacheclusterid`, `cluster_name`, `engine`, `engine_version`, `preferred_availability-zone`, `replication_group`                                                             |
+| [ElasticBeanstalk][36] | `environmentname`, `enviromentid`                                                                                                                                                                             |
+| [ELB][37]              | `availability-zone`, `hostname`, `loadbalancername`, `name`, `targetgroup`                                                                                                                                    |
+| [EMR][38]              | `cluster_name`, `jobflowid`                                                                                                                                                                                   |
+| [ES][39]               | `dedicated_master_enabled`, `ebs_enabled`, `elasticsearch_version`, `instance_type`, `zone_awareness_enabled`                                                                                                 |
 | [Firehose][40]         | `deliverystreamname`                                                                                                                                                                                          |
-| [FSx][41]             | `filesystemid`、`filesystemtype`                                                                                                                                                                               |
-| [Health][42]           | `event_category`、`status`、`service`                                                                                                                                                                         |
-| [IoT][43]              | `actiontype`、`protocol`、`rulename`                                                                                                                                                                          |
-| [Kinesis][44]          | `streamname`、`name`、`state`                                                                                                                                                                                 |
+| [FSx][41]             | `filesystemid`, `filesystemtype`                                                                                                                                                                               |
+| [Health][42]           | `event_category`, `status`, `service`                                                                                                                                                                         |
+| [IoT][43]              | `actiontype`, `protocol`, `rulename`                                                                                                                                                                          |
+| [Kinesis][44]          | `streamname`, `name`, `state`                                                                                                                                                                                 |
 | [KMS][45]              | `keyid`                                                                                                                                                                                                       |
-| [Lambda][46]           | `functionname`、`resource`、`executedversion`、`memorysize`、`runtime`                                                                                                                                        |
-| [Machine Learning][47] | `mlmodelid`、`requestmode`                                                                                                                                                                                    |
-| [MQ][48]               | `broker`、`queue`、`topic`                                                                                                                                                                                    |
-| [OpsWorks][49]         | `stackid`、`layerid`、`instanceid`                                                                                                                                                                            |
+| [Lambda][46]           | `functionname`, `resource`, `executedversion`, `memorysize`, `runtime`                                                                                                                                        |
+| [Machine Learning][47] | `mlmodelid`, `requestmode`                                                                                                                                                                                    |
+| [MQ][48]               | `broker`, `queue`, `topic`                                                                                                                                                                                    |
+| [OpsWorks][49]         | `stackid`, `layerid`, `instanceid`                                                                                                                                                                            |
 | [Polly][50]            | `operation`                                                                                                                                                                                                   |
-| [RDS][51]              | `auto_minor_version_upgrade`、`dbinstanceclass`、`dbclusteridentifier`、`dbinstanceidentifier`、`dbname`、`engine`、`engineversion`、`hostname`、`name`、`publicly_accessible`、`secondary_availability-zone` |
-| [RDS Proxy][52]       | `proxyname`、`target`、`targetgroup`、`targetrole`                                                                                                                                                                                                  |
-| [Redshift][53]       | `clusteridentifier`、`latency`、`nodeid`、`service_class`、`stage`、`wlmid`                                                                                                                                   |
+| [RDS][51]              | `auto_minor_version_upgrade`, `dbinstanceclass`, `dbclusteridentifier`, `dbinstanceidentifier`, `dbname`, `engine`, `engineversion`, `hostname`, `name`, `publicly_accessible`, `secondary_availability-zone` |
+| [RDS Proxy][52]       | `proxyname`, `target`, `targetgroup`, `targetrole`                                                                                                                                                                                                  |
+| [Redshift][53]       | `clusteridentifier`, `latency`, `nodeid`, `service_class`, `stage`, `wlmid`                                                                                                                                   |
 | [Route 53][54]        | `healthcheckid`                                                                                                                                                                                               |
-| [S3][55]             | `bucketname`、`filterid`、`storagetype`                                                                                                                                                                       |
-| [SES][56]             | タグキーは AWS でカスタム設定されます。                                                                                                                                                                               |
+| [S3][55]             | `bucketname`, `filterid`, `storagetype`                                                                                                                                                                       |
+| [SES][56]             | Tag keys are custom set in AWS.                                                                                                                                                                               |
 | [SNS][57]              | `topicname`                                                                                                                                                                                                   |
 | [SQS][58]              | `queuename`                                                                                                                                                                                                   |
-| [VPC][59]              | `nategatewayid`、`vpnid`、`tunnelipaddress`                                                                                                                                                                   |
-| [WorkSpaces][60]       | `directoryid`、`workspaceid`                                                                                                                                                                                  |
+| [VPC][59]              | `nategatewayid`, `vpnid`, `tunnelipaddress`                                                                                                                                                                   |
+| [WorkSpaces][60]       | `directoryid`, `workspaceid`                                                                                                                                                                                  |
 
-### ヘルプ
+### Service Checks
 {{< get-service-checks-from-git "amazon_web_services" >}}
 
 
-## ヘルプ
+## Troubleshooting
 
-AWS インテグレーションに関する問題解決は、[AWS インテグレーションのトラブルシューティングガイド][62]をご参照ください。
+See the [AWS Integration Troubleshooting guide][62] to resolve issues related to the AWS integration.
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

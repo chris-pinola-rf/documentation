@@ -72,9 +72,12 @@ CREATE USER datadog FOR LOGIN datadog;
 {{% /tab %}}
 {{< /tabs >}}
 
-## Agent のインストール
+### Securely store your password
+{{% dbm-secret %}}
 
-Agent を SQL Server ホストに直接インストールすることをお勧めします。そうすることで、SQL Server 固有のテレメトリーに加え、様々なシステムテレメトリー (CPU、メモリ、ディスク、ネットワーク) を収集することができるからです。
+## Install the Agent
+
+It's recommended to install the agent directly on the SQL Server host as that enables the agent to collect a variety of system telemetry (CPU, memory, disk, network) in addition to SQL Server specific telemetry.
 
 {{< tabs >}}
 {{% tab "Windows Host" %}}
@@ -95,9 +98,9 @@ Agent を SQL Server ホストに直接インストールすることをお勧�
 {{% /tab %}}
 {{< /tabs >}}
 
-## Agent の構成例
+## Example Agent Configurations
 {{% dbm-sqlserver-agent-config-examples %}}
 
-## 参考資料
+## Further reading
 
 {{< partial name="whats-next/whats-next.html" >}}

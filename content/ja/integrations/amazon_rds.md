@@ -9,27 +9,27 @@ categories:
 - data stores
 - log collection
 - network
+custom_kind: integration
 dependencies: []
-description: Amazon RDS に関連する大量のメトリクスを追跡する。
+description: Track a wealth of metrics related to Amazon RDS.
 doc_link: https://docs.datadoghq.com/integrations/amazon_rds/
 draft: false
 further_reading:
 - link: https://www.datadoghq.com/blog/monitoring-rds-mysql-performance-metrics/
-  tag: ブログ
-  text: RDS MySQL パフォーマンスメトリクスを監視する
+  tag: Blog
+  text: Monitoring RDS MySQL performance metrics
 - link: https://www.datadoghq.com/blog/aws-rds-postgresql-monitoring/
-  tag: ブログ
-  text: AWS RDS PostgreSQL 監視のキーメトリクス
+  tag: Blog
+  text: Key metrics for AWS RDS PostgreSQL monitoring
 - link: https://www.datadoghq.com/blog/monitoring-amazon-aurora-performance-metrics/
-  tag: ブログ
-  text: Amazon Aurora パフォーマンスメトリクスを監視する
+  tag: Blog
+  text: Monitoring Amazon Aurora performance metrics
 git_integration_title: amazon_rds
 has_logo: true
 integration_id: amazon-rds
 integration_title: Amazon RDS
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: '1.0'
 monitors:
   rds_cpu_utilization: assets/monitors/rds_cpu_utilization.json
@@ -101,7 +101,7 @@ RDS インスタンスを監視するには、Standard、Enhanced、Native の 3
 
 インスタンスの作成中または作成後に RDS インスタンスの拡張モニタリングを有効にするには、**Instance Actions** の下にある **Modify** を選択します。監視の詳細度には `15` を選択することをお勧めします。
 
-次の手順では、KMS と Lambda Management Console を使用して、RDS Enhanced Monitoring Lambda 関数でのみ使用できる Datadog API キーの暗号化バージョンを作成します。[Log Forwarder][1] などの別の Lambda からの暗号化された API キーを既にお持ちの場合、他のオプションについては [Lambda 関数の README][2] を参照してください。
+The following instructions use KMS and the Lambda Management Console to create an encrypted version of your Datadog API key which can only be used with the RDS Enhanced Monitoring Lambda function. If you already have an encrypted API key from another Lambda such as the [Log Forwarder][1], see [the Lambda function's README][2] for other options.
 
 #### KMS キーの作成
 
@@ -177,7 +177,7 @@ Lambda 関数のテストボタンをクリックすると、次のエラーが�
 
 3. [Datadog - Amazon RDS インテグレーション][4]をインストールします。
 
-[1]: https://app.datadoghq.com/organization-settings/api-keys
+[1]: https://app.datadoghq.com/integrations/amazon-web-services
 [2]: https://docs.datadoghq.com/ja/integrations/amazon_web_services/#installation
 [3]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/security_iam_service-with-iam.html
 [4]: https://app.datadoghq.com/integrations/amazon-rds

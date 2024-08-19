@@ -7,8 +7,9 @@ categories:
 - issue tracking
 - log collection
 - provisioning
+custom_kind: integration
 dependencies: []
-description: Chef クライアントの実行を追跡。失敗、成功、大きな変更を把握。
+description: 'Track Chef client runs: know when they fail, succeed, or make big changes.'
 doc_link: https://docs.datadoghq.com/integrations/chef/
 draft: false
 git_integration_title: chef
@@ -17,7 +18,6 @@ integration_id: chef
 integration_title: Chef
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: '1.0'
 name: chef
 public_title: Datadog-Chef インテグレーション

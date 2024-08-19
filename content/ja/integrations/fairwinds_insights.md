@@ -32,6 +32,7 @@ categories:
 - マーケットプレイス
 - プロビジョニング
 - セキュリティ
+custom_kind: integration
 dependencies: []
 display_on_public_website: true
 draft: false
@@ -40,7 +41,6 @@ integration_id: fairwinds-insights
 integration_title: Fairwinds Insights
 integration_version: ''
 is_public: true
-custom_kind: integration
 legal_terms:
   eula: assets/eula.pdf
 manifest_version: 2.0.0
@@ -70,7 +70,6 @@ tile:
   - Category::Provisioning
   - Category::Security
   - Offering::Integration
-  - Offering::Software License
   - Supported OS::Linux
   - Supported OS::Windows
   - Supported OS::macOS
@@ -109,6 +108,11 @@ tile:
     image_url: images/Fairwinds_Insights_VulnerabilityScanning_Image_v1.png
     media_type: image
   overview: README.md#Overview
+  resources:
+  - resource_type: blog
+    url: https://www.datadoghq.com/blog/fairwinds-insights-datadog-marketplace/
+  - resource_type: documentation
+    url: https://insights.docs.fairwinds.com/
   support: README.md#Support
   title: Fairwinds Insights
   uninstallation: README.md#Uninstallation
@@ -117,98 +121,98 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/marketplace -->
 
 
-## 概要
+## Overview
 
-業務の遂行に不可欠な Kubernetes アプリケーションを保護、最適化するためのソフトウェア。
+Software to protect and optimize your mission-critical Kubernetes applications
 
-#### 開発からオペレーションまでのハンドオフを効率化
+#### Streamline handoffs from development to operations
 
-* 複数のクラスター内のカスタムポリシーを定義、制御
-* 管理コントローラで防御策およびベストプラクティスを実行
-* インテグレーションコンテナのスキャニングおよび CI/CD ワークフローへのデプロイ確認
+* Define and control custom policies across multiple clusters
+* Enforce guardrails and best practices with an admission controller
+* Integration container scanning and deployment validation into CI/CD workflows
 
-#### Kubernetes コストの監視と最適化
+#### Monitor and optimize Kubernetes costs
 
-* ワークロードリソースの使用量および推定コストを視覚化
-* ワークロードに適切な CPU とメモリ設定を決定
+* Gain visibility into workload resource usage and estimated costs
+* Determine the right CPU and memory settings for your workloads
 
-#### 時間を節約
+#### Save time
 
-* Datadog ダッシュボードに Kubernetes の推奨コンフィギュレーションを統合
-* Slack インテグレーションでコラボレーションを向上
+* Integrate Kubernetes configuration recommendations with your existing Datadog dashboards
+* Improve collaboration with Slack integration
 
-#### リスクを削減
+#### Reduce risk
 
-* コンテナ内の既知の脆弱性を監視
-* Kubernetes のデプロイメントコンフィギュレーションを確認
+* Monitor containers for known vulnerabilities
+* Validate Kubernetes deployment configurations
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 
-Fairwinds Insights インサイトのアクションアイテムは、タグと共に Datadog に表示されるため、必要な分析を行うことができます。
+Action Items from Fairwinds Insights will appear in Datadog with tags so that you can perform any analysis you need.
 
-### ヘルプ
+### Service Checks
 
-Fairwinds Insights にサービスのチェックは含まれません。
+Fairwinds Insights does not include any service checks.
 
-### ヘルプ
+### Events
 
-* 最初のイベントは、インテグレーションのセットアップを完了すると表示されます
-* Fairwinds Insights の新しいアクションアイテムごとのイベント
-* Fairwinds Insights のイベント修正済みアクションアイテムごとのイベント
+* An initial Event will appear when you first setup the integration
+* Event per new Action Item in Fairwinds Insights
+* Event per event fixed Aciton Item in Fairwinds Insights
 
-## Agent
+## Support
 
-サポートまたはリクエストをご希望の場合は、以下のチャンネルから Fairwinds にお問い合わせください。
+For support or requests, contact Fairwinds through the following channels:
 
-- 電話: +1 617-202-3659 
-- メール: [sales@fairwinds.com][2]
+- Phone: +1 617-202-3659 
+- Email: [sales@fairwinds.com][2]
 
-### よくある質問
+### Frequently Asked Questions
 
-**Fairwinds Insights の仕組みについて教えてください。**
+**How does Fairwinds Insights work?**
 
-Fairwinds Insights は、Kubernetes コンフィギュレーションの 3 つの課題領域（セキュリティ、効率、信頼性）に対する統一されたマルチクラスタービューを提供します。Fairwinds Insights を使用すると、単一の Helm インストールで複数のオープンソースツールを簡単にデプロイすることができます。一度インストールすれば、各ツールのカスタマイズや構成の作業の必要がなくなります。また、ソフトウェアによりポリシー管理機能が追加されるため、エンジニアチームは Kubernetes クラスターへのデプロイに対する防御策を定義し実行できます。
+Fairwinds Insights provides a unified, multi-cluster view into three categories of Kubernetes configuration issues: security, efficiency, and reliability. Fairwinds Insights makes it easy to deploy multiple open-source tools through a single helm installation. This one-time install helps engineers avoid custom work for installing and configuring each tool. The software also adds policy management capabilities so engineering teams can define and enforce guardrails for deployments into Kubernetes clusters.
 
-**プラグインとは？**
+**What’s a plugin?**
 
-Fairwinds Insights は、ソフトウェアと統合したツールを「プラグイン」として参照します。
+Fairwinds Insights refers to the tools integrated with the software as ‘plugins.’
 
-**Agent とは？**
+**What’s an Agent?**
 
-Fairwinds Insights は、含まれる Helm チャートを「Fairwinds Insights Agent」として参照します。
+Fairwinds Insights refers to the included helm chart as the ‘Fairwinds Insights Agent.’
 
-**データはどうなりますか？**
+**What happens to my data?**
 
-Fairwinds Insights では、各プラグインからの結果が集計され、複数クラスタービューに公開されるため、簡単に消費、優先度付け、そして問題の追跡ができます。
+Fairwinds Insights aggregates findings from each plugin and publishes it into a multi-cluster view for easy consumption, prioritization, and issue tracking.
 
-**Fairwinds Insights に含まれるプラグインは？**
+**What plugins does Fairwinds Insights include?**
 
-Fairwinds Insights は、広く使用されているさまざまな素晴らしいオープンソースツールのインテグレーションを提供します（[Polaris](https://github.com/FairwindsOps/polaris)、[Goldilocks](https://github.com/FairwindsOps/goldilocks/)、[Open Policy Agent](https://www.openpolicyagent.org/)、[Trivy Container Scanning](https://github.com/aquasecurity/trivy) など）。含まれるすべてのプラグイン一覧は、[Fairwinds Insights ドキュメントセンター](https://insights.docs.fairwinds.com/)でご覧いただけます。以下は、結果例の一部です。
+Fairwinds Insights provides integrations for a variety of great open source tools you use today, including [Polaris](https://github.com/FairwindsOps/polaris), [Goldilocks](https://github.com/FairwindsOps/goldilocks/), [Open Policy Agent](https://www.openpolicyagent.org/), and [Trivy Container Scanning](https://github.com/aquasecurity/trivy). For the complete list, please visit the [Fairwinds Insights documentation center](https://insights.docs.fairwinds.com/). Just a few of the example findings are listed below:
 
-* コンテナの脆弱性
-* Kubernetes デプロイに関するセキュリティの問題（例: デプロイメントがルートとして実行するよう構成されていた）
-* クラスターレベルの脆弱性（例: 公開されたポッド、情報開示など）
-* Kubernetes CVE
-* 古くなった Helm チャートの自動通知
-* カスタム Kubernetes ポリシーおよびコンフィギュレーションチェック
+* Container vulnerabilities
+* Security issues with Kubernetes deployments (e.g., deployments configured to run as root)
+* Cluster-level weaknesses (e.g., exposed pods, information disclosures, etc.)
+* Kubernetes CVEs
+* Automated notification of Helm charts that are out of date
+* Custom Kubernetes policies and configuration checks
 
-### 返金ポリシー
+### Refund Policy
 
-Insights のキャンセルおよび返金ポリシー:
+Insights Cancellation and Refund Policy:
 
-Fairwinds Insights は月々の定額利用で提供されるため、お客様は Datadog マーケットプレイスのアカウントを使用していつでもご利用を中止することが可能です。定額利用を中止した場合、その時点で有効な月間利用期間の残りの分のみが請求されます。Insights では、すでにお支払いいただいた料金の返金はいたしかねます。
+Fairwinds Insights is provided as a month-to-month subscription that you, the customer, may discontinue at any time in the ways made available to you through your DataDog Marketplace account. If you discontinue your subscription, you will be billed only for the remainder of the monthly billing period then in effect. Insights does not provide refunds of any fees already paid.
 
-### その他の参考資料
+### Further Reading
 
-お役に立つドキュメント、リンクや記事:
+Additional helpful documentation, links, and articles:
 
-- [Datadog Marketplace で Fairwinds Insights の製品を使って Kubernetes を監視する][2]
-- [Fairwinds Insights のドキュメント][3]
+- [Monitor Kubernetes with Fairwinds Insights' offering in the Datadog Marketplace][2]
+- [Fairwinds Insights Documentation][3]
 
 [1]: https://insights.fairwinds.com
 [2]: https://www.datadoghq.com/blog/fairwinds-insights-datadog-marketplace/
 [3]: https://insights.docs.fairwinds.com/
 ---
-このアプリケーションは Marketplace から入手でき、Datadog テクノロジーパートナーによってサポートされています。このアプリケーションを購入するには、<a href="https://app.datadoghq.com/marketplace/app/fairwinds-insights" target="_blank">こちらをクリック</a>してください。
+This application is made available through the Marketplace and is supported by a Datadog Technology Partner. <a href="https://app.datadoghq.com/marketplace/app/fairwinds-insights" target="_blank">Click Here</a> to purchase this application.

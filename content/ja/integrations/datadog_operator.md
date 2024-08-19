@@ -19,7 +19,9 @@ author:
   name: Datadog
   sales_email: info@datadoghq.com (日本語対応)
   support_email: help@datadoghq.com
-categories: []
+categories:
+- kubernetes
+custom_kind: integration
 dependencies:
 - https://github.com/DataDog/integrations-core/blob/master/datadog_operator/README.md
 display_on_public_website: true
@@ -29,7 +31,6 @@ integration_id: datadog-operator
 integration_title: Datadog Operator
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: datadog_operator
 public_title: Datadog Operator
@@ -41,9 +42,11 @@ supported_os:
 tile:
   changelog: CHANGELOG.md
   classifier_tags:
+  - Category::Kubernetes
   - Supported OS::Linux
   - Supported OS::Windows
   - Supported OS::macOS
+  - Offering::Integration
   configuration: README.md#Setup
   description: Datadog Operator を監視する
   media: []
@@ -55,33 +58,33 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/integrations-core -->
 
 
-## 概要
+## Overview
 
-このチェックは、Datadog Agent を通じて [Datadog Operator][1] を監視します。
+This check monitors the [Datadog Operator][1] through the Datadog Agent.
 
-## 計画と使用
+## Setup
 
-### インフラストラクチャーリスト
+### Installation
 
-[Datadog Operator][1] のドキュメントを参照してください。
+Please see the documentation for [Datadog Operator][1].
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "datadog_operator" >}}
 
 
-### ヘルプ
+### Events
 
-Datadog Operator インテグレーションには、イベントは含まれません。
+The Datadog Operator integration does not include any events.
 
-### ヘルプ
+### Service Checks
 {{< get-service-checks-from-git "datadog_operator" >}}
 
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][4]までお問合せください。
+Need help? Contact [Datadog support][4].
 
 [1]: https://docs.datadoghq.com/ja/containers/datadog_operator/
 [2]: https://github.com/DataDog/integrations-core/blob/master/datadog_operator/metadata.csv

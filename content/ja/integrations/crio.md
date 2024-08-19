@@ -25,6 +25,7 @@ author:
   support_email: help@datadoghq.com
 categories:
 - コンテナ
+custom_kind: integration
 dependencies:
 - https://github.com/DataDog/integrations-core/blob/master/crio/README.md
 display_on_public_website: true
@@ -32,9 +33,8 @@ draft: false
 git_integration_title: crio
 integration_id: cri-o
 integration_title: CRI-O
-integration_version: 2.6.0
+integration_version: 2.6.1
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: crio
 public_title: CRI-O
@@ -50,6 +50,7 @@ tile:
   - Supported OS::macOS
   - Supported OS::Windows
   - Category::Containers
+  - Offering::Integration
   configuration: README.md#Setup
   description: CRI-O のすべてのメトリクスを Datadog で追跡
   media: []
@@ -61,42 +62,42 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/integrations-core -->
 
 
-## 概要
+## Overview
 
-このチェックは [CRI-O][1] を監視します。
+This check monitors [CRI-O][1].
 
-## 計画と使用
+## Setup
 
-### インフラストラクチャーリスト
+### Installation
 
-このインテグレーションは、CRI-O の `--enable-metrics` オプションに依存します。このオプションはデフォルトでは無効です。有効にした場合は、`127.0.0.1:9090/metrics` でメトリクスが公開されます。
+The integration relies on the `--enable-metrics` option of CRI-O that is disabled by default, when enabled metrics are exposed at `127.0.0.1:9090/metrics`.
 
-### ブラウザトラブルシューティング
+### Configuration
 
-1. CRI-Oのパフォーマンスデータを収集するには、Agent のコンフィギュレーションディレクトリのルートにある `conf.d/` フォルダーの `crio.d/conf.yaml` ファイルを編集します。使用可能なすべてのコンフィギュレーションオプションについては、[サンプル crio.d/conf.yaml][2] を参照してください。
+1. Edit the `crio.d/conf.yaml` file, in the `conf.d/` folder at the root of your Agent's configuration directory to start collecting your CRI-O performance data. See the [sample crio.d/conf.yaml][2] for all available configuration options.
 
-2. [Agent を再起動します][3]。
+2. [Restart the Agent][3].
 
-### 検証
+### Validation
 
-[Agent の `status` サブコマンドを実行][4]し、Checks セクションで `crio` を探します。
+[Run the Agent's status subcommand][4] and look for `crio` under the Checks section.
 
-## リアルユーザーモニタリング
+## Data Collected
 
-CRI-O は、ランタイムによって実行される操作のカウントとレイテンシーに関するメトリクスを収集します。
-さらに、Datadog-CRI-O インテグレーションは、CRI-O Golang バイナリ自体の CPU 使用率とメモリ使用量を収集します。
+CRI-O collects metrics about the count and latency of operations that are done by the runtime.
+The Datadog-CRI-O integration collects CPU and memory usage of the CRI-O golang binary itself.
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "crio" >}}
 
 
-### ヘルプ
+### Service Checks
 {{< get-service-checks-from-git "crio" >}}
 
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][7]までお問い合わせください。
+Need help? Contact [Datadog support][7].
 
 
 [1]: http://cri-o.io

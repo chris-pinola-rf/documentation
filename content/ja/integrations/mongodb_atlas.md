@@ -4,6 +4,7 @@ app_uuid: d7f734da-a1f7-4e3f-a590-ea154018a8d8
 assets:
   dashboards:
     MongoDB-Atlas-Overview: assets/dashboards/MongoDB-Atlas-Overview_dashboard.json
+    MongoDB-Atlas-Vector-Search-Overview: assets/dashboards/MongoDB-Atlas-Vector-Search-Overview_dashboard.json
   integration:
     auto_install: true
     configuration: {}
@@ -29,7 +30,9 @@ author:
   sales_email: info@datadoghq.com (日本語対応)
   support_email: help@datadoghq.com
 categories:
-- メトリクス
+- ai/ml
+- metrics
+custom_kind: integration
 dependencies:
 - https://github.com/DataDog/integrations-extras/blob/master/mongodb_atlas/README.md
 display_on_public_website: true
@@ -39,11 +42,10 @@ integration_id: mongodb-atlas
 integration_title: MongoDB Atlas
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: mongodb_atlas
 public_title: MongoDB Atlas
-short_description: MongoDB Atlas
+short_description: Atlas の読み取り/書き込みパフォーマンス、Vector Search メトリクスなどを追跡します。
 supported_os:
 - linux
 - windows
@@ -54,61 +56,77 @@ tile:
   - Supported OS::Linux
   - Supported OS::Windows
   - Supported OS::macOS
+  - Category::AI/ML
   - Category::Metrics
+  - Offering::Integration
   configuration: README.md#Setup
-  description: MongoDB Atlas
-  media: []
+  description: Atlas の読み取り/書き込みパフォーマンス、Vector Search のメトリクスなどを追跡します。
+  media:
+  - caption: MongoDB Atlas 概要ダッシュボード
+    image_url: images/mongodb_atlas_dashboard.png
+    media_type: image
+  - caption: MongoDB Atlas Vector Search 概要ダッシュボード
+    image_url: images/mongodb_atlas_vector_search_dashboard.png
+    media_type: image
   overview: README.md#Overview
+  resources:
+  - resource_type: blog
+    url: https://www.datadoghq.com/blog/monitor-atlas-performance-metrics-with-datadog/
+  - resource_type: other
+    url: https://www.mongodb.com/products/platform/atlas-for-government
   support: README.md#Support
   title: MongoDB Atlas
 ---
 
 <!--  SOURCED FROM https://github.com/DataDog/integrations-extras -->
-## 概要
+## Overview
 
-MongoDB Atlas は、算出メトリクスを Datadog にプッシュして、以下のことができます。
+MongoDB Atlas can push calculated metrics into Datadog to:
 
-- MongoDB Atlas のキーメトリクスを視覚化できます。
-- MongoDB Atlas のパフォーマンスをアプリケーションの他の部分と関連付けることができます。
+- Visualize key MongoDB Atlas metrics.
+- MongoDB Atlas Vector Search のメトリクスを視覚化できます。
+- MongoDB Atlas の全体的なパフォーマンスをアプリケーションの他の部分と相関付けることができます。
 
-このインテグレーションには、すぐに使えるモニターとダッシュボードが含まれており、Atlas の健全性およびパフォーマンスのメトリクスの表示、スループットメトリクスの監視、読み取りおよび書き込み操作の平均レイテンシーの経時的な追跡、現在の接続数が上限に近づいた場合にアラートを出すモニターの作成が可能です。
+このインテグレーションには、すぐに使えるモニターと専用ダッシュボードが含まれており、Atlas の健全性およびパフォーマンスのメトリクスを表示することができます。また、スループットメトリクスの監視、読み取りおよび書き込み操作の平均レイテンシーの経時的な追跡、現在の接続数が上限に近づいた場合にアラートを出すモニターの作成が可能です。
 
-**注**: MongoDB Atlas インテグレーションは M10+ クラスターでのみ利用可能です。
+MongoDB Atlas Vector Search のメトリクスを使用すれば、Atlas Vector Search を安心して使用して、インデックス作成、検索、高性能な生成 AI アプリケーションの構築を行うことができます。
 
-## 計画と使用
+**Note**: The MongoDB Atlas integration is only available on M10+ clusters.
 
-### インフラストラクチャーリスト
+## Setup
 
-MongoDB Atlas インテグレーションは、Atlas ポータルにログインすることによってインストールできます。
+### Installation
 
-### ブラウザトラブルシューティング
+You can install the MongoDB Atlas integration by logging in to your Atlas portal.
 
-1. Datadog [API キー][1]を取得または作成します。
-2. [Atlas ポータル][2]の **Integrations** -> **Datadog Settings** で、Datadog API キーを入力します。
+### Configuration
 
-## リアルユーザーモニタリング
+1. Retrieve or create a Datadog [API key][1].
+2. In the [Atlas portal][2], enter a Datadog API key under **Integrations** -> **Datadog Settings**.
 
-### データセキュリティ
+## Data Collected
+
+### Metrics
 {{< get-metrics-from-git "mongodb_atlas" >}}
 
 
-### ヘルプ
+### Events
 
-MongoDB Atlas は、Datadog に[アラート][4]をイベントとしてプッシュできます。
+MongoDB Atlas can push [alerts][4] to Datadog as events.
 
-### ヘルプ
+### Service Checks
 
-MongoDB Atlas インテグレーションには、サービスのチェック機能は含まれません。
+The MongoDB Atlas integration does not include any service checks.
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][5]までお問合せください。
+Need help? [Contact Datadog Support][5]
 
-## その他の参考資料
+## Further Reading
 
-お役に立つドキュメント、リンクや記事:
+Additional helpful documentation, links, and articles:
 
-- [Datadog を使用した MongoDB Atlas の監視][6]
+- [Monitor MongoDB Atlas with Datadog][6]
 - [MongoDB Atlas for Government][7]
 
 [1]: https://app.datadoghq.com/organization-settings/api-keys

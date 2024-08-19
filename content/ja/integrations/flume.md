@@ -22,6 +22,7 @@ author:
   sales_email: kealan.maas@datadoghq.com
   support_email: kealan.maas@datadoghq.com
 categories: []
+custom_kind: integration
 dependencies:
 - https://github.com/DataDog/integrations-extras/blob/master/flume/README.md
 display_on_public_website: true
@@ -31,7 +32,6 @@ integration_id: flume
 integration_title: flume
 integration_version: 0.0.1
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: flume
 public_title: flume
@@ -46,6 +46,7 @@ tile:
   - Supported OS::Linux
   - Supported OS::macOS
   - Supported OS::Windows
+  - Offering::Integration
   configuration: README.md#Setup
   description: Apache Flume Agent のシンク、チャンネル、ソースを追跡
   media: []
@@ -57,71 +58,71 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/integrations-extras -->
 
 
-## 概要
+## Overview
 
-このチェックは [Apache Flume][1] を監視します。
+This check monitors [Apache Flume][1].
 
-## 計画と使用
+## Setup
 
-Flume チェックは [Datadog Agent][2] パッケージに含まれていないため、お客様自身でインストールする必要があります。
+The Flume check is not included in the [Datadog Agent][2] package, so you need to install it.
 
-### インフラストラクチャーリスト
+### Installation
 
-Agent v7.21 / v6.21 以降の場合は、下記の手順に従い Flume チェックをホストにインストールします。Docker Agent または 上記バージョン以前の Agent でインストールする場合は、[コミュニティインテグレーションの使用][3]をご参照ください。
+For Agent v7.21+ / v6.21+, follow the instructions below to install the Flume check on your host. See [Use Community Integrations][3] to install with the Docker Agent or earlier versions of the Agent.
 
-1. 以下のコマンドを実行して、Agent インテグレーションをインストールします。
+1. Run the following command to install the Agent integration:
 
    ```shell
    datadog-agent integration install -t datadog-flume==<INTEGRATION_VERSION>
    ```
 
-2. コアの[インテグレーション][4]と同様にインテグレーションを構成します。
+2. Configure your integration similar to core [integrations][4].
 
-### ブラウザトラブルシューティング
+### Configuration
 
-1. 以下の JVM 引数を [flume-env.sh][5] に追加して、Flume Agent を構成し JMX を有効にします。
+1. Configure the Flume agent to enable JMX by adding the following JVM arguments to your [flume-env.sh][5]: 
 
 ```
 export JAVA_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=5445 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
 
 ```
 
-2. Flume パフォーマンスデータの収集を開始するには、Agent の構成ディレクトリのルートにある `conf.d/` フォルダーの `flume.d/conf.yaml` ファイルを編集します
-   。
-   使用可能なすべてのコンフィギュレーションオプションについては、[サンプル `flume.d/conf.yaml`][6] ファイルを参照してください。
+2. Edit the `flume.d/conf.yaml` file, in the `conf.d/` folder at the root of your
+   Agent's configuration directory to start collecting Flume performance data.
+   See the [sample `flume.d/conf.yaml`][6] file for all available configuration options.
 
-   このチェックでは、インスタンスあたりのメトリクス数が 350 に制限されています。返されたメトリクスの数は、ステータス出力に表示されます。
-   以下で説明する構成を編集することで、関心があるメトリクスを指定できます。
-   収集するメトリクスのカスタマイズの詳細については、[JMX Checks のドキュメント][7]を参照してください。
-   制限以上のメトリクスを監視する必要がある場合は、[Datadog のサポートチーム][8]までお問い合わせください。
+   This check has a limit of 350 metrics per instance. The number of returned metrics is indicated in the status output.
+   You can specify the metrics you are interested in by editing the configuration below.
+   For detailed instructions on customizing the metrics to collect, see the [JMX Checks documentation][7].
+   If you need to monitor more metrics, contact [Datadog support][8].
 
-3. [Agent を再起動します][9]
+3. [Restart the Agent][9]
 
-### 検証
+### Validation
 
-[Agent の `status` サブコマンドを実行][10]し、Checks セクションで `flume` を探します。
+[Run the Agent's `status` subcommand][10] and look for `flume` under the Checks section.
 
-### コンポーネントメトリクス
+### Component metrics
 
-このチェックによって取得されるメトリクスは、Flume Agent が使用するソース、チャネル、シンクによって異なります。各コンポーネントによって公開されるメトリクスの完全なリストについては、Apache Flume ドキュメントの[利用可能なコンポーネントメトリクス][9]を確認してください。Datadog に表示されるメトリクスのリストについては、このページの[メトリクス](#metrics)セクションを参照してください。
+The metrics retrieved by this check depend on the source, channel, and sink used by your Flume agent. For a full list of metrics exposed by each component, review [Available Component Metrics][9] from the Apache Flume documentation. For a list of the metrics that you can see in Datadog, see the [Metrics](#metrics) section on this page.
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "flume" >}}
 
 
-### ヘルプ
+### Events
 
-Flume には、イベントは含まれません。
+Flume does not include any events.
 
-### ヘルプ
+### Service Checks
 {{< get-service-checks-from-git "flume" >}}
 
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][8]までお問合せください。
+Need help? Contact [Datadog support][8].
 
 
 [1]: https://flume.apache.org/

@@ -25,6 +25,7 @@ author:
   support_email: help@datadoghq.com
 categories:
 - containers
+custom_kind: integration
 dependencies:
 - https://github.com/DataDog/integrations-core/blob/master/datadog_cluster_agent/README.md
 display_on_public_website: true
@@ -32,9 +33,8 @@ draft: false
 git_integration_title: datadog_cluster_agent
 integration_id: datadog-cluster-agent
 integration_title: Datadog Cluster Agent
-integration_version: 3.1.0
+integration_version: 3.2.0
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: datadog_cluster_agent
 public_title: Datadog Cluster Agent
@@ -50,6 +50,7 @@ tile:
   - Supported OS::macOS
   - Supported OS::Windows
   - Category::Containers
+  - Offering::Integration
   configuration: README.md#Setup
   description: Datadog Cluster Agent のメトリクスを追跡
   media: []
@@ -61,46 +62,46 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/integrations-core -->
 
 
-## 概要
+## Overview
 
-このチェックは、Datadog Agent を通じて [Datadog Cluster Agent][1] を監視します。
+This check monitors the [Datadog Cluster Agent][1] through the Datadog Agent.
 
-## 計画と使用
+## Setup
 
-ホストで実行されている Agent 用にこのチェックをインストールおよび構成する場合は、以下の手順に従ってください。コンテナ環境の場合は、[オートディスカバリーのインテグレーションテンプレート][2]のガイドを参照してこの手順を行ってください。
+Follow the instructions below to install and configure this check for an Agent running on a host. For containerized environments, see the [Autodiscovery Integration Templates][2] for guidance on applying these instructions.
 
-### インフラストラクチャーリスト
+### Installation
 
-Datadog-Cluster-Agent チェックは [Datadog Agent][2] パッケージに含まれています。
-サーバーに追加でインストールする必要はありません。
+The Datadog-Cluster-Agent check is included in the [Datadog Agent][2] package.
+No additional installation is needed on your server.
 
-### ブラウザトラブルシューティング
+### Configuration
 
-1. datadog_cluster_agent のパフォーマンスデータの収集を開始するには、Agent のコンフィギュレーションディレクトリのルートにある `conf.d/` フォルダーの `datadog_cluster_agent.d/conf.yaml` ファイルを編集します。使用可能なすべてのコンフィギュレーションオプションについては、[サンプル datadog_cluster_agent.d/conf.yaml][3] を参照してください。
+1. Edit the `datadog_cluster_agent.d/conf.yaml` file, in the `conf.d/` folder at the root of your Agent's configuration directory to start collecting your datadog_cluster_agent performance data. See the [sample datadog_cluster_agent.d/conf.yaml][3] for all available configuration options.
 
-2. [Agent を再起動します][4]。
+2. [Restart the Agent][4].
 
-### 検証
+### Validation
 
-[Agent の status サブコマンドを実行][5]し、Checks セクションで `datadog_cluster_agent` を探します。
+[Run the Agent's status subcommand][5] and look for `datadog_cluster_agent` under the Checks section.
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "datadog_cluster_agent" >}}
 
 
-### ヘルプ
+### Events
 
-Datadog_Cluster_Agent インテグレーションには、イベントは含まれません。
+The Datadog-Cluster-Agent integration does not include any events.
 
-### ヘルプ
+### Service Checks
 {{< get-service-checks-from-git "datadog_cluster_agent" >}}
 
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][8]までお問合せください。
+Need help? Contact [Datadog support][8].
 
 
 [1]: https://docs.datadoghq.com/ja/agent/cluster_agent/

@@ -26,13 +26,13 @@ further_reading:
 title: Go ログ収集
 ---
 
-Go のログを Datadog に送信するには、ファイルにログを記録し、Datadog Agent でそのファイルを[テール][11]します。オープンソースのロギングライブラリである [logrus][1] を使用すると、以下のようなセットアップが可能です。
+Go のログを Datadog に送信するには、ファイルにログを記録し、そのファイルを Datadog Agent で[追跡][11]します。オープンソースのロギングライブラリである [logrus][1] を使用すると、以下のようなセットアップが可能です。
 
-Datadog は、[カスタムパース規則][2]の使用を避け、ログを JSON で生成するようにロギングライブラリをセットアップすることを強くお勧めします。
+Datadog strongly encourages setting up your logging library to produce your logs in JSON to avoid the need for [custom parsing rules][2].
 
-## ロガーの構成
+## Configure your logger
 
-典型的な Go 構成では、`main.go` ファイルを開き、以下のコードに貼り付けます。
+For a classic Go configuration, open a `main.go` file and paste in the following code:
 
 ```go
 package main
@@ -43,17 +43,17 @@ import (
 
 func main() {
 
-    // JSONFormatter を使用します
+    // use JSONFormatter
     log.SetFormatter(&log.JSONFormatter{})
 
-    // logrus を使用して通常どおりイベントをログに記録します
+    // log an event as usual with logrus
     log.WithFields(log.Fields{"string": "foo", "int": 1, "float": 1.1 }).Info("My first event from golang to stdout")
 }
 ```
 
-ログイベントに表示するメタデータを JSON オブジェクトで提供すると、ログにメタデータを追加できます。
+You can add metas to any log if you provide a JSON object that you want to see in the log event.
 
-メタデータには、`hostname`、`username`、`customers`、`metric` などの情報があり、トラブルシューティングや Go アプリケーションの状態の把握に役立ちます。
+These metas can be `hostname`, `username`, `customers`, `metric` or any information that can help you troubleshoot and understand what happens in your Go application.
 
 ```go
 package main
@@ -64,13 +64,13 @@ import (
 
 func main() {
 
-    // JSONFormatter を使用します
+    // use JSONFormatter
     log.SetFormatter(&log.JSONFormatter{})
 
-    // logrus を使用してイベントをログに記録します
+    // log an event with logrus
     log.WithFields(log.Fields{"string": "foo", "int": 1, "float": 1.1 }).Info("My first event from golang to stdout")
 
-  // メタデータについては、以下のように、ログステートメント間でフィールドを再利用するのが一般的です
+  // for metadata, a common pattern is to reuse fields between logging statements by reusing
   contextualizedLog := log.WithFields(log.Fields{
     "hostname": "staging-1",
     "appname": "foo-app",
@@ -81,41 +81,41 @@ func main() {
 }
 ```
 
-## Datadog Agent の構成
+## Configure your Datadog Agent
 
-[ログ収集が有効][3]になったら、ログファイルを追跡して新しいログを Datadog に送信する[カスタムログ収集][4]を設定します。
+Once [log collection is enabled][3], set up [custom log collection][4] to tail your log files and send new logs to Datadog.
 
-1. `go.d/` フォルダーを `conf.d/` [Agent 構成ディレクトリ][5]に作成します。
-2. `go.d/` に以下の内容で `conf.yaml` ファイルを作成します。
+1. Create a `go.d/` folder in the `conf.d/` [Agent configuration directory][5].
+2. Create a `conf.yaml` file in `go.d/` with the following content:
 
     ```yaml
     ##Log section
     logs:
 
       - type: file
-        path: "/path/to/your/go/log.log"
-        service: go
+        path: "<path_to_your_go_log>.log"
+        service: <service_name>
         source: go
         sourcecategory: sourcecode
     ```
 
-3. [Agent を再起動します][6]。
-4. [Agent の status サブコマンド][7]を実行し、`Checks` セクションで `go` を探し、ログが Datadog に正常に送信されることを確認します。
+3. [Restart the Agent][6].
+4. Run the [Agent's status subcommand][7] and look for `go` under the `Checks` section to confirm logs are successfully submitted to Datadog.
 
-ログが JSON 形式の場合、Datadog は自動的にログメッセージを[パース][8]し、ログ属性を抽出します。[ログエクスプローラー][9]を使用して、ログを表示し、トラブルシューティングを行うことができます。
+If logs are in JSON format, Datadog automatically [parses the log messages][8] to extract log attributes. Use the [Log Explorer][9] to view and troubleshoot your logs.
 
-## ログとトレースの接続
+## Connect logs and traces
 
-このアプリケーションで APM が有効になっている場合、[APM Go ロギングのドキュメント][10]に従ってログにトレース ID とスパン ID を自動的に追加することで、アプリケーションログとトレース間の相関関係を改善できます。
+If APM is enabled for this application, the correlation between application logs and traces can be improved by following the [APM Go logging documentation][10] to automatically add trace and span IDs in your logs.
 
-## ベストプラクティス
+## Best practices
 
-* ロガーには、関連する関数やサービスに対応する名前を付けます。
-* `DEBUG`、`INFO`、`WARNING`、`FATAL` のログレベルを使用します。Datadog では、Go の `FATAL` は `Emergency` という重大度レベルにマッピングされます。
-* まず、最も重要な情報をロギングすることから始めましょう。さらに繰り返しながら、ログの包括性を高めていきます。
-* メタを使用して、あらゆるログにコンテキストを追加します。これにより、ユーザー、顧客、ビジネス中心の属性などをすばやくフィルターにかけることができます。
+* Name the logger with a name that corresponds to the relevant functionality or service.
+* Use the `DEBUG`, `INFO`, `WARNING`, and `FATAL` log levels. In Datadog, Go's `FATAL` maps to a severity level of `Emergency`.
+* Start with logging the information that is most important. Expand the comprehensiveness of your logging with further iterations.
+* Use metas to add context to any log. This enables you to quickly filter over users, customers, business-centric attributes, etc.
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
@@ -123,9 +123,9 @@ func main() {
 [2]: /ja/logs/log_configuration/parsing
 [3]: /ja/agent/logs/?tab=tailfiles#activate-log-collection
 [4]: /ja/agent/logs/?tab=tailfiles#custom-log-collection
-[5]: /ja/agent/guide/agent-configuration-files/?tab=agentv6v7#agent-configuration-directory
-[6]: /ja/agent/guide/agent-commands/?tab=agentv6v7#restart-the-agent
-[7]: /ja/agent/guide/agent-commands/?tab=agentv6v7#agent-status-and-information
+[5]: /ja/agent/configuration/agent-configuration-files/?tab=agentv6v7#agent-configuration-directory
+[6]: /ja/agent/configuration/agent-commands/?tab=agentv6v7#restart-the-agent
+[7]: /ja/agent/configuration/agent-commands/?tab=agentv6v7#agent-status-and-information
 [8]: /ja/logs/log_configuration/parsing/?tab=matchers
 [9]: /ja/logs/explorer/#overview
 [10]: /ja/tracing/other_telemetry/connect_logs_and_traces/go/

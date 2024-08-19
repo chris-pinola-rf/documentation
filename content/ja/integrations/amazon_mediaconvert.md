@@ -25,6 +25,7 @@ categories:
 - メトリクス
 - ログの収集
 - クラウド
+custom_kind: integration
 dependencies: []
 display_on_public_website: true
 draft: false
@@ -33,7 +34,6 @@ integration_id: amazon-mediaconvert
 integration_title: Amazon MediaConvert
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: amazon_mediaconvert
 public_title: Amazon MediaConvert
@@ -46,6 +46,7 @@ tile:
   - Category::Metrics
   - Category::Log Collection
   - Category::Cloud
+  - Offering::Integration
   configuration: README.md#Setup
   description: テレビ、コネクテッドデバイス向けビデオコンテンツのフォーマットと圧縮
   media: []
@@ -55,56 +56,56 @@ tile:
 ---
 
 <!--  SOURCED FROM https://github.com/DataDog/integrations-internal-core -->
-## 概要
+## Overview
 
-Amazon Elemental MediaConvert は、オフラインビデオコンテンツをテレビや接続デバイスへの配信用にフォーマットして圧縮するサービスです。
+AWS Elemental MediaConvert is a service that formats and compresses offline video content for delivery to televisions or connected devices.
 
-このインテグレーションを有効にすると、Datadog にすべての Elemental MediaConvert メトリクスを表示できます。
+Enable this integration to see all your Elemental MediaConvert metrics in Datadog.
 
-## 計画と使用
+## Setup
 
-### インフラストラクチャーリスト
+### Installation
 
-[Amazon Web Services インテグレーション][1]をまだセットアップしていない場合は、最初にセットアップします。
+If you haven't already, set up the [Amazon Web Services integration][1] first.
 
-### メトリクスの収集
+### Metric collection
 
-1. [AWS インテグレーションページ][2]で、`Metric Collection` タブの下にある `MediaConvert` が有効になっていることを確認します。
-2. [Datadog - Amazon Elemental MediaConvert インテグレーション][3]をインストールします。
+1. In the [AWS integration page][2], ensure that `MediaConvert` is enabled under the `Metric Collection` tab.
+2. Install the [Datadog - AWS Elemental MediaConvert integration][3].
 
-### 収集データ
+### Log collection
 
-#### ログの有効化
+#### Enable logging
 
-Amazon Elemental MediaConvert から S3 バケットまたは CloudWatch のいずれかにログを送信するよう構成します。
+Configure AWS Elemental MediaConvert to send logs to either an S3 bucket or to CloudWatch.
 
-**注**: S3 バケットにログを送る場合は、_Target prefix_ が `amazon_mediaconvert` に設定されているかを確認してください。
+**Note**: If you log to an S3 bucket, make sure that `amazon_mediaconvert` is set as _Target prefix_.
 
-#### ログを Datadog に送信する方法
+#### Send logs to Datadog
 
-1. [Datadog Forwarder Lambda 関数][4]をまだセットアップしていない場合は、セットアップします。
-2. Lambda 関数がインストールされたら、AWS コンソールで、Amazon Elemental MediaConvert ログを含む S3 バケットまたは CloudWatch のロググループに手動でトリガーを追加します。
+1. If you haven't already, set up the [Datadog Forwarder Lambda function][4].
+2. Once the Lambda function is installed, manually add a trigger on the S3 bucket or CloudWatch log group that contains your AWS Elemental MediaConvert logs in the AWS console:
 
-    - [S3 バケットに手動トリガーを追加][5]
-    - [CloudWatch ロググループに手動トリガーを追加][6]
+    - [Add a manual trigger on the S3 bucket][5]
+    - [Add a manual trigger on the CloudWatch Log Group][6]
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "amazon_mediaconvert" >}}
 
 
-### ヘルプ
+### Events
 
-Amazon Elemental MediaConvert インテグレーションには、イベントは含まれません。
+The AWS Elemental MediaConvert integration does not include any events.
 
-### ヘルプ
+### Service Checks
 
-Amazon Elemental MediaConvert インテグレーションには、サービスのチェック機能は含まれません。
+The AWS Elemental MediaConvert integration does not include any service checks.
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][8]までお問合せください。
+Need help? Contact [Datadog support][8].
 
 [1]: https://docs.datadoghq.com/ja/integrations/amazon_web_services/
 [2]: https://app.datadoghq.com/integrations/amazon-web-services

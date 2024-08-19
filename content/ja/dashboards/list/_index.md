@@ -2,7 +2,7 @@
 description: リストによるダッシュボードの整理と管理
 disable_toc: false
 further_reading:
-- link: serverless/enhanced_lambda_metrics
+- link: dashboards/
   tag: ドキュメント
   text: ダッシュボードの概要
 - link: dashboards/guide/maintain-relevant-dashboards
@@ -11,82 +11,82 @@ further_reading:
 title: ダッシュボードリスト
 ---
 
-## 概要
+## Overview
 
-ダッシュボードリスト機能により、拡大するダッシュボードコレクションを整理して合理化できます。ダッシュボードをリストにグループ化し、特定のチームに割り当て、重要なものをお気に入りとしてマークして、重要な視覚化にすばやくアクセスできます。チームによるフィルタリング、効率的な管理のための一括アクションの実行、複数のダッシュボードへのチームの割り当てなどの機能を使用することで、ダッシュボードの構成をさらに管理できます。[Dashboard List ページ][1]では、カスタムダッシュボードやインテグレーションダッシュボードを簡単に検索、作成、管理できます。
-ダッシュボードを表示および管理します。
-- [リストの並べ替え、検索、グループ化には、*All Dashboards* テーブルを使用します。](#view-all-dashboards)
-- [リストでダッシュボードビューを整理します。](#lists)
+Organize and streamline your expanding dashboard collection with Dashboard List features. Group dashboards into lists, assign them to specific teams, and mark important ones as favorites for fast access to key visualizations. Manage dashboard organization further by using functionalities like filtering by Teams, performing bulk actions for efficient management, and assigning Teams to multiple dashboards. Explore, create, and manage custom or integrated dashboards effortlessly on the [Dashboard List page][1].
+View and manage your dashboards:
+- [Use the *All Dashboards* table to sort, search, and group your lists.](#view-all-dashboards)
+- [Organize your dashboard views through lists.](#lists)
 
-## すべてのダッシュボードを表示
+## View all dashboards
 
-**All Dashboards** テーブルには、Datadog 組織内のダッシュボードが一覧表示され、カスタム作成されたダッシュボードやすぐに使えるダッシュボードが表示されます。[チーム](#teams)とダッシュボードの関連付けや、[リスト](#lists)へのダッシュボードの追加などの一括アクションを実行するには、テーブル内の複数のダッシュボードを選択します。
+The **All Dashboards** table lists dashboards in your Datadog organization, either custom created or available as an out-of-the-box dashboard. Select multiple dashboards in the table to conduct bulk actions, such as associating [Teams](#teams) with dashboards or adding dashboards to [lists](#lists).
 
-列ヘッダー *Name*、*Modified*、*Popularity* でソートできます。
+You can sort by column headers *Name*, *Modified*, and *Popularity*.
 
-| 列     | 説明                                                                              |
+| Column     | Description                                                                              |
 |------------|------------------------------------------------------------------------------------------|
-| スター       | 現在のユーザーがスターを付けたすべてのダッシュボード。                                              |
-| 名前       | カスタムダッシュボードまたはプリセットダッシュボードの名前。                                              |
-| Author     | ダッシュボードの作成者のプロフィールアイコン。                                             |
-| ヘルプ      | ダッシュボードに割り当てられた[チーム][2]。                                                    |
-| Modified   | カスタムダッシュボードの最終更新日。                                            |
-| 人気度 (Popularity) | 組織のダッシュボードの相対的な[人気度](#人気度)。           |
-| アイコン       | ダッシュボードの種類 (タイムボードまたはスクリーンボード) を示すアイコン。                     |
+| Star       | All dashboards starred by the current user.                                              |
+| Name       | The name of the custom or preset dashboard.                                              |
+| Author     | The profile icon of the dashboard's creator.                                             |
+| Teams      | [Teams][2] assigned to the dashboard.                                                    |
+| Modified   | The last modified date of a custom dashboard.                                            |
+| Popularity | The relative [popularity](#popularity) of the dashboard for your organization.           |
+| Icon       | An icon indicating the type of dashboard (Timeboard or Screenboard).                     |
 
 
-### 人気度 (Popularity)
+### Popularity
 
-組織で最も人気のあるダッシュボードに 5 つの人気度バーが表示されます。他のすべてのダッシュボードの人気度は、このダッシュボードを基準として評価されます。人気度は、ダッシュボードが受信するトラフィック量に基づきます。人気度は毎日更新され、新しいダッシュボードの人気度バーは最大 24 時間の間はゼロです。
+An organization's most popular dashboard displays five popularity bars. All other dashboards are relative to this dashboard. Popularity is based on the amount of traffic a dashboard receives. Popularity is updated daily; new dashboards have zero popularity bars for up to 24 hours.
 
-**注**: 公開ダッシュボード URL のトラフィックは、人気度に反映されません。
+**Note**: Traffic to public dashboard URLs is ignored for popularity.
 
-## ヘルプ
+## Teams
 
-**My Teams** トグルを使用して、すべてのダッシュボードを表示するか、自分の[チーム][2]が所有するダッシュボードのみを表示するかを切り替えることができます。
+Use the **My Teams** toggle to switch between viewing all dashboards and only dashboards owned by your [teams][2].
 
-1 つまたは複数のダッシュボードに関連するチームを編集するには、次の手順を実行します。
-1. 変更したい各ダッシュボードの横にあるチェックボックスを選択します。
-1. 右上の **Edit Teams** ドロップダウンを開きます。
-1. チェックボックスを使用して、ダッシュボードの適切なチームを選択します。
-1. **Apply Changes** をクリックします。
+To edit the teams associated with one or more dashboards, take the following steps:
+1. Select the checkbox next to each dashboard you wish to modify.
+1. Open the **Edit Teams** dropdown in the upper right.
+1. Use the checkboxes to select the appropriate teams for the dashboards.
+1. Click **Apply Changes**.
 
-## リスト
+## Lists
 
-ダッシュボードリストはダッシュボードをグループ化し、チームメンバーは同じコンテキスト内でダッシュボードを切り替えることができます。[プリセットリスト](#preset-lists)またはカスタムリストにダッシュボードを追加できます。
+Dashboard lists groups dashboards so you and your team can switch between dashboards within the same context. You can add dashboards to [preset lists](#preset-lists) or to a custom list.
 
-1. ダッシュボードリストを作成するには、右上にある **+ New List** をクリックします。
-1. リストのタイトルを変更するには、鉛筆アイコンをクリックします。リストのタイトルは自動的にユーザーの名で設定されます。例: `John's list`
-1. ダッシュボードをリストに追加します。**[All Dashboards](#view-all-dashboards)** テーブルで、ダッシュボードタイトルの横にあるチェックボックスをオンにします。次に、ダッシュボードリストの右上隅にある **Add to** ドロップダウンをクリックし、リストを選択します。
+1. To create a dashboard list, click **+ New List** in the upper right.
+1. Click the pencil icon to change a list's title. The list's title is automatically set with the user's first name. For example, `John's list`. 
+1. Add dashboards to a list. In the **[All Dashboards](#view-all-dashboards)** table, check the checkboxes next to the Dashboard title. Then click the **Add to** dropdown in the upper right corner of the Dashboard list and select the list.
 
-左サイドバーにはすべてのリストが表示され、チームや検索キーワードで絞り込むことができます。このサイドバーを非表示にするには、**Hide Controls** を切り替えます。
+The left sidebar displays all lists, which you can filter by Team or through search terms. Toggle **Hide Controls** to hide this sidebar.
 
-### お気に入りリスト
+### Favorite lists
 
-Favorite lists (お気に入りリスト) は、現在ログインしているユーザーがスターを付けたダッシュボードのリストです。**注**: スター付きのリストがない場合、*Favorite Lists* のカテゴリは非表示になります。
+Favorite lists are dashboard lists starred by the current logged in user. **Note**: If you have no starred lists, the *Favorite Lists* category is hidden.
 
-### プリセットリスト
+### Preset lists
 
-プリセットリストは、Datadog ですぐに使えるダッシュボードリストです。
+Preset lists are out-of-the-box dashboard lists in Datadog:
 
-| リスト                     | 説明                                                               |
+| List                     | Description                                                               |
 |--------------------------|---------------------------------------------------------------------------|
-| All Custom               | 組織アカウント内のチームメンバーによって作成されたカスタムダッシュボード。 |
-| All Hosts                | ホストを追加すると Datadog で自動作成されるダッシュボード。              |
-| All Integrations         | インテグレーションを設置すると Datadog で自動作成されるダッシュボード。  |
-| All Shared               | 認証済みまたは公開リンクの共有が有効になっているダッシュボード。             |
-| Created By You           | 現在のユーザーにより作成されたカスタムダッシュボード。                            |
-| Frequently Viewed By You | 現在のユーザーが頻繁に表示するすべてのダッシュボード。                     |
-| Recently Deleted         | 過去 30 日以内に削除されたダッシュボード。このリストから[削除されたダッシュボードを復元します](#restore-deleted-dashboards)。|
-| セキュリティとコンプライアンス  | すぐに使えるセキュリティダッシュボード。                                       |
+| All Custom               | Custom dashboards made by any team member in your organization's account. |
+| All Hosts                | Automatic dashboards created by Datadog when you add a host.              |
+| All Integrations         | Automatic dashboards created by Datadog when you install an integration.  |
+| All Shared               | Dashboards with authenticated or public link sharing enabled.             |
+| Created By You           | Custom dashboards created by the current user.                            |
+| Frequently Viewed By You | All dashboards frequently viewed by the current user.                     |
+| Recently Deleted         | Dashboards deleted within the last 30 days. [Restore deleted dashboards](#restore-deleted-dashboards) from this list.|
+| Security and Compliance  | Out-of-the-box Security dashboards.                                       |
 
-### ダウンタイム
+### Restore deleted dashboards
 
-削除されたダッシュボードを復元するには、プリセットの **Recently Deleted** リストを使用します。リストから、復元するすべてのダッシュボードを選択し、**Restore to** をクリックします。ダッシュボードを復元する特定のリストを選択するか、カスタムリストなしで復元する場合は **All Custom** を選択します。**Recently Deleted** にあるダッシュボードは、30 日後に完全に削除されます。
+Use the preset **Recently Deleted** list to restore deleted dashboards. From the list, select all dashboards to restore and click **Restore to**. Select a specific list to restore the dashboards to, or select **All Custom** to restore them without a custom list. Dashboards in **Recently Deleted** are permanently deleted after 30 days.
 
-{{< img src="dashboards/list/recently_deleted_restore.png" alt="Recently Deleted リストで削除したダッシュボードを復元" style="width:100%;">}}
+{{< img src="dashboards/list/recently_deleted_restore.png" alt="Restore deleted dashboard on the Recently Deleted list" style="width:100%;">}}
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

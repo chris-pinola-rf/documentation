@@ -7,40 +7,42 @@ further_reading:
   tag: ドキュメント
   text: JSON を使用したダッシュボードの構築方法について
 title: ノート &amp; リンクウィジェット
+widget_type: note
 ---
 
-**Notes & Links** ウィジェットは、[フリーテキストウィジェット][1]と似ていますが、より多くのフォーマットと表示オプションが含まれています。
+The **Notes & Links** widget is similar to the [free text widget][1] but contains more formatting and display options. 
 
-## セットアップ
+**Note**: The Notes & Links widget does not support inline HTML.
 
-1. 表示したいテキストを入力します。マークダウンがサポートされています。
-2. プリセットのテンプレートを選択するか、表示オプションをカスタマイズします。
-3. 文字サイズとウィジェットの背景色を選択します。
-4. テキストの位置を調整するには、**Alignment** ボタンをクリックします。パディングを入れない場合は、**No Padding** をクリックします。
-5. ポインターを含めるには、**Show Pointer** をクリックし、ドロップダウンメニューから位置を選択します。
+## Setup
 
-{{< img src="dashboards/widgets/note/overview.png" alt="Notes & Links ウィジェットエディタの Markdown フィールドにテキストを追加する" style="width:90%;" >}}
+1. Enter the text you want to display. Markdown is supported.
+2. Select a preset template or customize the display options. 
+3. Select a text size and the widget's background color.
+4. To adjust the position of the text, click on the **Alignment** buttons. To not include padding, click **No Padding**.
+5. To include a pointer, click **Show Pointer** and select a position from the dropdown menu.
 
-ウィジェットを作成する準備ができたら、**Save** をクリックします。
+{{< img src="dashboards/widgets/note/overview.png" alt="Adding text in the Markdown field of the Notes & Links widget editor" style="width:90%;" >}}
 
-このウィジェットはテンプレート変数をサポートしています。ウィジェットの内容を動的に更新するには `{TX-PL-LABEL}lt;VARIABLE_NAME>.value` 構文を使用します。
+When you are ready to create the widget, click **Save**.
 
-{{< img src="dashboards/widgets/note/template_variable.png" alt="Notes & Links ウィジェットエディタの Markdown フィールドでテンプレート変数を使用する" style="width:90%;" >}}
+This widget supports template variables. Use the `$<VARIABLE_NAME>.value` syntax to dynamically update the widget content.
 
-この例では、`$env.value` が選択された環境に対するリンクの値を更新します。
+{{< img src="dashboards/widgets/note/template_variable.png" alt="Using template variables in the Markdown field of the Notes & Links widget editor" style="width:90%;" >}}
+
+In this example, `$env.value` updates the value of a link to the selected environment.
 
 ## API
 
-このウィジェットは、**ダッシュボード API** とともに使用できます。詳しくは、[ダッシュボード API][2] ドキュメントをご参照ください。
+This widget can be used with the **[Dashboards API][2]**. See the following table for the [widget JSON schema definition][3]:
 
-ノートウィジェットの[ウィジェット JSON スキーマ定義][3]は次のとおりです。
 
 {{< dashboards-widgets-api >}}
 
-
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
 [1]: /ja/dashboards/widgets/free_text/
-[2]: /ja/api/v1/dashboards/
+[2]: /ja/api/latest/dashboards/
 [3]: /ja/dashboards/graphing_json/widget_json/

@@ -8,75 +8,88 @@ further_reading:
 title: タイムシフト
 ---
 
-ここでは、`<TIMEPERIOD>_before()` という形式の関数について説明します。これらの関数は、対応する期間の値をグラフに表示します。この値自体に大きな意味はありませんが、現在値と組み合わせることで、アプリケーションのパフォーマンスについて有益なインサイトを得られることがあります。
+Here is a set of functions of the pattern `<TIMEPERIOD>_before()`. These functions display the values from the corresponding time period on the graph. On their own, they may not be of high value, but together with the current values they may provide useful insight into the performance of your application.
 
-## タイムシフト
+## Timeshift
 
-| 関数      | 説明                                                                                    | 例                                          |
+| Function      | Description                                                                                    | Example                                          |
 |:--------------|:-----------------------------------------------------------------------------------------------|:-------------------------------------------------|
-| `timeshift()` | メトリクスの現在のタイムスタンプより任意の `<TIME_IN_SECOND>` 前の値をグラフ化します。 | `timeshift(<METRIC_NAME>{*}, -<TIME_IN_SECOND>)` |
+| `timeshift()` | Graph values from an arbitrary `<TIME_IN_SECOND>` before the current timestamp for the metric. | `timeshift(<METRIC_NAME>{*}, -<TIME_IN_SECOND>)` |
 
-たとえば、これを使用して現在のシステム負荷を 2 週間前 (60\*60\*24\*14 = 1209600) の負荷と比較する場合は、次のようなクエリになります。
+For example, if you wanted to use this to compare current system load with load from 2 weeks ago (60\*60\*24\*14 = 1209600), your query would be:
 
 ```text
 timeshift(avg:system.load.1{*}, -1209600)
 ```
 
-## 1 時間前
+## Hour before
 
-| 関数        | 説明                                                            | 例                         |
+| Function        | Description                                                            | Example                         |
 |:----------------|:-----------------------------------------------------------------------|:--------------------------------|
-| `hour_before()` | メトリクスの現在のタイムスタンプより 1 時間前の値をグラフ化します。 | `hour_before(<METRIC_NAME>{*})` |
+| `hour_before()` | Graph values from an hour before the current timestamp for the metric. | `hour_before(<METRIC_NAME>{*})` |
 
-例として、`system.load.1` の `hour_before()` 値を破線で示します。この例では、マシンが午前 6:30 に起動し、`hour_before()` 値が 7:30 のマークから表示されています。もちろんこの例は、`hour_before()` の値が実際の値と合致するように特別に作成されています。
+Here is an example of `system.load.1` with the `hour_before()` value shown as a dotted line. In this particular example, you can see the machine was started at 6:30am and the `hour_before()` values show up at the 7:30 mark. Of course, this example was created specifically so that you can see the `hour_before()` values match up with the actual values.
 
-{{< img src="dashboards/functions/timeshift/simple_hour_before_example.png" alt="hour before の例" style="width:80%;">}}
+{{< img src="dashboards/functions/timeshift/simple_hour_before_example.png" alt="simple hour before example" style="width:80%;">}}
 
-## 1 日前
+## Day before
 
-| 関数       | 説明                                                          | 例                        |
+| Function       | Description                                                          | Example                        |
 |:---------------|:---------------------------------------------------------------------|:-------------------------------|
-| `day_before()` | メトリクスの現在のタイムスタンプより 1 日前の値をグラフ化します。 | `day_before(<METRIC_NAME>{*})` |
+| `day_before()` | Graph values from a day before the current timestamp for the metric. | `day_before(<METRIC_NAME>{*})` |
 
-例として、`nginx.net.connections` の `day_before()` 値を明るい細線で示します。この例では、1 週間分のデータを表示できるため、`day_before()` のデータが簡単にわかります。
+Here is an example of `nginx.net.connections` with the `day_before()` value shown as a lighter, thinner line. In this example, you can see a week's worth of data, which makes the `day_before()` data easier to identify.
 
-{{< img src="dashboards/functions/timeshift/simple_day_before_example.png" alt="day before の例" style="width:80%;">}}
+{{< img src="dashboards/functions/timeshift/simple_day_before_example.png" alt="simple day before example" style="width:80%;">}}
 
-## 1 週前
+## Week before
 
-| 関数        | 説明                                                                    | 例                         |
+| Function        | Description                                                                    | Example                         |
 |:----------------|:-------------------------------------------------------------------------------|:--------------------------------|
-| `week_before()` | メトリクスの現在のタイムスタンプより 1 週間 (7 日) 前の値をグラフ化します。 | `week_before(<METRIC_NAME>{*})` |
+| `week_before()` | Graph values from a week (7 days) before the current timestamp for the metric. | `week_before(<METRIC_NAME>{*})` |
 
-例として、`cassandra.db.read_count` の `week_before()` 値を破線で示します。この例では約 3 週間分のデータを表示できるため、`week_before()` のデータが簡単にわかります。
+Here is an example of `cassandra.db.read_count` with the `week_before()` value shown as a dotted line. In this example, you can see about three weeks' worth of data, which makes the `week_before()` data easier to identify.
 
-{{< img src="dashboards/functions/timeshift/simple_week_before_example.png" alt="week before の例" style="width:80%;">}}
+{{< img src="dashboards/functions/timeshift/simple_week_before_example.png" alt="simple week before example" style="width:80%;">}}
 
-### 1 か月前
+## Month before
 
-| 関数         | 説明                                                                                | 例                          |
+| Function         | Description                                                                                | Example                          |
 |:-----------------|:-------------------------------------------------------------------------------------------|:---------------------------------|
-| `month_before()` | メトリクスの現在のタイムスタンプより 1 か月 (28 日/4 週間) 前の値をグラフ化します。 | `month_before(<METRIC_NAME>{*})` |
+| `month_before()` | Graph values from a month (28 days / 4 weeks) before the current timestamp for the metric. | `month_before(<METRIC_NAME>{*})` |
 
-例として、`aws.ec2.cpuutilization` の `month_before()` 値を細実線で示します。
+Here is an example of `aws.ec2.cpuutilization` with the `month_before()` value shown as a thin, solid line.
 
-{{< img src="dashboards/functions/timeshift/simple_month_before_example.png" alt="month before の例" style="width:80%;">}}
+{{< img src="dashboards/functions/timeshift/simple_month_before_example.png" alt="simple month before example" style="width:80%;">}}
 
-## その他の関数
+
+## カレンダーシフト
+
+<div class="alert alert-info">カレンダーシフト機能は、<em>プライベート</em>ダッシュボードのクラウドコストデータソースでのみ利用可能です。</div>
+
+| Function           | Description                                                                                   | Example                            |
+|:-------------------|:----------------------------------------------------------------------------------------------|:-----------------------------------|
+| `calendar_shift()` | メトリクスの現在のタイムスタンプから前の日、週、または月の値をグラフ化します。 | `calendar_shift(<METRIC_NAME>{*})` |
+
+calendar_shift() 関数にアクセスするには、**Add function** ボタンをクリックし、**Timeshift &gt; Month before** を選択します。カレンダーシフトを使用すると、同じメトリクスを同等の期間で比較できます。以下は、2 週間前の calendar_shift() の値と現在の値を比較したクラウドコストメトリクス `aws.cost.net.amortized` の例です。
+
+{{< img src="dashboards/functions/timeshift/calendar_shift_two_weeks.png" alt="2 週間前と現在の `aws.cost.net.amortized ` メトリクス値を比較するために使用される calendar_shift() 関数の例" style="width:80%;" >}}
+
+## Other functions
 
 {{< whatsnext desc="Consult the other available functions:" >}}
-    {{< nextlink href="/dashboards/functions/algorithms" >}}アルゴリズム: メトリクスに異常値や外れ値の検出機能を実装します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/arithmetic" >}}算術: メトリクスに対して算術演算を実行します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/count" >}}カウント: メトリクスの 0 以外または null 以外の値をカウントします。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/exclusion" >}}除外: メトリクスの特定の値を除外します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/interpolation" >}}補間: メトリクスにデフォルト値を挿入または設定します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/rank" >}}ランク: メトリクスの一部のみを選択します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/rate" >}}レート: メトリクスに対してカスタム微分係数を計算します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/regression" >}}回帰: メトリクスに何らかの機械学習関数を適用します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/rollup" >}}ロールアップ: メトリクスに使用される元ポイントの数を制御します。{{< /nextlink >}}
-    {{< nextlink href="/dashboards/functions/smoothing" >}}スムーシング: メトリクスの変動を滑らかにします。{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/algorithms" >}}Algorithmic: Implement Anomaly or Outlier detection on your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/arithmetic" >}}Arithmetic: Perform Arithmetic operation on your metric.  {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/count" >}}Count: Count non zero or non null value of your metric. {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/exclusion" >}}Exclusion: Exclude certain values of your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/interpolation" >}}Interpolation: Fill or set default values for your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/rank" >}}Rank: Select only a subset of metrics. {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/rate" >}}Rate: Calculate custom derivative over your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/regression" >}}Regression: Apply some machine learning function to your metric.{{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/rollup" >}}Rollup: Control the number of raw points used in your metric. {{< /nextlink >}}
+    {{< nextlink href="/dashboards/functions/smoothing" >}}Smoothing: Smooth your metric variations.{{< /nextlink >}}
 {{< /whatsnext >}}
 
-
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}

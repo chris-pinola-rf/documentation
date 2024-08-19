@@ -24,189 +24,174 @@ further_reading:
 title: インシデント管理
 ---
 
-{{< site-region region="gov" >}}
-<div class="alert alert-warning">Datadog for Government site では、インシデント管理をご利用いただけません。</div>
-{{< /site-region >}}
+{{< learning-center-callout header="Join an enablement webinar session" hide_image="true" btn_title="Sign Up" btn_url="https://www.datadoghq.com/technical-enablement/sessions/?tags.topics-0=Incidents">}}
+  Explore and register for Foundation Enablement sessions. Learn how Datadog Incident Management enables DevOps teams and SREs to more effectively manage their incident response workflows from start to finish, saving time and reducing frustration when it matters most.
+{{< /learning-center-callout >}}
 
-組織のサービス中断につながる可能性のあるイベントは、すべてインシデントと見なすことができます。多くの場合、こうしたイベントを処理するためのフレームワークを用意する必要があります。Datadog のインシデント管理機能は、組織がインシデントを効果的に識別して軽減できるシステムを提供します。
+Any event that may lead to a disruption in your organization's services can be described as an incident, and it is often necessary to have a set framework for handling these events. Datadog's Incident Management feature provides a system through which your organization can effectively identify and mitigate incidents.
 
-インシデントは、収集しているメトリクス、トレース、ログとともに Datadog に存在します。自分に関連するインシデントを表示してフィルタリングできます。
+Incidents live in Datadog alongside the metrics, traces, and logs you are collecting. You can view and filter incidents that are relevant to you.
 
-Datadog パラダイムでは、次のいずれかがインシデントを宣言するための適切な状況です。
+In the Datadog paradigm, any of the following are appropriate situations for declaring an incident:
 
-* 問題が顧客またはサービスに影響を及ぼしている、またはその可能性があります。
-* あなたは、インシデントを呼び出す必要があるかどうかがわかりません。他の人に通知し、重大度を適切に上げます。
+* An issue is or may be impacting customers or services.
+* You do not know whether you should call an incident. Notify other people and increase severity appropriately.
 
-## 使用方法
+## Usage
 
-インシデント管理にインストールは必要ありません。インシデントを表示するには、[Incidents][1] ページに移動して、すべての進行中インシデントのフィードを確認します。[Incident Settings][2] で、すべてのインシデントに表示される追加フィールドを構成できます。
+Incident Management requires no installation. To view your incidents, go to the [Incidents][1] page to see a feed of all ongoing incidents. You can configure additional fields that appear for all incidents in [Incident Settings][2].
 
-**注**: [Apple App Store][4] および [Google Play Store][5] で入手できる [Datadog モバイルアプリ][3]をダウンロードして、モバイルデバイスのホーム画面からインシデント一覧を表示し、インシデントを管理/作成することができます。
+**Note**: View your Incidents list from your mobile device home screen and manage/create incidents by downloading the [Datadog Mobile App][3], available on the [Apple App Store][4] and [Google Play Store][5].
 
-{{< img src="service_management/incidents/incidents-list-mobile.png" style="width:100%; background:none; border:none; box-shadow:none;" alt="モバイルアプリでのインシデント">}}
+{{< img src="service_management/incidents/incidents-list-mobile.png" style="width:100%; background:none; border:none; box-shadow:none;" alt="Incidents on Mobile App">}}
 
-### インシデントの作成
+### Creating an incident
 
-#### グラフから作成
+#### From a graph
 
-グラフ上でエクスポートボタンをクリックすると表示される **Declare incident** ボタンをクリックすることで、グラフから直接インシデントを宣言できます。インシデント作成モーダルが表示され、グラフがシグナルとして追加されます。
+You can declare an incident directly from a graph by clicking the export button on the graph and then clicking **Declare incident**. The incident creation modal appears, and the graph is added to the incident as a signal.
 
-{{< img src="service_management/incidents/from-a-graph.png" alt="グラフからインシデントを作成" style="width:80%;">}}
+{{< img src="service_management/incidents/from-a-graph.png" alt="Create in incident from a graph" style="width:80%;">}}
 
-#### クリップボードから作成
+#### From the Clipboard
 
-Datadog クリップボードから複数のモニターとグラフを収集し、インシデントを生成します。クリップボードにダッシュボードを追加するには、いずれかのグラフを複製し、**Open Clipboard** を選択します。次に、関連するグラフとモニターすべてをクリップボードに追加し、**Add to New Incident** をクリックします。クリップボード上のすべてがシグナルとしてインシデントに追加されます。
+Use the Datadog Clipboard to gather multiple monitors and graphs and to generate an incident. To add a dashboard to the Clipboard, copy any graph, and then select **Open Clipboard**. Add all of the relevant graphs and monitors to the Clipboard and then click **Add to New Incident**. Everything on the Clipboard is added to the incident as a signal.
 
-{{< img src="service_management/incidents/from-clipboard.png" alt="クリップボードにダッシュボードを追加" style="width:80%;">}}
+{{< img src="service_management/incidents/from-clipboard.png" alt="Add a dashboard to the clipboard" style="width:80%;">}}
 
-{{< img src="service_management/incidents/clipboard.png" alt="クリップボードからインシデントを作成" style="width:80%;">}}
+{{< img src="service_management/incidents/clipboard.png" alt="Create in incident from the clipboard" style="width:80%;">}}
 
-**注**: インシデントからのエクスポートに加え、クリップボードのデータを新しいダッシュボードやノートブックにエクスポートできます。
+**Note**: In addition to exporting from an incident, data on the Clipboard can be exported to a new dashboard or a notebook.
 
-#### モニターから作成
+#### From a monitor
 
-**Declare incident** ボタンをクリックすることで、モニターから直接インシデントを宣言できます。インシデント作成モーダルが表示され、モニターがシグナルとして追加されます。
+You can declare an incident directly from a monitor by clicking **Declare incident**. The incident creation modal appears, and the monitor is added into the incident as a signal.
 
-{{< img src="service_management/incidents/incident-from-monitor.png" alt="モニターからインシデントを作成" style="width:80%;">}}
+{{< img src="service_management/incidents/incident-from-monitor.png" alt="Create an incident from a monitor" style="width:80%;">}}
 
-既存のインシデントにモニターを追加することもできます。
+You can also add a monitor to an existing incident.
 
-{{< img src="service_management/incidents/existing.png" alt="既存のインシデントにモニターを追加" style="width:80%;">}}
+{{< img src="service_management/incidents/existing.png" alt="Add a monitor to an existing incident" style="width:80%;">}}
 
-#### セキュリティシグナルから
+#### From a Security Signal
 
-サイドパネルの右上にあるケバブボタンをクリックし、**Declare incident** をクリックして、Cloud SIEM または Cloud Workload Security のシグナルから直接インシデントを宣言することができます。
+Declare an incident directly from a Cloud SIEM or Cloud Security Management Threats signal by clicking the kebab button on the top right of the side panel, and clicking **Declare incident**.
 
-サイドパネルの右上にあるエクスポートボタンを選択し、**Export to incident** をクリックして、Application Security Management のシグナルからインシデントを宣言します。
+Declare an incident from an Application Security Management signal by selecting the export button on the top right of the side panel, and clicking **Export to incident**.
 
-{{< img src="service_management/incidents/security-signal-incidents.png" alt="セキュリティシグナルからインシデントを作成" style="width:80%;">}}
+{{< img src="service_management/incidents/security-signal-incidents.png" alt="Create an incident from a security signal" style="width:80%;">}}
 
-#### Incidents ページから作成
+#### From the Incidents page
 
-[Datadog UI][1] で **New Incident** をクリックし、インシデントを作成します。
+In the [Datadog UI][1], click **Declare Incident** to create an incident.
 
-{{< img src="service_management/incidents/incident_declaration_modal.jpeg" alt="インシデント宣言モーダル" style="width:80%;">}}
+{{< img src="/service_management/incidents/declare_incident_make_private.png" alt="Incident Declaration Modal" style="width:80%;">}}
 
-インシデント作成モーダルは、オーガニゼーションで使用されている重大度とステータスのヘルパーテキストと説明を含む折りたたみ可能なサイドパネルをレスポンダーに提供します。ヘルパーのテキストと説明は、[Incident Settings][6] でカスタマイズできます。
+The incident creation modal provides responders with a collapsible side panel that contains helper text and descriptions for the severities and statuses used by your organization. The helper text and descriptions are customizable in the [Incident Settings][6]. You also have the option to make the incident private to limit access to only responders.
 
-{{< img src="service_management/incidents/incident_information_settings.jpeg" alt="インシデント情報の設定" style="width:80%;">}}
+#### From Slack
 
-#### Slack から作成
+Once you have the [Datadog integration enabled on Slack][7], from any Slack channel you can use the slash command `/datadog incident` to declare a new incident.
 
-[Datadog インテグレーションを Slack で有効化][7]すると、どの Slack チャンネルからでもスラッシュコマンド `/datadog incident` を使用して新しいインシデントを宣言できます。
+In the creation modal, you add a descriptive title, select whether customers were impacted (yes, no, or unknown) and select a severity level (1-5, unknown).
 
-作成モーダルで、説明タイトル (Title) に入力し、カスタマーへの影響 (Yes、No、Unknown) を選択して、重大度 (Severity) を (Unknown または 1～5) から選択します。
+If the user declaring the incident has connected their Slack to their Datadog account, then by default that user becomes the Incident Commander (IC). If the person declaring an incident is not a member of a Datadog account, then the IC is unassigned. You can change the IC on the [incidents page][1] later if necessary.
 
-インシデントを宣言しているユーザーが Slack を Datadog アカウントと接続済みの場合、デフォルトではそのユーザーがインシデント調査責任者 (IC) になります。IC は、必要に応じて後からアプリ内で変更できます。インシデントを宣言しているユーザーが Datadog アカウントを所有していない場合、IC は一般の `Slack app user` に割り当てられ、アプリ内の別の IC に割り当てることができます。
+After you declare an incident from Slack, it generates an incident channel.
 
-Datadog Slack アプリの使用については、[こちら][8]を確認してください。
+{{< img src="service_management/incidents/from-slack.png" alt="Create in incident from Slack" style="width:60%;">}}
 
-{{< img src="service_management/incidents/from-slack.png" alt="Slack からインシデントを作成" style="width:60%;">}}
-
-インシデントを宣言しているユーザーが Datadog アカウントを所有している場合、デフォルトではそのユーザーがインシデント調査責任者 (IC) になります。インシデントを宣言しているユーザーが Datadog アカウントを所有していない場合、IC は一般の `Slack app user` に割り当てられます。IC は Datadog アプリの[インシデントページ][1]で変更できます。
-
-Slack でインシデントを宣言すると、インシデントチャネルが生成されます。
-
-Datadog Slack インテグレーションについては、[ドキュメント][7]を参照してください。
+Read more about using the Datadog Slack App [here][8].
 
 {{< site-region region="eu" >}}
-Slack をご利用の {{< region-param key="dd_site_name" >}} のお客様は、https://help.datadoghq.com/ でチケットを提出して、Slack アプリに関する最新情報を入手してください。
+For {{< region-param key="dd_site_name" >}} customers who use Slack, stay informed about the Slack app by filing a ticket at https://help.datadoghq.com/.
 {{< /site-region >}}
 
-### インシデントの説明
+## Describing the incident
 
-インシデントの作成場所に関わらず、インシデントについてできる限り詳細な説明を添えて、社内のインシデント管理プロセスに関わるメンバーと情報を共有することが重要です。
+No matter where you create an incident, it's important to describe it as thoroughly as possible to share the information with other people involved in your company's incident management process.
 
-インシデントを作成すると、インシデントモーダルが表示されます。このモーダルにはいくつかの重要な要素が含まれています。
+When you create an incident, an incident modal comes up. This modal has several core elements:
 
-**Severity Level**: インシデントの重大度を SEV-1 (最も重大) から SEV-5 (最も軽微) で表します。インシデントを調査中で重大度がまだわからない場合は UNKNOWN を選択します。
+| Incident elements    | Description |
+| ----------- | ----------- |
+| Title | (Required) Give your incident a descriptive title. |
+| Severity Level| (Required) Denotes the severity of your incident, from SEV-1 (most severe) to SEV-5 (least severe). If your incident is under initial investigation, and you do not know the severity yet, select UNKNOWN. <br> **Note**: You can customize the description of each severity level to fit the requirements of your organization.|
+| Incident Commander | This person is assigned as the leader of the incident investigation. |
+| Attributes (Teams) | Assign the appropriate group of users to an incident using [Datadog Teams][9]. Members of the assigned team are automatically invited to the Slack channels. |
+| Notifications | Specify a user, Slack channel or external email to send notifications of this incident to.  |
+| Notes & Links | You can customize the description of each severity level to fit the requirements of your organization. Include links to graphs, monitors, or security signals for additional awareness. |
 
-* SEV-1: 重大な影響
-* SEV-2: 大きな影響
-* SEV-3: 中程度の影響
-* SEV-4: 小さい影響
-* SEV-5: 軽微な問題
-* UNKNOWN: 初期調査
+### Updating the incident and the incident timeline
 
-**注**: 各重大度レベルの説明は、組織の要件に合わせてカスタマイズできます。
+An incident's status can be updated directly on the incident's overview page, or from Slack within the dedicated incident channel. To update an incident from its Slack channel, use this slash command to open the update modal: `/datadog incident update`
 
-**Title**: インシデントにわかりやすいタイトルを付けます。
+Update the impact section to specify customer impact, the start and end times of the impact, and whether the incident is still active. This section also requires a description of the scope of impact to be completed.
 
-**Signals**: インシデントを宣言している理由。これは、グラフやログなどの視覚情報にすることができます。
+In the incident header, you can see the incident's state, severity, timestamp, impact, and duration, as well as who has responded to the incident. You can also notify responders of updates. There are quick links to chat channels (if not using the Datadog Slack App, video conferencing, and attached postmortem (if one has been added).
 
-**Incident commander**: この人物はインシデント調査のリーダーとして割り当てられます。
+Timeline data is automatically categorized, so you can use the facets to filter through timeline content. This is particularly useful for long incidents with longer investigations. This makes it easier for ICs and responders to filter through for who is involved, what progress has been made, and what's already investigated. As the author of the timeline notes, you can edit the timestamps and message notes as they are created. You can also flag timeline calls to highlight them to other people monitoring the incident.
 
-**Additional notifications**: 他のチームまたは人々に通知します。
+#### Status levels
 
-**Declare Incident** をクリックして、インシデントの作成を完了します。
+The default includes the statuses **Active**, **Stable**, and **Resolved**. **Completed** can be enabled or disabled. You can customize the description of each status level to fit the requirements of your organization.
 
-### インシデントとインシデントタイムラインの更新
+* Active: Incident affecting others.
+* Stable: Incident no longer affecting others, but investigations incomplete.
+* Resolved: Incident no longer affecting others and investigations complete.
+* Completed: All remediation complete.
 
-インシデントのステータスは、インシデントの概要ページ、または、専用のインシデントチャネルの Slack から直接更新できます。その Slack チャネルからインシデントを更新するには、スラッシュコマンド `/datadog incident update` を使用して、更新モーダルを開きます。
+As the status of an incident changes, Datadog tracks time-to-resolution as follows:
 
-影響セクションを更新し、顧客への影響、影響の開始と終了時刻、およびインシデントがまだアクティブであるかどうかを指定します。また、このセクションには、完了する影響範囲の記述が必要です。
-
-インシデントのヘッダーには、インシデントの状況、重大度、タイムスタンプ、影響、期間のほか、インシデントに対応した人物が表示されます。また、対応者に最新情報を通知することもできます。Datadog Slack アプリを使用していない場合は、チャット、ビデオ会議、事後分析 (追加されている場合) 用のリンクが用意されています。
-
-タイムラインのデータは自動的に分類されるため、ファセットを使用してタイムラインの内容にフィルターを設定できます。この機能は、調査が長期におよぶ長期的なインシデントの場合、特に便利です。これにより、IC や対応者は関係者、進捗状況、調査済みの事柄についてフィルターを設定しやすくなります。タイムラインノートの作成者は、タイムスタンプや作成されたメッセージメモは編集できます。また、タイムラインコールにフラグを立てて、インシデントをモニタリングしている人に対して強調できます。
-
-#### ステータスレベル
-
-デフォルトのステータスは、**Active**、**Stable**、**Resolved** です。**Completed** は有効化/無効化できます。各ステータスレベルの説明は、組織の要件に合わせてカスタマイズできます。
-
-* Active: インシデントが他者に影響している。
-* Stable: インシデントはもはや他者に影響していないが、調査が未完了。
-* Resolved: インシデントはもはや他者に影響しておらず、調査も完了している。
-* Completed: すべての修復作業が完了している。
-
-インシデントのステータスが変化すると、Datadog は次のように解決までの時間を追跡します。
-
-| ステータスの遷移 | 解決されたタイムスタンプ |
+| Status Transition | Resolved Timestamp |
 | ------------------ | -----------|
-| `Active` から `Resolved`、`Active` から `Completed` | 現在の時刻 |
-| `Active` から `Resolved` から `Completed`、`Active` から `Completed` から `Resolved` | 変更なし |
-| `Active` から `Completed` から `Active` から `Resolved` | 最後の遷移にオーバーライド |
+| `Active` to `Resolved`, `Active` to `Completed` | Current time |
+| `Active` to `Resolved` to `Completed`, `Active` to `Completed` to `Resolved` | Unchanged |
+| `Active` to `Completed` to `Active` to `Resolved` | Overridden on last transition |
 
-#### 評価フィールド
+#### Assessment fields
 
-評価フィールドは、インシデントごとに定義できるメタデータとコンテキストから成ります。このフィールドは [key:value メトリクスタグ][9]になっており、設定でフィールドキーを追加すると、概要ページでインシデントの影響を評価する際に、値を利用できるようになります。例えば、「アプリケーション」フィールドを追加できます。次のフィールドはすべてのインシデントの評価に利用できます。
+Assessment fields are the metadata and context that you can define per incident. These fields are [key:value metric tags][10]. These field keys are added in settings, and the values are then available when you are assessing the impact of an incident on the overview page. For example, you can add an Application field. The following fields are available for assessment in all incidents:
 
-* **Root Cause**: このテキストフィールドには、インシデントの根本原因の説明、トリガー、要因を入力できます。
-* **Detection Method**: デフォルトの選択肢「Customer、Employee、Monitor、Other、Unknown」から、インシデントがどのように検出されたか指定します。
-* **Services**: APM を構成済みの場合は、インシデント評価に APM サービスを利用できます。APM サービスの構成については、[ドキュメント][10]を参照してください。
-    * Datadog APM を使用していない場合は、サービス名を CSV ファイルでアップロードできます。CSV ファイルでアップロードされた値は、インシデント管理のインシデント評価にのみ使用できます。
-    * Datadog は、大文字と小文字を区別しないことによるサービス名の重複を排除します。そのため、"My Service" や "my service" といった名前を使用している場合、手動で追加した名前のみが表示されます。
-    * Datadog は、手動でアップロードしたリストを優先して APM サービス名をオーバーライドします。
-    * 利用しているサービスが APM サービスで、過去 7 日間にメトリクスが何もポストされていない場合、検索結果には表示されません。
-    * Datadog 製品をさらに統合すると、サービスへの影響をより正確に評価できます。サービスのプロパティフィールドは、Datadog APM を使用しているカスタマーの APM サービスが自動的に入力されます。
-* **Teams**: 組織で定義されている[チーム][11]から選択してください。CSV ファイルからチームリストをアップロードする必要はありません。
+* **Root Cause**: This text field allows you to enter the description of the root cause, triggers, and contributing factors of the incident.
+* **Detection Method**: Specify how the incident was detected with these default options: customer, employee, monitor, other, or unknown.
+* **Services**: If you have APM configured, your APM services are available for incident assessment. To learn more about configuring your services in APM, see [the docs][11].
+    * If you are not using Datadog APM, you can upload service names as a CSV. Any values uploaded via CSV are only be available within Incident Management for incident assessment purposes.
+    * Datadog deduplicates service names case-insensitively, so if you use "My Service" or "my service", only the manually added one is shown.
+    * Datadog overrides APM service names in favor of the manually uploaded list.
+    * Note that if the service is an APM service and no metrics are posted in the past seven days, it does not appear in the search results.
+    * Further integrate with Datadog products and accurately assess service impact. The Services property field is automatically populated with APM services for customers using Datadog APM.
+* **Teams**: Choose from the [teams][9] defined in your organization. It is not necessary to upload a list of teams from a CSV file.
 
-## 収集データ
+## Data collected
 
-インシデント管理は、次の分析メジャーを収集します。
+Incident Management collects the following analytic measures:
 
-* インシデント数
-* 顧客への影響期間
-* ステータスアクティブ期間
-* ステータス安定期間
-* 修理までの時間 (顧客への影響の終了時間 - 作成された時間)
-* 解決までの時間 (解決された時間 - 作成された時間)
+* Incident Count
+* Customer Impact Duration
+* Status Active Duration
+* Status Stable Duration
+* Time to Repair (customer impact end time - created time)
+* Time to Resolve (resolved time - created time)
 
-インシデント管理グラフの詳細については、[インシデント管理分析][12]を参照してください。
+For more information about Incident Management graphs, see [Incident Management Analytics][12].
 
-## インテグレーション
+## Integrations
 
-[Slack][7] との統合に加えて、インシデント管理は以下とも統合されます。
+In addition to integrating with [Slack][7], Incident Management also integrates with:
 
-- [PagerDuty][13] と [OpsGenie][14] は、オンコールエンジニアにインシデント通知を送信します。
-- [Jira][15] は、インシデントの Jira チケットを作成します。
-- [Webhook][16] は、Webhook を使用してインシデント通知を送信します (たとえば、[SMS を Twilio に送信][17])。
+- [PagerDuty][13] and [OpsGenie][14] to send incident notifications to your on-call engineers.
+- [CoScreen][21] to launch collaborative meetings with multi-user screen sharing, remote control, and built-in audio and video chat.
+- [Jira][15] to create a Jira ticket for an incident.
+- [Webhooks][16] to send incident notifications using webhooks (for example, [sending SMS to Twilio][17]).
+- [Statuspage][19] to create and update Statuspage incidents.
+- [ServiceNow][20] to create a ServiceNow ticket for an incident.
 
-## 準備はいいですか？
+## Ready to try it out?
 
-[Incident Management 入門][18]ガイドのワークフロー例を実行してください。
+Work through an example workflow in the [Getting Started with Incident Management][18] guide.
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
@@ -218,9 +203,9 @@ Slack をご利用の {{< region-param key="dd_site_name" >}} のお客様は、
 [6]: /ja/service_management/incident_management/incident_settings#information
 [7]: /ja/integrations/slack/?tab=slackapplicationbeta#using-the-slack-app
 [8]: /ja/integrations/slack/
-[9]: /ja/getting_started/tagging/assigning_tags?tab=noncontainerizedenvironments#overview
-[10]: /ja/tracing/#2-instrument-your-application
-[11]: /ja/account_management/teams/
+[9]: /ja/account_management/teams/
+[10]: /ja/getting_started/tagging/assigning_tags?tab=noncontainerizedenvironments#overview
+[11]: /ja/tracing/#2-instrument-your-application
 [12]: /ja/service_management/incident_management/analytics/#overview
 [13]: /ja/integrations/pagerduty/
 [14]: /ja/integrations/opsgenie/
@@ -228,3 +213,6 @@ Slack をご利用の {{< region-param key="dd_site_name" >}} のお客様は、
 [16]: /ja/integrations/webhooks/
 [17]: /ja/integrations/webhooks/#sending-sms-through-twilio
 [18]: /ja/getting_started/incident_management
+[19]: /ja/integrations/statuspage/
+[20]: /ja/integrations/servicenow/
+[21]: /ja/coscreen

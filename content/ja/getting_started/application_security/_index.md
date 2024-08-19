@@ -8,98 +8,95 @@ further_reading:
 - link: /security/application_security/how-appsec-works
   tag: Documentation
   text: Application Security Management の仕組み
-- link: /security/application_security/enabling/
-  tag: Documentation
-  text: ASM の有効化
 - link: https://dtdg.co/fe
   tag: Foundation Enablement
-  text: セキュリティと脅威検出を高めるインタラクティブなセッションに参加できます
+  text: Join an interactive session to elevate your security and threat detection
 - link: /getting_started/application_security/software_composition_analysis
-  tag: ガイド
-  text: Software Composition Analysis を始める
+  tag: Guide
+  text: Getting Started with Software Composition Analysis
 - link: https://securitylabs.datadoghq.com/
   tag: Security Labs
-  text: Datadog のセキュリティリサーチ、レポート、ヒント、ビデオ
+  text: Security research, reports, tips, and videos from Datadog
 title: Application Security Management を始める
 ---
 
-## 概要
+## Overview
 
-Datadog Application Security Management (ASM) は、本番環境における Web アプリケーションや API の安全性を確保します。ASM は、サービス内のアプリケーションレベルの脆弱性を視覚化し、これらの脆弱性を悪用しようとする攻撃や攻撃者からリアルタイムで保護します。
+Datadog Application Security Management (ASM) helps secure your web applications and APIs in production. ASM provides visibility into application-level vulnerabilities in your services, and protects in real-time from attacks and attackers that aim to exploit these vulnerabilities.
 
-このガイドでは、ASM の導入と運用のためのベストプラクティスを説明します。
+This guide walks you through best practices for getting your team up and running with ASM.
 
-## セキュリティリスクのあるサービスの特定
-
-
-ASM を活用できる、**攻撃に対して脆弱なサービスまたは攻撃にさらされているサービスを特定します**。[**Service Catalog > Security ページ**][1]で、有効にしたいサービスを表示して選択します。
-
-{{< img src="getting_started/appsec/ASM_activation_service_selection_v2.png" alt="Vulnerabilities を表示し、Suspicious requests 列でソートされた ASM Services ページビュー。" style="width:100%;" >}}
-
-これらのセキュリティに関する洞察は、APM によって報告されたデータから検出されます。このインサイトは、セキュリティ対策に優先順位をつけるのに役立ちます。ASM は、サービス上のすべてのセキュリティリスクを特定し、優先順位を付け、修復を支援します。
-
-**注**: 脆弱性や不審なリクエストが報告されない場合、サービスが最新の Datadog トレーシングライブラリのバージョンを使用していることを確認してください。[Security Service Catalog][2] から、任意のサービスのサイドパネルを開き、その **Tracing Configuration** を見てください。
+## Identify services that have security risk
 
 
-{{< img src="getting_started/appsec/ASM_Tracing_Configuration.png" alt="APM Service Catalog ページビューの Tracer Configuration タブ。Datadog Agent、Datadog トレーシングライブラリのどのバージョンがサービスで使用されているかをハイライトしています。" style="width:100%;" >}}
+**Identify services vulnerable or exposed to attacks** that would benefit from ASM. On the [**Service Catalog > Security page**,][1] view and select the services you wish to enable.
+
+{{< img src="getting_started/appsec/ASM_activation_service_selection_v2.png" alt="ASM Services page view, showing Vulnerabilities and sorted by Suspicious requests column." style="width:100%;" >}}
+
+These security insights are detected from data reported by APM. The insights help prioritize your security efforts. ASM identifies, prioritizes, and helps remediate all security risks on your services.
+
+**Note**: If no vulnerabilities or suspicious requests are reported, ensure your services are using a recent Datadog tracing library version. From the [Security Service Catalog][2], open any service's side panel and look at its **Tracing Configuration**.
 
 
-## ASM の有効化
-
-### アプリ内の指示で ASM を有効化
-
-[ASM ランディングページ][18]で、指示に従ってセットアップを開始します。これには以下が含まれます。
-- ASM が有効であると思われるサービスの選定を指導します。
-- 環境変数で Datadog トレーシングライブラリを構成します。
-- サービスを再起動します。</br>
-
-1. **Get Started with ASM** をクリックします。
-2. オープンソースライブラリの脆弱性を検出する (Software Composition Analysis)、コードレベルの脆弱性を検出して修正する (Code Security)、サービスの脅威検出を発見して有効化する (Threat Management) ためには、**Get Started** を選択してください。
-3. ASM を使い始めるには、指示に従ってください。
-
-   {{< img src="getting_started/appsec/asm_sca_setup.png" alt="Software Composition Analysis セットアップページ。" style="width:100%;" >}}
+{{< img src="getting_started/appsec/ASM_Tracing_Configuration.png" alt="Tracer Configuration tab in APM Service Catalog page view. Highlighting which version of the Datadog Agent, and Datadog tracing library are being used by your services." style="width:100%;" >}}
 
 
-### リモート構成で ASM を有効にする
-#### 前提条件:
-- Datadog Agent バージョン 7.42.0 以上がホストまたはコンテナにインストールされていること。
-- Datadog トレーサーのバージョンが、[リモート構成と互換性がある][16]こと。
+## Enable ASM
 
-#### リモート構成の設定 (まだ有効になっていない場合)
-Datadog UI で[リモート構成][17]を有効にする手順に従ってください。これには以下が含まれます。
-  1. 組織のリモート構成機能を有効にします。
-  2. 既存の API キーにリモート構成機能を追加するか、新しい API キーを作成します。
-  3. Datadog Agent 構成を更新して、リモート構成機能で API キーを使用します。
+### Enable ASM with in-app instructions
 
-  詳しくは[リモート構成の設定][21]をご覧ください。
+On the [ASM landing page,][18] follow the instructions to get started. This includes:
+- Guided selection of services that would benefit from ASM.
+- Configuring your Datadog tracing libraries with an environment variable.
+- Restarting your services. </br>
 
-### ASM のテスト
-ASM を有効にすると、アプリケーションの脆弱性を即座に識別し、サービスを標的とする攻撃や攻撃者を検出します。
+1. Click **Get Started with ASM**.
+2. Select **Get Started** to detect vulnerabilities in open-source libraries (Software Composition Analysis), find and fix code-level vulnerabilities (Code Security), and find and enable threat detection on your services (Threat Management).
+3. Follow the instructions to get started with ASM.
 
-1. **脆弱性の検証**: [Vulnerabilities タブ][14]に移動し、脆弱性のトリアージと修復を行います。
-2. **攻撃の検証**: テスト検出ルールをトリガーする攻撃パターンを送信します。ターミナルから以下のスクリプトを実行します。
+   {{< img src="getting_started/appsec/asm_sca_setup.png" alt="Software Composition Analysis setup page." style="width:100%;" >}}
+
+
+### Enable ASM with Remote Configuration
+#### Prerequisites:
+- Datadog Agent versions 7.42.0 or higher installed on your hosts or containers.
+- Datadog Tracer versions are [compatible with Remote Configuration][17].
+
+#### Setup Remote Configuration (if not enabled already)
+  Follow the steps to enable [Remote Configuration][17] in your Datadog UI. This includes:
+  1. Activate Remote Config capability for your organization.
+  2. Add Remote Configuration capability to an existing API key, or create a new one.
+  3. Update your Datadog Agent configuration to use the API key with Remote Configuration capability.
+
+  See [Setting up Remote Configuration][21] for more information.
+
+### Test ASM
+Once enabled, ASM immediately identifies application vulnerabilities and detects attacks and attackers targeting your services.
+
+1. **Validate vulnerabilities**: Navigate to the [Vulnerabilities tab][14], triage and remediate your vulnerabilities.
+2. **Validate attacks**: Send attack patterns to trigger a test detection rule. From your terminal, run the following script:
 
   {{< code-block lang="sh" >}}
   for ((i=1;i<=250;i++)); do
-  # 既存サービスのルートをターゲットにする
+  # Target existing service's routes
   curl https://your-application-url/<EXISTING ROUTE> -A
   'dd-test-scanner-log';
-  # 既存サービス外のルートをターゲットにする
+  # Target non existing service's routes
   curl https://your-application-url/<NON-EXISTING ROUTE> -A
   'dd-test-scanner-log';
   done{{< /code-block >}}
 
-3. [セキュリティシグナルエクスプローラー][6]で、数秒後に発生するシグナルを確認してください。
+3. Go to [Security Signals Explorer][6] to see the signal that is generated after a few seconds.
 
-## レポートと通知
+## Reports and notifications
 
-1. [通知ルール][23]を設定して、Slack、Jira、メールなどを使用してアラートを受け取るようにします。
-3. 毎週の[脅威ダイジェスト][22]レポートを購読して、過去 7 日間に発見された最も重要なセキュリティ脅威の調査と対処を開始してください。
+1. Set up [notification rules][23] to receive alerts using Slack, Jira, email, and more.
+3. Subscribe to the weekly [threat digest][22] reports to begin investigation and remediation of the most important security threats discovered in the last seven days. 
 
 
-さらなるベストプラクティスにご興味がおありですか？[製品内クイックスタートガイド][19]をご覧ください。
+Interested in best practices to go further? View the [in-product Quickstart Guide.][19]
 
-## その他の参考資料
+## Further reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
@@ -118,7 +115,6 @@ ASM を有効にすると、アプリケーションの脆弱性を即座に識�
 [13]: /ja/security/application_security/risk_management
 [14]: https://app.datadoghq.com/security/appsec/vm?&group=vulnerability
 [15]: https://docs.datadoghq.com/ja/agent/guide/how_remote_config_works/?tab=configurationyamlfile#overview
-[16]: https://docs.datadoghq.com/fr/security/application_security/enabling/compatibility/
 [17]: https://app.datadoghq.com/organization-settings/remote-config
 [18]: https://app.datadoghq.com/security/appsec/landing
 [19]: https://app.datadoghq.com/security/configuration/asm/onboarding

@@ -25,6 +25,7 @@ author:
 categories:
 - ログの収集
 - セキュリティ
+custom_kind: integration
 dependencies:
 - https://github.com/DataDog/integrations-extras/blob/master/contrastsecurity/README.md
 display_on_public_website: true
@@ -34,7 +35,6 @@ integration_id: contrastsecurity
 integration_title: Contrast Security
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: 2.0.0
 name: contrastsecurity
 public_title: Contrast Security
@@ -51,6 +51,7 @@ tile:
   - Supported OS::Linux
   - Supported OS::Windows
   - Supported OS::macOS
+  - Offering::Integration
   configuration: README.md#Setup
   description: Datadog で Contrast Security から攻撃や脆弱性をチェックする
   media: []
@@ -62,23 +63,23 @@ tile:
 <!--  SOURCED FROM https://github.com/DataDog/integrations-extras -->
 
 
-## 概要
+## Overview
 
-Datadog-Contrast インテグレーションでは、Contrast のログを Datadog に収集することができます。
+The Datadog-Contrast integration allows you to get your Contrast logs into Datadog.
 
-## 計画と使用
+## Setup
 
-### 収集データ
+### Log collection
 
-Linux プラットフォームの場合は、`/etc/datadog-agent/datadog.yaml` で Datadog Agent のログ収集を有効にします。その他のプラットフォームの場合は、[Agent コンフィギュレーションファイルガイド][1] を参照し、コンフィギュレーションファイルの場所を調べてください。
+Enable logs collection for Datadog Agent in `/etc/datadog-agent/datadog.yaml` on Linux platforms. On other platforms, see the [Agent Configuration Files guide][1] for the location of your configuration file:
 
 ```yaml
 logs_enabled: true
 ```
 
-- このコンフィギュレーションブロックを `contrastsecurity.d/conf.yaml` ファイルに追加して、Contrast のログの収集を開始します。
-- 新しい `conf.yaml` ファイルを作成します。
-- カスタムログ収集のコンフィギュレーショングループを追加します。
+- Add this configuration block to your `contrastsecurity.d/conf.yaml` file to start collecting your Contrast Logs:
+- Create a new `conf.yaml` file.
+- Add a custom log collection configuration group.
 
     ```yaml
     logs:
@@ -88,31 +89,31 @@ logs_enabled: true
         source: contrastsecurity
     ```
 
-ログの詳細については、[Contrast Security のドキュメント][2]を参照してください。
+For more information on logs, see the [Contrast Security documentation][2].
 
-- [Datadog Agent を再起動][3]します。
+- [Restart the Datadog Agent][3].
 
-詳細については、次を参照してください:
-- [Datadog ログのドキュメント][4]
-- [Datadog ダッシュボード API][5]
+For more information, see the:
+- [Datadog Logs documentation][4]
+- [Datadog Dashboards API][5]
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 
-Contrast インテグレーションには、メトリクスは含まれません。
+The Contrast integration does not include any metrics.
 
-### ヘルプ
+### Events
 
-Contrast インテグレーションは、イベントを送信しません。
+The Contrast integration does not send any events.
 
-### ヘルプ
+### Service Checks
 
-Contrast インテグレーションには、サービス チェック機能は含まれません。
+The Contrast integration does not include any service checks.
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、このインテグレーションの[メインテナー][6]までお問い合わせください。
+Need help? Contact the [maintainer][6] of this integration.
 
 [1]: https://docs.datadoghq.com/ja/agent/guide/agent-configuration-files/
 [2]: https://docs.contrastsecurity.com/

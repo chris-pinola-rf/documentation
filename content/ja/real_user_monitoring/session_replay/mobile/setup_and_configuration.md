@@ -17,33 +17,36 @@ further_reading:
 - link: /real_user_monitoring/session_replay
   tag: ドキュメント
   text: セッションリプレイ
+- link: /real_user_monitoring/mobile_and_tv_monitoring/web_view_tracking
+  tag: Documentation
+  text: Web View Tracking
 title: モバイルセッションリプレイの設定と構成
 ---
 
-## セットアップ
+## Setup
 
 {{< tabs >}}
 {{% tab "Android" %}}
 
-セッションリプレイ SDK は、[Maven スナップショットリポジトリ][1]にすべてのバージョンが用意されています。
+All Session Replay SDK versions can be found in the [Maven Snapshots Repository][1].
 
-Android 用にモバイルセッションリプレイを設定する方法
+To set up Mobile Session Replay for Android:
 
-1. [Datadog Android RUM SDK の設定と初期化][2]が完了し、ビューインスツルメンテーションが有効になっていることを確認します。
+1. Make sure you've [setup and initialized the Datadog Android RUM SDK][2] with views instrumentation enabled.
 
-2. Datadog セッションリプレイを依存関係として宣言します。
+2. Declare the Datadog Session Replay as a dependency:
   {{< code-block lang="kotlin" filename="build.gradle" disable_copy="false" collapsible="true" >}}
     implementation("com.datadoghq:dd-sdk-android-rum:[datadog_version]")
     implementation("com.datadoghq:dd-sdk-android-session-replay:[datadog_version]")
-    //  Material UI のサポートが必要な場合
+    // in case you need material support
     implementation("com.datadoghq:dd-sdk-android-session-replay-material:[datadog_version]")
    {{< /code-block >}}
 
-3. アプリでセッションリプレイを有効にします。
+3. Enable Session Replay in your app:
 
    {{< code-block lang="kotlin" filename="Application.kt" disable_copy="false" collapsible="true" >}}
    val sessionReplayConfig = SessionReplayConfiguration.Builder([sampleRate])
-    // Material UI の拡張サポートが必要な場合
+    // in case you need material extension support
     .addExtensionSupport(MaterialExtensionSupport()) 
     .build()
    SessionReplay.enable(sessionReplayConfig)
@@ -56,19 +59,19 @@ Android 用にモバイルセッションリプレイを設定する方法
 {{% /tab %}}
 {{% tab "iOS" %}}
 
-iOS 用にモバイルセッションリプレイを設定する方法
+To set up Mobile Session Replay for iOS:
 
-1. [Datadog iOS RUM SDK の設定と初期化][1]が完了し、ビューインスツルメンテーションが有効になっていることを確認します。
+1. Make sure you've [set up and initialized the Datadog iOS RUM SDK][1] with views instrumentation enabled.
 
-2. パッケージマネージャーに応じて、Datadog セッションリプレイライブラリをプロジェクトに接続します。
+2. Link the Datadog Session Replay library to your project based on your package manager:
 
-   | パッケージマネージャー            | インストール手順                                                                           |
+   | Package manager            | Installation step                                                                           |
    |----------------------------|---------------------------------------------------------------------------------------------|
-   | [CocoaPods][2]             | `pod 'DatadogSessionReplay'` を `Podfile` に追加します。                                         |
-   | [Swift Package Manager][3] | `DatadogSessionReplay` ライブラリを依存関係としてアプリターゲットに追加します。                      |
-   | [Carthage][4]              | `DatadogSessionReplay.xcframework` を依存関係としてアプリターゲットに追加します。                  |
+   | [CocoaPods][2]             | Add `pod 'DatadogSessionReplay'` to your `Podfile`.                                         |
+   | [Swift Package Manager][3] | Add `DatadogSessionReplay` library as a dependency to your app target.                      |
+   | [Carthage][4]              | Add `DatadogSessionReplay.xcframework` as a dependency to your app target.                  |
 
-3. アプリでセッションリプレイを有効にします。
+3. Enable Session Replay in your app:
 
    {{< code-block lang="swift" filename="AppDelegate.swift" disable_copy="false" collapsible="true" >}}
    import DatadogSessionReplay
@@ -88,12 +91,50 @@ iOS 用にモバイルセッションリプレイを設定する方法
 {{% /tab %}}
 {{< /tabs >}}
 
-## 追加構成
-### 記録したセッションが表示されるサンプルレートの設定
+## Web view instrumentation
 
-サンプルレートは、セッションリプレイの構成で必須のパラメーターです。 0.0～100.0 の間の数字でなければならず、0 はリプレイが記録されないこと、100 はすべての RUM セッションにリプレイが含まれることを意味します。
+You can record the entire user journey across both [web and native views][1] on iOS or Android and watch it in a single Session Replay.
 
-このサンプルレートは、RUM サンプルレートに加えて適用されます。たとえば、RUM が 80% のサンプルレートを使用し、セッションリプレイが 20% のサンプルレートを使用した場合、すべてのユーザーセッションのうち 80% が RUM に含まれ、それらのセッションのうち 20% のみがリプレイを持つことを意味します。
+The Session Replay is recorded through the Browser SDK, then the Mobile SDK handles the batching and uploading of the webview recording.
+
+{{< tabs >}}
+{{% tab "Android" %}}
+
+To instrument your consolidated web and native Session Replay views for Android:
+
+1. Ensure you are using version [`2.8.0`][2] or higher of the Android SDK.
+2. Enable [webview tracking][3] for your mobile application.
+3. Enable [Session Replay][4] for your web application.
+4. Enable Session Replay for your mobile application (see setup instructions above).
+
+[1]: /ja/real_user_monitoring/mobile_and_tv_monitoring/web_view_tracking/
+[2]: https://github.com/DataDog/dd-sdk-ios/releases/tag/2.13.0
+[3]: /ja/real_user_monitoring/mobile_and_tv_monitoring/web_view_tracking/?tab=android#instrument-your-web-views
+[4]: /ja/real_user_monitoring/session_replay/browser/#setup
+
+{{% /tab %}}
+{{% tab "iOS" %}}
+
+To instrument your consolidated web and native Session Replay views for iOS:
+
+1. Ensure you are using version [`2.13.0`][1] or higher of the iOS SDK.
+2. Enable [webview tracking][2] for your mobile application.
+3. Enable [Session Replay][3] for your web application.
+4. Enable Session Replay for your mobile application (see setup instructions above).
+
+[1]: https://github.com/DataDog/dd-sdk-ios/releases/tag/2.13.0
+[2]: /ja/real_user_monitoring/mobile_and_tv_monitoring/web_view_tracking/?tab=ios#instrument-your-web-views
+[3]: /ja/real_user_monitoring/session_replay/browser/#setup
+
+{{% /tab %}}
+{{< /tabs >}}
+
+## Additional configuration
+### Set the sample rate for recorded sessions to appear
+
+Sample rate is a required parameter in Session Replay configuration. It must be a number between 0.0 and 100.0, where 0 means no replays are recorded and 100 means all RUM sessions contain replay.
+
+This sample rate is applied in addition to the RUM sample rate. For example, if RUM uses a sample rate of 80% and Session Replay uses a sample rate of 20%, it means that out of all user sessions, 80% are included in RUM, and within those sessions, only 20% have replays.
 
 {{< tabs >}}
 {{% tab "Android" %}}
@@ -116,9 +157,9 @@ var sessionReplayConfig = SessionReplay.Configuration(
 {{% /tab %}}
 {{< /tabs >}}
 
-### セッションリプレイデータが送信されているかどうかの検証
+### Validate whether Session Replay data is being sent
 
-セッションリプレイデータがアプリから送信されているかどうかを検証するには、Datadog SDK でデバッグオプションを有効にします。
+To validate whether Session Replay data is being sent from the app, you can enable debug option in Datadog SDK:
 
 {{< tabs >}}
 {{% tab "Android" %}}
@@ -134,7 +175,7 @@ Datadog.setVerbosity(Log.DEBUG)
 Datadog.verbosityLevel = .debug
 {{< /code-block >}}
 
-設定がすべて正しく行われていれば、アプリが起動してから約 30 秒後に、以下のログが Xcode デバッグコンソールに表示されるはずです。
+If everything is fine, following logs should appear in the Xcode debug console in about 30 seconds after launching the app:
 
 {{< code-block lang="bash" filename="Xcode console" disable_copy="true" >}}
 
@@ -146,12 +187,15 @@ Datadog.verbosityLevel = .debug
 {{% /tab %}}
 {{< /tabs >}}
 
-### プライバシーのオプション
+### Privacy options
 
-[プライバシーオプション][1]を参照してください。
+See [Privacy Options][2].
 
-[1]: /ja/real_user_monitoring/session_replay/mobile/privacy_options
 
-## 参考資料
+
+## Further reading
 
 {{< partial name="whats-next/whats-next.html" >}}
+
+[1]: /ja/real_user_monitoring/mobile_and_tv_monitoring/web_view_tracking
+[2]: /ja/real_user_monitoring/session_replay/mobile/privacy_options

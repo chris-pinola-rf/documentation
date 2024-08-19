@@ -5,8 +5,9 @@ categories:
 - developer tools
 - orchestration
 - provisioning
+custom_kind: integration
 dependencies: []
-description: デプロイをキャプチャおよび検索し、主要メトリクスのグラフに重ねて表示。
+description: Capture and search for deploys, overlay them onto key metrics graphs.
 doc_link: https://docs.datadoghq.com/integrations/capistrano/
 draft: false
 git_integration_title: capistrano
@@ -15,7 +16,6 @@ integration_id: capistrano
 integration_title: Capistrano
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: '1.0'
 name: capistrano
 public_title: Datadog-Capistrano インテグレーション
@@ -35,9 +35,9 @@ Capistrano Datadog インテグレーションをインストールすると、�
 
 特定の `Capfile` に対してこのインテグレーションを有効にすると、完了した Capistrano タスクがイベントとして Datadog に送信されます。ロール情報とログ出力も送信されます。
 
-## 計画と使用
+## Setup
 
-### インフラストラクチャーリスト
+### Installation
 
 `dogapi` Ruby gem をインストールします。
 
@@ -45,7 +45,7 @@ Capistrano Datadog インテグレーションをインストールすると、�
 sudo gem install dogapi --version ">=1.10.0"
 ```
 
-### ブラウザトラブルシューティング
+### Configuration
 
 Datadog に送信したいタスクを持つ `Capfile` の先頭に以下を追加します。
 
@@ -64,21 +64,21 @@ set :datadog_api_key, "${独自の_API_キー}"
 
 {{< img src="integrations/capistrano/capistranoevents.mp4" video="true" >}}
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 
 Capistrano インテグレーションには、メトリクスは含まれません。
 
-### ヘルプ
+### Events
 
 Capistrano インテグレーションには、イベントは含まれません。
 
-### ヘルプ
+### Service Checks
 
 Capistrano インテグレーションには、サービスのチェック機能は含まれません。
 
-## ヘルプ
+## Troubleshooting
 
 ご不明な点は、[Datadog のサポートチーム][3]までお問合せください。
 

@@ -1,90 +1,117 @@
 ---
+app_id: dyn
+app_uuid: a5eea87b-1ed7-4ac2-b2ef-ffa2e7dc0a7f
+assets:
+  dashboards:
+    dyn_screen: assets/dashboards/dyn_screen.json
+  integration:
+    auto_install: false
+    events:
+      creates_events: true
+    metrics:
+      check: dyn.qps
+      metadata_path: metadata.csv
+      prefix: dyn.
+    service_checks:
+      metadata_path: assets/service_checks.json
+    source_type_id: 79
+    source_type_name: Dyn
+author:
+  homepage: https://www.datadoghq.com
+  name: Datadog
+  sales_email: info@datadoghq.com
+  support_email: help@datadoghq.com
 categories:
 - network
-- metrics
-- oracle
+custom_kind: integration
 dependencies: []
-description: ゾーン変更を監視し、ゾーンまたはレコード別に秒単位でクエリを追跡。
-doc_link: https://docs.datadoghq.com/integrations/dyn/
+display_on_public_website: true
 draft: false
 git_integration_title: dyn
-has_logo: true
-integration_id: ''
+integration_id: dyn
 integration_title: Dyn
 integration_version: ''
 is_public: true
-custom_kind: integration
-manifest_version: '1.0'
+manifest_version: 2.0.0
 name: dyn
-public_title: Datadog-Dyn インテグレーション
-short_description: ゾーン変更を監視し、ゾーンまたはレコード別に秒単位でクエリを追跡。
-team: web-integrations
-version: '1.0'
+public_title: Dyn
+short_description: 'Monitor your zones: QPS and updates.'
+supported_os: []
+tile:
+  changelog: CHANGELOG.md
+  classifier_tags:
+  - Category::Network
+  - Offering::Integration
+  configuration: README.md#Setup
+  description: 'Monitor your zones: QPS and updates.'
+  media: []
+  overview: README.md#Overview
+  support: README.md#Support
+  title: Dyn
 ---
 
-<!--  SOURCED FROM https://github.com/DataDog/dogweb -->
-{{< img src="integrations/dyn/dyn_overview.png" alt="Dyn 概要" popup="true">}}
+<!--  SOURCED FROM https://github.com/DataDog/integrations-internal-core -->
+{{< img src="integrations/dyn/dyn_overview.png" alt="Dyn Overview" popup="true">}}
 
-## 概要
+## Overview
 
 <div class="alert alert-warning">
-Oracle Cloud Infrastructure は 2016 年に Dyn を買収し、Dyn の製品とサービスを Oracle Cloud Infrastructure プラットフォームにインテグレーションしました。サービスの移行については、<a href="https://www.oracle.com/corporate/acquisitions/dyn/technologies/migrate-your-services/" target="_blank">Dyn サービスの Oracle Cloud Infrastructure への移行</a>を参照してください。
+Oracle Cloud Infrastructure acquired Dyn in 2016 and integrated Dyn's products and services into the Oracle Cloud Infrastructure platform. See <a href="https://www.oracle.com/corporate/acquisitions/dyn/technologies/migrate-your-services/" target="_blank">Migrating Dyn Services to Oracle Cloud Infrastructure</a> for information about migrating your services.
 </div>
 
+Monitor your zones with advanced graphs and events.
 
-最先端のグラフやイベントを使用してゾーンを監視します。
+- Keep track of the changes made when a zone is updated.
+- Analyze the QPS made by zone or record type thanks to advanced graphing tools.
 
-- ゾーンが更新されたときに行われる変更を追跡します。
-- 最先端のグラフ作成ツールを利用してゾーンまたはレコードタイプ別の QPS を分析します。
+## Setup
 
-## 計画と使用
+### Configuration
 
-### ブラウザトラブルシューティング
+If you have not created a `datadog` read-only user on Dyn yet, [log in to Dyn][1] and follow these instructions:
 
-Dyn で `datadog` 読み取り専用ユーザーをまだ作成していない場合は、[Dyn にログイン][1]し、以下の手順を実行します。
+1. Choose a username and a password:
+   {{< img src="integrations/dyn/create_dyn_user.png" alt="Create dyn user" style="width:75%;" popup="true">}}
 
-1. ユーザー名とパスワードを選択します。 
-   {{< img src="integrations/dyn/create_dyn_user.png" alt="dyn ユーザーを作成" style="width:75%;" popup="true">}}
+2. Select the **READONLY** user group:
+   {{< img src="integrations/dyn/choose_dyn_group.png" alt="Choose dyn group" style="width:75%;" popup="true">}}
 
-2. **READONLY** ユーザーグループを選択します。
-   {{< img src="integrations/dyn/choose_dyn_group.png" alt="dyn グループを選択" style="width:75%;" popup="true">}}
+3. Click on **Add New User**.
 
-3. **Add New User** をクリックします。
+Once you have created a Datadog read-only user:
 
-Datadog 読み取り専用ユーザーを作成し、次の手順を行います。
+1. Configure the Datadog [Dyn integration][2] using the integration tile:
+   {{< img src="integrations/dyn/dyn_integration.png" alt="Dyn Integration" style="width:75%;" popup="true">}}
 
-1. インテグレーションタイルを使用して Datadog [Dyn インテグレーション][2]を構成:
-   {{< img src="integrations/dyn/dyn_integration.png" alt="Dyn インテグレーション" style="width:75%;" popup="true">}}
+2. Select the zones (_Zone notes_) that you want to collect events and the `dyn.changes` metric from:<br>
 
-2. イベントと `dyn.changes` メトリクスを収集するゾーン (_Zone notes_) を選択します。<br>
+{{< img src="integrations/dyn/dyn_zone.png" alt="Dyn zone" style="width:75%;" popup="true">}}
 
-{{< img src="integrations/dyn/dyn_zone.png" alt="Dyn ゾーン" style="width:75%;" popup="true">}}
-
-デフォルトでは、すべてのゾーンの Dyn `QPS` メトリクスが収集されます。
+Dyn `QPS` metrics are collected for all zones by default.
 
 <div class="alert alert-info">
-Dyn インテグレーションでは、IP ACL を無効にする必要があります。
+IP ACLs must be disabled for the Dyn integration.
 </div>
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "dyn" >}}
 
 
-**注**: `dyn.qps` メトリクスは、現在の時刻から約 90 分後に Datadog で使用できるようになります。
+**Note**: The `dyn.qps` metric is made available to Datadog about 90 minutes after the current time.
 
-### ヘルプ
+### Events
 
-Dyn インテグレーションには、イベントは含まれません。
+The Dyn integration does not include any events.
 
-### ヘルプ
+### Service Checks
 
-Dyn インテグレーションには、サービスのチェック機能は含まれません。
+The Dyn integration does not include any service checks.
 
-## ヘルプ
+## Troubleshooting
 
-ご不明な点は、[Datadog のサポートチーム][4]までお問合せください。
+Need help? Contact [Datadog support][4].
 
 [1]: https://manage.dynect.net/login
 [2]: https://app.datadoghq.com/integrations/dyn

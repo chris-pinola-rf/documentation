@@ -33,98 +33,96 @@ ICMP テストを使用すると、ホストの可用性を監視し、ネット
 
 ICMP テストは、ネットワークの外部または内部のどちらからエンドポイントへの ICMP ping をトリガーするかに応じて、[管理ロケーション](#select-locations)および[プライベートロケーション][1]の両方から実行できます。ICMP テストは、定義されたスケジュールで、オンデマンドで、または [CI/CD パイプライン][2]内から実行できます。
 
-**注**: Windows プライベートロケーションは `ICMP` テストの実行をサポートしていません。
+## Configuration
 
-## ブラウザトラブルシューティング
+After choosing to create an `ICMP` test, define your test's request.
 
-`ICMP` テストの作成を選択した後、テストのリクエストを定義します。
+### Define request
 
-### リクエストを定義する
+1. Specify the **Domain Name** or **IP address** to run your test on.
+2. Select or deselect **Track number of network hops (TTL)**. When selected, this option turns on a "traceroute" probe to discover all gateways along the path to the host destination.
+3. Select the **Number of Pings** to trigger per test session. By default, the number of pings is set to four. You can choose to decrease this number or increase it up to ten.
+4. **Name** your ICMP test.
+5. Add `env` **Tags** as well as any other tags to your ICMP test. You can then use these tags to filter through your Synthetic tests on the [Synthetic Monitoring & Continuous Testing page][3].
 
-1. テストを実行する**ドメイン名**または **IP アドレス**を指定します。
-2. **Track number of network hops (TTL)** (ネットワークホップ数 (TTL) の追跡) を選択または選択解除します。このオプションを選択すると、"traceroute" プローブをオンにして、ホストの宛先へのパスに沿ったすべてのゲートウェイを検出します。
-3. テストセッションごとにトリガーする **Number of Pings** (Ping の数) を選択します。 デフォルトでは、ping の数は 4 に設定されています。この数値は、減らすか最大 10 まで増やすかを選択できます。
-4. ICMP テストに**名前**を付けます。
-5. ICMP テストに `env` **タグ**とその他のタグを追加します。次に、これらのタグを使用して、[Synthetic Monitoring & Continuous Testing ページ][3]で Synthetic テストをフィルタリングできます。
+{{< img src="synthetics/api_tests/icmp_test_config.png" alt="Define ICMP request" style="width:90%;" >}}
 
-{{< img src="synthetics/api_tests/icmp_test_config.png" alt="ICMP リクエストを定義する" style="width:90%;" >}}
+Click **Test URL** to try out the request configuration. A response preview is displayed on the right side of your screen.
 
-**Test URL** をクリックして、リクエストのコンフィギュレーションをテストします。画面の右側に応答プレビューが表示されます。
+### Define assertions
 
-### アサーションを定義する
+Assertions define what an expected test result is. After you click **Test URL**, basic assertions on `latency`, `packet loss`, and `packet received` are added. You must define at least one assertion for your test to monitor.
 
-アサーションは、期待されるテスト結果が何であるかを定義します。**Test URL** をクリックすると、`latency`、`packet loss`、`packet received` の基本的なアサーションが追加されます。テストで監視するには、少なくとも 1 つのアサーションを定義する必要があります。
-
-| タイプ          | 集計    |演算子                                                                               | 値の型       |
+| Type          | Aggregation    |Operator                                                                               | Value Type       |
 |-----------------|----------------|------------------------------------------------------------------------|------------------|
-| レイテンシー         | `avg`、`max`、`min` または `stddev` (別名 `jitter`) |`is less than`、`is less than or equal`、<br> `is`、`is more than`、`is more than or equal` | 整数 (ms)    |
-| パケットロス     | - |`is less than`、`is less than or equal`、`is`、`is more than`、`is more than or equal` | パーセント (%) |
-| 受信したパケット | - |`is less than`、`is less than or equal`、`is`、`is more than`、`is more than or equal` | _integer_        |
-| ネットワークホップ    | - |`is less than`、`is less than or equal`、`is`、`is more than`、`is more than or equal` | _integer_        |
+| latency         | `avg`, `max`, `min`, or `stddev` (aka `jitter`) |`is less than`, `is less than or equal`, <br> `is`, `is more than`, `is more than or equal` | _integer (ms)_    |
+| packet loss     | - |`is less than`, `is less than or equal`, `is`, `is more than`, `is more than or equal` | _percentage (%)_ |
+| packet received | - |`is less than`, `is less than or equal`, `is`, `is more than`, `is more than or equal` | _integer_        |
+| network hops    | - |`is less than`, `is less than or equal`, `is`, `is more than`, `is more than or equal` | _integer_        |
 
-**New Assertion** を選択するか、応答プレビューを直接選択することで、API テストごとに最大 20 個のアサーションを作成できます。
+You can create up to 20 assertions per API test by selecting **New Assertion** or by selecting the response preview directly:
 
-{{< img src="synthetics/api_tests/icmp_assertion.png" alt="ICMP テストが成功または失敗するためのアサーションを定義する" style="width:90%;" >}}
+{{< img src="synthetics/api_tests/icmp_assertion.png" alt="Define assertions for your ICMP test to succeed or fail on" style="width:90%;" >}}
 
-テストがレスポンス本文にアサーションを含まない場合、本文のペイロードはドロップし、Synthetics Worker で設定されたタイムアウト制限内でリクエストに関連するレスポンスタイムを返します。
+If a test does not contain an assertion on the response body, the body payload drops and returns an associated response time for the request within the timeout limit set by the Synthetics Worker.
 
-テストがレスポンス本文に対するアサーションを含み、タイムアウトの制限に達した場合、`Assertions on the body/response cannot be run beyond this limit` というエラーが表示されます。
+If a test contains an assertion on the response body and the timeout limit is reached, an `Assertions on the body/response cannot be run beyond this limit` error appears.
 
-### ロケーションを選択する
+### Select locations
 
-ICMP テストを実行する**ロケーション**を選択します。ICMP テストは、ネットワークの外部または内部のどちらから ICMP ping をトリガーするかの好みによって、管理ロケーションと[プライベートロケーション][1]の両方から実行できます。
+Select the **Locations** to run your ICMP test from. ICMP tests can run from both managed and [private locations][1] depending on your preference for triggering trigger the ICMP pings from outside or inside your network.
 
-{{% managed-locations %}} 
+{{% managed-locations %}}
 
-### テストの頻度を指定する
+### Specify test frequency
 
-ICMP テストは次の頻度で実行できます。
+ICMP tests can run:
 
-* **On a schedule**: 最も重要なサービスにユーザーが常にアクセスできるようにします。Datadog で ICMP テストを実行する頻度を選択します。
-* [**Within your CI/CD pipelines**][2]。
-* **On-demand**: チームにとって最も意味のあるときにいつでもテストを実行します。
+* **On a schedule** to ensure your most important services are always accessible to your users. Select the frequency at which you want Datadog to run your ICMP test.
+* [**Within your CI/CD pipelines**][2].
+* **On-demand** to run your tests whenever makes the most sense for your team.
 
 {{% synthetics-alerting-monitoring %}}
 
 {{% synthetics-variables %}}
 
-### 変数を使用する
+### Use variables
 
-ICMP テストの URL およびアサーションで、[**Settings** ページで定義されたグローバル変数][8]を使用できます。
+You can use the [global variables defined on the **Settings** page][8] in the URL and assertions of your ICMP tests.
 
-変数のリストを表示するには、目的のフィールドに `{{` と入力します。
+To display your list of variables, type `{{` in your desired field.
 
-## テストの失敗
+## Test failure
 
-テストが 1 つ以上のアサーションを満たさない場合、またはリクエストが途中で失敗した場合、テストは `FAILED` と見なされます。場合によっては、エンドポイントに対するアサーションをテストせずにテストが実際に失敗することがあります。
+A test is considered `FAILED` if it does not satisfy one or more assertions or if the request prematurely failed. In some cases, the test can fail without testing the assertions against the endpoint.
 
-これらの理由には以下が含まれます。
+These reasons include the following:
 
 `DNS`
-: テスト URL に対応する DNS エントリが見つかりませんでした。原因としては、テスト URL の誤構成や DNS エントリの誤構成が考えられます。
+: DNS entry not found for the test URL. Possible causes include misconfigured test URL or the wrong configuration of your DNS entries.
 
-## ヘルプ
+## Permissions
 
-デフォルトでは、[Datadog 管理者および Datadog 標準ロール][9]を持つユーザーのみが、Synthetic ICMP テストを作成、編集、削除できます。Synthetic ICMP テストの作成、編集、および削除のアクセス権を取得するには、ユーザーのロールをこれら 2 つの[デフォルトのロール][9]のいずれかにアップグレードしてください。
+By default, only users with the [Datadog Admin and Datadog Standard roles][9] can create, edit, and delete Synthetic ICMP tests. To get create, edit, and delete access to Synthetic ICMP tests, upgrade your user to one of those two [default roles][9].
 
-[カスタムロール機能][10]を使用している場合は、`synthetics_read` および `synthetics_write` 権限を含むカスタムロールにユーザーを追加します。
+If you are using the [custom role feature][10], add your user to any custom role that includes `synthetics_read` and `synthetics_write` permissions.
 
-### アクセス制限
+### Restrict access
 
-アカウントに[カスタムロール][11]を使用しているお客様は、アクセス制限が利用可能です。
+Access restriction is available for customers using [custom roles][11] on their accounts.
 
-組織内の役割に基づいて、ICMP テストへのアクセスを制限することができます。ICMP テストを作成する際に、ユーザーに加えてどのロールがあなたのテストを読み取りおよび書き込むことができるかを選択します。
+You can restrict access to an ICMP test based on the roles in your organization. When creating an ICMP test, choose which roles (in addition to your user) can read and write your test.
 
-{{< img src="synthetics/settings/restrict_access_1.png" alt="テストの権限の設定" style="width:70%;" >}}
+{{< img src="synthetics/settings/restrict_access_1.png" alt="Set permissions for your test" style="width:70%;" >}}
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
 [1]: /ja/synthetics/private_locations
 [2]: /ja/synthetics/cicd_integrations
 [3]: /ja/synthetics/search/#search
-[4]: /ja/monitors/notify/#notify-your-team
+[4]: /ja/monitors/notify/#configure-notifications-and-automations
 [5]: https://www.markdownguide.org/basic-syntax/
 [6]: /ja/monitors/notify/?tab=is_recoveryis_alert_recovery#conditional-variables
 [7]: /ja/synthetics/guide/synthetic-test-monitors

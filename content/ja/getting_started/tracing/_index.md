@@ -2,176 +2,222 @@
 aliases:
 - /ja/getting_started/tracing/distributed-tracing
 further_reading:
-- link: /tracing/trace_collection/
+- link: /tracing/
   tag: ドキュメント
-  text: アプリケーション言語の選択
-- link: /tracing/glossary/
+  text: APM 機能の詳細
+- link: /tracing/metrics/runtime_metrics/
   tag: ドキュメント
-  text: APM の UI を利用する
+  text: ランタイムメトリクスの有効化
+- link: /tracing/guide/#enabling-tracing-tutorials
+  tag: Guides
+  text: トレースを有効にするための様々な方法のチュートリアル
 - link: https://learn.datadoghq.com/courses/intro-to-apm
-  tag: ラーニングセンター
-  text: Application Performance Monitoring の紹介
+  tag: Learning Center
+  text: Introduction to Application Performance Monitoring
 - link: https://dtdg.co/fe
   tag: Foundation Enablement
-  text: APM の理解を深めるためのインタラクティブなセッションに参加できます
-title: トレースの概要
+  text: APM の理解を深めるためのインタラクティブセッションに参加しましょう
+title: APM トレーシングの概要
 ---
 
-## 概要
+## Overview
 
-Datadog の APM (アプリケーションパフォーマンス監視機能、またはトレース) を使用して、バックエンドアプリケーションコードから[トレース][1]を収集できます。このビギナーガイドでは、トレースを Datadog に取り込む方法をご説明します。
+Datadog Application Performance Monitoring (APM) は、アプリケーションを詳細に可視化することで、パフォーマンスのボトルネックを特定し、問題をトラブルシューティングし、サービスを最適化することを可能にします。
 
-**注**: Datadog APM は、多くの言語とフレームワークで使用できます。[アプリケーションのインスツルメンテーション][2]のドキュメントを参照してください。
+このガイドでは、APM の始め方と最初のトレースを Datadog に送信する方法を説明します。
 
-## Datadog アカウント
+1. Datadog APM をセットアップして、Datadog にトレースを送信します。
+1. アプリケーションを実行してデータを生成します。
+1. 収集したデータを Datadog で確認します。
 
-[Datadog アカウント][3]をまだ作成していない場合は作成します。
+## Prerequisites
 
-## Datadog Agent
+To complete this guide, you need the following:
 
-Datadog Agent をインストールする前に、以下のコマンドを使用して [Vagrant Ubuntu 22.04 仮想マシン][4]を設定します。Vagrant の詳細については、[はじめに][5]ページをご参照ください。
+1. [Datadog アカウントの作成][1]をまだ行っていない場合は、作成します。
+1. [Datadog API キー][2]を検索または作成します。
+1. Linux ホストまたは VM を起動します。
 
-```text
-vagrant init ubuntu/jammy64
-vagrant up
-vagrant ssh
-```
+## Create an application
 
-[Datadog API キー][7]を付加した [1 行のインストールコマンド][6]を使用して、Datadog Host Agent をインストールします。
+Datadog で観測するアプリケーションを作成するには
 
-```shell
-DD_API_KEY=<DATADOG_API_KEY> DD_SITE="{{< region-param key="dd_site" >}}" bash -c "$(curl -L https://install.datadoghq.com/scripts/install_script_agent7.sh)"
-```
+1. Linux ホストまたは VM 上で、`hello.py` という名前の Python アプリケーションを新規作成します。例えば、`nano hello.py` とします。
+1. 以下のコードを `hello.py` に追加します。
 
-### 検証
+    {{< code-block lang="python" filename="hello.py" collapsible="true" disable_copy="false" >}}
+  from flask import Flask
+  import random
 
-[ステータスコマンド][8]を使用して、Agent が実行されていることを確認します。
+  app = Flask(__name__)
 
-```shell
-sudo datadog-agent status
-```
+  quotes = [
+      "成功するために努力するのではなく、むしろ価値あるものになるために努力しなさい。- アルバート・アインシュタイン",
+      "できると信じれば、道は拓ける。- セオドア・ルーズベルト",
+      "未来は、夢の美しさを信じる人のもの。- エレノア・ルーズベルト"
+  ]
 
-数分経過したら、Datadog で [Infrastructure List][9] をチェックして、Agent がアカウントに接続されていることを確認します。
+  @app.route('/')
+  def index():
+      quote = random.choice(quotes)+"\n"
+      return quote
 
-## Datadog APM
+  if __name__ == '__main__':
+      app.run(host='0.0.0.0', port=5050)
+  {{< /code-block >}}
 
-### アプリ内のドキュメントに従ってください (推奨)
+## Set up Datadog APM
 
-残りのステップを実行し、Datadog サイト内の[クイックスタート手順][10]に従って、最高のエクスペリエンスを実現します。例:
+アプリケーションのコードやデプロイプロセスを変更せずに Datadog APM をセットアップするには、Single Step APM Instrumentation を使用します。
 
-- デプロイコンフィギュレーション (この場合はホストベースのデプロイメント) を範囲とする段階的な手順。
-- `service`、`env`、`version` タグを動的に設定します。
-- セットアップ中に Continuous Profiler、トレースの 100% の取り込み、およびトレース ID 挿入を有効にします。
+<div class="alert alert-info"><strong>注</strong>: <a href="https://docs.datadoghq.com/tracing/trace_collection/automatic_instrumentation/single-step-apm/">Single Step APM Instrumentation</a> はベータ版です。または、<a href="https://docs.datadoghq.com/tracing/trace_collection/automatic_instrumentation/dd_libraries/">Datadog トレーシングライブラリ</a>を使用して APM をセットアップすることもできます。</div>
+
+1. インストールコマンドを実行します。
+
+   ```shell
+    DD_API_KEY=<YOUR_DD_API_KEY> DD_SITE="<YOUR_DD_SITE>" DD_APM_INSTRUMENTATION_ENABLED=host DD_APM_INSTRUMENTATION_LIBRARIES=python:2 DD_ENV=<AGENT_ENV> bash -c "$(curl -L https://install.datadoghq.com/scripts/install_script_agent7.sh)"
+    ```
+
+   `<YOUR_DD_API_KEY>` を [Datadog API キー][2]、`<YOUR_DD_SITE>` を [Datadog サイト][7]、`<AGENT_ENV>` を Agent がインストールされている環境 (例えば `development`) に置き換えます。 
 
 
-### APM を有効にする
+1. Restart the services on your host or VM.
+1. Verify the Agent is running:
 
-Agent v6 と v7 の最新バージョンでは、APM がデフォルトで有効になっています。これは、Agent の [`datadog.yaml` コンフィギュレーションファイル][11]で確認できます。
+    ```shell
+   sudo datadog-agent status
+   ```
 
-```yaml
-# apm_config:
-##   APM Agent の実行の有無
-#   enabled: true
-```
+This approach automatically installs the Datadog Agent, enables Datadog APM, and [instruments][5] your application at runtime.
 
-`trace-agent.log` でも確認できます。
+## Run the application
 
-```bash
-# /var/log/datadog/trace-agent.log:
-2019-03-25 20:33:18 INFO (run.go:136) - trace-agent running on host ubuntu-jammy
-2019-03-25 20:33:18 INFO (api.go:144) - listening for traces at http://localhost:8126
-2019-03-25 20:33:28 INFO (api.go:341) - no data received
-2019-03-25 20:34:18 INFO (service.go:63) - total number of tracked services: 0
-```
+When you set up Datadog APM with Single Step Instrumentation, Datadog automatically instruments your application at runtime.
 
-### 環境名
+To run `hello.py`:
 
-最適な体験を得るために、環境変数 `DD_ENV` を使用して、サービスのトレーサーを通じて `env` を構成することをお勧めします。
+1. Create a Python virtual environment in the current directory:
 
-さらに、トレーサーでログの挿入が有効になっている場合、`env` はトレースとログ全体で一貫しています。これがどのように機能するかについては、[統合サービスタグ付け][12]を参照してください。
+   ```shell
+   python3 -m venv ./venv
+   ```
 
-または、`datadog.yaml` を更新して環境に名前を付けて、`apm_config` で `env` を設定します。APM の `env` の設定の詳細については、[スコープへのプライマリタグの設定に関するガイド][13]を参照してください。
+1. Activate the `venv` virtual environment:
 
-## APM アプリケーション
+   ```shell
+   source ./venv/bin/activate
+   ```
 
-### インストール
+1. Install `pip` and `flask`:
 
-アプリケーションを設定する前に、まず Ubuntu VM 上に `pip` をインストールし、次に `flask` と `ddtrace` をインストールします。
+   ```shell
+   sudo apt-get install python3-pip
+   pip install flask
+   ```
 
-```shell
-sudo apt-get install python-pip
-pip install flask
-pip install ddtrace
-```
+1. Set the service name and run `hello.py`:
 
-### 作成
+   ```shell
+   export DD_SERVICE=hello
+   python3 hello.py
+   ```
 
-Ubuntu VM 上に、以下の内容でアプリケーション `hello.py` を作成します。
+## Test the application
 
-```python
-from flask import Flask
-app = Flask(__name__)
+Test the application to send traces to Datadog:
 
-@app.route('/')
-def index():
-    return 'hello world'
+1. In a new command prompt, run the following:
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5050)
-```
+   ```shell
+   curl http://0.0.0.0:5050/
+   ```
+1. Confirm that a random quote is returned.
+   ```text
+   Believe you can and you're halfway there. - Theodore Roosevelt
+   ```
 
-### 実行
+Each time you run the `curl` command, a new trace is sent to Datadog.
 
-`ddtrace` を使用して `hello.py` を実行します。`ddtrace` は Datadog でアプリケーションを自動的に計測します。
+## Explore traces in Datadog
 
-```shell
-export DD_SERVICE=hello
-ddtrace-run python hello.py
-```
+1. In Datadog, go to [**APM** > **Services**][3]. You should see a Python service named `hello`:
 
-次のような出力が表示されます。
+   {{< img src="/getting_started/apm/service-catalog.png" alt="Service Catalog shows the new Python service." style="width:100%;" >}}
 
-```bash
-* Serving Flask app "hello" (lazy loading)
-  ...
-* Running on http://0.0.0.0:5050/ (Press CTRL+C to quit)
-```
+1. Select the service to view its performance metrics, such as latency, throughput, and error rates.
+1. Go to [**APM** > **Traces**][4]. You should see a trace for the `hello` service:
 
-### テスト
+   {{< img src="/getting_started/apm/trace-explorer.png" alt="Trace explorer shows the trace for the hello service." style="width:100%;" >}}
 
-アプリケーションをテストし、`curl` を使用して Datadog にトレースを送信します。アプリケーションは (上述のように) 実行中のはずです。別のコマンドプロンプトで、以下を実行します。
+1. Select a trace to see its details, including the flame graph, which helps identify performance bottlenecks.
 
-```text
-vagrant ssh
-curl http://0.0.0.0:5050/
-```
+## Advanced APM setup
 
-以下が出力されます。
+Up until this point, you let Datadog automatically instrument the `hello.py` application using Single Step Instrumentation. This approach is recommended if you want to capture essential traces across common libraries and languages without touching code or manually installing libraries.
 
-```text
-hello world
-```
+However, if you need to collect traces from custom code or require more fine-grained control, you can add [custom instrumentation][6].
 
-数分経過すると、Datadog の `hello` サービスの下にトレースが表示されます。[サービスカタログ][14]または[トレースの一覧][15]をご確認ください。
+To illustrate this, you will import the Datadog Python tracing library into `hello.py` and create a custom span and span tag.
 
-{{< img src="getting_started/tracing-services-list.png" alt="トレースサービス一覧" >}}
+To add custom instrumentation:
 
-## その他の参考資料
+1. Install the Datadog tracing library:
+
+   ```shell
+   pip install ddtrace
+   ```
+
+1. Add the highlighted lines to the code in `hello.py` to create a custom span tag `get_quote` and a custom span tag `quote`:
+
+   {{< highlight python "hl_lines=3 15 17" >}}
+    from flask import Flask
+    import random
+    from ddtrace import tracer
+
+    app = Flask(__name__)
+
+    quotes = [
+        "Strive not to be a success, but rather to be of value. - Albert Einstein",
+        "Believe you can and you're halfway there. - Theodore Roosevelt",
+        "The future belongs to those who believe in the beauty of their dreams. - Eleanor Roosevelt"
+    ]
+
+    @app.route('/')
+    def index():
+        with tracer.trace("get_quote") as span:
+            quote = random.choice(quotes)+"\n"
+            span.set_tag("quote", quote)
+            return quote
+
+    if __name__ == '__main__':
+        app.run(host='0.0.0.0', port=5050)
+   {{< /highlight >}}
+
+1. Run `hello.py` in the virtual environment from earlier:
+   ```shell
+   ddtrace-run python hello.py
+   ```
+1. Run a few `curl` commands in a separate command prompt:
+   ```shell
+   curl http://0.0.0.0:5050/
+   ```
+1. In Datadog, go to [**APM** > **Traces**][4].
+1. Select the **hello** trace.
+1. Find the new custom `get_quote` span in the flame graph and hover over it:
+
+   {{< img src="/getting_started/apm/custom-instrumentation.png" alt="The get_quote custom span displays in the flame graph. On hover, the quote span tag is displayed. " style="width:100%;" >}}
+
+1. Notice that the custom `quote` span tag displays on the **Info** tab.
+
+
+## Further reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
-[1]: /ja/tracing/#terminology
-[2]: https://docs.datadoghq.com/ja/tracing/setup/
-[3]: https://www.datadoghq.com
-[4]: https://app.vagrantup.com/ubuntu/boxes/jammy64
-[5]: https://www.vagrantup.com/intro/getting-started
-[6]: https://app.datadoghq.com/account/settings/agent/latest?platform=ubuntu
-[7]: https://app.datadoghq.com/organization-settings/api-keys
-[8]: /ja/agent/configuration/agent-commands/#agent-information
-[9]: https://app.datadoghq.com/infrastructure
-[10]: https://app.datadoghq.com/apm/service-setup
-[11]: /ja/agent/configuration/agent-configuration-files/#agent-main-configuration-file
-[12]: /ja/getting_started/tagging/unified_service_tagging
-[13]: /ja/tracing/guide/setting_primary_tags_to_scope/
-[14]: https://app.datadoghq.com/services
-[15]: https://app.datadoghq.com/apm/traces
+[1]: https://www.datadoghq.com/free-datadog-trial/
+[2]: https://app.datadoghq.com/organization-settings/api-keys/
+[3]: https://app.datadoghq.com/services
+[4]: https://app.datadoghq.com/apm/traces
+[5]: /ja/tracing/glossary/#instrumentation
+[6]: /ja/tracing/trace_collection/custom_instrumentation/
+[7]: /ja/getting_started/site/

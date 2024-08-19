@@ -9,24 +9,24 @@ further_reading:
 title: APM 統計グラフの構成
 ---
 
-## 概要
+## Overview
 
-APM 統計データを使用してグラフを構成するには、次の手順に従います。
+To configure your graph using APM stats data, follow these steps:
 
-1. 利用可能な[ウィジェット][1]の中から視覚化したいものを選択します。
-2. [詳細レベルを選択](#level-of-detail)します。
-3. [パラメーターを選択](#apm-stats-parameters)します。
-4. グラフのタイトル (メトリクスと同様)
+1. Select your visualization from the available [widgets][1].
+2. [Choose your level of detail](#level-of-detail).
+3. [Choose your parameters](#apm-stats-parameters).
+4. Title the graph (same as for Metrics).
 
-### 詳細レベル
-1 つ以上のサービス、リソース、またはスパンの統計を表示する詳細レベルを選択します。これらのすべてがすべてのウィジェットタイプで使用できるわけではありません。
+### Level of detail
+Choose what level of detail you want to see statistics for: one or more services, resources, or spans. Not all of these are available for every widget type.
 
-### APM 統計パラメーター
-グラフエディタから次のパラメーターを選択します: 環境 (`env`)、プライマリタグ (`primary_tag`)、サービス (`service`)、オペレーション名 (`name`)。
+### APM stats parameters
+Select the following parameters from the graphing editor: Environment (`env`), Primary tag (`primary_tag`), Service (`service`), and Operation name (`name`).
 
-詳細レベルが `resource` または `span` の場合、一部のウィジェットタイプでは、クエリの範囲を狭めるためにリソース名 (`resource`) を選択する必要もあります。
+If your level of detail is `resource` or `span`, some widget types also require you to select a Resource name (`resource`) to narrow the scope of your query.
 
-## その他の参考資料
+## Further reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

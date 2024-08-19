@@ -21,29 +21,29 @@ title: Node.js ログとトレースの相関付け
 type: multi-code-lang
 ---
 
-## 自動挿入
+## Automatic injection
 
-環境変数 `DD_LOGS_INJECTION=true` か、直接トレーサーを構成することで挿入を有効にします:
+Enable injection with the environment variable `DD_LOGS_INJECTION=true` or by configuring the tracer directly:
 
 ```javascript
-// この行は、ロガーをインポートする前に記述する必要があります。
+// This line must come before importing the logger.
 const tracer = require('dd-trace').init({
     logInjection: true
 });
 ```
 
-これにより、`bunyan`、`paperplane`、`pino`、`winston` の自動トレース ID 挿入が有効になります。
+This enables automatic trace ID injection for `bunyan`, `paperplane`, `pino`, and `winston`.
 
-まだの場合は、Node.js トレーサーを `DD_ENV`、`DD_SERVICE`、`DD_VERSION` で構成します。これは、
-`env`、`service`、`version` を追加する際のベストプラクティスです (詳細は、[統合サービスタグ付け][1]を参照)。
+If you haven't done so already, configure the Node.js tracer with `DD_ENV`, `DD_SERVICE`, and `DD_VERSION`. This will provide the best
+experience for adding `env`, `service`, and `version` (see [Unified Service Tagging][1] for more details).
 
-**注**: 自動挿入が機能するのは JSON 形式のログのみです。
+**Note**: Automatic injection only works for logs formatted as JSON.
 
-## 手動挿入
+## Manual injection
 
-自動挿入に対応していないロギングライブラリを使っているが、JSON 形式を使っている場合は、コード内で直接手動挿入を実行することができます。
+If you are using a logging library not supported for automatic injection but are using JSON format, it's possible to do manual injection directly in your code.
 
-`console` を基底のロガーとして使う例:
+Example using `console` as the underlying logger:
 
 ```javascript
 const tracer = require('dd-trace');
@@ -66,7 +66,7 @@ class Logger {
 module.exports = Logger;
 ```
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

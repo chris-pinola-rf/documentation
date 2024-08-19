@@ -6,9 +6,9 @@ further_reading:
 title: どのインテグレーションで Jmxfetch が使われていますか？
 ---
 
-## デフォルトのインテグレーション
+## Default integrations
 
-以下のインテグレーションは [JMXFetch][1] を使用しており、Datadog Agent にデフォルトで含まれています。
+The following integrations use [JMXFetch][1] and are included by default in the Datadog Agent:
 
 * [ActiveMQ][2]
 * [Cassandra][3]
@@ -26,11 +26,11 @@ title: どのインテグレーションで Jmxfetch が使われていますか
 * [SonarQube][15]
 * [Tomcat][16]
 
-**注**: これらのインテグレーションは、デフォルトでは実行されません。各インテグレーションは、ホスト上で実行されるように構成する必要があります。
+**Note**: These integrations do **not** run by default. Each integration must be configured to run on a host.
 
-## コミュニティのインテグレーション
+## Community integrations
 
-以下の[コミュニティインテグレーション][17]は jmxfetch を使用しており、Datadog Agent にデフォルトで**含まれていません**。
+The following [Community Integrations][17] use jmxfetch and are **not** included by default in the Datadog Agent:
 
 * [nextcloud][18]
 * [flume][19]
@@ -45,13 +45,13 @@ title: どのインテグレーションで Jmxfetch が使われていますか
 * [hbase_master][28]
 * [neutrona][29]
 
-**注**: これらのインテグレーションは、デフォルトでは実行されません。各インテグレーションは、ホスト上で実行されるようにインストール、構成する必要があります。
+**Note**: These integrations do **not** run by default. Each integration must be installed and configured to run on a host.
 
-## カスタムチェック
+## Custom checks
 
-Datadog ユーザーは、[Java/JMX][10] チェックを構成することで、あらゆる Java アプリケーションを監視することができます。これらのチェックの名前は、チェックを作成するユーザーによって決定されます。
+Datadog users can monitor any Java Application by configuring the [Java/JMX][10] check. The name of these checks is determined by the user who creates the check.
 
-## その他の参考資料
+## Further Reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 

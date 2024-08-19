@@ -4,8 +4,9 @@ categories:
 - data stores
 - google cloud
 - log collection
+custom_kind: integration
 dependencies: []
-description: パフォーマンス、健全性、レプリケーションに関するデータベースメトリクスを追跡。
+description: Track database metrics for performance, health, and replication.
 doc_link: https://docs.datadoghq.com/integrations/google_cloudsql/
 draft: false
 git_integration_title: google_cloudsql
@@ -14,7 +15,6 @@ integration_id: google-cloudsql
 integration_title: Google Cloud SQL
 integration_version: ''
 is_public: true
-custom_kind: integration
 manifest_version: '1.0'
 name: google_cloudsql
 public_title: Datadog-Google Cloud SQL インテグレーション
@@ -32,15 +32,15 @@ Google Cloud SQL からメトリクスを取得して、以下のことができ
 - Cloud SQL データベースのパフォーマンスを視覚化。
 - Cloud SQL データベースのパフォーマンスをアプリケーションと関連付け。
 
-## 計画と使用
+## Setup
 
-### インフラストラクチャーリスト
+### Installation
 
 #### メトリクスの収集
 
 [Google Cloud Platform インテグレーション][1]をまだセットアップしていない場合は、最初にセットアップします。それ以上のインストール手順はありません。
 
-#### ブラウザトラブルシューティング
+#### Configuration
 
 カスタム Cloud SQL ラベルをタグとして収集するには、Cloud Asset Inventory のアクセス権を有効にします。
 
@@ -56,11 +56,11 @@ Google Cloud SQL からメトリクスを取得して、以下のことができ
 
 Google Cloud SQL のログは Google Cloud Logging で収集され、Cloud Pub/Sub トピックを通じて Dataflow ジョブに送信されます。まだの場合は、[Datadog Dataflow テンプレートでロギングをセットアップしてください][2]。
 
-これが完了したら、Google Cloud SQL のログを Google Cloud Logging から Pub/Sub へエクスポートします。
+これが完了したら、Google Cloud SQL のログを Google Cloud Logging から Pub/Sub トピックへエクスポートします。
 
 1. [Google Cloud Logging のページ][3]に移動し、Google Cloud SQL のログを絞り込みます。
 2. **シンクを作成**し、シンクに適宜名前を付けます。
-3. エクスポート先として「Cloud Pub/Sub」を選択し、エクスポート用に作成された Pub/Sub を選択します。**注**: この Pub/Sub は別のプロジェクト内に配置することもできます。
+3. 宛先として "Cloud Pub/Sub" を選択し、その目的で作成された Pub/Sub トピックを選択します。**注**: Pub/Sub トピックは別のプロジェクトに配置できます。
 4. **作成**をクリックし、確認メッセージが表示されるまで待ちます。
 
 [2]: https://docs.datadoghq.com/ja/integrations/google_cloud_platform/#log-collection
@@ -68,22 +68,22 @@ Google Cloud SQL のログは Google Cloud Logging で収集され、Cloud Pub/S
 
 {{< /site-region >}}
 
-## リアルユーザーモニタリング
+## Data Collected
 
-### データセキュリティ
+### Metrics
 {{< get-metrics-from-git "google_cloudsql" >}}
 
 
-### ヘルプ
+### Events
 
 Google Cloud SQL インテグレーションには、イベントは含まれません。
 
-### ヘルプ
+### Service Checks
 
 **gcp.cloudsql.database.state**
 Cloud SQL インスタンスの現在のサービス状態。
 
-## ヘルプ
+## Troubleshooting
 
 ご不明な点は、[Datadog のサポートチーム][3]までお問合せください。
 

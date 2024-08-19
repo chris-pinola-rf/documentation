@@ -12,39 +12,40 @@ further_reading:
 title: Continuous Testing と CI/CD のトラブルシューティング
 ---
 
-## 概要
+## Overview
 
-このページでは、Continuous Testing と CI/CD に関する問題のトラブルシューティングに役立つ情報を提供します。さらにヘルプが必要な場合は、[Datadog サポート][1]にお問い合わせください。
+This page provides information to help you troubleshoot issues with Continuous Testing and CI/CD. If you need additional help, contact [Datadog support][1].
 
-## 用語
+## Terminology
 
-CI バッチ
-: 継続的インテグレーションまたは継続的デリバリー (CI/CD) パイプラインまたは [Datadog Synthetic Monitoring API][2] を通してトリガーされる Continuous Testing テストのグループです。
+CI batch 
+: The group of Continuous Testing tests triggered through a continuous integration or continuous delivery (CI/CD) pipeline or the [Datadog Synthetic Monitoring API][2].
 
-テスト実行
-: [API][7] や[ブラウザテスト][8]といった Continuous Testing のテストの 1 回の実行。再試行が構成されている場合は、個々のテスト実行としてカウントされます。たとえば、2 回の再試行を伴うテストは、最大 3 回の関連するテスト実行を持つことができます。
+Test run
+: A single run of a Continuous Testing test, which can be an [API][7] or [browser test][8]. If you have configured retries, they count as individual test runs. For example, a test with two retries can have up to three associated test runs.
 
-並列テスト
-: CI/CD パイプラインで別の Continuous Testing のテストと同時に実行される Continuous Testing のこと。いくつのテストを並行して実行するかを設定するには、[Continuous Testing の設定ページ][9]で並列化の設定を行います。
+Parallel test
+: A Continuous Testing test that is run at the same time as another Continuous Testing test in your CI/CD pipeline. To set how many tests you would like to run in parallel, configure parallelization on the [Continuous Testing Settings page][9].
 
-バッチタイムアウト
-: バッチタイムアウトは、コンフィギュレーションファイルで設定された[ポーリングタイムアウト][3]に基づいて、バッチが妥当な時間内に完了しない場合に発生します。
+Batch timeout
+: A batch timeout occurs when your batch does not complete within a reasonable time based on the [polling timeout][3] set in your configuration file. 
 
-実行ルール: [実行ルール][4]は、テストの失敗が CI パイプラインに与える影響を、影響の大きいものから小さいものへと定義します (`skipped`、`non_blocking`、`blocking`)。これらのオプションは重み付けされ、デフォルトは最も影響の大きいものになります。UI で `skipped` と設定され、構成ファイルで `blocking` と設定されたテストは、テスト実行時にスキップされます。</br><br> 実行ルールはテストのプロパティ、グローバルコンフィギュレーションファイル、あるいは個々のテストのオーバーライドファイルで設定することができます。
+Execution rule
+: An [execution rule][4] defines the impact of a test failure on a CI/CD pipeline from most to least impactful: `skipped`, `non_blocking`, and `blocking`. These options are weighted and default to the most impactful. If your test is configured as `skipped` in the UI and `blocking` in the configuration file, it is skipped during the test run. </br><br> You can set the execution rule in your tests' properties, global configuration file, or an individual test's override file. 
 
 ## Results Explorer
 
-### CI メタデータが表示されない
+### CI metadata does not appear
 
-CI/CD テスト実行のトリガーに API エンドポイントを使用しているかどうかを確認します。Synthetic Monitoring & Continuous Testing Results Explorer に CI メタデータを入力するには、Datadog の[ネイティブインテグレーション][5]、または [NPM パッケージ][6]のいずれかを使用する必要があります。
+Check whether you are using API endpoints to trigger your CI/CD test runs. In order to populate the Synthetic Monitoring & Continuous Testing Results Explorer with CI metadata, you must use one of Datadog's [native integrations][5], or the [NPM package][6].
 
-## CI/CD パイプライン内
+## Within your CI/CD pipeline
 
-### CI パイプラインでテストがタイムアウトする
+### My tests are timing out in my CI pipeline
 
-まず確認すべきは、[グローバルコンフィギュレーションファイル][3]でどの失敗モードフラグを渡しているかということです。複数のテストを含む CI の実行では、一部のテストは [Continuous Testing の設定ページ][9]で定義された並列化設定に基づいてキューに入れられます。組織のニーズに応じて、構成と並列化の両方を調整する必要があるかもしれません。
+The first thing to check is which failure mode flags you are passing in your [global configuration file][3]. For CI runs that contain multiple tests, some tests are queued based on the parallelization setting defined on the [Continuous Testing Settings page][9]. You may need to adapt both your configuration and parallelization based on your organizational needs.
 
-## その他の参考資料
+## Further reading
 
 {{< partial name="whats-next/whats-next.html" >}}
 
